@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation beanclass="psdi.webclient.system.beans.AppBean" id="LBLMLSTOP" mboname="LBL_MAILSTOP" orderby="building_number, floor_number,mailstopid" resultstableid="results_showlist" version="6.2.6">
+	<page id="mainrec">
+		<include id="pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" label="Mail Stops" mboname="LBL_MAILSTOP" selectmode="multiple">
+						<defaultvalue dataattribute="mailstopid" defaulttype="query" id="results_showlist_default"/>
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="mailstopid" id="results_showlist_tablebody_2" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="building_number" id="results_showlist_tablebody_3" label="Building Number"/>
+							<tablecol dataattribute="floor_number" id="results_showlist_tablebody_4" label="Floor Number"/>
+							<tablecol dataattribute="zip" id="results_showlist_tablebody_7" label="Zip"/>
+							<tablecol dataattribute="zip_extension" id="results_showlist_tablebody_8" label="Zip Extension"/>
+							<tablecol dataattribute="siteid" id="results_showlist_tablebody_9"/>
+							<tablecol filterable="false" hidden="false" id="results_bookmark" mxevent="BOOKMARK" mxevent_desc="Add to Bookmarks" mxevent_icon="btn_addtobookmarks.gif" sortable="false" type="event"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="LBNL Mailstop Details" type="insert">
+					<section border="false" height="240" id="main_section_1">
+						<sectionrow id="main_section_1_row_1">
+							<sectioncol id="main_section_1_row_1_column_1">
+								<section border="false" id="main_section_1_row_1_column_1_section_1" label="Mailstop identifier Details">
+									<textbox dataattribute="mailstopid" id="main_grid1_1" label="Mailstop Id"/>
+									<multiparttextbox dataattribute="building_number" descdataattribute="LBL_MAILSTOP_BLDG.description" descinputmode="READONLY" id="main_grid1_2" label="Building Number" longdescinputmode="READONLY" lookup="LBL_BUILDING" menutype="NORMAL"/>
+									<multiparttextbox dataattribute="floor_number" descdataattribute="LBL_MAILSTOP_FLOOR.description" descinputmode="READONLY" id="main_grid1_4" label="Floor Number" longdescinputmode="READONLY" lookup="LBL_FLOOR" menutype="NORMAL"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_section_1_row_1_column_2">
+								<section border="false" id="main_section_1_row_1_column_2_section_1" label="Mailstop Details (More)">
+									<textbox dataattribute="DESCRIPTION" id="main_grid2_2" label="Mailstop Description"/>
+									<textbox dataattribute="capacity" id="main_grid2_4" label="Capacity"/>
+									<textbox dataattribute="zip" id="main_grid2_5" inputmode="ZIP Code"/>
+									<textbox dataattribute="zip_extension" id="main_grid2_6" inputmode="ZIP Extension"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="main_section_1_row_2">
+							<sectioncol id="main_section_1_row_2_column_1">
+								<section border="false" id="main_section_1_row_2_column_1_section_1" label="Mailstop Details (Remaining)">
+									<multiparttextbox dataattribute="contact1" descdataattribute="LBL_MAILSTOP_PERSON1.DISPLAYNAME" descinputmode="READONLY" id="main_grid3_2" label="Primary Contact" longdescinputmode="READONLY" lookup="PERSON" menutype="NORMAL"/>
+									<multiparttextbox dataattribute="contact2" descdataattribute="LBL_MAILSTOP_PERSON2.displayname" descinputmode="READONLY" id="main_grid3_4" label="Backp Contact" longdescinputmode="READONLY" lookup="person" menutype="NORMAL"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_section_1_row_2_column_2">
+								<section border="false" id="main_section_1_row_2_column_2_section_1" label="Mailstop Status">
+									<textbox dataattribute="DISABLED" id="main_section_1_row_2_column_2_section_1_1" label="Disabled"/>
+									<textbox dataattribute="CHANGEBY" id="main_section_1_row_2_column_2_section_1_2" inputmode="READONLY"/>
+									<textbox dataattribute="CHANGEDATE" id="main_section_1_row_2_column_2_section_1_3" inputmode="READONLY" lookup="datelookup"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include id="pageFooter"/>
+	</page>
+</presentation>

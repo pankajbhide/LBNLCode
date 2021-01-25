@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation beanclass="psdi.webclient.beans.common.StatefulAppBean" id="lblwcdasmt" mboname="WORKORDER" originalapp="CUSTAPP" resultstableid="results_showlist" version="6.2.6" whereclause="workorder.historyflag=0 and workorder.lbl_wcd_status not in ('NOT REQUIRED','FINALIZED')">
+	<page id="mainrec">
+		<include id="pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar1" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" mboname="WORKORDER" selectmode="multiple">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="wonum" filterable="false" hidden="false" id="results_showlist_tablebody_1" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+							<tablecol dataattribute="wonum" id="results_showlist_tablebody_2" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="description" id="results_showlist_tablebody_3"/>
+							<tablecol dataattribute="lbl_wcdcatg_calc" id="results_showlist_tablebody_4"/>
+							<tablecol dataattribute="status" id="results_showlist_tablebody_5"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="Workorder WCD Assessment" type="insert">
+					<section border="true" id="headerB_1">
+						<sectionrow id="headerB_2">
+							<sectioncol id="headerB_3">
+								<section id="headerB_4">
+									<multiparttextbox dataattribute="wonum" descdataattribute="description" descinputmode="readonly" id="headerB_5"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="headerB_15">
+								<section id="headerB_16">
+									<textbox dataattribute="lbl_wcdcatg_calc" id="headerB_17" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="headerB_21">
+								<section id="headerB_22">
+									<textbox dataattribute="lbl_wcdlvl_calc" id="headerB_23" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="headerB_18">
+								<section id="headerB_19">
+									<textbox dataattribute="lbl_wcdtotalpoints" id="headerB_20" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="headerB_6">
+								<section id="headerB_7">
+									<textbox dataattribute="siteid" id="headerB_11" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="headerB_9">
+								<section id="headerB_10">
+									<textbox dataattribute="status" id="headerB_8"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="new_section">
+						<statictext align="LEFT" id="new_statictext_2" label="&lt;font color = #FF0000&gt;When applicable, Not Applicable may also be used to answer a question.&lt;/font&gt;" plaintext="false"/>
+					</section>
+					<table beanclass="lblwebui.webclient.beans.wcd.WOWcdCondBean" id="main_table1" label="WO WCD Assessment" orderby="conditionnum, subconditionnum" relationship="LBL_WOWCDCONDITION">
+						<tablebody customizable="true" displayrowsperpage="50" filterable="true" id="main_table1_tablebody">
+							<tablecol dataattribute="LBL_WCDCONDITION.CONDITIONNUM" id="main_table1_tablebody_9" inputmode="readonly" label="Condition" width="25"/>
+							<tablecol dataattribute="answer" id="main_table1_tablebody_3" lookup="valuelist"/>
+							<tablecol dataattribute="LBL_WCDCONDITION.DESCRIPTION" id="main_table1_tablebody_8" inputmode="readonly" width="600"/>
+							<tablecol dataattribute="LBL_WCDSUBCOND.DESCRIPTION" id="main_table1_tablebody_11" inputmode="readonly" label="Option"/>
+							<tablecol dataattribute="points" id="main_table1_tablebody_4"/>
+							<tablecol dataattribute="changeby" id="main_table1_tablebody_6" inputmode="readonly"/>
+							<tablecol dataattribute="changedate" id="main_table1_tablebody_7" inputmode="readonly"/>
+							<tablecol dataattribute="LBL_WCDCONDITION.WCD_LEVEL" id="main_table1_tablebody_2" inputmode="readonly"/>
+							<tablecol dataattribute="LBL_WCDCONDITION.HASSUBCONDITION" id="main_table1_tablebody_12" inputmode="readonly"/>
+							<tablecol dataattribute="LBL_WCDSUBCOND.SUBCONDITIONNUM" id="main_table1_tablebody_10" inputmode="readonly"/>
+						</tablebody>
+					</table>
+				</tab>
+			</tabgroup>
+		</clientarea>
+	</page>
+
+	<dialog beanclass="psdi.webclient.system.beans.QbeBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<section id="searchmore_1">
+			<textbox id="searchmore_queryfield_1" inputmode="query"/>
+		</section>
+		<buttongroup id="searchmore_buttongroup">
+			<pushbutton default="true" id="searchmore_buttongroup_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="searchmore_buttongroup_2" label="Clear" mxevent="qbeclear"/>
+			<pushbutton id="searchmore_buttongroup_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.ViewBookmarksBean" id="searchbook" label="My Bookmarks" mboname="WORKORDER">
+		<table id="bookmarks_table" inputmode="readonly" selectmode="single">
+			<tablebody displayrowsperpage="20" filterable="true" id="bookmarks_table_tablebody">
+				<tablecol id="bookmarks_tablecolumn_1" mxevent="selectrecord" type="link"/>
+				<tablecol dataattribute="description" id="bookmarks_tablecolumn_2"/>
+				<tablecol filterable="false" hidden="false" id="bookmarks_tablecolumn_3" mxevent="instantdelete" mxevent_desc="Delete" mxevent_icon="btn_delete.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="bookmarks_2">
+			<pushbutton default="true" id="bookmarks_2_1" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+</presentation>

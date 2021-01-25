@@ -1,0 +1,644 @@
+<?xml version="1.0"?>
+<DataSpliceViewDocument>
+  <StorageObject Type="DataSplice.Data.DataSpliceView">
+    <View>
+      <DataSource>LocalizationPluginDataSource</DataSource>
+      <Id>
+        <Struct>
+          <Tokens>
+            <List>
+              <ListEntry Type="System.String">DataSplice Internal</ListEntry>
+              <ListEntry Type="System.String">Localization Settings</ListEntry>
+            </List>
+          </Tokens>
+        </Struct>
+      </Id>
+      <Description IsNull="true" />
+      <Options>
+        <OptionCollection>
+          <Name IsNull="true" />
+          <Options />
+        </OptionCollection>
+      </Options>
+      <Attributes>
+        <DataSpliceAttributes>
+          <Attributes>
+            <Dictionary>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">DS_ASSUME_MODIFICATIONS</_key>
+                  <_value Type="System.String">true</_value>
+                </Struct>
+              </DictionaryEntry>
+            </Dictionary>
+          </Attributes>
+        </DataSpliceAttributes>
+      </Attributes>
+      <Permissions>
+        <ObjectPermissions>
+          <Conditions>
+            <Dictionary>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="DataSplice.Data.ObjectPermission">ViewInsert</_key>
+                  <_value Type="System.String">true</_value>
+                </Struct>
+              </DictionaryEntry>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="DataSplice.Data.ObjectPermission">ViewUpdate</_key>
+                  <_value Type="System.String">${Locale} is not null</_value>
+                </Struct>
+              </DictionaryEntry>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="DataSplice.Data.ObjectPermission">ViewDelete</_key>
+                  <_value Type="System.String">${Collection} == 'Custom'</_value>
+                </Struct>
+              </DictionaryEntry>
+            </Dictionary>
+          </Conditions>
+        </ObjectPermissions>
+      </Permissions>
+      <Fields>
+        <ViewFieldCollection>
+          <Fields>
+            <List>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Auto Translate</Name>
+                  <DataType>Boolean</DataType>
+                  <DataSize>0</DataSize>
+                  <Flags>None</Flags>
+                  <Default IsNull="true" />
+                  <DisplayWidth>25</DisplayWidth>
+                  <Style IsNull="true" />
+                  <Label IsNull="true" />
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSortable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Collection</Name>
+                  <DataType>String</DataType>
+                  <DataSize>25</DataSize>
+                  <Flags>PrimaryKey</Flags>
+                  <Default>Custom</Default>
+                  <DisplayWidth>-1</DisplayWidth>
+                  <Style>Collection List</Style>
+                  <Label IsNull="true" />
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldEditable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSortable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Locale</Name>
+                  <DataType>String</DataType>
+                  <DataSize>20</DataSize>
+                  <Flags>PrimaryKey</Flags>
+                  <Default IsNull="true" />
+                  <DisplayWidth>-1</DisplayWidth>
+                  <Style>Locale List</Style>
+                  <Label IsNull="true" />
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldEditable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSortable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Context</Name>
+                  <DataType>String</DataType>
+                  <DataSize>20</DataSize>
+                  <Flags>PrimaryKey</Flags>
+                  <Default IsNull="true" />
+                  <DisplayWidth>-1</DisplayWidth>
+                  <Style IsNull="true" />
+                  <Label IsNull="true" />
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldEditable</_key>
+                              <_value Type="System.String">IsInsert()</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSortable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Default Text</Name>
+                  <DataType>String</DataType>
+                  <DataSize>200</DataSize>
+                  <Flags>PrimaryKey</Flags>
+                  <Default IsNull="true" />
+                  <DisplayWidth>250</DisplayWidth>
+                  <Style>Long Text</Style>
+                  <Label IsNull="true" />
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldEditable</_key>
+                              <_value Type="System.String">IsInsert()</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSortable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Localized Text</Name>
+                  <DataType>String</DataType>
+                  <DataSize>200</DataSize>
+                  <Flags>None</Flags>
+                  <Default IsNull="true" />
+                  <DisplayWidth>250</DisplayWidth>
+                  <Style>Long Text</Style>
+                  <Label IsNull="true" />
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldEditable</_key>
+                              <_value Type="System.String">${Locale} is not null</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSortable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+            </List>
+          </Fields>
+        </ViewFieldCollection>
+      </Fields>
+      <Styles>
+        <ValidationStyleCollection>
+          <Styles>
+            <List>
+              <ListEntry Type="DataSplice.Data.FieldValidationStyle">
+                <FieldValidationStyle>
+                  <Name>Collection List</Name>
+                  <Format IsNull="true" />
+                  <SearchFlags>Default</SearchFlags>
+                  <ValueSource Type="DataSplice.Display.ValueSource">
+                    <ValueSource>
+                      <Type>Static</Type>
+                      <Options>
+                        <OptionCollection>
+                          <Name IsNull="true" />
+                          <Options>
+                            <List>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>StaticList</Key>
+                                  <OptionType>StringArray</OptionType>
+                                  <Value Type="System.String[]">
+                                    <List>
+                                      <ListEntry Type="System.String">Core</ListEntry>
+                                      <ListEntry Type="System.String">Admin</ListEntry>
+                                      <ListEntry Type="System.String">Server</ListEntry>
+                                      <ListEntry Type="System.String">Rare</ListEntry>
+                                      <ListEntry Type="System.String">Custom</ListEntry>
+                                    </List>
+                                  </Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                            </List>
+                          </Options>
+                        </OptionCollection>
+                      </Options>
+                    </ValueSource>
+                  </ValueSource>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </FieldValidationStyle>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.FieldValidationStyle">
+                <FieldValidationStyle>
+                  <Name>Locale List</Name>
+                  <Format IsNull="true" />
+                  <SearchFlags>Default</SearchFlags>
+                  <ValueSource Type="DataSplice.Display.ValueSource">
+                    <ValueSource>
+                      <Type>Static</Type>
+                      <Options>
+                        <OptionCollection>
+                          <Name IsNull="true" />
+                          <Options>
+                            <List>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>StaticList</Key>
+                                  <OptionType>StringArray</OptionType>
+                                  <Value Type="System.String[]">
+                                    <List>
+                                      <ListEntry Type="System.String">en</ListEntry>
+                                    </List>
+                                  </Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                            </List>
+                          </Options>
+                        </OptionCollection>
+                      </Options>
+                    </ValueSource>
+                  </ValueSource>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </FieldValidationStyle>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.FieldValidationStyle">
+                <FieldValidationStyle>
+                  <Name>Long Text</Name>
+                  <Format IsNull="true" />
+                  <SearchFlags>Default</SearchFlags>
+                  <ValueSource Type="DataSplice.Display.ValueSource">
+                    <ValueSource>
+                      <Type>LongText</Type>
+                      <Options>
+                        <OptionCollection>
+                          <Name IsNull="true" />
+                          <Options />
+                        </OptionCollection>
+                      </Options>
+                    </ValueSource>
+                  </ValueSource>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </FieldValidationStyle>
+              </ListEntry>
+            </List>
+          </Styles>
+        </ValidationStyleCollection>
+      </Styles>
+      <Events>
+        <EventChainsCollection Version="2">
+          <Events>
+            <List>
+              <ListEntry Type="DataSplice.Events.EventChain">
+                <EventChain Version="2">
+                  <Identifier>
+                    <Struct>
+                      <Name>Custom</Name>
+                      <Qualifier>Update Custom Keys</Qualifier>
+                    </Struct>
+                  </Identifier>
+                  <Actions>
+                    <List>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>PluginFunctionAction</ActionType>
+                          <Condition IsNull="true" />
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description IsNull="true" />
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>FunctionProvider</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">LocalizationPlugin</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>FunctionGroup</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Default</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>FunctionName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">UpdateCustomKeys</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>Disposition</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Server</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                    </List>
+                  </Actions>
+                </EventChain>
+              </ListEntry>
+            </List>
+          </Events>
+        </EventChainsCollection>
+      </Events>
+      <UiSettings>
+        <ViewUiSettings>
+          <Actions>
+            <List>
+              <ListEntry Type="DataSplice.Display.NavigationAction">
+                <QueryNavigationAction>
+                  <Type>DisplayQuery</Type>
+                  <Name>Localized Text</Name>
+                  <Options>
+                    <OptionCollection>
+                      <Name IsNull="true" />
+                      <Options>
+                        <List>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>DisplayMode</Key>
+                              <OptionType>Text</OptionType>
+                              <Value Type="System.String">filter</Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>Query</Key>
+                              <OptionType>Query</OptionType>
+                              <Value Type="DataSplice.Data.DataSpliceQuery">
+                                <Query>
+                                  <Target>
+                                    <Struct>
+                                      <Tokens>
+                                        <List>
+                                          <ListEntry Type="System.String">DataSplice Internal</ListEntry>
+                                          <ListEntry Type="System.String">Localization Settings</ListEntry>
+                                        </List>
+                                      </Tokens>
+                                    </Struct>
+                                  </Target>
+                                  <Offset>0</Offset>
+                                  <MaxRecords>0</MaxRecords>
+                                  <Filter>
+                                    <FilterItem>
+                                      <Operator>And</Operator>
+                                      <Arguments>
+                                        <List>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Default Text</ListEntry>
+                                                  <ListEntry IsNull="true" />
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Localized Text</ListEntry>
+                                                  <ListEntry IsNull="true" />
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Locale</ListEntry>
+                                                  <ListEntry IsNull="true" />
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Collection</ListEntry>
+                                                  <ListEntry Type="System.String">Custom</ListEntry>
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                        </List>
+                                      </Arguments>
+                                    </FilterItem>
+                                  </Filter>
+                                  <Sort IsNull="true" />
+                                </Query>
+                              </Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                        </List>
+                      </Options>
+                    </OptionCollection>
+                  </Options>
+                </QueryNavigationAction>
+              </ListEntry>
+            </List>
+          </Actions>
+          <Collections>
+            <Dictionary>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">Home Screen Actions</_key>
+                  <_value Type="DataSplice.Display.NavigationActionCollection">
+                    <NavigationActionCollection>
+                      <Actions>
+                        <List>
+                          <ListEntry Type="DataSplice.Display.ActionReference">
+                            <Struct>
+                              <ActionName>Localized Text</ActionName>
+                              <Weight>1</Weight>
+                              <Condition IsNull="true" />
+                              <Enabled IsNull="true" />
+                              <Category IsNull="true" />
+                              <DisplayType>Normal</DisplayType>
+                            </Struct>
+                          </ListEntry>
+                        </List>
+                      </Actions>
+                    </NavigationActionCollection>
+                  </_value>
+                </Struct>
+              </DictionaryEntry>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">Navigation Menu Actions</_key>
+                  <_value Type="DataSplice.Display.NavigationActionCollection">
+                    <NavigationActionCollection>
+                      <Actions>
+                        <List>
+                          <ListEntry Type="DataSplice.Display.ActionReference">
+                            <Struct>
+                              <ActionName>Update Custom Keys</ActionName>
+                              <Weight>1</Weight>
+                              <Condition IsNull="true" />
+                              <Enabled IsNull="true" />
+                              <Category IsNull="true" />
+                              <DisplayType>Normal</DisplayType>
+                            </Struct>
+                          </ListEntry>
+                        </List>
+                      </Actions>
+                    </NavigationActionCollection>
+                  </_value>
+                </Struct>
+              </DictionaryEntry>
+            </Dictionary>
+          </Collections>
+        </ViewUiSettings>
+      </UiSettings>
+      <OfflineQueries>
+        <OfflineQueryCollection>
+          <Queries />
+        </OfflineQueryCollection>
+      </OfflineQueries>
+    </View>
+  </StorageObject>
+</DataSpliceViewDocument>

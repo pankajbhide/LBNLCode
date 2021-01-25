@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation beanclass="psdi.webclient.beans.common.StatefulAppBean" id="lblwrhsdtl" ismobile="false" mboname="LBL_WRHSFEEDHDR" resultstableid="results_showlist" version="6.2.6">
+	<page id="mainrec" scroll="false">
+		<include controltoclone="pageHeader" id="INCLUDE-pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" label="Warehouse Recharge Details" mboname="LBL_WRHSFEEDHDR" selectmode="multiple">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="feeder_id" filterable="false" id="results_showlist_tablebody_1" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+							<tablecol dataattribute="feeder_id" id="results_showlist_tablebody_2" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="financialperiod" id="results_showlist_tablebody_3" sortable="false"/>
+							<tablecol dataattribute="periodstart" id="results_showlist_tablebody_4" sortable="false"/>
+							<tablecol dataattribute="periodend" id="results_showlist_tablebody_5" sortable="false"/>
+							<tablecol dataattribute="orgid" id="results_showlist_tablebody_6" sortable="false"/>
+							<tablecol dataattribute="siteid" id="results_showlist_tablebody_7" sortable="false"/>
+							<tablecol filterable="false" id="results_bookmark" mxevent="BOOKMARK" mxevent_desc="Add to Bookmarks" mxevent_icon="btn_addtobookmarks.gif" sortable="false" type="event"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="Warehouse Recharge Details" type="insert">
+					<section border="true" id="main_grid1">
+						<defaultvalue dataattribute="SITEID" defaulttype="INSERT" id="main_section_1_def1" value="FAC"/>
+						<defaultvalue dataattribute="ORGID" defaulttype="INSERT" id="main_section_1_def2" value="LBNL"/>
+						<sectionrow id="main_grid1_row1">
+							<sectioncol id="main_grid1_row1_col1">
+								<section id="main_grid1_row1_col1_1">
+									<textbox dataattribute="FEEDER_ID" id="1429725138915" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid1_row1_col2">
+								<section id="main_grid1_row1_col2_2">
+									<textbox dataattribute="financialperiod" id="main_grid1_2" inputmode="READONLY" label="Financial Period"/>
+									<textbox dataattribute="periodstart" id="main_grid1_3" inputmode="READONLY" label="Start Date"/>
+									<textbox dataattribute="periodend" id="main_grid1_4" inputmode="READONLY" label="End Date"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<tabgroup id="main_wrhsrecharge">
+						<tab id="main_wrhsrecharge_dtl" label="Warehouse Recharge Details">
+							<table id="main_wrhsrecharge_dtl_table" label="Recharge Details" orderby="lbl_org_level_1" relationship="LBL_WRSHDR2DTL">
+								<defaultvalue dataattribute="orgid" defaulttype="INSERT" fromattribute="orgid" fromdatasrc="MAINRECORD" id="lbl_table_def1"/>
+								<defaultvalue dataattribute="siteid" defaulttype="INSERT" fromattribute="siteid" fromdatasrc="MAINRECORD" id="lbl_table_def2"/>
+								<defaultvalue dataattribute="financialperiod" defaulttype="INSERT" fromattribute="financialperiod" fromdatasrc="MAINRECORD" id="lbl_table_def3"/>
+								<defaultvalue dataattribute="feeder_id" defaulttype="INSERT" fromattribute="feeder_id" fromdatasrc="MAINRECORD" id="lbl_table_def4"/>
+								<tablebody displayrowsperpage="10" filterable="true" id="main_wrhsrecharge_dtl_tablebody">
+									<tablecol filterable="false" id="main_wrhsrecharge_dtl_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+									<tablecol dataattribute="lbl_org_level_1" id="main_wrhsrecharge_dtl_tablebody_2" label="Division"/>
+									<tablecol dataattribute="codetag" id="main_wrhsrecharge_dtl_tablebody_3" label="Code Tag"/>
+									<tablecol dataattribute="proj_act_id" id="main_wrhsrecharge_dtl_tablebody_4" label="Project ID"/>
+									<tablecol dataattribute="description" id="main_wrhsrecharge_dtl_tablebody_6" label="Description"/>
+									<tablecol dataattribute="quantity" id="main_wrhsrecharge_dtl_tablebody_7" label="Quantity"/>
+									<tablecol dataattribute="sq_ft_used" id="main_wrhsrecharge_dtl_tablebody_8" label="Sq/ft Used"/>
+									<tablecol dataattribute="doe_number" id="main_wrhsrecharge_dtl_tablebody_10" label="DOE#"/>
+									<tablecol dataattribute="consignorid" id="main_wrhsrecharge_dtl_tablebody_11" label="Consignor Id"/>
+									<tablecol dataattribute="ownerid" id="main_wrhsrecharge_dtl_tablebody_12" label="Owner Id"/>
+									<tablecol dataattribute="VAULT_NUMBER" id="main_wrhsrecharge_dtl_tablebody_14" label="Vault Number"/>
+									<tablecol dataattribute="PROJECT_ID" id="new_tablecol" inputmode="READONLY"/>
+									<tablecol filterable="false" id="main_wrhsrecharge_dtl_tablebody_100" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+								</tablebody>
+								<tabledetails id="main_wrhs_dtl_table_details">
+									<section id="main_wrhs_dtl_table_details_s1" label="Details">
+										<sectionrow id="main_wrhs_dtl_table_details_s1_r1">
+											<sectioncol id="main_wrhs_dtl_table_details_s1_r1_c1">
+												<section id="main_wrhs_dtl_table_details_s1_r1_c1_s1">
+													<textbox dataattribute="lbl_org_level_1" id="main_wrhs_dtl_table_details_s1_r1_c1_s1_1" label="Division" lookup="lbl_org_1"/>
+													<textbox dataattribute="codetag" id="main_wrhs_dtl_table_details_s1_r2_c1_s1_1" label="Code Tag"/>
+													<textbox dataattribute="doe_number" id="main_wrhs_dtl_table_details_s1_r3_c1_s1_1" label="DOE#"/>
+													<textbox dataattribute="container_number" id="main_wrhs_dtl_table_details_s1_r4_c1_s1_1" label="Container number"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="main_wrhs_dtl_table_details_s1_r1_c2">
+												<section id="main_wrhs_dtl_table_details_s1_r1_c2_s2">
+													<textbox dataattribute="description" id="main_wrhs_dtl_table_details_s1_r1_c2_s2_1" label="Description"/>
+													<multiparttextbox dataattribute="proj_act_id" descdataattribute="LBL_WRSDTL2COA.ACCOUNTNAME" descinputmode="READONLY" id="main_wrhs_dtl_table_details_s1_r2_c2_s2_1" lookup="LBLPROJACTGLNAVIGATOR"/>
+													<textbox dataattribute="quantity" id="main_wrhs_dtl_table_details_s1_r3_c2_s2_1" label="Quantity"/>
+													<textbox dataattribute="sq_ft_used" id="new_textbox" label="Sq/Ft Used"/>
+													<textbox dataattribute="vault_number" id="new_textbox100" label="Vault Number"/>
+													<textbox dataattribute="comments" id="main_wrhs_dtl_table_details_s1_r4_c2_s2_1" label="Comments"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="main_wrhs_dtl_table_details_s1_r1_c3">
+												<section id="main_wrhs_dtl_table_details_s1_r1_c3_s1">
+													<textbox dataattribute="date_received" id="main_wrhs_dtl_table_details_s1_r1_c3_s1_1" label="Date Received" lookup="datelookup"/>
+													<textbox dataattribute="Location" id="main_wrhs_dtl_table_details_s1_r2_c3_s1_1" label="Location"/>
+													<textbox dataattribute="unitofmeasure" id="main_wrhs_dtl_table_details_s1_r4_c3_s1_1" lookup="LBL_UOM"/>
+													<textbox applink="person" dataattribute="CONSIGNORID" id="main_wrhs_dtl_table_details_s1_r3_c3_s1_1" label="Consignor" lookup="person" menutype="normal"/>
+													<textbox applink="person" dataattribute="ownerid" id="main_wrhs_dtl_table_details_s1_r3_c5_s1_1" label="Owner" lookup="person" menutype="normal"/>
+													<textbox dataattribute="category" id="main_wrhs_dtl_table_details_s1_r3_c4_s1_1" label="Category"/>
+													<blankline id="new_blankline"/>
+													<textbox dataattribute="date_returned" id="main_wrhs_dtl_table_details_s1_rr2_c1_s1_1" lookup="datelookup"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+										<sectionrow id="main_wrhs_dtl_table_details_s1_rr2">
+											<sectioncol id="main_wrhs_dtl_table_details_s1_rr2_c1"/>
+										</sectionrow>
+									</section>
+								</tabledetails>
+								<buttongroup id="main_wrhsrecharge_dtl_table_2">
+									<pushbutton default="true" id="main_wrhsrecharge_dtl_table_2_pb1" label="New Row" mxevent="addrow"/>
+								</buttongroup>
+							</table>
+						</tab>
+					</tabgroup>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include controltoclone="pageFooter" id="INCLUDE-pageFooter"/>
+	</page>
+	<configurationblock id="datastore_configurationblock">
+	</configurationblock>
+</presentation>

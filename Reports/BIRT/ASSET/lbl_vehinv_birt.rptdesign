@@ -1,0 +1,1824 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">Copyright (c) 2006 &lt;&lt;Your Company Name here>></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.3.1.v201309091055 Build &lt;4.3.1.v20130918-1142></property>
+    <html-property name="description">This template will create a report with one or more subreports, each having different data fields.</html-property>
+    <simple-property-list name="includeResource">
+        <value>asset</value>
+    </simple-property-list>
+    <property name="units">in</property>
+    <method name="initialize"><![CDATA[importPackage(Packages.com.ibm.tivoli.maximo.report.script);
+
+mxReportScriptContext = MXReportScriptContext.initialize(reportContext);
+
+//mxReportScriptContext.setDefaultLogLevel("DEBUG");
+//mxReportScriptContext.setDefaultLogFile("C:/temp/lbl_vehinv_birt.log");
+
+var gstrWhereClause = new String(); 
+var gstrThreeFeilds = new String(); 
+var gstrVehicleType = new String();
+
+gstrVehicleType = params["parmVehicleType"].replace("=" , "")
+
+if(gstrVehicleType == "GSA"){
+
+		gstrThreeFeilds+=" ('Card #') as colLabel1, "
+						+" ('Fuel') as colLabel2, "
+						+" ('Color') as colLabel3, "
+						+" (a.serialnum) as colData1, "
+						+" (select alnvalue from assetspec where assetattrid = 'FL-FUEL' and assetnum = a.assetnum) colData2, "
+						+" (select alnvalue from assetspec where assetattrid = 'FL-COLOR' and assetnum = a.assetnum) colData3, " 						
+		
+
+        gstrWhereClause+=" and UPPER(b.vehicle_type) not like 'NON%' "
+						+" and a.assetnum not like '0%' "
+						+" and a.assetnum like 'G%' "
+
+}else if(gstrVehicleType == "LOV"){
+
+		gstrThreeFeilds+=" ('DOE #') as colLabel1, "
+						+" ('Color') as colLabel2, "
+						+" ('bogus') as colLabel3, "
+						+" (a.assettag) as colData1, "
+						+" (select alnvalue from assetspec where assetattrid = 'FL-COLOR' and assetnum = a.assetnum) colData2, "
+						+" ('bogus') colData3, " 						
+		
+
+		gstrWhereClause+=" and   UPPER(b.vehicle_type) not like 'NON%' "
+						+" and a.assetnum not like '0%' "
+						+" and a.assetnum like 'E%' "
+
+}else if(gstrVehicleType == "NON"){
+
+		gstrThreeFeilds+=" ('Card #') as colLabel1, "
+						+" ('DOE #') as colLabel2, "
+						+" ('bogus') as colLabel3, "
+						+" (a.serialnum) as colData1, "
+						+" (a.assettag) as colData2, "
+						+" ('bogus') colData3, " 
+
+		gstrWhereClause+=" and  ( UPPER(b.vehicle_type)  like 'NON%' "
+						+" or  a.assetnum  like '0%') "
+						
+
+}]]></method>
+    <method name="afterFactory"><![CDATA[MXReportScriptContext.close();]]></method>
+    <property name="theme">MaximoSystemLibrary.maximoTheme</property>
+    <property name="layoutPreference">auto layout</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">MaximoSystemLibrary.rptlibrary</property>
+            <property name="namespace">MaximoSystemLibrary</property>
+        </structure>
+        <structure>
+            <property name="fileName">lbnlreportlibrary.rptlibrary</property>
+            <property name="namespace">lbnlreportlibrary</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="where" id="25">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1=1</value>
+            </simple-property-list>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="appname" id="731">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramdelimiter" id="733">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramstring" id="732">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="parmVehicleType" id="2483">
+            <text-property name="promptText">Vehicle Type</text-property>
+            <property name="valueType">static</property>
+            <property name="sortBy">label</property>
+            <property name="sortDirection">asc</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="parmSiteid" id="537">
+            <text-property name="promptText">Site</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">=FAC</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="parmOrgid" id="3164">
+            <text-property name="promptText">Org</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">=LBNL</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <script-data-source name="maximoDataSource" id="64" extends="MaximoSystemLibrary.maximoDataSource"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="dataSet" id="1244">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">assetnum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">year</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">name1</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">VIN</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">parking_stall</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">category</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">glaccount</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">reading_date</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">model</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">vehicle_type</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">fuel_code</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">location</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">INSTALLDATE</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">priority</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">lastreading</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">report_type</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">colLabel1</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">colLabel2</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">colLabel3</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">colData1</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">colData2</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">22</property>
+                    <property name="name">colData3</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">23</property>
+                    <property name="name">operator</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">24</property>
+                    <property name="name">vehdriver</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">25</property>
+                    <property name="name">fleet_group</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">26</property>
+                    <property name="name">modifications</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">assetnum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">usage</property>
+                </structure>
+                <structure>
+                    <property name="columnName">parent</property>
+                </structure>
+                <structure>
+                    <property name="columnName">parent_description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">assettype</property>
+                </structure>
+                <structure>
+                    <property name="columnName">sourceassetnum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">targetassetnum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">location_description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reading_date</property>
+                </structure>
+                <structure>
+                    <property name="columnName">serial_date</property>
+                </structure>
+                <structure>
+                    <property name="columnName">year</property>
+                </structure>
+                <structure>
+                    <property name="columnName">name1</property>
+                </structure>
+                <structure>
+                    <property name="columnName">VIN</property>
+                </structure>
+                <structure>
+                    <property name="columnName">parking_stall</property>
+                </structure>
+                <structure>
+                    <property name="columnName">category</property>
+                </structure>
+                <structure>
+                    <property name="columnName">glaccount</property>
+                </structure>
+                <structure>
+                    <property name="columnName">assettag</property>
+                </structure>
+                <structure>
+                    <property name="columnName">vehicle_type</property>
+                </structure>
+                <structure>
+                    <property name="columnName">fuel_code</property>
+                </structure>
+                <structure>
+                    <property name="columnName">location</property>
+                </structure>
+                <structure>
+                    <property name="columnName">INSTALLDATE</property>
+                </structure>
+                <structure>
+                    <property name="columnName">priority</property>
+                </structure>
+                <structure>
+                    <property name="columnName">color</property>
+                </structure>
+                <structure>
+                    <property name="columnName">vehdriver</property>
+                </structure>
+                <structure>
+                    <property name="columnName">vehicle_class</property>
+                </structure>
+                <structure>
+                    <property name="columnName">model</property>
+                </structure>
+                <structure>
+                    <property name="columnName">report_type</property>
+                </structure>
+                <structure>
+                    <property name="columnName">colLabel1</property>
+                </structure>
+                <structure>
+                    <property name="columnName">colLabel2</property>
+                </structure>
+                <structure>
+                    <property name="columnName">colLabel3</property>
+                </structure>
+                <structure>
+                    <property name="columnName">colData1</property>
+                </structure>
+                <structure>
+                    <property name="columnName">colData2</property>
+                </structure>
+                <structure>
+                    <property name="columnName">colData3</property>
+                </structure>
+                <structure>
+                    <property name="columnName">operator</property>
+                </structure>
+                <structure>
+                    <property name="columnName">driver</property>
+                </structure>
+                <structure>
+                    <property name="columnName">fleet_group</property>
+                </structure>
+                <structure>
+                    <property name="columnName">modifications</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">assetnum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">year</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">name1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">VIN</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">parking_stall</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">category</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">glaccount</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">reading_date</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">model</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">vehicle_type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">fuel_code</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">location</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">INSTALLDATE</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">priority</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">lastreading</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">report_type</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">colLabel1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">colLabel2</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">colLabel3</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">colData1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">colData2</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">colData3</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
+                        <property name="name">operator</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">24</property>
+                        <property name="name">vehdriver</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">25</property>
+                        <property name="name">fleet_group</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">26</property>
+                        <property name="name">modifications</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+
+var sqlText = "";
+	
+sqlText += "select a.assetnum, b.year, "
++" initcap(substr(d.name, instr(d.name, 'FLEET:') * 7,4)) as name1, "
++" b.vin, b.parking_stall, "
++" decode(b.category, '1', 'ME', '2', 'D', '3', 'CV', '4', 'SP', 'NA') category, "
++" nvl(c.displayname,'not defined') operator, a.glaccount, "
++" to_char((select max(lastreadingdate) from assetmeter where assetnum = a.assetnum), 'MM/DD/YYYY') as readingdate, "
++" b.vehicle_class, b.model, (select displayname from person where person.personid = b.driver) vehdriver, b.fleet_group, b.modifications, "
+
++ gstrThreeFeilds
+
++" nvl(b.vehicle_type,'Not Defined') vehicle_type, b.fuel_code, "
++" nvl(a.location,'Not Defined') location, to_char(a.installdate,'MM/DD/YYYY') installdate, "
++" decode(a.priority, 3, 'essential', 2, 'special', 1,'discr.', 'undefined') priority, "
++" (select lastreading from assetmeter where assetmeter.metername = 'FLEET' and assetmeter.assetnum = a.assetnum and metername = 'FLEET' "
++" and assetmeter.lastreadingdate = (select  MAX( lastreadingdate) from assetmeter where assetmeter.assetnum = a.assetnum and metername = 'FLEET')) as lastreading "
++" from maximo.asset a, maximo.lbl_vehiclespec b, maximo.person c, maximo.companies d "
++" where  a.siteid=b.siteid "
++" and   a.assetnum=b.assetnum "
++" and   a.manufacturer = d.company "
++" and   b.operator=c.personid(+) "
++" and   a.assetnum = (select assetnum from assetmeter where metername = 'FLEET' and assetnum = a.assetnum) "
++" and   b.vehicle_class is not null "
++" and   a.isrunning =1 "
++" and a.siteid = '" + params["parmSiteid"].replace("=" , "") + "' "
++" and a.orgid = '" + params["parmOrgid"].replace("=" , "") + "' " 
+
++ gstrWhereClause
+
++" and  a.assetnum != 'LABOR' "
++" order by a.assetnum "
+; 
+
+
+
+
+
+maximoDataSet.setQuery(sqlText);]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+row["assetnum"] = maximoDataSet.getString("assetnum");
+row["year"] = maximoDataSet.getString("year");
+row["name1"] = maximoDataSet.getString("name1");
+row["VIN"] = maximoDataSet.getString("vin");
+row["parking_stall"] = maximoDataSet.getString("parking_stall");
+row["category"] = maximoDataSet.getString("category");
+row["operator"] = maximoDataSet.getString("operator");
+row["glaccount"] = maximoDataSet.getString("glaccount");
+row["reading_date"] = maximoDataSet.getString("readingdate");
+row["vehicle_class"] = maximoDataSet.getString("vehicle_class");
+row["model"] = maximoDataSet.getString("model");
+row["vehicle_type"] = maximoDataSet.getString("vehicle_type");
+row["vehdriver"] = maximoDataSet.getString("vehdriver");
+row["fleet_group"] = maximoDataSet.getString("fleet_group");
+row["modifications"] = maximoDataSet.getString("modifications");
+row["location"] = maximoDataSet.getString("location");
+//if(maximoDataSet.getString("INSTALLDATE") != null){
+row["installdate"] = maximoDataSet.getString("installdate");
+//}
+row["priority"] = maximoDataSet.getString("priority");
+row["lastreading"] = maximoDataSet.getString("lastreading");
+row["report_type"] = gstrVehicleType;
+
+row["colLabel1"] = maximoDataSet.getString("colLabel1");
+row["colLabel2"] = maximoDataSet.getString("colLabel2");
+row["colLabel3"] = maximoDataSet.getString("colLabel3");
+row["colData1"] = maximoDataSet.getString("colData1");
+row["colData2"] = maximoDataSet.getString("colData2");
+row["colData3"] = maximoDataSet.getString("colData3");
+
+
+//row["assettag"] = maximoDataSet.getString("assettag");
+//row["fuel"] = maximoDataSet.getString("fuel_code");
+//row["serialnum"] = maximoDataSet.getString("serialnum");
+//row["color"] = maximoDataSet.getString("color");
+
+return (true);]]></method>
+        </script-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="LandscapeWithoutLogo" id="3185" extends="lbnlreportlibrary.LandscapeWithoutLogo">
+            <property name="leftMargin">0.25in</property>
+            <property name="rightMargin">0.25in</property>
+            <overridden-values>
+                <ref-entry baseId="32" name="NewGrid21" id="32"/>
+                <ref-entry baseId="33" id="33"/>
+                <ref-entry baseId="34" id="34"/>
+                <ref-entry baseId="35" id="35"/>
+                <ref-entry baseId="36" id="36"/>
+                <ref-entry baseId="37" id="37"/>
+                <ref-entry baseId="38" name="NewImage2" id="38"/>
+                <ref-entry baseId="39" name="NewGrid3" id="39"/>
+                <ref-entry baseId="40" id="40"/>
+                <ref-entry baseId="41" id="41"/>
+                <ref-entry baseId="42" id="42"/>
+                <ref-entry baseId="43" id="43"/>
+                <ref-entry baseId="44" name="NewText2" id="44"/>
+                <ref-entry baseId="45" id="45"/>
+                <ref-entry baseId="46" name="NewGrid11" id="46"/>
+                <ref-entry baseId="47" id="3186"/>
+                <ref-entry baseId="48" id="48"/>
+                <ref-entry baseId="49" id="49"/>
+                <ref-entry baseId="50" id="50"/>
+                <ref-entry baseId="51" id="51"/>
+                <ref-entry baseId="52" name="NewAutoText2" id="52"/>
+                <ref-entry baseId="53" id="53"/>
+                <ref-entry baseId="54" name="NewText11" id="54"/>
+                <ref-entry baseId="55" id="55"/>
+                <ref-entry baseId="56" name="NewAutoText11" id="56"/>
+            </overridden-values>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="2284">
+            <property name="masterPage">maximoLandscape</property>
+            <property name="pageBreakAfter">avoid</property>
+            <property name="pageBreakBefore">avoid</property>
+            <property name="pageBreakInside">avoid</property>
+            <property name="canShrink">true</property>
+            <property name="width">100%</property>
+            <property name="dataSet">dataSet</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">assetnum</property>
+                    <text-property name="displayName">assetnum</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["assetnum"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">year</property>
+                    <text-property name="displayName">year</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["year"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">name1</property>
+                    <text-property name="displayName">name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["name1"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">VIN</property>
+                    <text-property name="displayName">VIN</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["VIN"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">parking_stall</property>
+                    <text-property name="displayName">park</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["parking_stall"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">category</property>
+                    <text-property name="displayName">cat</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["category"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">operator</property>
+                    <text-property name="displayName">operator</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["operator"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">glaccount</property>
+                    <text-property name="displayName">glaccount12C</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["glaccount"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">reading_date</property>
+                    <text-property name="displayName">read_date</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reading_date"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">vehicle_class</property>
+                    <text-property name="displayName">vehicle_class</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["vehicle_class"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">model</property>
+                    <text-property name="displayName">model</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["model"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">vehicle_type</property>
+                    <text-property name="displayName">veh_type</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["vehicle_type"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">fuel_code</property>
+                    <text-property name="displayName">fuel</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["fuel_code"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">location</property>
+                    <text-property name="displayName">loc</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["location"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">INSTALLDATE</property>
+                    <text-property name="displayName">INSTALLDATE</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["INSTALLDATE"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">priority</property>
+                    <text-property name="displayName">priority</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["priority"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">color</property>
+                    <text-property name="displayName">color</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["color"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">lastreading</property>
+                    <text-property name="displayName">miles</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["lastreading"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Date</property>
+                    <expression name="expression" type="javascript">BirtDateTime.now()</expression>
+                    <property name="dataType">date</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">count</text-property>
+                    <expression name="expression" type="javascript">Total.count()</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">report_type</property>
+                    <text-property name="displayName">report_type</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["report_type"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Total Label</property>
+                    <text-property name="displayName">Total Label:</text-property>
+                    <expression name="expression" type="javascript">if(row["report_type"] == "GSA"){&#13;
+"Total GSA:  ";}else if(row["report_type"] == "LOV"){&#13;
+"Total OWN:  ";}else if(row["report_type"] == "NON"){&#13;
+"Total Non-Vehicle:  ";}else{" re-enter Parameters ";}</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">colLabel1</property>
+                    <text-property name="displayName">Label1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["colLabel1"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">colData1</property>
+                    <text-property name="displayName">Data1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["colData1"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">colLabel2</property>
+                    <text-property name="displayName">Label2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["colLabel2"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">colData3</property>
+                    <text-property name="displayName">Data3</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["colData3"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">colData2</property>
+                    <text-property name="displayName">Data2</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["colData2"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">colLabel3</property>
+                    <text-property name="displayName">Label3</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["colLabel3"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">driver</property>
+                    <text-property name="displayName">driver</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["driver"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">fleet_group</property>
+                    <text-property name="displayName">fleet_group</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["fleet_group"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">modifications</property>
+                    <text-property name="displayName">modifications</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["modifications"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">vehdriver</property>
+                    <text-property name="displayName">vehdriver</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["vehdriver"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">500</property>
+            <column id="2388">
+                <property name="width">0.7083333333333334in</property>
+            </column>
+            <column id="2389">
+                <property name="width">0.5in</property>
+            </column>
+            <column id="2390">
+                <property name="width">0.5in</property>
+            </column>
+            <column id="2391">
+                <property name="width">1.45in</property>
+            </column>
+            <column id="2411">
+                <property name="width">0.6333333333333333in</property>
+            </column>
+            <column id="2415"/>
+            <column id="3171"/>
+            <column id="2419">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">if(row["colLabel3"] == "bogus")&#13;
+{true;}else&#13;
+{false;}</expression>
+                    </structure>
+                </list-property>
+            </column>
+            <column id="2427">
+                <property name="width">0.6083333333333333in</property>
+            </column>
+            <column id="2431"/>
+            <column id="2435">
+                <property name="width">0.7in</property>
+            </column>
+            <column id="2439">
+                <property name="width">0.7166666666666667in</property>
+            </column>
+            <column id="2443">
+                <property name="width">1.033in</property>
+            </column>
+            <column id="3198">
+                <property name="width">1.033in</property>
+            </column>
+            <column id="3205">
+                <property name="width">1.033in</property>
+            </column>
+            <column id="3211">
+                <property name="width">1.033in</property>
+            </column>
+            <column id="2392"/>
+            <column id="2394"/>
+            <column id="2395">
+                <property name="width">0.9in</property>
+            </column>
+            <header>
+                <row id="2541">
+                    <cell id="2542">
+                        <property name="colSpan">19</property>
+                        <property name="rowSpan">1</property>
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <grid id="2575">
+                            <column id="2576"/>
+                            <column id="2577"/>
+                            <column id="2578">
+                                <property name="width">33%</property>
+                            </column>
+                            <row id="2579">
+                                <cell id="2580">
+                                    <label id="2478">
+                                        <property name="fontWeight">bold</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Fleet Operations: EQUIPMNT</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="2581">
+                                    <label id="2480">
+                                        <property name="fontSize">12pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <text-property name="text">Lawrence Berkeley Laboratory</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="2582">
+                                    <data id="3184">
+                                        <property name="resultSetColumn">report_type</property>
+                                    </data>
+                                </cell>
+                            </row>
+                            <row id="2583">
+                                <cell id="2584">
+                                    <label id="2479">
+                                        <property name="fontWeight">bold</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Report: lbl_vehinv_birt</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="2585">
+                                    <label id="2481">
+                                        <property name="fontWeight">bold</property>
+                                        <property name="display">inline</property>
+                                        <text-property name="text">Vehicle Inventory Report As On </text-property>
+                                    </label>
+                                    <data id="2482">
+                                        <property name="fontWeight">bold</property>
+                                        <structure name="dateTimeFormat">
+                                            <property name="category">Short Date</property>
+                                            <property name="pattern">Short Date</property>
+                                        </structure>
+                                        <property name="display">inline</property>
+                                        <property name="resultSetColumn">Date</property>
+                                    </data>
+                                </cell>
+                                <cell id="2586"/>
+                            </row>
+                        </grid>
+                    </cell>
+                </row>
+                <row id="2524">
+                    <cell id="2525">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2526">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2527">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2528">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2529">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2530">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="3167">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2531">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2533">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2534">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2535">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2536">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2537">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="3194">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="3201">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="3207">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2538">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2539">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2540">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                </row>
+                <row id="2285">
+                    <property name="masterPage">maximoLandscape</property>
+                    <cell id="2286">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="2287">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">License#</text-property>
+                        </label>
+                    </cell>
+                    <cell id="2288">
+                        <property name="colSpan">2</property>
+                        <property name="rowSpan">1</property>
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="2289">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Manufact </text-property>
+                        </label>
+                        <label id="2977">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">"Verdana", "Arial", sans-serif</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">#000000</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">inline</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">true</property>
+                            <property name="overflow">hidden</property>
+                            <text-property name="text">Year</text-property>
+                        </label>
+                        <label id="3155">
+                            <property name="display">inline</property>
+                            <text-property name="text">  </text-property>
+                        </label>
+                        <label id="2291">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">right</property>
+                            <property name="display">inline</property>
+                            <text-property name="text">Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="2292">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="2293">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">VIN</text-property>
+                        </label>
+                    </cell>
+                    <cell id="2408">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="2311">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Model</text-property>
+                        </label>
+                    </cell>
+                    <cell id="2412">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <data id="3177">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">"Verdana", "Arial", sans-serif</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">#000000</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">true</property>
+                            <property name="overflow">hidden</property>
+                            <property name="resultSetColumn">colLabel1</property>
+                        </data>
+                    </cell>
+                    <cell id="3168">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <data id="3179">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">"Verdana", "Arial", sans-serif</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">#000000</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">true</property>
+                            <property name="overflow">hidden</property>
+                            <property name="resultSetColumn">colLabel2</property>
+                        </data>
+                    </cell>
+                    <cell id="2416">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <data id="3183">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">"Verdana", "Arial", sans-serif</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">#000000</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">true</property>
+                            <property name="overflow">hidden</property>
+                            <property name="resultSetColumn">colLabel3</property>
+                        </data>
+                    </cell>
+                    <cell id="2424">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="2313">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Vehicle Type</text-property>
+                        </label>
+                    </cell>
+                    <cell id="2428">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="2297">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Div</text-property>
+                        </label>
+                    </cell>
+                    <cell id="2432">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="2325">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">Mileage</text-property>
+                        </label>
+                    </cell>
+                    <cell id="2436">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="2303">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Reading Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="2440">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="2299">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Custodian</text-property>
+                        </label>
+                    </cell>
+                    <cell id="3195">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="3199">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Driver</text-property>
+                        </label>
+                    </cell>
+                    <cell id="3202">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="3212">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Group	</text-property>
+                        </label>
+                    </cell>
+                    <cell id="3208">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="3213">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Modification</text-property>
+                        </label>
+                    </cell>
+                    <cell id="2294">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="2295">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Bldg</text-property>
+                        </label>
+                    </cell>
+                    <cell id="2298">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="2317">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Catag</text-property>
+                        </label>
+                    </cell>
+                    <cell id="2300">
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <label id="2301">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Account</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="2326">
+                    <property name="fontSize">9pt</property>
+                    <property name="pageBreakAfter">avoid</property>
+                    <property name="height">0.35in</property>
+                    <list-property name="highlightRules">
+                        <structure>
+                            <property name="operator">eq</property>
+                            <property name="backgroundColor">#EDEDED</property>
+                            <property name="fontSize">10pt</property>
+                            <expression name="testExpr" type="javascript">row[0] % 2</expression>
+                            <simple-property-list name="value1">
+                                <value type="javascript">0</value>
+                            </simple-property-list>
+                        </structure>
+                    </list-property>
+                    <cell id="2327">
+                        <property name="fontSize">10pt</property>
+                        <data id="2328">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">assetnum</property>
+                        </data>
+                    </cell>
+                    <cell id="2329">
+                        <property name="fontSize">10pt</property>
+                        <data id="2330">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">year</property>
+                        </data>
+                    </cell>
+                    <cell id="2331">
+                        <property name="fontSize">10pt</property>
+                        <data id="2332">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">name1</property>
+                        </data>
+                    </cell>
+                    <cell id="2333">
+                        <property name="fontSize">10pt</property>
+                        <data id="2334">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">VIN</property>
+                        </data>
+                    </cell>
+                    <cell id="2409">
+                        <property name="fontSize">10pt</property>
+                        <data id="2352">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">model</property>
+                        </data>
+                    </cell>
+                    <cell id="2413">
+                        <property name="fontSize">10pt</property>
+                        <data id="3178">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">"Verdana", "Arial", sans-serif</property>
+                            <property name="fontSize">8pt</property>
+                            <property name="fontWeight">normal</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">#000000</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">true</property>
+                            <property name="overflow">hidden</property>
+                            <property name="resultSetColumn">colData1</property>
+                        </data>
+                    </cell>
+                    <cell id="3169">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <data id="3181">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">"Verdana", "Arial", sans-serif</property>
+                            <property name="fontSize">8pt</property>
+                            <property name="fontWeight">normal</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">#000000</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">true</property>
+                            <property name="overflow">hidden</property>
+                            <property name="resultSetColumn">colData2</property>
+                        </data>
+                    </cell>
+                    <cell id="2417">
+                        <property name="fontSize">10pt</property>
+                        <data id="3182">
+                            <property name="backgroundAttachment">scroll</property>
+                            <property name="backgroundPositionX">0%</property>
+                            <property name="backgroundPositionY">0%</property>
+                            <property name="backgroundRepeat">repeat</property>
+                            <property name="fontFamily">"Verdana", "Arial", sans-serif</property>
+                            <property name="fontSize">8pt</property>
+                            <property name="fontWeight">normal</property>
+                            <property name="fontStyle">normal</property>
+                            <property name="fontVariant">normal</property>
+                            <property name="color">#000000</property>
+                            <property name="textLineThrough">none</property>
+                            <property name="textOverline">none</property>
+                            <property name="textUnderline">none</property>
+                            <property name="borderBottomColor">black</property>
+                            <property name="borderBottomStyle">none</property>
+                            <property name="borderBottomWidth">medium</property>
+                            <property name="borderLeftColor">black</property>
+                            <property name="borderLeftStyle">none</property>
+                            <property name="borderLeftWidth">medium</property>
+                            <property name="borderRightColor">black</property>
+                            <property name="borderRightStyle">none</property>
+                            <property name="borderRightWidth">medium</property>
+                            <property name="borderTopColor">black</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">medium</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="marginLeft">0pt</property>
+                            <property name="marginBottom">0pt</property>
+                            <property name="marginRight">0pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingLeft">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="paddingRight">1pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="letterSpacing">normal</property>
+                            <property name="lineHeight">normal</property>
+                            <property name="orphans">2</property>
+                            <property name="textTransform">none</property>
+                            <property name="whiteSpace">normal</property>
+                            <property name="widows">2</property>
+                            <property name="wordSpacing">normal</property>
+                            <property name="display">block</property>
+                            <property name="pageBreakAfter">auto</property>
+                            <property name="pageBreakBefore">auto</property>
+                            <property name="pageBreakInside">auto</property>
+                            <property name="showIfBlank">false</property>
+                            <property name="canShrink">true</property>
+                            <property name="overflow">hidden</property>
+                            <property name="resultSetColumn">colData3</property>
+                        </data>
+                    </cell>
+                    <cell id="2425">
+                        <property name="fontSize">10pt</property>
+                        <data id="2354">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">vehicle_type</property>
+                        </data>
+                    </cell>
+                    <cell id="2429">
+                        <property name="fontSize">10pt</property>
+                        <data id="2358">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">location</property>
+                        </data>
+                    </cell>
+                    <cell id="2433">
+                        <property name="fontSize">10pt</property>
+                        <data id="2366">
+                            <property name="fontSize">8pt</property>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">lastreading</property>
+                        </data>
+                    </cell>
+                    <cell id="2437">
+                        <property name="fontSize">10pt</property>
+                        <data id="2344">
+                            <property name="fontSize">8pt</property>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">reading_date</property>
+                        </data>
+                    </cell>
+                    <cell id="2441">
+                        <property name="fontSize">10pt</property>
+                        <data id="2340">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">operator</property>
+                        </data>
+                    </cell>
+                    <cell id="3196">
+                        <property name="fontSize">10pt</property>
+                        <data id="3217">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">vehdriver</property>
+                        </data>
+                    </cell>
+                    <cell id="3203">
+                        <property name="fontSize">10pt</property>
+                        <data id="3215">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">fleet_group</property>
+                        </data>
+                    </cell>
+                    <cell id="3209">
+                        <property name="fontSize">10pt</property>
+                        <data id="3216">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">modifications</property>
+                        </data>
+                    </cell>
+                    <cell id="2335">
+                        <property name="fontSize">10pt</property>
+                        <data id="2336">
+                            <property name="fontSize">8pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">parking_stall</property>
+                        </data>
+                    </cell>
+                    <cell id="2339">
+                        <property name="fontSize">10pt</property>
+                        <data id="2338">
+                            <property name="fontSize">8pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">category</property>
+                        </data>
+                    </cell>
+                    <cell id="2341">
+                        <property name="fontSize">10pt</property>
+                        <data id="2342">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">glaccount</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="2367">
+                    <cell id="2368">
+                        <property name="colSpan">3</property>
+                        <property name="rowSpan">1</property>
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">right</property>
+                        <data id="3175">
+                            <property name="resultSetColumn">Total Label</property>
+                        </data>
+                    </cell>
+                    <cell id="3176">
+                        <property name="fontSize">10pt</property>
+                        <data id="2863">
+                            <property name="resultSetColumn">Column Binding</property>
+                        </data>
+                    </cell>
+                    <cell id="2410">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2414">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="3170">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2418">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2426">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2430">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2434">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2438">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2442">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="3197">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="3204">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="3210">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2372">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2374">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                    <cell id="2375">
+                        <property name="fontSize">10pt</property>
+                    </cell>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

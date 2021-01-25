@@ -1,0 +1,978 @@
+<?xml version="1.0"?>
+<DataSpliceViewDocument>
+  <StorageObject Type="DataSplice.Data.DataSpliceView">
+    <View>
+      <DataSource>AdoNetDataSource</DataSource>
+      <Id>
+        <Struct>
+          <Tokens>
+            <List>
+              <ListEntry Type="System.String">Maximo</ListEntry>
+              <ListEntry Type="System.String">Support</ListEntry>
+              <ListEntry Type="System.String">GL Components</ListEntry>
+            </List>
+          </Tokens>
+        </Struct>
+      </Id>
+      <Description>
+      </Description>
+      <Options>
+        <OptionCollection>
+          <Name IsNull="true" />
+          <Options>
+            <List>
+              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                <ConfigurationOption>
+                  <Key>ConnectionProfileName</Key>
+                  <OptionType>Text</OptionType>
+                  <Value Type="System.String">maximo</Value>
+                </ConfigurationOption>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                <ConfigurationOption>
+                  <Key>BaseSqlSelect</Key>
+                  <OptionType>LongText</OptionType>
+                  <Value Type="System.String">select glorder, compvalue, comptext, orgid, glcomponentsid
+from glcomponents
+where active = 1</Value>
+                </ConfigurationOption>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                <ConfigurationOption>
+                  <Key>ViewFieldNames</Key>
+                  <OptionType>ConfigurationSection</OptionType>
+                  <Value Type="DataSplice.Configuration.ConfigurationSection">
+                    <ConfigurationSection>
+                      <Key>DbName</Key>
+                      <Flags>Fixed</Flags>
+                      <Template Type="DataSplice.Configuration.OptionCollection">
+                        <OptionCollection>
+                          <Name IsNull="true" />
+                          <Options>
+                            <List>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>DbName</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value IsNull="true" />
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>DataSpliceName</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value IsNull="true" />
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>UserSetColumnExpression</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value IsNull="true" />
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>CurrentFilterExpression</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value IsNull="true" />
+                                </ConfigurationOption>
+                              </ListEntry>
+                            </List>
+                          </Options>
+                        </OptionCollection>
+                      </Template>
+                      <Collections>
+                        <List>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">GLORDER</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Order</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">glcomponents.[glorder]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">COMPVALUE</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Value</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">glcomponents.[compvalue]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">COMPTEXT</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Text</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">glcomponents.[comptext]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">ORGID</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Org</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">glcomponents.[orgid]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">GLCOMPONENTSID</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">glcomponentsid</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">glcomponents.[glcomponentsid]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                        </List>
+                      </Collections>
+                    </ConfigurationSection>
+                  </Value>
+                </ConfigurationOption>
+              </ListEntry>
+            </List>
+          </Options>
+        </OptionCollection>
+      </Options>
+      <Attributes>
+        <DataSpliceAttributes>
+          <Attributes>
+            <Dictionary>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">SEARCH_COMPONENT</_key>
+                  <_value Type="System.String">:= substitute( find( ${Search GL}, /^([^-]+)(-[^-]+)?(-[^-]+)?(-[^-]+)?(-[^-]+)?(-[^-]+)?(-[^-]+)?(-[^-]+)?(-[^-]+)?(-[^-]+)?/, ${1} ), '-', '' )</_value>
+                </Struct>
+              </DictionaryEntry>
+            </Dictionary>
+          </Attributes>
+        </DataSpliceAttributes>
+      </Attributes>
+      <Permissions>
+        <ObjectPermissions>
+          <Conditions />
+        </ObjectPermissions>
+      </Permissions>
+      <Fields>
+        <ViewFieldCollection>
+          <Fields>
+            <List>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Order</Name>
+                  <DataType>Integer</DataType>
+                  <DataSize>0</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>55</DisplayWidth>
+                  <Style>
+                  </Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldVisible</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Value</Name>
+                  <DataType>String</DataType>
+                  <DataSize>20</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>56</DisplayWidth>
+                  <Style>UpperCase</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Text</Name>
+                  <DataType>String</DataType>
+                  <DataSize>100</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>172</DisplayWidth>
+                  <Style>
+                  </Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Org</Name>
+                  <DataType>String</DataType>
+                  <DataSize>8</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>-1</DisplayWidth>
+                  <Style>Org List</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldVisible</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>glcomponentsid</Name>
+                  <DataType>Long</DataType>
+                  <DataSize>0</DataSize>
+                  <Flags>PrimaryKey, ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>-1</DisplayWidth>
+                  <Style>
+                  </Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldVisible</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Virtual</Type>
+                  <Name>Search GL</Name>
+                  <DataType>String</DataType>
+                  <DataSize>50</DataSize>
+                  <Flags>None</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>-1</DisplayWidth>
+                  <Style>UpperCase</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldVisible</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSortable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+            </List>
+          </Fields>
+        </ViewFieldCollection>
+      </Fields>
+      <Styles>
+        <ValidationStyleCollection>
+          <Styles />
+        </ValidationStyleCollection>
+      </Styles>
+      <Events>
+        <EventChainsCollection Version="2">
+          <Events>
+            <List>
+              <ListEntry Type="DataSplice.Events.EventChain">
+                <EventChain Version="2">
+                  <Identifier>
+                    <Struct>
+                      <Name>ServerQuery</Name>
+                      <Qualifier>
+                      </Qualifier>
+                    </Struct>
+                  </Identifier>
+                  <Actions>
+                    <List>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>ModifyFilterAction</ActionType>
+                          <Condition>${Search GL} is not null</Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>ReplaceFilterOption</Key>
+                                      <OptionType>Boolean</OptionType>
+                                      <Value Type="System.Boolean">True</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>FilterOption</Key>
+                                      <OptionType>Filter</OptionType>
+                                      <Value Type="DataSplice.Data.FilterItem">
+                                        <FilterItem>
+                                          <Operator>And</Operator>
+                                          <Arguments>
+                                            <List>
+                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                <FilterItem>
+                                                  <Operator>Equals</Operator>
+                                                  <Arguments>
+                                                    <List>
+                                                      <ListEntry Type="System.String">Org</ListEntry>
+                                                      <ListEntry Type="System.String">:= nvl( ${Org}, ${MX_CURRENT_ORG} )</ListEntry>
+                                                    </List>
+                                                  </Arguments>
+                                                </FilterItem>
+                                              </ListEntry>
+                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                <FilterItem>
+                                                  <Operator>Or</Operator>
+                                                  <Arguments>
+                                                    <List>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>And</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Value</ListEntry>
+                                                                      <ListEntry Type="System.String">${SEARCH_COMPONENT('1')}</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Order</ListEntry>
+                                                                      <ListEntry Type="System.String">0</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>Equals</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="System.String">glcomponentsid</ListEntry>
+                                                              <ListEntry IsNull="true" />
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>And</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Value</ListEntry>
+                                                                      <ListEntry Type="System.String">${SEARCH_COMPONENT('2')}</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Order</ListEntry>
+                                                                      <ListEntry Type="System.String">1</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>Equals</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="System.String">glcomponentsid</ListEntry>
+                                                              <ListEntry IsNull="true" />
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>And</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Value</ListEntry>
+                                                                      <ListEntry Type="System.String">${SEARCH_COMPONENT('3')}</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Order</ListEntry>
+                                                                      <ListEntry Type="System.String">2</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>Equals</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="System.String">glcomponentsid</ListEntry>
+                                                              <ListEntry IsNull="true" />
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>And</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Value</ListEntry>
+                                                                      <ListEntry Type="System.String">${SEARCH_COMPONENT('4')}</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Order</ListEntry>
+                                                                      <ListEntry Type="System.String">3</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>Equals</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="System.String">glcomponentsid</ListEntry>
+                                                              <ListEntry IsNull="true" />
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>And</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Value</ListEntry>
+                                                                      <ListEntry Type="System.String">${SEARCH_COMPONENT('5')}</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Order</ListEntry>
+                                                                      <ListEntry Type="System.String">4</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>Equals</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="System.String">glcomponentsid</ListEntry>
+                                                              <ListEntry IsNull="true" />
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>And</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Value</ListEntry>
+                                                                      <ListEntry Type="System.String">${SEARCH_COMPONENT('6')}</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Order</ListEntry>
+                                                                      <ListEntry Type="System.String">5</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>Equals</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="System.String">Text</ListEntry>
+                                                              <ListEntry IsNull="true" />
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Data.FilterItem">
+                                                        <FilterItem>
+                                                          <Operator>And</Operator>
+                                                          <Arguments>
+                                                            <List>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Value</ListEntry>
+                                                                      <ListEntry Type="System.String">${SEARCH_COMPONENT('7')}</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                                <FilterItem>
+                                                                  <Operator>Equals</Operator>
+                                                                  <Arguments>
+                                                                    <List>
+                                                                      <ListEntry Type="System.String">Order</ListEntry>
+                                                                      <ListEntry Type="System.String">6</ListEntry>
+                                                                    </List>
+                                                                  </Arguments>
+                                                                </FilterItem>
+                                                              </ListEntry>
+                                                            </List>
+                                                          </Arguments>
+                                                        </FilterItem>
+                                                      </ListEntry>
+                                                    </List>
+                                                  </Arguments>
+                                                </FilterItem>
+                                              </ListEntry>
+                                            </List>
+                                          </Arguments>
+                                        </FilterItem>
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>DefaultChainAction</ActionType>
+                          <Condition>
+                          </Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options />
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                    </List>
+                  </Actions>
+                </EventChain>
+              </ListEntry>
+            </List>
+          </Events>
+        </EventChainsCollection>
+      </Events>
+      <UiSettings>
+        <ViewUiSettings>
+          <Actions />
+          <Collections>
+            <Dictionary>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">Child Views</_key>
+                  <_value Type="DataSplice.Display.NavigationActionCollection">
+                    <NavigationActionCollection>
+                      <Actions />
+                    </NavigationActionCollection>
+                  </_value>
+                </Struct>
+              </DictionaryEntry>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">Home Screen Actions</_key>
+                  <_value Type="DataSplice.Display.NavigationActionCollection">
+                    <NavigationActionCollection>
+                      <Actions />
+                    </NavigationActionCollection>
+                  </_value>
+                </Struct>
+              </DictionaryEntry>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">Navigation Menu Actions</_key>
+                  <_value Type="DataSplice.Display.NavigationActionCollection">
+                    <NavigationActionCollection>
+                      <Actions />
+                    </NavigationActionCollection>
+                  </_value>
+                </Struct>
+              </DictionaryEntry>
+            </Dictionary>
+          </Collections>
+        </ViewUiSettings>
+      </UiSettings>
+      <OfflineQueries>
+        <OfflineQueryCollection>
+          <Queries />
+        </OfflineQueryCollection>
+      </OfflineQueries>
+    </View>
+  </StorageObject>
+</DataSpliceViewDocument>

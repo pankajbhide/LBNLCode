@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation apphelp="com.ibm.mbs.doc,wfadmin/c_workflow_administration_app.html" beanclass="psdi.webclient.beans.common.WFAdminBean" id="wfadmin" ismobile="false" mboname="WFINSTANCE" version="6.2.8">
+	<page id="mainrec" scroll="false">
+		<include controltoclone="single_pageHeader" id="INCLUDE-single_pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup format="carddeck" id="maintabs" style="form">
+				<tab id="results">
+					<table id="main_wfadmin_table" inputmode="readonly" label="Processes">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="main_wfadmin_table_tablebody">
+							<tablecol dataattribute="processname" id="main_wfadmin_table_tablebody_1"/>
+							<tablecol dataattribute="ownertable" id="main_wfadmin_table_tablebody_5"/>
+							<tablecol dataattribute="LBL_WFINSTANCE2WO.wonum" id="main_wfadmin_table_tablebody_21" label="Work order"/>
+							<tablecol dataattribute="LBL_WFINSTANCE2WO.description" id="main_wfadmin_table_tablebody_22" label="Description"/>
+							<tablecol dataattribute="LBL_WFINSTANCE2WO.STATUS" id="1549928286515"/>
+							<tablecol dataattribute="LBL_WFINSTANCE2WO.lbl_fammanager" id="main_wfadmin_table_tablebody_23" label="FAM"/>
+							<tablecol dataattribute="LBL_WFINSTANCE2WO.lbl_planner_group" id="main_wfadmin_table_tablebody_24" label="Planner group"/>
+							<tablecol dataattribute="originator" id="main_wfadmin_table_tablebody_8" label="Originator"/>
+							<tablecol dataattribute="starttime" id="main_wfadmin_table_tablebody_9" lookup="datelookup"/>
+							<tablecol filterable="false" id="results_col_delete" mxevent="viewactive" mxevent_desc="View/Modify Active Assignments" mxevent_icon="btn_edit.gif" sortable="false" type="event"/>
+							<tablecol filterable="false" id="results_col_delete_2" mxevent="workflowstop" mxevent_desc="Stop Process" mxevent_icon="btn_stop.gif" sortable="false" type="event"/>
+						</tablebody>
+					</table>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include controltoclone="pageFooter" id="INCLUDE-pageFooter"/>
+	</page>
+
+	<dialog beanclass="psdi.webclient.beans.common.WFAdminBean" id="viewactive" label="View Active Assignments" relationship="ACTIVEASSIGNMENTS">
+		<helpgrid id="viewactive_help" innerhtml="To delete an assignment, click the Delete Assignment button on the desired row. To reassign an assignment, click the Reassign Assignment on the desired row."/>
+		<table id="viewactive_table" inputmode="readonly" label="View Active Assignments" orderby="assigncode asc">
+			<tablebody displayrowsperpage="10" filterable="true" id="viewactive_tablebody">
+				<tablecol dataattribute="assigncode" id="viewactive_tablebody_1"/>
+				<tablecol dataattribute="priority" id="viewactive_tablebody_2"/>
+				<tablecol dataattribute="timelimit" id="viewactive_tablebody_3"/>
+				<tablecol dataattribute="startdate" id="viewactive_tablebody_4"/>
+				<tablecol dataattribute="duedate" id="viewactive_tablebody_5"/>
+				<tablecol dataattribute="LBL_WFASSIGN2WORKORDER.wonum" id="viewactive_tablebody_6"/>
+				<tablecol dataattribute="LBL_WFASSIGN2WORKORDER.description" id="viewactive_tablebody_7"/>
+				<tablecol filterable="false" id="viewactive_tablebody_8" mxevent="deleteassign" mxevent_desc="Delete Assignment" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+				<tablecol filterable="false" id="viewactive_tablebody_9" mxevent="wfreassign" mxevent_desc="Reassign Assignment" mxevent_icon="btn_selectowner.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="viewactive_buttongroup">
+			<pushbutton default="true" id="viewactive_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="viewactive_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="wfreassign" label="Reassign" relationship="REASSIGNWF">
+		<helpgrid id="wfreassign_help" innerhtml="You have chosen to reassign this task to someone else. Please choose a person and optionally enter a memo. To send a notification that this assignment has been reassigned, enter notifications."/>
+		<section border="true" id="wfreassign_grid2" label="Reassign to:">
+			<sectionrow id="wfreassign_grid2_r1">
+				<sectioncol id="wfreassign_grid2_r1_c1">
+					<section id="wfreassign_grid2_r1_c1_1">
+						<multiparttextbox dataattribute="assignee" descdataattribute="assignee.displayname" id="wfreassign_grid3_1" label="Person" lookup="person"/>
+						<textbox dataattribute="memo" id="wfreassign_grid3_2"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<table id="wfreassign_grid1_1_1_notificationTable" label="Notifications" relationship="NOTIFICATIONS">
+			<tablebody displayrowsperpage="20" filterable="false" filterexpanded="true" id="wfreassign_grid1_1_1_CommodityGroupsTable_tablebody">
+				<tablecol filterable="false" id="wfreassign_grid1_1_1_stopworkflow_tablebody_0" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol applink="commtmplt" dataattribute="templateid" id="wfreassign_grid1_1_1_stopworkflow_tablebody_1" lookup="commtmplt" menutype="normal"/>
+				<tablecol applink="person" dataattribute="sendto" id="wfreassign_grid1_1_1_stopworkflow_tablebody_2" lookup="person" menutype="normal"/>
+				<tablecol dataattribute="subject" id="wfreassign_grid1_1_1_stopworkflow_tablebody_3"/>
+				<tablecol filterable="false" id="wfreassign_grid1_1_1_stopworkflow_tablebody_4" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="wfreassign_table_1">
+				<section id="wfreassign_1_grid1_table_1" label="Details">
+					<multiparttextbox applink="commtmplt" dataattribute="templateid" descdataattribute="commtemplate.description" descinputmode="readonly" id="wfreassign_1_grid1_table_1_1" lookup="commtmplt" menutype="normal"/>
+					<textbox applink="person" dataattribute="sendto" id="wfreassign_1_grid1_table_1_2" lookup="person" menutype="normal"/>
+					<textbox dataattribute="subject" id="wfreassign_1_grid1_table_1_3"/>
+					<multilinetextbox columns="35" dataattribute="message" id="wfreassign_1_grid1_table_1_4" rows="2"/>
+				</section>
+			</tabledetails>
+			<buttongroup id="main_asset_table_2">
+				<pushbutton default="true" id="main_asset_table_2_1" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="wfreassign_2">
+			<pushbutton default="true" id="wfreassign_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="wfreassign_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+	<configurationblock id="datastore_configurationblock">
+	</configurationblock>
+</presentation>

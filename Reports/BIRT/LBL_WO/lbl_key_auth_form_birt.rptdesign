@@ -1,0 +1,1292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">IBM Confidential
+
+OCO Source Materials
+
+5724-M19
+
+(C) COPYRIGHT IBM CORP. 2006
+
+The source code for this program is not published or otherwise
+divested of its trade secrets, irrespective of what has been
+deposited with the U.S. Copyright Office.
+
+09-19764@000</property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.3.1.v201309091055 Build &lt;4.3.1.v20130918-1142></property>
+    <html-property name="description">This template will create a report having a single header with multiple rows of data.</html-property>
+    <property name="units">in</property>
+    <method name="initialize"><![CDATA[importPackage(Packages.com.ibm.tivoli.maximo.report.script);
+
+mxReportScriptContext = MXReportScriptContext.initialize(reportContext);]]></method>
+    <method name="beforeFactory"><![CDATA[// Remove page break intervals from PDF output
+if ( (reportContext.getParameterValue("usepagebreaks") == "false")|| reportContext.getOutputFormat() == "pdf" ) {
+	// Give each table in the report a name, and add the names to the list below, e.g. ["mainTable", "childTable1"]
+	var tableListing = ["mainTable"];
+	for each(var tableName in tableListing) {
+		var table = reportContext.getReportRunnable().designHandle.getDesignHandle().findElement(tableName)
+		if (table != null)
+		{
+			table.setProperty("pageBreakInterval", 0);
+		}
+	}
+}]]></method>
+    <method name="afterFactory"><![CDATA[MXReportScriptContext.close();]]></method>
+    <property name="theme">MaximoSystemLibrary.maximoTheme</property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">MaximoSystemLibrary.rptlibrary</property>
+            <property name="namespace">MaximoSystemLibrary</property>
+        </structure>
+        <structure>
+            <property name="fileName">lbnlreportlibrary.rptlibrary</property>
+            <property name="namespace">lbnlreportlibrary</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="where" id="25">
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1=1</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="appname" id="200">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramdelimiter" id="202">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramstring" id="201">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="usepagebreaks" id="342">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">true</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <script-data-source name="maximoDataSource" id="64" extends="MaximoSystemLibrary.maximoDataSource"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="mainDataSet" id="5">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">wonum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">seqno</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">reportdate</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">onbehalfof</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">workorderid</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">assetnum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">parent</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">backoutplan</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">onbehalfofname</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">onbehalfofphone</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">lbl_authorizer</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">authorizername</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">authorizerloc</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">reportedby</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">reportedbyname</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">reportedbyphone</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">keycutstr</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">keyway</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">loc</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">assetLD</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">wonum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">seqno</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">onbehalfof</property>
+                </structure>
+                <structure>
+                    <property name="columnName">workorderid</property>
+                </structure>
+                <structure>
+                    <property name="columnName">assetnum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">parent</property>
+                </structure>
+                <structure>
+                    <property name="columnName">backoutplan</property>
+                </structure>
+                <structure>
+                    <property name="columnName">onbehalfofname</property>
+                </structure>
+                <structure>
+                    <property name="columnName">onbehalfofphone</property>
+                </structure>
+                <structure>
+                    <property name="columnName">lbl_authorizer</property>
+                </structure>
+                <structure>
+                    <property name="columnName">authorizername</property>
+                </structure>
+                <structure>
+                    <property name="columnName">authorizerloc</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportedby</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportedbyname</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportedbyphone</property>
+                </structure>
+                <structure>
+                    <property name="columnName">keycutstr</property>
+                </structure>
+                <structure>
+                    <property name="columnName">keyway</property>
+                </structure>
+                <structure>
+                    <property name="columnName">loc</property>
+                </structure>
+                <structure>
+                    <property name="columnName">assetLD</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">wonum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">seqno</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">reportdate</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">onbehalfof</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">workorderid</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">assetnum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">parent</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">backoutplan</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">onbehalfofname</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">onbehalfofphone</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">lbl_authorizer</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">authorizername</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">authorizerloc</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">reportedby</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">reportedbyname</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">reportedbyphone</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">keycutstr</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">keyway</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">loc</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">assetLD</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+var sqlText = new String();
+
+// Add query to sqlText variable.
+
+
+
+sqlText = "select workorder.wonum, workorder.backoutplan, (select asset.lbl_seq_no from asset where workorder.assetnum = asset.assetnum) seqno, "
+//+ " (select location from lbl_workorder_loc where lbl_workorder_loc.wonum = workorder.wonum) accessloc, "
++ " workorder.reportdate, workorder.onbehalfof, workorder.workorderid, workorder.assetnum, workorder.parent, workorder.backoutplan, "
++ " (select person.displayname from person where person.personid = workorder.onbehalfof) onbehalfofname, " 
++ " (select phone.phonenum from phone where phone.personid = workorder.onbehalfof) onbehalfofphone, "
++ " workorder.lbl_authorizer, " 
+//+ " (select location from lbl_workorder_loc where lbl_workorder_loc.wonum = workorder.wonum) loc,  " 
++ " (select person.displayname from person where person.personid = workorder.lbl_authorizer) authorizername, " 
++ " (select person.location from person where person.personid = workorder.lbl_authorizer) authorizerloc, "
++ " workorder.reportedby, " 
++ " (select person.displayname from person where person.personid = workorder.reportedby) reportedbyname, " 
++ " (select phone.phonenum from phone where phone.personid = workorder.reportedby) reportedbyphone, "
++ " (select lbl_sequence.key_cut_string from lbl_sequence where lbl_sequence.seq_no = (select lbl_seq_no from asset where workorder.assetnum = asset.assetnum)) keycutstr, "
++ " (select ldtext from longdescription where ldownertable = 'ASSET' and ldownercol = 'DESCRIPTION' and ldkey = (select assetuid from asset where assetnum = workorder.assetnum)) assetLD, "
++ " (select lbl_sequence.keyway from lbl_sequence where seq_no = (select asset.lbl_seq_no from asset where workorder.assetnum = assetnum)) keyway "
++ " from workorder " 
++ " where workorder.worktype = 'LS' "
+//+ " and workorder.historyflag = 0 "
+//+ " and workorder.orgid = '" + params["orgid"].value + "' " 
+//+ " and workorder.siteid = '" + params["siteid"].value + "' "
+
++ " and " + params["where"]
+
+;
+maximoDataSet.setQuery(sqlText);
+
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["wonum"] = maximoDataSet.getString("wonum");
+row["backoutplan"] = maximoDataSet.getString("backoutplan");
+row["seqno"] = maximoDataSet.getString("seqno");
+row["reportdate"] = maximoDataSet.getTimestamp("reportdate");
+row["onbehalfof"] = maximoDataSet.getString("onbehalfof");
+row["workorderid"] = maximoDataSet.getString("workorderid");
+//row["loc"] = maximoDataSet.getString("loc");
+row["assetnum"] = maximoDataSet.getString("assetnum");
+row["parent"] = maximoDataSet.getString("parent");
+row["backoutplan"] = maximoDataSet.getString("backoutplan");
+row["onbehalfofname"] = maximoDataSet.getString("onbehalfofname");
+row["onbehalfofphone"] = maximoDataSet.getString("onbehalfofphone");
+row["lbl_authorizer"] = maximoDataSet.getString("lbl_authorizer");
+row["authorizername"] = maximoDataSet.getString("authorizername");
+row["authorizerloc"] = maximoDataSet.getString("authorizerloc");
+row["reportedby"] = maximoDataSet.getString("reportedby");
+row["reportedbyname"] = maximoDataSet.getString("reportedbyname");
+row["reportedbyphone"] = maximoDataSet.getString("reportedbyphone");
+row["keycutstr"] = maximoDataSet.getString("keycutstr");
+row["keyway"] = maximoDataSet.getString("keyway");
+row["assetLD"] = maximoDataSet.getString("assetLD");
+
+return (true);
+
+
+
+]]></method>
+        </script-data-set>
+        <script-data-set name="accessLocDataSet" id="752">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">location</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">location</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">location</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[accessLocDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+accessLocDataSet.open();
+
+var sqlText = new String();
+
+sqlText = " select location "
++ " from lbl_workorder_loc "
++ "  	where lbl_workorder_loc.wonum = '" + rows[0]["wonum"] + "' "
+
+;
+
+
+accessLocDataSet.setQuery(sqlText);
+]]></method>
+            <method name="fetch"><![CDATA[if (!accessLocDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+
+row["location"] = accessLocDataSet.getString("location");
+
+return (true);]]></method>
+        </script-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab-cell" id="370">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="371">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="PortraitWithoutLogo" id="885" extends="lbnlreportlibrary.PortraitWithoutLogo">
+            <property name="topMargin">0.15in</property>
+            <property name="bottomMargin">0.5in</property>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table name="mainTable" id="7">
+            <property name="comments">09-19764@000</property>
+            <property name="width">100%</property>
+            <property name="dataSet">mainDataSet</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">wonum</property>
+                    <text-property name="displayName">wonum</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["wonum"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">seqno</property>
+                    <text-property name="displayName">seqno</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["seqno"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportdate</property>
+                    <text-property name="displayName">reportdate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportdate"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">onbehalfof</property>
+                    <text-property name="displayName">onbehalfof</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["onbehalfof"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">workorderid</property>
+                    <text-property name="displayName">workorderid</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["workorderid"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">assetnum</property>
+                    <text-property name="displayName">assetnum</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["assetnum"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">parent</property>
+                    <text-property name="displayName">parent</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["parent"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">backoutplan</property>
+                    <text-property name="displayName">backoutplan</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["backoutplan"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">onbehalfofname</property>
+                    <text-property name="displayName">onbehalfofname</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["onbehalfofname"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">onbehalfofphone</property>
+                    <text-property name="displayName">onbehalfofphone</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["onbehalfofphone"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">lbl_authorizer</property>
+                    <text-property name="displayName">lbl_authorizer</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["lbl_authorizer"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">authorizername</property>
+                    <text-property name="displayName">authorizername</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["authorizername"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">authorizerloc</property>
+                    <text-property name="displayName">authorizerloc</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["authorizerloc"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportedby</property>
+                    <text-property name="displayName">reportedby</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportedby"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportedbyname</property>
+                    <text-property name="displayName">reportedbyname</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportedbyname"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportedbyphone</property>
+                    <text-property name="displayName">reportedbyphone</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportedbyphone"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">keycutstr</property>
+                    <text-property name="displayName">keycutstr</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["keycutstr"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">keyway</property>
+                    <text-property name="displayName">keyway</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["keyway"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">loc</property>
+                    <text-property name="displayName">loc</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["loc"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">assetLD</property>
+                    <text-property name="displayName">assetLD</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["assetLD"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <expression name="expression" type="javascript">new Date()</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">50</property>
+            <column id="83"/>
+            <detail>
+                <row id="428">
+                    <property name="style">tabledetailsdatarow</property>
+                    <cell id="429">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <grid id="483">
+                            <column id="484"/>
+                            <column id="485"/>
+                            <column id="486"/>
+                            <row id="665">
+                                <cell id="666">
+                                    <property name="colSpan">3</property>
+                                    <property name="rowSpan">1</property>
+                                    <label id="671">
+                                        <property name="fontFamily">"Arial"</property>
+                                        <property name="fontSize">20pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">LAWRENCE BERKELEY NATIONAL LABORATORY</text-property>
+                                    </label>
+                                </cell>
+                            </row>
+                            <row id="661">
+                                <property name="textUnderline">none</property>
+                                <cell id="662">
+                                    <property name="colSpan">2</property>
+                                    <property name="rowSpan">1</property>
+                                    <label id="669">
+                                        <property name="fontFamily">"Arial"</property>
+                                        <property name="fontSize">20pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">KEY AUTHORIZATION FORM</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="664">
+                                    <text-data id="670">
+                                        <property name="fontFamily">"Times New Roman"</property>
+                                        <property name="fontSize">12pt</property>
+                                        <property name="textAlign">right</property>
+                                        <expression name="valueExpr">BirtStr.concat('WO#: ', row["wonum"])</expression>
+                                        <property name="contentType">html</property>
+                                    </text-data>
+                                </cell>
+                            </row>
+                            <row id="657">
+                                <cell id="658">
+                                    <property name="colSpan">3</property>
+                                    <property name="rowSpan">1</property>
+                                    <text-data id="509">
+                                        <property name="fontFamily">"Times New Roman"</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="color">red</property>
+                                        <property name="borderTopColor">#000000</property>
+                                        <property name="borderTopStyle">solid</property>
+                                        <property name="borderTopWidth">1px</property>
+                                        <property name="textAlign">left</property>
+                                        <expression name="valueExpr">BirtStr.concat('Summary ', row["backoutplan"])</expression>
+                                        <property name="contentType">html</property>
+                                    </text-data>
+                                </cell>
+                            </row>
+                            <row id="487">
+                                <cell id="488">
+                                    <label id="495">
+                                        <property name="fontSize">10pt</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">KEY SEQUENCE NUMBER</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="489">
+                                    <label id="496">
+                                        <property name="fontFamily">"Arial"</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">KEY SERIAL NUMBER</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="490">
+                                    <property name="colSpan">1</property>
+                                    <property name="rowSpan">2</property>
+                                    <table id="947">
+                                        <property name="dataSet">accessLocDataSet</property>
+                                        <list-property name="boundDataColumns">
+                                            <structure>
+                                                <property name="name">location</property>
+                                                <text-property name="displayName">location</text-property>
+                                                <expression name="expression" type="javascript">dataSetRow["location"]</expression>
+                                                <property name="dataType">string</property>
+                                            </structure>
+                                        </list-property>
+                                        <column id="954"/>
+                                        <header>
+                                            <row id="948">
+                                                <cell id="949">
+                                                    <label id="956">
+                                                        <property name="fontFamily">"Arial"</property>
+                                                        <property name="fontSize">10pt</property>
+                                                        <property name="textAlign">left</property>
+                                                        <text-property name="text">ACCESS REQUESTED</text-property>
+                                                    </label>
+                                                </cell>
+                                            </row>
+                                        </header>
+                                        <detail>
+                                            <row id="950">
+                                                <cell id="951">
+                                                    <text-data id="955">
+                                                        <property name="fontFamily">"Times New Roman"</property>
+                                                        <property name="fontSize">10pt</property>
+                                                        <property name="fontWeight">bold</property>
+                                                        <property name="textAlign">left</property>
+                                                        <expression name="valueExpr">row["location"]</expression>
+                                                        <property name="contentType">html</property>
+                                                    </text-data>
+                                                </cell>
+                                            </row>
+                                        </detail>
+                                    </table>
+                                </cell>
+                            </row>
+                            <row id="491">
+                                <cell id="492">
+                                    <data id="498">
+                                        <property name="fontFamily">"Times New Roman"</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <property name="textAlign">left</property>
+                                        <property name="resultSetColumn">seqno</property>
+                                    </data>
+                                </cell>
+                                <cell id="493">
+                                    <data id="499">
+                                        <property name="fontFamily">"Times New Roman"</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <property name="textAlign">left</property>
+                                        <property name="resultSetColumn">assetnum</property>
+                                    </data>
+                                </cell>
+                            </row>
+                            <row id="799">
+                                <cell id="800">
+                                    <property name="colSpan">3</property>
+                                    <property name="rowSpan">1</property>
+                                    <grid id="818">
+                                        <column id="819"/>
+                                        <column id="820"/>
+                                        <row id="821">
+                                            <cell id="822">
+                                                <label id="545">
+                                                    <property name="fontFamily">"Arial"</property>
+                                                    <property name="fontSize">10pt</property>
+                                                    <property name="textAlign">left</property>
+                                                    <text-property name="text">CUSTODIAN EMPLOYEE NAME</text-property>
+                                                </label>
+                                            </cell>
+                                            <cell id="823">
+                                                <label id="546">
+                                                    <property name="fontFamily">"Arial"</property>
+                                                    <property name="fontSize">10pt</property>
+                                                    <property name="textAlign">left</property>
+                                                    <text-property name="text">EMPLOYEE NUMBER</text-property>
+                                                </label>
+                                            </cell>
+                                        </row>
+                                        <row id="824">
+                                            <cell id="825">
+                                                <data id="547">
+                                                    <property name="fontFamily">"Times New Roman"</property>
+                                                    <property name="fontSize">14pt</property>
+                                                    <property name="fontWeight">bold</property>
+                                                    <property name="textUnderline">none</property>
+                                                    <property name="textAlign">left</property>
+                                                    <property name="resultSetColumn">onbehalfofname</property>
+                                                </data>
+                                            </cell>
+                                            <cell id="826">
+                                                <data id="548">
+                                                    <property name="fontFamily">"Times New Roman"</property>
+                                                    <property name="fontSize">14pt</property>
+                                                    <property name="fontWeight">bold</property>
+                                                    <property name="textUnderline">none</property>
+                                                    <property name="textAlign">left</property>
+                                                    <property name="resultSetColumn">onbehalfof</property>
+                                                </data>
+                                            </cell>
+                                        </row>
+                                        <row id="827">
+                                            <cell id="828">
+                                                <label id="550">
+                                                    <property name="fontFamily">"Arial"</property>
+                                                    <property name="fontSize">10pt</property>
+                                                    <property name="textAlign">left</property>
+                                                    <text-property name="text">AUTHORIZER EMPLOYEE NAME</text-property>
+                                                </label>
+                                            </cell>
+                                            <cell id="829">
+                                                <label id="549">
+                                                    <property name="fontFamily">"Arial"</property>
+                                                    <property name="fontSize">10pt</property>
+                                                    <property name="fontWeight">normal</property>
+                                                    <property name="textAlign">left</property>
+                                                    <text-property name="text">EMPLOYEE NUMBER</text-property>
+                                                </label>
+                                            </cell>
+                                        </row>
+                                        <row id="830">
+                                            <cell id="831">
+                                                <data id="552">
+                                                    <property name="fontFamily">"Times New Roman"</property>
+                                                    <property name="fontSize">12pt</property>
+                                                    <property name="fontWeight">bold</property>
+                                                    <property name="textAlign">left</property>
+                                                    <property name="resultSetColumn">authorizername</property>
+                                                </data>
+                                            </cell>
+                                            <cell id="832">
+                                                <data id="551">
+                                                    <property name="fontFamily">"Times New Roman"</property>
+                                                    <property name="fontSize">12pt</property>
+                                                    <property name="fontWeight">bold</property>
+                                                    <property name="textAlign">left</property>
+                                                    <property name="resultSetColumn">lbl_authorizer</property>
+                                                </data>
+                                            </cell>
+                                        </row>
+                                    </grid>
+                                </cell>
+                            </row>
+                            <row id="522">
+                                <cell id="523">
+                                    <label id="554">
+                                        <property name="fontFamily">"Arial"</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">REQUESTER EMPLOYEE NAME</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="524">
+                                    <label id="556">
+                                        <property name="fontFamily">"Arial"</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="fontWeight">normal</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">EMPLOYEE NUMBER</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="525">
+                                    <label id="557">
+                                        <property name="fontFamily">"Arial"</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="fontWeight">normal</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">DATE REQUESTED</text-property>
+                                    </label>
+                                </cell>
+                            </row>
+                            <row id="514">
+                                <property name="height">0.4375in</property>
+                                <cell id="515">
+                                    <data id="558">
+                                        <property name="fontFamily">"Times New Roman"</property>
+                                        <property name="fontSize">12pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <property name="textAlign">left</property>
+                                        <property name="resultSetColumn">reportedbyname</property>
+                                    </data>
+                                </cell>
+                                <cell id="516">
+                                    <data id="559">
+                                        <property name="fontFamily">"Times New Roman"</property>
+                                        <property name="fontSize">12pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <property name="textAlign">left</property>
+                                        <property name="resultSetColumn">reportedby</property>
+                                    </data>
+                                </cell>
+                                <cell id="517">
+                                    <data id="560">
+                                        <property name="fontFamily">"Times New Roman"</property>
+                                        <property name="fontSize">12pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <structure name="dateTimeFormat">
+                                            <property name="category">Short Date</property>
+                                            <property name="pattern">Short Date</property>
+                                        </structure>
+                                        <property name="textAlign">left</property>
+                                        <property name="resultSetColumn">reportdate</property>
+                                    </data>
+                                </cell>
+                            </row>
+                            <row id="561">
+                                <cell id="562">
+                                    <property name="colSpan">3</property>
+                                    <property name="rowSpan">1</property>
+                                    <label id="573">
+                                        <property name="fontFamily">"Arial"</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">CUSTODIAN RESPONSIBLITIES FOR RECEIPT OF KEY</text-property>
+                                    </label>
+                                </cell>
+                            </row>
+                            <row id="565">
+                                <property name="height">1.9479166666666667in</property>
+                                <cell id="566">
+                                    <property name="colSpan">3</property>
+                                    <property name="rowSpan">1</property>
+                                    <label id="574">
+                                        <property name="fontFamily">"Arial"</property>
+                                        <property name="fontSize">8pt</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">* LBNL keys are government properly and are not to be duplicated.&#13;
+* An LBNL key is to be used only by the employee to whom it is issued as listed above.&#13;
+* Transfer of the LBNL metallic keys is at the discretion of the Lockshop.&#13;
+   Clients will be notified if a key can not be transferred.&#13;
+   New key will need to be requested in that case.&#13;
+* Loss of LBNL: metallic keys is to be reported immediately to LBNL Lockshop (Ext 7668)&#13;
+* Upon termination of employment of or when an LBNL key is no longer needed, key is to be returned to Lockshop.&#13;
+* Information as to keys issued in my name may be provided to Personnel during termaination procedures.&#13;
+&#13;
+The Key Serial Number, Key Building Number and Key Sequence Number data above coincides with the number stamped on &#13;
+the key assigned to me.  My name and employee name are correct as listed above or I have made necessary corrections, &#13;
+change to a different employee is not allowed.</text-property>
+                                    </label>
+                                </cell>
+                            </row>
+                            <row id="569">
+                                <property name="height">0.2708333333333333in</property>
+                                <cell id="570">
+                                    <property name="colSpan">3</property>
+                                    <property name="rowSpan">1</property>
+                                    <property name="borderTopColor">#000000</property>
+                                    <property name="borderTopStyle">dashed</property>
+                                    <property name="borderTopWidth">1px</property>
+                                    <label id="592">
+                                        <property name="fontFamily">"Arial"</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="fontWeight">normal</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">&#13;
+REQUIRED SIGNATURES</text-property>
+                                    </label>
+                                </cell>
+                            </row>
+                            <row id="579">
+                                <cell id="580">
+                                    <property name="colSpan">3</property>
+                                    <property name="rowSpan">1</property>
+                                    <label id="593">
+                                        <property name="fontFamily">"Arial"</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="fontWeight">normal</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">RETURN SIGNED FORM TO FACILITIES DIVISION, LOCKSHOP, MS 76-225</text-property>
+                                    </label>
+                                </cell>
+                            </row>
+                            <row id="575">
+                                <cell id="576">
+                                    <property name="colSpan">3</property>
+                                    <property name="rowSpan">1</property>
+                                    <grid id="596">
+                                        <column id="597"/>
+                                        <column id="598"/>
+                                        <row id="599">
+                                            <property name="height">0.4479166666666667in</property>
+                                            <cell id="600">
+                                                <label id="608">
+                                                    <property name="fontFamily">"Arial"</property>
+                                                    <property name="fontSize">10pt</property>
+                                                    <property name="fontWeight">normal</property>
+                                                    <property name="textAlign">left</property>
+                                                    <text-property name="text">AUTHORIZER NAME &amp; LOCATION:</text-property>
+                                                </label>
+                                            </cell>
+                                            <cell id="601">
+                                                <text-data id="609">
+                                                    <property name="fontFamily">"Times New Roman"</property>
+                                                    <property name="fontSize">10pt</property>
+                                                    <property name="fontWeight">bold</property>
+                                                    <property name="textAlign">left</property>
+                                                    <expression name="valueExpr">if (row["authorizername"] != null)&#13;
+BirtStr.concat(row["authorizername"], ' ' , row["authorizerloc"]) &#13;
+else&#13;
+	" "</expression>
+                                                    <property name="contentType">html</property>
+                                                </text-data>
+                                            </cell>
+                                        </row>
+                                        <row id="614">
+                                            <property name="height">0.2708333333333333in</property>
+                                            <cell id="615">
+                                                <property name="colSpan">2</property>
+                                                <property name="rowSpan">1</property>
+                                                <label id="617">
+                                                    <property name="fontFamily">"Arial"</property>
+                                                    <property name="fontSize">10pt</property>
+                                                    <property name="fontWeight">normal</property>
+                                                    <property name="textAlign">left</property>
+                                                    <text-property name="text">AUTHORIZER SIGNATURE: _______________________________________             DATE: ______________________</text-property>
+                                                </label>
+                                            </cell>
+                                        </row>
+                                        <row id="605">
+                                            <property name="height">0.4375in</property>
+                                            <cell id="606">
+                                                <label id="612">
+                                                    <property name="fontFamily">"Arial"</property>
+                                                    <property name="fontSize">10pt</property>
+                                                    <property name="fontWeight">normal</property>
+                                                    <property name="textAlign">left</property>
+                                                    <text-property name="text">KEY CUSTODIAN NAME &amp; PHONE (LBL EMPLOYEE)</text-property>
+                                                </label>
+                                            </cell>
+                                            <cell id="607">
+                                                <text-data id="613">
+                                                    <property name="fontFamily">"Times New Roman"</property>
+                                                    <property name="fontSize">11pt</property>
+                                                    <property name="fontWeight">bold</property>
+                                                    <property name="textAlign">left</property>
+                                                    <expression name="valueExpr">if (row["onbehalfofname"] != null)&#13;
+BirtStr.concat(row["onbehalfofname"], ' ', row["onbehalfofphone"])&#13;
+else&#13;
+	" "</expression>
+                                                    <property name="contentType">html</property>
+                                                </text-data>
+                                            </cell>
+                                        </row>
+                                        <row id="698">
+                                            <property name="height">0.28125in</property>
+                                            <cell id="699">
+                                                <property name="colSpan">2</property>
+                                                <property name="rowSpan">1</property>
+                                                <label id="707">
+                                                    <property name="fontFamily">"Arial"</property>
+                                                    <property name="fontSize">10pt</property>
+                                                    <property name="fontWeight">normal</property>
+                                                    <property name="textAlign">left</property>
+                                                    <text-property name="text">KEY CUSTODIAN SIGNATURE: ____________________________________             DATE: ______________________</text-property>
+                                                </label>
+                                            </cell>
+                                        </row>
+                                        <row id="701">
+                                            <property name="height">0.2708333333333333in</property>
+                                            <cell id="702">
+                                                <property name="colSpan">2</property>
+                                                <property name="rowSpan">1</property>
+                                                <label id="718">
+                                                    <property name="fontFamily">"Arial"</property>
+                                                    <property name="fontSize">10pt</property>
+                                                    <property name="fontWeight">normal</property>
+                                                    <property name="textAlign">left</property>
+                                                    <text-property name="text">KEY CUSTODIAN NAME &amp; PHONE (NON LBL EMPLOYEE)  ________________________   DATE: _______________</text-property>
+                                                </label>
+                                            </cell>
+                                        </row>
+                                        <row id="879">
+                                            <property name="height">0.23958333333333334in</property>
+                                            <cell id="880">
+                                                <property name="colSpan">2</property>
+                                                <property name="rowSpan">1</property>
+                                                <label id="882">
+                                                    <property name="borderBottomStyle">dashed</property>
+                                                    <property name="borderBottomWidth">thin</property>
+                                                    <property name="paddingTop">0pt</property>
+                                                    <property name="paddingBottom">0pt</property>
+                                                    <text-property name="text"></text-property>
+                                                </label>
+                                            </cell>
+                                        </row>
+                                        <row id="890">
+                                            <property name="height">0.23958333333333334in</property>
+                                            <cell id="891">
+                                                <property name="colSpan">2</property>
+                                                <property name="rowSpan">1</property>
+                                                <grid id="893">
+                                                    <column id="894"/>
+                                                    <column id="895"/>
+                                                    <column id="896"/>
+                                                    <row id="897">
+                                                        <property name="height">0.4270833333333333in</property>
+                                                        <cell id="898">
+                                                            <label id="653">
+                                                                <property name="fontFamily">"Arial"</property>
+                                                                <property name="fontSize">10pt</property>
+                                                                <property name="fontWeight">bold</property>
+                                                                <property name="borderRightColor">#000000</property>
+                                                                <property name="borderRightStyle">none</property>
+                                                                <property name="borderRightWidth">1px</property>
+                                                                <property name="paddingTop">0pt</property>
+                                                                <property name="paddingBottom">0pt</property>
+                                                                <property name="textAlign">left</property>
+                                                                <text-property name="text">LOCKSHOP INTERNAL USE ONLY	</text-property>
+                                                            </label>
+                                                        </cell>
+                                                        <cell id="899">
+                                                            <property name="colSpan">2</property>
+                                                            <property name="rowSpan">1</property>
+                                                            <label id="878">
+                                                                <property name="fontFamily">"Times New Roman"</property>
+                                                                <property name="fontSize">10pt</property>
+                                                                <property name="fontWeight">bold</property>
+                                                                <property name="paddingTop">0pt</property>
+                                                                <property name="paddingBottom">0pt</property>
+                                                                <property name="textAlign">left</property>
+                                                                <text-property name="text">                         COMMENT/SPECIAL INSTRUCTIONS:</text-property>
+                                                            </label>
+                                                        </cell>
+                                                    </row>
+                                                    <row id="901">
+                                                        <cell id="902">
+                                                            <label id="654">
+                                                                <property name="fontFamily">"Arial"</property>
+                                                                <property name="fontSize">10pt</property>
+                                                                <property name="fontWeight">normal</property>
+                                                                <property name="borderRightColor">#000000</property>
+                                                                <property name="borderRightStyle">none</property>
+                                                                <property name="borderRightWidth">1px</property>
+                                                                <property name="textAlign">left</property>
+                                                                <text-property name="text">Key Requester Name &amp; Phone</text-property>
+                                                            </label>
+                                                        </cell>
+                                                        <cell id="903">
+                                                            <property name="colSpan">2</property>
+                                                            <property name="rowSpan">6</property>
+                                                            <property name="textAlign">left</property>
+                                                            <data id="958">
+                                                                <property name="fontSize">medium</property>
+                                                                <property name="color">red</property>
+                                                                <property name="textAlign">left</property>
+                                                                <property name="resultSetColumn">assetLD</property>
+                                                            </data>
+                                                        </cell>
+                                                    </row>
+                                                    <row id="905">
+                                                        <cell id="906">
+                                                            <data id="656">
+                                                                <property name="fontFamily">"Times New Roman"</property>
+                                                                <property name="fontSize">10pt</property>
+                                                                <property name="fontWeight">bold</property>
+                                                                <property name="borderRightColor">#000000</property>
+                                                                <property name="borderRightStyle">none</property>
+                                                                <property name="borderRightWidth">1px</property>
+                                                                <property name="textAlign">left</property>
+                                                                <property name="resultSetColumn">reportedbyname</property>
+                                                            </data>
+                                                        </cell>
+                                                    </row>
+                                                    <row id="909">
+                                                        <cell id="910">
+                                                            <data id="686">
+                                                                <property name="fontFamily">"Times New Roman"</property>
+                                                                <property name="fontSize">10pt</property>
+                                                                <property name="fontWeight">bold</property>
+                                                                <property name="borderRightColor">#000000</property>
+                                                                <property name="borderRightStyle">none</property>
+                                                                <property name="borderRightWidth">1px</property>
+                                                                <property name="textAlign">left</property>
+                                                                <property name="resultSetColumn">reportedbyphone</property>
+                                                            </data>
+                                                        </cell>
+                                                    </row>
+                                                    <row id="913">
+                                                        <cell id="914">
+                                                            <text-data id="926">
+                                                                <property name="fontFamily">"Times New Roman"</property>
+                                                                <property name="fontSize">10pt</property>
+                                                                <property name="textAlign">left</property>
+                                                                <expression name="valueExpr">if (row["parent"] != null)&#13;
+BirtStr.concat('PARENT WO#', row["parent"])&#13;
+else {'PARENT WO# '}</expression>
+                                                                <property name="contentType">html</property>
+                                                            </text-data>
+                                                        </cell>
+                                                    </row>
+                                                    <row id="917">
+                                                        <cell id="918">
+                                                            <data id="943">
+                                                                <property name="fontFamily">"Arial"</property>
+                                                                <property name="fontSize">10pt</property>
+                                                                <property name="numberAlign">left</property>
+                                                                <structure name="dateTimeFormat">
+                                                                    <property name="category">Short Date</property>
+                                                                    <property name="pattern">Short Date</property>
+                                                                </structure>
+                                                                <property name="textAlign">left</property>
+                                                                <property name="resultSetColumn">Column Binding</property>
+                                                            </data>
+                                                        </cell>
+                                                    </row>
+                                                    <row id="921">
+                                                        <cell id="922">
+                                                            <text-data id="693">
+                                                                <property name="fontFamily">"Arial"</property>
+                                                                <property name="fontSize">10pt</property>
+                                                                <property name="fontWeight">bold</property>
+                                                                <property name="textAlign">left</property>
+                                                                <expression name="valueExpr">if (row["keyway"] != null)&#13;
+BirtStr.concat(row["keycutstr"], row["keyway"])&#13;
+else {' '}</expression>
+                                                                <property name="contentType">html</property>
+                                                            </text-data>
+                                                        </cell>
+                                                    </row>
+                                                </grid>
+                                            </cell>
+                                        </row>
+                                    </grid>
+                                </cell>
+                            </row>
+                        </grid>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+    </body>
+</report>

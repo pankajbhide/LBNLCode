@@ -1,0 +1,1896 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">IBM Confidential
+
+OCO Source Materials
+
+5724-M19
+
+(C) COPYRIGHT IBM CORP. 2006
+
+The source code for this program is not published or otherwise
+divested of its trade secrets, irrespective of what has been
+deposited with the U.S. Copyright Office.
+
+09-19764@000</property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.3.1.v201309091055 Build &lt;4.3.1.v20130918-1142></property>
+    <html-property name="description">This template will create a report having a single header with multiple rows of data.</html-property>
+    <property name="units">in</property>
+    <method name="initialize"><![CDATA[importPackage(Packages.com.ibm.tivoli.maximo.report.script);
+
+mxReportScriptContext = MXReportScriptContext.initialize(reportContext);]]></method>
+    <method name="beforeFactory"><![CDATA[// Remove page break intervals from PDF output
+if ( (reportContext.getParameterValue("usepagebreaks") == "false")|| reportContext.getOutputFormat() == "pdf" ) {
+	// Give each table in the report a name, and add the names to the list below, e.g. ["mainTable", "childTable1"]
+	var tableListing = ["mainTable"];
+	for each(var tableName in tableListing) {
+		var table = reportContext.getReportRunnable().designHandle.getDesignHandle().findElement(tableName)
+		if (table != null)
+		{
+			table.setProperty("pageBreakInterval", 0);
+		}
+	}
+}]]></method>
+    <method name="afterFactory"><![CDATA[MXReportScriptContext.close();]]></method>
+    <property name="theme">MaximoSystemLibrary.maximoTheme</property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">MaximoSystemLibrary.rptlibrary</property>
+            <property name="namespace">MaximoSystemLibrary</property>
+        </structure>
+        <structure>
+            <property name="fileName">lbnlreportlibrary.rptlibrary</property>
+            <property name="namespace">lbnlreportlibrary</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="where" id="25">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1=1</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="appname" id="200">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramdelimiter" id="202">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramstring" id="201">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="usepagebreaks" id="342">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">true</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <script-data-source name="maximoDataSource" id="64" extends="MaximoSystemLibrary.maximoDataSource"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="MainDataSet" id="5">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">wonum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">reportedby</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">reportedbyname</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">reportdate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">clientname</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">phoneno</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">clientphone</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">wo1</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">distination</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">wonum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportedby</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportedbyname</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">clientname</property>
+                </structure>
+                <structure>
+                    <property name="columnName">phoneno</property>
+                </structure>
+                <structure>
+                    <property name="columnName">clientphone</property>
+                </structure>
+                <structure>
+                    <property name="columnName">wo1</property>
+                </structure>
+                <structure>
+                    <property name="columnName">distination</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">wonum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">reportedby</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">reportedbyname</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">reportdate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">clientname</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">phoneno</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">clientphone</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">wo1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">distination</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+// Add query to sqlText variable.
+sqlText = "select workorder.wonum, workorder.reportedby, "
++ " workorder.reportdate, workorder.wo1, "
++ " concat(concat((select lbl_workreq.to_building from batch_maximo.lbl_workreq where batch_maximo.lbl_workreq.wonum = workorder.wonum), ' - '), (select lbl_workreq.to_room from batch_maximo.lbl_workreq where batch_maximo.lbl_workreq.wonum = workorder.wonum)) distination, "
++ " (select person.displayname from person where person.personid = workorder.reportedby) reportedbyname, "
++ " (select person.displayname from person where person.personid = workorder.wo1) clientname, "
++ " (select phone.phonenum from phone where phone.personid = workorder.reportedby) phoneno, "
++ " (select phone.phonenum from phone where phone.personid = workorder.wo1) clientphone "
++ " from workorder "
++ " where " + params["where"]
+;
+
+maximoDataSet.setQuery(sqlText);
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["wonum"] = maximoDataSet.getString("wonum");	
+row["reportedby"] = maximoDataSet.getString("reportedby");
+row["reportdate"] = maximoDataSet.getTimestamp("reportdate");
+row["wo1"] = maximoDataSet.getString("wo1");	
+row["distination"] = maximoDataSet.getString("distination");
+row["reportedbyname"] = maximoDataSet.getString("reportedbyname");	
+row["clientname"] = maximoDataSet.getString("clientname");
+row["phoneno"] = maximoDataSet.getString("phoneno");		
+row["clientphone"] = maximoDataSet.getString("clientphone");
+
+
+return (true);]]></method>
+        </script-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab-cell" id="729">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="730">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="PortraitWithoutLogo" id="1107" extends="lbnlreportlibrary.PortraitWithoutLogo"/>
+    </page-setup>
+    <body>
+        <table name="mainTable" id="7">
+            <property name="comments">09-19764@000</property>
+            <property name="pageBreakAfter">always</property>
+            <property name="width">100%</property>
+            <property name="dataSet">MainDataSet</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">wonum</property>
+                    <text-property name="displayName">wonum</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["wonum"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportedby</property>
+                    <text-property name="displayName">reportedby</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportedby"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportedbyname</property>
+                    <text-property name="displayName">reportedbyname</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportedbyname"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportdate</property>
+                    <text-property name="displayName">reportdate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportdate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">clientname</property>
+                    <text-property name="displayName">clientname</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["clientname"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">phoneno</property>
+                    <text-property name="displayName">phoneno</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["phoneno"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">clientphone</property>
+                    <text-property name="displayName">clientphone</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["clientphone"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">wo1</property>
+                    <text-property name="displayName">wo1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["wo1"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">distination</property>
+                    <text-property name="displayName">distination</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["distination"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">50</property>
+            <column id="83">
+                <property name="width">1.8645833333333333in</property>
+            </column>
+            <column id="87">
+                <property name="width">2in</property>
+            </column>
+            <column id="17">
+                <property name="width">1.3854166666666667in</property>
+            </column>
+            <column id="18">
+                <property name="width">1.3958333333333333in</property>
+            </column>
+            <header>
+                <row id="180">
+                    <property name="style">title</property>
+                    <cell id="181">
+                        <property name="colSpan">4</property>
+                        <property name="rowSpan">1</property>
+                        <property name="paddingBottom">10pt</property>
+                        <label id="698">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="color">black</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">LBNL Transportation Form</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="818">
+                    <property name="style">tabledetailsdatarow</property>
+                    <cell id="819">
+                        <property name="colSpan">4</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="852">
+                            <property name="fontSize">12pt</property>
+                            <property name="paddingBottom">15pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">1. This page must be completed by Custodian (a Custodian is defined as owners or users who      have first hand knowledge of item's physical characteristics and history).&#13;
+&#13;
+2. A signed copy of this page must be attached to each item or box  -  boxes and crates should be sealed.&#13;
+&#13;
+3.  All rules on the proper transportation of items must be followed - these are on the following two pages.</text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="1117">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="height">1.4583333333333333in</property>
+                    <cell id="1118">
+                        <property name="colSpan">4</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">1px</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">1px</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">1px</property>
+                        <label id="1207">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">I am the Custodian of this material.  With regard to ALL equipment/materials in the requested move, I certify that: &#13;
+     1. They are free of biological, chemical, and radiological hazards.</text-property>
+                        </label>
+                        <grid id="1225">
+                            <column id="1226"/>
+                            <column id="1227"/>
+                            <column id="1228"/>
+                            <column id="1229"/>
+                            <column id="1230"/>
+                            <column id="1231"/>
+                            <column id="1232"/>
+                            <column id="1233"/>
+                            <row id="1234">
+                                <cell id="1235"/>
+                                <cell id="1236">
+                                    <property name="colSpan">7</property>
+                                    <property name="rowSpan">1</property>
+                                    <text id="1209">
+                                        <property name="fontSize">14pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <property name="textAlign">left</property>
+                                        <property name="contentType">html</property>
+                                        <text-property name="content"><![CDATA[<UL><LI>          Hazard labels have been removed, covered, or defaced.</LI></UL>
+]]></text-property>
+                                    </text>
+                                </cell>
+                            </row>
+                        </grid>
+                        <label id="1243">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="paddingBottom">1pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">     2. They are not prohibited as noted in Table 1.&#13;
+     3. The actions listed in Table 2 have been completed.&#13;
+&#13;
+&#13;
+&#13;
+&#13;
+</text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="738">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <cell id="739">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="788">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="borderTopColor">#000000</property>
+                            <property name="borderTopStyle">none</property>
+                            <property name="borderTopWidth">1px</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">NAME:</text-property>
+                        </label>
+                    </cell>
+                    <cell id="740">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <data id="855">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="borderTopColor">#000000</property>
+                            <property name="borderTopWidth">1px</property>
+                            <property name="marginTop">0pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">reportedbyname</property>
+                        </data>
+                    </cell>
+                    <cell id="741">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="773">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="borderTopColor">#000000</property>
+                            <property name="borderTopWidth">1px</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">EMPLOYEE NO.:</text-property>
+                        </label>
+                    </cell>
+                    <cell id="742">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopWidth">1px</property>
+                        <data id="857">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="marginTop">15pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">reportedby</property>
+                        </data>
+                    </cell>
+                </row>
+                <row id="733">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <cell id="734">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="789">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="marginTop">5pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">PHONE:</text-property>
+                        </label>
+                    </cell>
+                    <cell id="735">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <data id="856">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="marginTop">5pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">phoneno</property>
+                        </data>
+                    </cell>
+                    <cell id="736">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                    </cell>
+                    <cell id="737">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                    </cell>
+                </row>
+                <row id="792">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <cell id="793">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="768">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="marginTop">5pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">DATE </text-property>
+                        </label>
+                    </cell>
+                    <cell id="794">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <data id="861">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="marginTop">5pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">reportdate</property>
+                        </data>
+                    </cell>
+                    <cell id="795">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                    </cell>
+                    <cell id="796">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                    </cell>
+                </row>
+                <row id="802">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="height">1.1666666666666667in</property>
+                    <cell id="803">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="769">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="marginTop">5pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">DESTINATION</text-property>
+                        </label>
+                    </cell>
+                    <cell id="804">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <data id="1104">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="marginTop">5pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">distination</property>
+                        </data>
+                    </cell>
+                    <cell id="805">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                    </cell>
+                    <cell id="806">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                    </cell>
+                </row>
+                <row id="797">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="pageBreakAfter">always</property>
+                    <property name="height">0.3958333333333333in</property>
+                    <cell id="798">
+                        <property name="colSpan">2</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="770">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="marginTop">5pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="pageBreakAfter">always</property>
+                            <text-property name="text">WORK ORDER # (IF KNOWN)</text-property>
+                        </label>
+                    </cell>
+                    <cell id="800">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <data id="862">
+                            <property name="fontSize">14pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="marginTop">5pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="pageBreakAfter">always</property>
+                            <property name="resultSetColumn">wonum</property>
+                        </data>
+                    </cell>
+                    <cell id="801">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                    </cell>
+                </row>
+                <row id="864">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="height">0.4895833333333333in</property>
+                    <cell id="865">
+                        <property name="colSpan">4</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <text id="904">
+                            <property name="fontSize">12pt</property>
+                            <property name="paddingTop">10pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="pageBreakBefore">always</property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[The Transportation Department <U><B> will not</B></U>  move some materials (e.g., opened chemical containers or damaged  VDTs or CRTs<sup>1</sup>) because of regulatory restrictions or potential ES&amp;H hazards they present. These are summarized in Table 1.
+
+]]></text-property>
+                        </text>
+                    </cell>
+                </row>
+                <row id="869">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="height">0.5208333333333334in</property>
+                    <cell id="870">
+                        <property name="colSpan">4</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="paddingTop">8pt</property>
+                        <label id="905">
+                            <property name="fontSize">12pt</property>
+                            <property name="paddingTop">1pt</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Table 1:  Materials That the Transportation Department Will Not Move </text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="879">
+                    <property name="style">tabledetailsdatarow</property>
+                    <cell id="880">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="906">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Adhesives</text-property>
+                        </label>
+                    </cell>
+                    <cell id="881">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="910">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Opened chemicals</text-property>
+                        </label>
+                    </cell>
+                    <cell id="882">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="914">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Greases</text-property>
+                        </label>
+                    </cell>
+                    <cell id="883">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="918">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Solvents</text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="874">
+                    <property name="style">tabledetailsdatarow</property>
+                    <cell id="875">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="907">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Aerosol cans</text-property>
+                        </label>
+                    </cell>
+                    <cell id="876">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="911">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Cleaners</text-property>
+                        </label>
+                    </cell>
+                    <cell id="877">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="915">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Oils</text-property>
+                        </label>
+                    </cell>
+                    <cell id="878">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <text id="1245">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[Damaged VDTs or CRTs<sup>1</sup>]]></text-property>
+                        </text>
+                    </cell>
+                </row>
+                <row id="899">
+                    <property name="style">tabledetailsdatarow</property>
+                    <cell id="900">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="908">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Batteries</text-property>
+                        </label>
+                    </cell>
+                    <cell id="901">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="912">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Gas Cylinders</text-property>
+                        </label>
+                    </cell>
+                    <cell id="902">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="916">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Paints</text-property>
+                        </label>
+                    </cell>
+                    <cell id="903">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="920">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Wastes</text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="894">
+                    <property name="style">tabledetailsdatarow</property>
+                    <cell id="895">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="909">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Biological materials</text-property>
+                        </label>
+                    </cell>
+                    <cell id="896">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="913">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Glues</text-property>
+                        </label>
+                    </cell>
+                    <cell id="897">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="917">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">700</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Radiological Material</text-property>
+                        </label>
+                    </cell>
+                    <cell id="898">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                    </cell>
+                </row>
+                <row id="889">
+                    <property name="style">tabledetailsdatarow</property>
+                    <cell id="890">
+                        <property name="colSpan">4</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <text id="931">
+                            <property name="fontSize">12pt</property>
+                            <property name="paddingTop">10pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="pageBreakAfter">always</property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[O The Transportation Department will move <U>unopened</U> chemicals in their original shipping container.<BR><BR>O The EH&amp;S Waste Management Group (Ext. 5877) will relocate previously opened chemical containers and will dispose of damaged or non-operating VDTs, monitors and CRTs - both free of charge.<BR><BR>O For chemicals you no longer need, they may be transferred another person who can use them.  Remember to update your chemical inventory online at the Chemical Management System Website.  Otherwise, disposed of them per EH&amp;S Waste Management Group requirements.<BR><BR>O The EH&amp;S "Help By Division" Web Link lists several EH&amp;S contacts assigned to your Division who can provide assistance. <BR>]]></text-property>
+                        </text>
+                    </cell>
+                </row>
+                <row id="884">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="height">0.3125in</property>
+                    <cell id="885">
+                        <property name="colSpan">4</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <text id="939">
+                            <property name="fontSize">12pt</property>
+                            <property name="paddingTop">20pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[The Transportation Department will relocate equipment and items provided the <U>Custodian</U> <sup>2</sup>
+]]></text-property>
+                        </text>
+                        <text id="1099">
+                            <property name="fontSize">12pt</property>
+                            <property name="paddingTop">5pt</property>
+                            <property name="paddingBottom">20pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[O Confirms the items are free of biological, chemical and radiological hazards. <BR><BR>O Completes the actions specified in Table 2 "Custodian Responsibilities For Items To Be Moved To Another LBNL Location Or To Salvage".<BR><BR>O Has materials from a posted Radiological Material Area (RMA) or a Radioactive Storage Area (RSA) surveyed and released (green tagged) by a Radiological Control Technician . <BR><BR>O Verifies that these actions have been taken by completing the first page of this form and attaching it to each item or container.]]></text-property>
+                        </text>
+                    </cell>
+                </row>
+                <row id="933">
+                    <property name="style">tabledetailsdatarow</property>
+                    <cell id="934">
+                        <property name="colSpan">4</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <label id="1098">
+                            <property name="fontSize">9pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">1. VDTs - Video Display Terminals and monitors; CRTs -  Cathode Ray Tubes.  Damaged VDTs, monitors and CRTs should be disposed of as waste through the EH&amp;S Waste Management Group.  This is a free service.  Salvage will not accepted damaged units.&#13;
+2. Custodians are defined as owners or users who have first hand knowledge of the item's physical characteristics and history.</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+        <grid id="966">
+            <property name="borderBottomStyle">none</property>
+            <property name="borderLeftStyle">none</property>
+            <property name="borderRightStyle">none</property>
+            <property name="borderTopStyle">none</property>
+            <column id="967"/>
+            <column id="968"/>
+            <column id="969"/>
+            <row id="970">
+                <cell id="971">
+                    <property name="colSpan">3</property>
+                    <property name="rowSpan">1</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1038">
+                        <property name="fontSize">12pt</property>
+                        <property name="textAlign">center</property>
+                        <text-property name="text">Table 2: Custodian Responsibilities for Items to Be Moved To another LBNL Location or To Salvage &#13;
+(Please review this table carefully and ensure the applicable actions have been taken) </text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="974">
+                <cell id="975">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1039">
+                        <property name="fontSize">12pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="textAlign">center</property>
+                        <text-property name="text">Items</text-property>
+                    </label>
+                </cell>
+                <cell id="976">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1049">
+                        <property name="fontSize">12pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="textAlign">center</property>
+                        <text-property name="text">Examples</text-property>
+                    </label>
+                </cell>
+                <cell id="977">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1050">
+                        <property name="fontSize">12pt</property>
+                        <property name="fontWeight">bold</property>
+                        <property name="textAlign">center</property>
+                        <text-property name="text">Action</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="978">
+                <cell id="979">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1040">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Asbetos containing items</text-property>
+                    </label>
+                </cell>
+                <cell id="980">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1044">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Autoclaves, furnaces, incubators &amp; ovens</text-property>
+                    </label>
+                </cell>
+                <cell id="981">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1045">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Contact IH Must be in good, operating and reusable condition of value &amp; can be handled without producing airborne fibers.  Asbestos must be abated if in damaged condition or if item does not work and only has recycle value.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="982">
+                <cell id="983">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1041">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Biosafety cabinets</text-property>
+                    </label>
+                </cell>
+                <cell id="984">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                </cell>
+                <cell id="985">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1046">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Contact IH Decontamination is required and removal of hazard warning labels.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="986">
+                <cell id="987">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1042">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Chemical storage cabinets</text-property>
+                    </label>
+                </cell>
+                <cell id="988">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1051">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Flammable storage lockers, acid and corrosive storage cabinets</text-property>
+                    </label>
+                </cell>
+                <cell id="989">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1047">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Clean and remove visible residue and removal of hazard warning labels.  Contact IH for help.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="990">
+                <cell id="991">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1043">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Electrical components</text-property>
+                    </label>
+                </cell>
+                <cell id="992">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1052">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Capacitors &amp; transformers</text-property>
+                    </label>
+                </cell>
+                <cell id="993">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1048">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Oils must be drained (PCBs are a concern). Contact Electrical Shop (x6023) for help.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="994">
+                <cell id="995">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1053">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Fume hoods</text-property>
+                    </label>
+                </cell>
+                <cell id="996">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                </cell>
+                <cell id="997">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1057">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Clean and remove visible residue and hazard warning labels.  Contact IH for help.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="998">
+                <cell id="999">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1054">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Gas cabinets</text-property>
+                    </label>
+                </cell>
+                <cell id="1000">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                </cell>
+                <cell id="1001">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1058">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Clean and remove visible residue and hazard warning labels.  Contact IH for help.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="1002">
+                <cell id="1003">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1055">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Gas chromatographs</text-property>
+                    </label>
+                </cell>
+                <cell id="1004">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1056">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">May contain electron capture detectors with sealed radiological sources</text-property>
+                    </label>
+                </cell>
+                <cell id="1005">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1059">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Contact RCT if sources are present.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="1108">
+                <cell id="1109">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1112">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Glove boxes	</text-property>
+                    </label>
+                </cell>
+                <cell id="1110">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                </cell>
+                <cell id="1111">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1113">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Clean and remove visible residue and hazard warning labels.  Contact IH for help.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="1076">
+                <cell id="1077">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1060">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Mercury containing items</text-property>
+                    </label>
+                </cell>
+                <cell id="1078">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1069">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Barometers, coulter counters, manometers, switches &amp; thermometers</text-property>
+                    </label>
+                </cell>
+                <cell id="1079">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1074">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Contact IH May need to drain mercury and/or dispose via Waste Management</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="1006">
+                <cell id="1007">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1061">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Pumps</text-property>
+                    </label>
+                </cell>
+                <cell id="1008">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                </cell>
+                <cell id="1009">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1085">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Oil must be drained.  Contact Plant Maintenance for help (x7941)</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="1010">
+                <cell id="1011">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1062">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Refigerators &amp; freezers</text-property>
+                    </label>
+                </cell>
+                <cell id="1012">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1070">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Those that have been used for chemical storage</text-property>
+                    </label>
+                </cell>
+                <cell id="1013">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1086">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Clean and remove visible residue and hazard warning labels.  Contact IH for help.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="1014">
+                <cell id="1015">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1063">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Shop equipment</text-property>
+                    </label>
+                </cell>
+                <cell id="1016">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1071">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Lathes &amp; mills</text-property>
+                    </label>
+                </cell>
+                <cell id="1017">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1087">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">All fluids must be drained.  Contact Plant Maintenance for help (x7941).</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="1080">
+                <cell id="1081">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1064">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Static eliminators</text-property>
+                    </label>
+                </cell>
+                <cell id="1082">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1084">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Contain sealed radiological sources</text-property>
+                    </label>
+                </cell>
+                <cell id="1083">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1088">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Contact RCT</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="1018">
+                <cell id="1019">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1065">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Syringes</text-property>
+                    </label>
+                </cell>
+                <cell id="1020">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                </cell>
+                <cell id="1021">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1089">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Dispose in sharps container.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="1022">
+                <cell id="1023">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1066">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Video monitors - CRT's, oscilloscopes</text-property>
+                    </label>
+                </cell>
+                <cell id="1024">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1072">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Non-functioning monitors that can't be repaired</text-property>
+                    </label>
+                </cell>
+                <cell id="1025">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1090">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Contact Generator Assistant and dispose of as waste.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="1026">
+                <cell id="1027">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1067">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Washing equipment</text-property>
+                    </label>
+                </cell>
+                <cell id="1028">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1073">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Lab glassware washers, cage washers, etc. - may contain corrosive cleaning fluids</text-property>
+                    </label>
+                </cell>
+                <cell id="1029">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1094">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Contact IH for help.</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="1030">
+                <cell id="1031">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1068">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">X-ray producing equipment</text-property>
+                    </label>
+                </cell>
+                <cell id="1032">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                </cell>
+                <cell id="1033">
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1093">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">left</property>
+                        <text-property name="text">Contact RCT</text-property>
+                    </label>
+                </cell>
+            </row>
+            <row id="1034">
+                <cell id="1035">
+                    <property name="colSpan">3</property>
+                    <property name="rowSpan">1</property>
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderBottomWidth">1px</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderLeftWidth">1px</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderRightWidth">1px</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <property name="borderTopWidth">1px</property>
+                    <label id="1095">
+                        <property name="fontSize">10pt</property>
+                        <property name="textAlign">center</property>
+                        <text-property name="text">Note:  Costs for sample analyses and decontamination may be borne by the custodian </text-property>
+                    </label>
+                </cell>
+            </row>
+        </grid>
+    </body>
+</report>

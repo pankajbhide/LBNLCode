@@ -1,0 +1,683 @@
+/******************************************************************************
+*
+* PROGRAM NAME          : IMPHAZAZPREC_HEAR.SQL 
+*
+*
+* DESCRIPTION           : PROGRAM TO REFRSH MAXIMO SAFETY RELATED TABLES
+*                         WITH HMS HAZARDS/CONTROLS.  
+*                        
+*                        
+* AUTHOR                : PANKAJ BHIDE
+*
+* DATE WRITTEN          : 19 -SEPT-2007
+*
+* DATE MODIFIED         :
+*
+* MODIFICATION HISORTY  : 15-FEB-2008 GET THE PRECAUTION(CONTROL) INFORMATION 
+*                         FROM THE CUSTOM TABLE TITLED LBL_HAZPRECAUTION. 
+*                         
+*                         25-SEP-2008 THE VALUE OF PRV_KEY WAS NOT SET AFTER THE 
+*                         CONTROL BREAK. FIXED THE DEFECT.
+*
+*                         15-DEC-2008 UPDATE PRECAUTIONS FROM THE SOURCE SYSTEM
+*                         IF NO COMMON CONTROLS ARE FOUND (RT# 58553). 
+*
+*                         06-FEB-2009 (RT#59279) 
+*                         THE LOCATION NOTES IS CONNECTED TO PRECAUTION. THERE
+*                         CAN BE MULTIPLE LOCATION NOTES FOR THE SAME HAZARDS.
+*
+*
+*                         20-MARCH-2009 CHANGES MADE FOR MXES
+*                         (SITEID/ORGID ARGUMENTS, HASLD AND LONG DESCRIPTION
+*                         CHANGES
+*                           
+*                         12-FEB-2015 Modified the program for MAXIMO 7.6 upgrade
+*
+*  NOTES FOR FUTURE 
+*  ENHANCEMENTS          : DEPENDING UPON THE REQUIREMENTS FROM OTHER DIVISIONS 
+*                          (E.G. ALS), THE TABLE TITLED "LBL_FAC_HAZARDS" CAN BE 
+*                          RENAMED TO "LBL_MAX_HAZARDS". LATER, DEPENDING UPON THE
+*                          FILTER SETUP BY THE DIVISION, THE ORG_ID AND SITE_ID
+*                          IN THIS TABLE CAN ADDED AND POPULATED. FINALLY, THE 
+*                          SELECTION FROM THIS TABLE CAN BE BASED ON ORGID AND
+*                          SITE ID.   (PANKAJ) 
+*
+*                          1-OCT-2015: Revised the program for MAXIMO 7.6 upgrade. (AL)
+*******************************************************************************/
+
+WHENEVER SQLERROR EXIT 1 ROLLBACK;
+
+DECLARE
+
+  -- CURSOR FOR ACTIVE HAZARDS
+  CURSOR LBL_HAZARDS_CONTROLS_CUR IS
+  SELECT A.SOURCE_SYSTEM,
+         A.SOURCE_ID SOURCE_HAZARD_ID,
+         LTRIM(RTRIM(SUBSTR(A.HAZARD_DESC,1,50))) HAZARD_DESC,
+         LTRIM(RTRIM(NVL(A.CONTROLS,'**EMPTY**')))      CONTROLS,
+         LTRIM(RTRIM(NVL(A.LOCATION_NOTE,'**EMPTY**'))) CONTROLS_LOCATION_NOTE,
+         NVL(A.HAZARD_LONGDESC,'')                      HAZARD_LONGDESCRIPTION,
+         LTRIM(RTRIM(NVL(A.COMMENTS,'')))               HAZARD_COMMENTS,
+         NVL(A.STATUS,'ACTIVE')                         HAZARD_STATUS,
+         A.BUILDING                                     HAZARD_BUILDING,
+         A.ROOM                                         HAZARD_ROOM
+   FROM  LBL_HAZARDS A, LBL_FAC_HAZARDS C
+   WHERE A.SOURCE_SYSTEM=C.SOURCE_SYSTEM
+   AND   A.HAZARD_DESC=C.HAZARD_DESC
+   AND   UPPER(A.STATUS) IN ('ACTIVE','OK')
+   AND   C.STATUS='A'
+   ORDER BY A.SOURCE_SYSTEM, LTRIM(RTRIM(A.HAZARD_DESC)),
+   LTRIM(RTRIM(NVL(A.CONTROLS,'**EMPTY**'))),
+   LTRIM(RTRIM(NVL(A.LOCATION_NOTE,'**EMPTY**'))),
+   A.BUILDING, A.ROOM;
+
+
+   HAZARDID_T  MAXIMO.HAZARD.HAZARDID%TYPE;
+   PRECAUTIONID_T    MAXIMO.PRECAUTION.PRECAUTIONID%TYPE;
+   HAZ_DESCRIPTION_T MAXIMO.HAZARD.DESCRIPTION%TYPE;
+   PRECAUTIONENABLED_T  MAXIMO.HAZARD.PRECAUTIONENABLED%TYPE;
+   SEED_T     MAXIMO.AUTOKEY.SEED%TYPE;
+   LOCATION_T  MAXIMO.LOCATIONS.LOCATION%TYPE;
+   REC_CNT_T   NUMBER(10) :=0;
+   REC_CHECK_T NUMBER(10) :=0;
+   CAN_BE_DELETED_T BOOLEAN;
+   PRV_HAZARD_DESC_T LBL_HAZARDS.HAZARD_DESC%TYPE;
+   PRV_HAZ_LONGDES_T LBL_HAZARDS.HAZARD_LONGDESC%TYPE;
+   PRV_SOURCE_SYSTEM_T LBL_HAZARDS.SOURCE_SYSTEM%TYPE;
+   PRV_KEY_T             VARCHAR2(4000);
+   PRV_CONTROLS_T        LBL_HAZARDS.CONTROLS%TYPE;
+   PRV_CNTRLOC_NOTES_T   LBL_HAZARDS.LOCATION_NOTE%TYPE;
+   ORGID_T               SAFETYLEXICON.ORGID%TYPE;
+   SITEID_T              SAFETYLEXICON.SITEID%TYPE;
+
+--***************************************************************************
+-- FUNCTION TO INSERT THE HAZARD RECORD. IF RECORD ALREADY EXISTS, THEN, IT
+-- RETURNS THE HAZARDID
+--***************************************************************************
+FUNCTION PROCESS_HAZARD(ORGID_I         IN SAFETYLEXICON.ORGID%TYPE,
+                        SITEID_I        IN SAFETYLEXICON.SITEID%TYPE,
+                        SOURCE_SYSTEM_I IN LBL_HAZARDS.SOURCE_SYSTEM%TYPE,
+                        HAZARD_DESC_I   IN LBL_HAZARDS.HAZARD_DESC%TYPE,
+                        HAZARD_LONGDESCRIPTION_I IN LBL_HAZARDS.HAZARD_LONGDESC%TYPE,
+                        CONTROLS_I       IN LBL_HAZARDS.CONTROLS%TYPE,
+                        CNTRLOC_NOTES_I  IN LBL_HAZARDS.LOCATION_NOTE%TYPE)
+          RETURN MAXIMO.HAZARD.HAZARDID%TYPE
+IS
+  HAZARDID_T  MAXIMO.HAZARD.HAZARDID%TYPE :=NULL;
+  SEED_T     MAXIMO.AUTOKEY.SEED%TYPE :=NULL;
+  HAZARDTYPE_T MAXIMO.HAZARD.HAZARDTYPE%TYPE :='';
+  HAZARDUID_T HAZARD.HAZARDUID%TYPE;   -- MXES 
+  HASLD_T     HAZARD.HASLD%TYPE :='0'; -- MXES 
+  LDNEXTVAL_T MAXIMO.LONGDESCRIPTION.LONGDESCRIPTIONID%TYPE;
+  CONTENTUID_T MAXIMO.LONGDESCRIPTION.CONTENTUID%TYPE;
+
+  BEGIN
+    --*********************************************************************
+    -- CHECK WHETHER THE HAZARD ALREADY EXISTING IN THE CUSTOM LOOKUP TABLE
+    -- IF IT EXISTS, THEN, RETURN HAZARD ID
+    --*********************************************************************
+     BEGIN
+
+       SELECT HAZARDID INTO HAZARDID_T
+       FROM   BATCH_MAXIMO.LBL_HAZ_CNTRL_LOCNOTES
+       WHERE  SOURCE_SYSTEM=SOURCE_SYSTEM_I
+       AND    HAZARD_DESC=HAZARD_DESC_I
+       AND    CONTROLS=CONTROLS_I
+       AND    LOCATION_NOTES=CNTRLOC_NOTES_I
+       AND    ORGID=ORGID_I
+       AND    SITEID=SITEID_I;
+
+       -- DELETE ALL PRECAUTIONS ASSOCIATED WITH THIS HAZARD
+       DELETE FROM MAXIMO.HAZARDPREC 
+       WHERE HAZARDID=HAZARDID_T 
+       AND   ORGID=ORGID_I 
+       AND SITEID=SITEID_I;
+
+       RETURN HAZARDID_T;
+
+     EXCEPTION
+       WHEN OTHERS THEN
+         NULL;
+
+     END;
+
+      -- HAZARD NOT FOUND; HENCE CREATE NEW ONE
+
+     SELECT VARVALUE INTO HAZARDID_T
+      FROM MAXIMO.LBL_MAXVARS
+      WHERE VARNAME='HAZARDID'
+      AND   ORGID=ORGID_I
+      AND   SITEID=SITEID_I;
+
+      UPDATE MAXIMO.LBL_MAXVARS
+      SET VARVALUE=VARVALUE + 1
+      WHERE VARNAME='HAZARDID'
+      AND   ORGID=ORGID_I
+      AND   SITEID=SITEID_I;
+
+      HAZARDID_T := SOURCE_SYSTEM_I || LPAD(LTRIM(HAZARDID_T+1),6,'0');
+      
+      SELECT MAXIMO.HAZARDSEQ.NEXTVAL   -- MXES 
+      INTO HAZARDUID_T 
+      FROM SYS.DUAL;
+
+      IF LENGTH(HAZARD_LONGDESCRIPTION_I) > 0 THEN         
+       LDNEXTVAL_T := LONGDESCRIPTIONSEQ.NEXTVAL;
+       CONTENTUID_T := concat('BMXAA', LDNEXTVAL_T);
+       INSERT INTO MAXIMO.LONGDESCRIPTION
+       (LDKEY, LDOWNERTABLE, LDOWNERCOL, LDTEXT, 
+         LANGCODE, LONGDESCRIPTIONID, CONTENTUID)
+        VALUES (HAZARDUID_T,'HAZARD', 'DESCRIPTION', HAZARD_LONGDESCRIPTION_I, 
+                'EN',LDNEXTVAL_T , CONTENTUID_T);  -- MXES 
+        
+        HASLD_T :='1';  -- FLAG INDICATING THE EXISTENCE OF LONG DESCRIPTION 
+        
+      END IF; -- LENGTH(HAZARD_LONGDESCRIPTION_I) > 0
+
+      IF SOURCE_SYSTEM_I='HMS' THEN
+          HAZARDTYPE_T  := 'HEALTH';
+      END IF;
+
+      -- INSERT INTO HAZARD
+      INSERT INTO MAXIMO.HAZARD (HAZARDID, DESCRIPTION, HASLD,         -- MXES 
+                  PRECAUTIONENABLED, HAZMATENABLED, TAGOUTENABLED, ORGID,
+                  HAZARDTYPE, HAZ20, HAZARD.HAZARDUID, LANGCODE)
+       VALUES (HAZARDID_T, HAZARD_DESC_I, HASLD_T,                     -- MXES 
+              '1', '0', '0', ORGID_T,
+              HAZARDTYPE_T ,'0',HAZARDUID_T, 'EN');   -- MXES 
+
+       INSERT INTO MAXIMO.SAFETYLEXICON (HAZARDID,
+                    ORGID, SITEID, SL01, SAFETYLEXICONID)
+       VALUES (HAZARDID_T,
+               ORGID_T,SITEID_T,'H', SAFETYLEXICONSEQ.NEXTVAL);
+
+       INSERT INTO BATCH_MAXIMO.LBL_HAZ_CNTRL_LOCNOTES
+       (HAZARDID, SOURCE_SYSTEM, HAZARD_DESC,
+        CONTROLS, LOCATION_NOTES,LBL_CNTRL_LOC3, ORGID, SITEID) VALUES
+       (HAZARDID_T, SOURCE_SYSTEM_I, HAZARD_DESC_I,
+        CONTROLS_I, CNTRLOC_NOTES_I,SYSDATE, ORGID_T, SITEID_T);
+
+       RETURN HAZARDID_T;
+
+END; -- END OF FUNCTION
+
+  --*******************************************************************
+  -- FUNCTION TO INSERT THE PRECAUTION INFORMATION INTO THE DATABASE
+  -- TABLES
+  --*******************************************************************
+     FUNCTION WRITE_PRECAUTION(ORGID_I  IN SAFETYLEXICON.ORGID%TYPE,
+                               SITEID_I        IN SAFETYLEXICON.SITEID%TYPE,
+                               SOURCE_SYSTEM_I IN LBL_HAZARDS.SOURCE_SYSTEM%TYPE,
+                               HAZARDID_I       IN MAXIMO.HAZARD.HAZARDID%TYPE,
+                               PRECAUTIONID_I   IN MAXIMO.PRECAUTION.PRECAUTIONID%TYPE,
+                               HAZARD_DESC_I    IN LBL_HAZARDS.HAZARD_DESC%TYPE,
+                               CONTROLS_I       IN LBL_HAZARDS.CONTROLS%TYPE)
+
+                    RETURN MAXIMO.PRECAUTION.PRECAUTIONID%TYPE
+     IS
+
+       NUMBER_T          NUMBER(5) :=0;
+       PRECAUTIONID_T    PRECAUTION.PRECAUTIONID%TYPE;
+       HAZARDID_T1       MAXIMO.HAZARD.HAZARDID%TYPE;
+       HASLD_T           PRECAUTION.HASLD%TYPE :='0';
+       PRECAUTIONUID_T   PRECAUTION.PRECAUTIONUID%TYPE;
+       LDNEXTVAL_T MAXIMO.LONGDESCRIPTION.LONGDESCRIPTIONID%TYPE;
+       CONTENTUID_T MAXIMO.LONGDESCRIPTION.CONTENTUID%TYPE;
+
+     BEGIN
+       -- PREPARE PRECAUTION ID IF NULL
+       IF (PRECAUTIONID_I IS NULL) THEN
+
+         SELECT VARVALUE INTO PRECAUTIONID_T
+         FROM MAXIMO.LBL_MAXVARS
+         WHERE VARNAME='PRECAUTIONID'
+         AND   ORGID=ORGID_I
+         AND   SITEID=SITEID_I;
+
+         UPDATE MAXIMO.LBL_MAXVARS
+         SET VARVALUE=VARVALUE + 1
+         WHERE VARNAME='PRECAUTIONID'
+         AND   ORGID=ORGID_I
+         AND   SITEID=SITEID_I;
+
+         PRECAUTIONID_T := SOURCE_SYSTEM_I || LPAD(LTRIM(PRECAUTIONID_T+1),6,'0');
+       ELSE
+         PRECAUTIONID_T := PRECAUTIONID_I;
+       END IF; -- IF (PRECAUTIONID_I IS NULL) THEN 
+        
+        BEGIN
+
+         SELECT  PRECAUTION.PRECAUTIONUID, HASLD
+         INTO    PRECAUTIONUID_T, HASLD_T  
+         FROM    MAXIMO.PRECAUTION
+         WHERE   ORGID=ORGID_I
+         AND     SITEID=SITEID_I
+         AND     PRECAUTIONID=PRECAUTIONID_T;
+
+         -- RECORD EXISTS IN PRECAUTION TABLE
+         -- UPDATE LONG DESCRIPTION WITH NEW PREC TEXT 
+         
+           IF (HASLD_T ='1') THEN   -- MXES 
+             UPDATE MAXIMO.LONGDESCRIPTION -- NEW LDTEXT
+             SET   LDTEXT=CONTROLS_I
+             WHERE LDOWNERTABLE='PRECAUTION'
+             AND   LDOWNERCOL='DESCRIPTION'
+             AND   LDKEY=PRECAUTIONUID_T;
+           END IF;  -- IF HASLD_T =1 
+
+          EXCEPTION  -- RECORD DOES NOT EXIST IN PRECAUTION
+           WHEN OTHERS THEN
+              -- START INSERTING PRECAUTION DETAILS
+
+              SELECT PRECAUTIONSEQ.NEXTVAL 
+              INTO   PRECAUTIONUID_T
+              FROM   SYS.DUAL;
+              LDNEXTVAL_T := LONGDESCRIPTIONSEQ.NEXTVAL ;
+              CONTENTUID_T := concat('BMXAA', LDNEXTVAL_T);                                                                            
+              INSERT INTO MAXIMO.LONGDESCRIPTION
+              (LDKEY, LDOWNERTABLE, LDOWNERCOL, 
+               LANGCODE, LONGDESCRIPTIONID,
+               LDTEXT, CONTENTUID)
+               VALUES (PRECAUTIONUID_T, 'PRECAUTION', 'DESCRIPTION',
+                       'EN',LDNEXTVAL_T,
+                        RTRIM(LTRIM(CONTROLS_I)), CONTENTUID_T);
+                        
+                            
+               INSERT INTO MAXIMO.PRECAUTION
+                (ORGID, SITEID, PRECAUTIONID,
+                 DESCRIPTION,
+                 HASLD, PRECAUTIONUID , PREC10, LANGCODE)
+                VALUES (ORGID_I, SITEID_I, PRECAUTIONID_T,
+                SUBSTR(HAZARD_DESC_I,1,50), -- PRECAUTION DESC
+                '1', PRECAUTIONUID_T, '0','EN');       -- MXES 
+                                  
+           END; -- EXCEPTION RECORD DOES NOT EXIST IN PRECAUTION
+
+          -- NOW CONNECT IT TO HAZARD
+          BEGIN
+            SELECT HAZARDID INTO HAZARDID_T1
+            FROM   MAXIMO.HAZARDPREC
+            WHERE  HAZARDID=HAZARDID_I
+            AND    PRECAUTIONID=PRECAUTIONID_T
+            AND    ORGID=ORGID_I
+            AND    SITEID=SITEID_I;
+     
+             EXCEPTION -- RECORD NOT EXISTS IN HAZARDPREC
+               WHEN OTHERS THEN
+                -- MXES    
+                INSERT INTO MAXIMO.HAZARDPREC
+                (HAZARDID, PRECAUTIONID, ORGID, SITEID, HAZARDPREC.HAZARDPRECID) 
+                 VALUES
+                (HAZARDID_I, PRECAUTIONID_T, ORGID_I, SITEID_I, HAZARDPRECSEQ.NEXTVAL);
+              END;    -- RECORD NOT EXISTS IN HAZARDPREC
+
+     
+    RETURN PRECAUTIONID_T;
+
+   END; -- END FUNCTION
+
+     --**************************************************************
+     -- FUNCTION TO INSERT THE PRECAUTION INFORMATION FOR THE HAZARD
+     -- ADDED ON 2/15/07
+     --*************************************************************
+     FUNCTION PROCESS_PRECAUTION(
+                    ORGID_I         IN SAFETYLEXICON.ORGID%TYPE,
+                    SITEID_I        IN SAFETYLEXICON.SITEID%TYPE,
+                    SOURCE_SYSTEM_I IN LBL_HAZARDS.SOURCE_SYSTEM%TYPE,
+                    HAZARDID_I      IN MAXIMO.HAZARD.HAZARDID%TYPE,
+                    HAZARD_DESC_I   IN LBL_HAZARDS.HAZARD_DESC%TYPE,
+                    CONTROLS_I      IN LBL_HAZARDS.CONTROLS%TYPE,
+                    CNTRLOC_NOTES_I IN LBL_HAZARDS.LOCATION_NOTE%TYPE)
+                    RETURN MAXIMO.PRECAUTION.PRECAUTIONID%TYPE
+      IS
+
+      CONTROLS_T        VARCHAR2(4000) :=NULL;
+      PRECAUTION_DESC_T MAXIMO.PRECAUTION.DESCRIPTION%TYPE :=NULL;
+    
+      SME_T             BATCH_MAXIMO.LBL_HAZPRECAUTION.SME%TYPE;
+      PRECAUTIONID_T    PRECAUTION.PRECAUTIONID%TYPE :=NULL;
+      PRECAUTIONID_T1   PRECAUTION.PRECAUTIONID%TYPE :=NULL;
+
+
+      BEGIN
+        --******************************************************************
+        -- FIND OUT WHETHER ANY PRECAUTION EXIST FOR THAT ENTIRE SUB-SYSTEM
+        -- IF EXISTS, THEN IF NEEDED CREATE THE PRECAUTION AND ATTACH THAT
+        -- PRECAUTION TO ALL THE HAZARDS OF THAT SUB-SYSTEM.
+        --******************************************************************
+        BEGIN
+
+            SELECT PRECAUTION_DESC, SME, MAXIMO_PRECAUTIONID
+            INTO   CONTROLS_T, SME_T, PRECAUTIONID_T
+            FROM   BATCH_MAXIMO.LBL_HAZPRECAUTION
+            WHERE  SOURCE_SYSTEM=SOURCE_SYSTEM_I
+            AND    UPPER(HAZARD_DESC)='ALL'
+            AND    ORGID=ORGID_I
+            AND    SITEID=SITEID_I;
+
+            IF (CONTROLS_T IS NOT NULL AND LENGTH(CONTROLS_T) >0) THEN
+                CONTROLS_T := CONTROLS_T || CHR(13) || CHR(10) || CHR(13) || CHR(10)
+                           || 'SUBJECT MATTER EXPERT: ' || SME_T;
+            END IF;
+
+            -- UPDATE PRECAUTION RELATED DB TABLES
+            PRECAUTIONID_T1 := WRITE_PRECAUTION(ORGID_I, SITEID_I, 
+                               SOURCE_SYSTEM_I, HAZARDID_I, PRECAUTIONID_T,
+                               HAZARD_DESC_I, CONTROLS_T);
+
+            RETURN PRECAUTIONID_T1;
+
+        EXCEPTION
+
+         WHEN OTHERS THEN
+            NULL;
+        END;
+
+       --***********************************************************************
+       -- FIND OUT WHETHER ANY PRECAUTION EXISTS IN CUSTOM TABLE FOR THAT HAZARD
+       --***********************************************************************
+       BEGIN
+
+          SELECT PRECAUTION_DESC,SME, MAXIMO_PRECAUTIONID
+          INTO   CONTROLS_T, SME_T, PRECAUTIONID_T
+          FROM   BATCH_MAXIMO.LBL_HAZPRECAUTION
+          WHERE  SOURCE_SYSTEM=SOURCE_SYSTEM_I
+          AND    LTRIM(RTRIM(HAZARD_DESC))=HAZARD_DESC_I
+          AND    ORGID=ORGID_I
+          AND    SITEID=SITEID_I;
+
+          IF (CONTROLS_T IS NOT NULL AND LENGTH(CONTROLS_T) >0) THEN
+                    CONTROLS_T := CONTROLS_T || CHR(13) || CHR(10) || CHR(13) || CHR(10)
+                               || 'SUBJECT MATTER EXPERT: ' || SME_T;
+          END IF;
+
+          -- UPDATE PRECAUTION RELATED DB TABLES
+          PRECAUTIONID_T1 := WRITE_PRECAUTION(ORGID_I, SITEID_I,
+                             SOURCE_SYSTEM_I, HAZARDID_I, PRECAUTIONID_T,
+                             HAZARD_DESC_I, CONTROLS_T);
+                             
+          RETURN PRECAUTIONID_T1;
+
+       EXCEPTION
+           WHEN OTHERS THEN
+             NULL;
+       END;
+
+       --********************************************************************
+       -- NOW FIND OUT WHETHER PRECAUTION ALREADY EXISTS IN THE LOOKUP TABLE
+       --********************************************************************
+
+       PRECAUTIONID_T :=NULL;
+       CONTROLS_T     :=NULL;
+
+       BEGIN
+       
+        SELECT PRECAUTIONID INTO PRECAUTIONID_T
+        FROM   BATCH_MAXIMO.LBL_HAZ_CNTRL_LOCNOTES
+        WHERE  SOURCE_SYSTEM=SOURCE_SYSTEM_I
+        AND    HAZARD_DESC=HAZARD_DESC_I
+        AND    CONTROLS=CONTROLS_I
+        AND    LOCATION_NOTES=CNTRLOC_NOTES_I
+        AND    ORGID=ORGID_I
+        AND    SITEID=SITEID_I;
+
+        IF (CONTROLS_I !='**EMPTY**' )  THEN
+           CONTROLS_T := CONTROLS_I;
+        END IF;
+
+        IF (CNTRLOC_NOTES_I !='**EMPTY**')  THEN
+
+          IF (CONTROLS_T IS NOT NULL) THEN
+             CONTROLS_T := CONTROLS_T || CHR(13) || CHR(10) || CHR(13) || CHR(10)
+                        || CNTRLOC_NOTES_I;
+          ELSE
+             CONTROLS_T := CNTRLOC_NOTES_I;
+          END IF;
+        END IF;
+
+        IF (CONTROLS_T IS NOT NULL AND LENGTH(LTRIM(RTRIM(CONTROLS_T))) >0) THEN
+
+
+         -- UPDATE PRECAUTION RELATED DB TABLES
+         PRECAUTIONID_T1 := WRITE_PRECAUTION(ORGID_I, SITEID_I, SOURCE_SYSTEM_I, 
+                            HAZARDID_I, PRECAUTIONID_T,HAZARD_DESC_I, CONTROLS_T);
+
+
+
+         UPDATE BATCH_MAXIMO.LBL_HAZ_CNTRL_LOCNOTES
+         SET    PRECAUTIONID=PRECAUTIONID_T1
+         WHERE  SOURCE_SYSTEM=SOURCE_SYSTEM_I
+         AND    HAZARD_DESC=HAZARD_DESC_I
+         AND    CONTROLS=CONTROLS_I
+         AND    LOCATION_NOTES=CNTRLOC_NOTES_I
+         AND    ORGID=ORGID_I
+         AND    SITEID=SITEID_I;
+
+       END IF;
+
+        RETURN PRECAUTIONID_T1;
+
+       EXCEPTION
+         WHEN OTHERS THEN
+        
+          RETURN NULL;
+     END;
+
+
+   END;
+
+--********************************
+-- MAIN PROGRAM STARTS FROM HERE
+--********************************
+BEGIN
+DBMS_OUTPUT.ENABLE(1000000);
+
+    -- MXES 
+     ORGID_T   :=UPPER('&1');
+     SITEID_T  :=UPPER('&2');
+  
+  IF (ORGID_T IS NULL OR LENGTH(ORGID_T)=0) THEN
+       ORGID_T :='LBNL';
+    END IF;
+     
+    IF (SITEID_T IS NULL OR LENGTH(SITEID_T)=0) THEN
+       SITEID_T :='FAC';
+    END IF;
+
+   
+   -- DELETE OLD SAFETYLEXICON RECORDS (KEEP THE RECORDS FOR THE LAST 100 DAYS)
+   DELETE FROM BATCH_MAXIMO.LBL_SAFETYLEXICON
+   WHERE ORGID=ORGID_T   -- MXES
+   AND   SITEID=SITEID_T -- MXES 
+   AND   CHANGEDATE <= SYSDATE-100;
+
+   -- SAVE THE EXISTING RECORDS OF SAFETYLEXICON WHICH WERE PREVIOUSLY
+   -- INSERTED BY THIS PROGRAM
+   
+   INSERT INTO BATCH_MAXIMO.LBL_SAFETYLEXICON
+   (ROWSTAMP, SAFETYLEXICONID, LOCATION, ASSETNUM, HAZARDID, TAGOUTID,SL01,
+    SL02, SL03,SL04, APPLYSEQ, REMOVESEQ, ORGID,SITEID,CHANGEDATE)
+    SELECT ROWSTAMP, SAFETYLEXICONID, LOCATION, ASSETNUM, HAZARDID, TAGOUTID,SL01,
+    SL02, SL03,SL04, APPLYSEQ, REMOVESEQ, ORGID,SITEID,SYSDATE
+    FROM  MAXIMO.SAFETYLEXICON
+    WHERE LOCATION IS NOT NULL AND SL01='H' AND ASSETNUM IS NULL
+    AND   ORGID=ORGID_T AND SITEID=SITEID_T;   -- MXES
+
+   -- NOW DELETE THE EXISTING RECORDS WHICH WERE PREVIOUSLY
+   -- INSERTED BY THIS PROGRAM
+
+   DELETE FROM  MAXIMO.SAFETYLEXICON
+   WHERE LOCATION IS NOT NULL AND SL01='H' AND ASSETNUM IS NULL
+   AND   ORGID=ORGID_T AND SITEID=SITEID_T; -- MXES 
+
+
+   --*********************************
+   -- START READING ALL ACTIVE HAZARDS
+   --*********************************
+   FOR LBL_HAZARDS_CONTROLS_REC IN LBL_HAZARDS_CONTROLS_CUR
+
+    LOOP
+
+     REC_CNT_T := REC_CNT_T+1 ;
+
+     IF (REC_CNT_T=1) THEN
+
+        PRV_SOURCE_SYSTEM_T  := LBL_HAZARDS_CONTROLS_REC.SOURCE_SYSTEM;
+        PRV_HAZARD_DESC_T    := LBL_HAZARDS_CONTROLS_REC.HAZARD_DESC;
+        PRV_CONTROLS_T       := LBL_HAZARDS_CONTROLS_REC.CONTROLS;
+        PRV_CNTRLOC_NOTES_T  := LBL_HAZARDS_CONTROLS_REC.CONTROLS_LOCATION_NOTE;
+
+        -- PRIMARY CONTROL BREAK KEY 
+        PRV_KEY_T := LBL_HAZARDS_CONTROLS_REC.SOURCE_SYSTEM ||
+                     LBL_HAZARDS_CONTROLS_REC.HAZARD_DESC   ||
+                     LBL_HAZARDS_CONTROLS_REC.CONTROLS ||
+                     LBL_HAZARDS_CONTROLS_REC.CONTROLS_LOCATION_NOTE;
+
+        PRV_HAZ_LONGDES_T := LBL_HAZARDS_CONTROLS_REC.HAZARD_LONGDESCRIPTION;
+
+
+       -- GET HAZARD ID, IF ALREADY EXISTS, ELSE INSERT INTO MAXIMO
+       -- AND RETURN THE NEW HAZARD ID
+      
+       HAZARDID_T := PROCESS_HAZARD(ORGID_T,              -- MXES 
+                                    SITEID_T,             -- MXES   
+                                    PRV_SOURCE_SYSTEM_T,
+                                    PRV_HAZARD_DESC_T,
+                                    PRV_HAZ_LONGDES_T,
+                                    PRV_CONTROLS_T,
+                                    PRV_CNTRLOC_NOTES_T);
+
+
+       -- NOW INSERT THE PRECAUTION
+       PRECAUTIONID_T := PROCESS_PRECAUTION(ORGID_T,       -- MXES
+                         SITEID_T,                         -- MXES 
+                         PRV_SOURCE_SYSTEM_T,
+                         HAZARDID_T,
+                         PRV_HAZARD_DESC_T,
+                         PRV_CONTROLS_T,
+                         PRV_CNTRLOC_NOTES_T);
+
+
+     --DBMS_OUTPUT.PUT_LINE(HAZARDID_T);
+
+     END IF; -- IF (REC_CNT_T=1)
+
+
+     IF (PRV_KEY_T !=  LBL_HAZARDS_CONTROLS_REC.SOURCE_SYSTEM ||
+                       LBL_HAZARDS_CONTROLS_REC.HAZARD_DESC   ||
+                       LBL_HAZARDS_CONTROLS_REC.CONTROLS      ||
+                       LBL_HAZARDS_CONTROLS_REC.CONTROLS_LOCATION_NOTE) THEN
+
+        PRV_SOURCE_SYSTEM_T  := LBL_HAZARDS_CONTROLS_REC.SOURCE_SYSTEM;
+        PRV_HAZARD_DESC_T    := LBL_HAZARDS_CONTROLS_REC.HAZARD_DESC;
+        PRV_CONTROLS_T       := LBL_HAZARDS_CONTROLS_REC.CONTROLS;
+        PRV_CNTRLOC_NOTES_T  := LBL_HAZARDS_CONTROLS_REC.CONTROLS_LOCATION_NOTE;
+
+        PRV_HAZ_LONGDES_T    := LBL_HAZARDS_CONTROLS_REC.HAZARD_LONGDESCRIPTION;
+
+        -- PRIMARY CONTROL BREAK KEY
+        PRV_KEY_T := LBL_HAZARDS_CONTROLS_REC.SOURCE_SYSTEM ||
+                     LBL_HAZARDS_CONTROLS_REC.HAZARD_DESC   ||
+                     LBL_HAZARDS_CONTROLS_REC.CONTROLS ||
+                     LBL_HAZARDS_CONTROLS_REC.CONTROLS_LOCATION_NOTE;
+
+       -- GET HAZARD ID, IF ALREADY EXISTS, ELSE INSERT INTO MAXIMO
+       -- AND RETURN THE NEW HAZARD ID
+
+       HAZARDID_T := PROCESS_HAZARD(ORGID_T,                   -- MXES
+                                    SITEID_T,                  -- MXES 
+                                    PRV_SOURCE_SYSTEM_T,
+                                    PRV_HAZARD_DESC_T,
+                                    PRV_HAZ_LONGDES_T,
+                                    PRV_CONTROLS_T,
+                                    PRV_CNTRLOC_NOTES_T);
+     
+       -- NOW INSERT THE PRECAUTION
+       PRECAUTIONID_T := PROCESS_PRECAUTION(ORGID_T,           -- MXES 
+                                            SITEID_T,  
+                                            PRV_SOURCE_SYSTEM_T,
+                                            HAZARDID_T,
+                                            PRV_HAZARD_DESC_T,
+                                            PRV_CONTROLS_T,
+                                            PRV_CNTRLOC_NOTES_T );
+
+     END IF; -- IF (PRV_KEY_T !=  LBL_HAZARDS_CONTROLS_REC.SOURCE_SYSTEM ||
+             -- LBL_HAZARDS_CONTROLS_REC.HAZARD_DESC) THEN
+
+
+
+     -- NOW ASSOCIATE THE HAZARDS INFORMATION TO VALID LOCATION
+
+         BEGIN
+
+          SELECT LOCATION INTO LOCATION_T
+          FROM MAXIMO.LOCATIONS
+          WHERE LOCATION=LBL_HAZARDS_CONTROLS_REC.HAZARD_BUILDING ||
+          DECODE(NVL(LBL_HAZARDS_CONTROLS_REC.HAZARD_ROOM,'*NULL*'),'*NULL*','','-'||
+          LBL_HAZARDS_CONTROLS_REC.HAZARD_ROOM)
+          AND  ORGID=ORGID_T
+          AND  SITEID=SITEID_T;
+
+          --DBMS_OUTPUT.PUT_LINE(LOCATION_T);
+
+          REC_CHECK_T :=0;
+
+          SELECT COUNT(*) INTO REC_CHECK_T
+          FROM MAXIMO.SAFETYLEXICON
+          WHERE  ORGID=ORGID_T
+          AND    SITEID=SITEID_T
+          AND    HAZARDID=HAZARDID_T
+          AND    LOCATION=LOCATION_T;
+
+          -- INSERT INTO SAFETYLEXICON
+          IF (REC_CHECK_T = 0) THEN
+           
+           INSERT INTO MAXIMO.SAFETYLEXICON
+           (LOCATION, HAZARDID, SL01, ORGID, SITEID,
+            SAFETYLEXICONID)  -- MXES 
+            VALUES (LOCATION_T, HAZARDID_T, 'H',ORGID_T, SITEID_T,
+            SAFETYLEXICONSEQ.NEXTVAL);
+         END IF;  -- IF (REC_CHECK_T = 0) THEN
+
+
+       EXCEPTION  -- BAD LOCATION
+         WHEN OTHERS THEN
+          NULL;
+          
+      END ;
+
+   END LOOP;
+
+       -- INSERT PRECAUTION FOR THE LAST HAZARD RECORD
+    
+        IF (REC_CNT_T > 0) THEN
+
+       -- NOW INSERT THE HAZARD
+       HAZARDID_T := PROCESS_HAZARD(ORGID_T,                   -- MXES
+                                    SITEID_T,                  -- MXES 
+                                    PRV_SOURCE_SYSTEM_T,
+                                    PRV_HAZARD_DESC_T,
+                                    PRV_HAZ_LONGDES_T,
+                                    PRV_CONTROLS_T,
+                                    PRV_CNTRLOC_NOTES_T);
+
+
+       -- NOW INSERT THE PRECAUTION
+       PRECAUTIONID_T := PROCESS_PRECAUTION(ORGID_T,                   -- MXES
+                                            SITEID_T,                  -- MXES 
+                                            PRV_SOURCE_SYSTEM_T,
+                                            HAZARDID_T,
+                                            PRV_HAZARD_DESC_T,
+                                            PRV_CONTROLS_T,
+                                            PRV_CNTRLOC_NOTES_T );
+      END IF; -- (REC_CNT_T > 0) THEN
+
+
+ COMMIT;
+
+
+END ;
+
+
+/
+

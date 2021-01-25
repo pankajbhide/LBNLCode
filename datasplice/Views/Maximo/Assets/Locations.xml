@@ -1,0 +1,3032 @@
+<?xml version="1.0"?>
+<DataSpliceViewDocument>
+  <StorageObject Type="DataSplice.Data.DataSpliceView">
+    <View>
+      <DataSource>AdoNetDataSource</DataSource>
+      <Id>
+        <Struct>
+          <Tokens>
+            <List>
+              <ListEntry Type="System.String">Maximo</ListEntry>
+              <ListEntry Type="System.String">Assets</ListEntry>
+              <ListEntry Type="System.String">Locations</ListEntry>
+            </List>
+          </Tokens>
+        </Struct>
+      </Id>
+      <Description>
+      </Description>
+      <Options>
+        <OptionCollection>
+          <Name IsNull="true" />
+          <Options>
+            <List>
+              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                <ConfigurationOption>
+                  <Key>ConnectionProfileName</Key>
+                  <OptionType>Text</OptionType>
+                  <Value Type="System.String">maximo</Value>
+                </ConfigurationOption>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                <ConfigurationOption>
+                  <Key>BaseSqlSelect</Key>
+                  <OptionType>LongText</OptionType>
+                  <Value Type="System.String">select l.location, l.description, l.type, l.status, lh.systemid, l.isdefault, lh.children,
+	(select count(*) from asset where location = l.location and siteid = l.siteid) assetcount,
+	lh.parent, l.siteid, l.orgid, l.locationsid, lh.lochierarchyid
+from locations l 
+	left join lochierarchy lh on l.location = lh.location and l.siteid = lh.siteid and l.orgid = lh.orgid
+</Value>
+                </ConfigurationOption>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                <ConfigurationOption>
+                  <Key>ViewFieldNames</Key>
+                  <OptionType>ConfigurationSection</OptionType>
+                  <Value Type="DataSplice.Configuration.ConfigurationSection">
+                    <ConfigurationSection>
+                      <Key>DbName</Key>
+                      <Flags>Fixed</Flags>
+                      <Template Type="DataSplice.Configuration.OptionCollection">
+                        <OptionCollection>
+                          <Name IsNull="true" />
+                          <Options>
+                            <List>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>DbName</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value IsNull="true" />
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>DataSpliceName</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value IsNull="true" />
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>UserSetColumnExpression</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value IsNull="true" />
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>CurrentFilterExpression</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value IsNull="true" />
+                                </ConfigurationOption>
+                              </ListEntry>
+                            </List>
+                          </Options>
+                        </OptionCollection>
+                      </Template>
+                      <Collections>
+                        <List>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">LOCATION</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Location</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">l.[location]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">DESCRIPTION</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Description</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">l.[description]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">TYPE</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Type</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">l.[type]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">STATUS</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Status</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">l.[status]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">SYSTEMID</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">System</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">lh.[systemid]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">ISDEFAULT</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Is Default</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">l.[isdefault]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">CHILDREN</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Has Children</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">lh.[children]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">ASSETCOUNT</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Asset Count</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">PARENT</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Parent</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">lh.[parent]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">SITEID</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Site</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">l.[siteid]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">ORGID</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Org</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">l.[orgid]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">LOCATIONSID</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">locationsid</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">l.[locationsid]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DbName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">LOCHIERARCHYID</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>DataSpliceName</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">lochierarchyid</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>UserSetColumnExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CurrentFilterExpression</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">lh.[lochierarchyid]</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </ListEntry>
+                        </List>
+                      </Collections>
+                    </ConfigurationSection>
+                  </Value>
+                </ConfigurationOption>
+              </ListEntry>
+            </List>
+          </Options>
+        </OptionCollection>
+      </Options>
+      <Attributes>
+        <DataSpliceAttributes>
+          <Attributes>
+            <Dictionary>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">DS_OFFLINE_SQL_INDEX</_key>
+                  <_value Type="System.String">Location</_value>
+                </Struct>
+              </DictionaryEntry>
+            </Dictionary>
+          </Attributes>
+        </DataSpliceAttributes>
+      </Attributes>
+      <Permissions>
+        <ObjectPermissions>
+          <Conditions>
+            <Dictionary>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="DataSplice.Data.ObjectPermission">ViewQuery</_key>
+                  <_value Type="System.String">true</_value>
+                </Struct>
+              </DictionaryEntry>
+            </Dictionary>
+          </Conditions>
+        </ObjectPermissions>
+      </Permissions>
+      <Fields>
+        <ViewFieldCollection>
+          <Fields>
+            <List>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Location</Name>
+                  <DataType>String</DataType>
+                  <DataSize>12</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>96</DisplayWidth>
+                  <Style>UpperCase</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Description</Name>
+                  <DataType>String</DataType>
+                  <DataSize>100</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>174</DisplayWidth>
+                  <Style>Wildcard Search</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Type</Name>
+                  <DataType>String</DataType>
+                  <DataSize>16</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>95</DisplayWidth>
+                  <Style>Type List</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Status</Name>
+                  <DataType>String</DataType>
+                  <DataSize>20</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>99</DisplayWidth>
+                  <Style>Status List</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>System</Name>
+                  <DataType>String</DataType>
+                  <DataSize>8</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>89</DisplayWidth>
+                  <Style>System List</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Is Default</Name>
+                  <DataType>Integer</DataType>
+                  <DataSize>0</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>63</DisplayWidth>
+                  <Style>Bit</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Has Children</Name>
+                  <DataType>Integer</DataType>
+                  <DataSize>0</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>78</DisplayWidth>
+                  <Style>Bit</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Asset Count</Name>
+                  <DataType>Integer</DataType>
+                  <DataSize>0</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>75</DisplayWidth>
+                  <Style>Integer</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value Type="System.String">False</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Parent</Name>
+                  <DataType>String</DataType>
+                  <DataSize>12</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>75</DisplayWidth>
+                  <Style>UpperCase</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Site</Name>
+                  <DataType>String</DataType>
+                  <DataSize>8</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>59</DisplayWidth>
+                  <Style>Site List</Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldVisible</_key>
+                              <_value Type="System.String">${MX_DISPLAY_SITE}</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>Org</Name>
+                  <DataType>String</DataType>
+                  <DataSize>8</DataSize>
+                  <Flags>ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>58</DisplayWidth>
+                  <Style>
+                  </Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldVisible</_key>
+                              <_value Type="System.String">${MX_DISPLAY_ORG}</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>locationsid</Name>
+                  <DataType>Long</DataType>
+                  <DataSize>0</DataSize>
+                  <Flags>PrimaryKey, ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>76</DisplayWidth>
+                  <Style>
+                  </Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldVisible</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldEditable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.ViewField">
+                <ViewField>
+                  <Type>Default</Type>
+                  <Name>lochierarchyid</Name>
+                  <DataType>Long</DataType>
+                  <DataSize>0</DataSize>
+                  <Flags>PrimaryKey, ConflictCheck</Flags>
+                  <Default>
+                  </Default>
+                  <DisplayWidth>-1</DisplayWidth>
+                  <Style>
+                  </Style>
+                  <Label>
+                  </Label>
+                  <Permissions>
+                    <ObjectPermissions>
+                      <Conditions>
+                        <Dictionary>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldVisible</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldEditable</_key>
+                              <_value Type="System.String">false</_value>
+                            </Struct>
+                          </DictionaryEntry>
+                          <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                            <Struct>
+                              <_key Type="DataSplice.Data.ObjectPermission">FieldSearchable</_key>
+                              <_value IsNull="true" />
+                            </Struct>
+                          </DictionaryEntry>
+                        </Dictionary>
+                      </Conditions>
+                    </ObjectPermissions>
+                  </Permissions>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </ViewField>
+              </ListEntry>
+            </List>
+          </Fields>
+        </ViewFieldCollection>
+      </Fields>
+      <Styles>
+        <ValidationStyleCollection>
+          <Styles>
+            <List>
+              <ListEntry Type="DataSplice.Data.FieldValidationStyle">
+                <FieldValidationStyle>
+                  <Name>Status List</Name>
+                  <Format>UpperCase</Format>
+                  <SearchFlags>Default</SearchFlags>
+                  <ValueSource Type="DataSplice.Display.ValueSource">
+                    <ValueSource>
+                      <Type>Dynamic</Type>
+                      <Options>
+                        <OptionCollection>
+                          <Name IsNull="true" />
+                          <Options>
+                            <List>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>RestrictToList</Key>
+                                  <OptionType>Boolean</OptionType>
+                                  <Value Type="System.Boolean">True</Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>DisplayStyle</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value Type="System.String">Dropdown</Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>DynamicQuery</Key>
+                                  <OptionType>Query</OptionType>
+                                  <Value Type="DataSplice.Data.DataSpliceQuery">
+                                    <Query>
+                                      <Target>
+                                        <Struct>
+                                          <Tokens>
+                                            <List>
+                                              <ListEntry Type="System.String">Maximo</ListEntry>
+                                              <ListEntry Type="System.String">Support</ListEntry>
+                                              <ListEntry Type="System.String">Synonym Domain</ListEntry>
+                                            </List>
+                                          </Tokens>
+                                        </Struct>
+                                      </Target>
+                                      <Offset>0</Offset>
+                                      <MaxRecords>0</MaxRecords>
+                                      <Filter>
+                                        <FilterItem>
+                                          <Operator>Equals</Operator>
+                                          <Arguments>
+                                            <List>
+                                              <ListEntry Type="System.String">Domain</ListEntry>
+                                              <ListEntry Type="System.String">LOCASSETSTATUS</ListEntry>
+                                            </List>
+                                          </Arguments>
+                                        </FilterItem>
+                                      </Filter>
+                                      <Sort>
+                                        <SortInfo>
+                                          <Items>
+                                            <List>
+                                              <ListEntry Type="DataSplice.Data.SortItem">
+                                                <Struct>
+                                                  <FieldName>Value</FieldName>
+                                                  <Direction>Ascending</Direction>
+                                                </Struct>
+                                              </ListEntry>
+                                            </List>
+                                          </Items>
+                                        </SortInfo>
+                                      </Sort>
+                                    </Query>
+                                  </Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>ValueField</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value Type="System.String">Value</Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>TargetField</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value IsNull="true" />
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>VisibleFields</Key>
+                                  <OptionType>StringArray</OptionType>
+                                  <Value Type="System.String[]">
+                                    <List>
+                                      <ListEntry Type="System.String">Value</ListEntry>
+                                      <ListEntry Type="System.String">Description</ListEntry>
+                                    </List>
+                                  </Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                            </List>
+                          </Options>
+                        </OptionCollection>
+                      </Options>
+                    </ValueSource>
+                  </ValueSource>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </FieldValidationStyle>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.FieldValidationStyle">
+                <FieldValidationStyle>
+                  <Name>System List</Name>
+                  <Format>UpperCase</Format>
+                  <SearchFlags>Default</SearchFlags>
+                  <ValueSource Type="DataSplice.Display.ValueSource">
+                    <ValueSource>
+                      <Type>Dynamic</Type>
+                      <Options>
+                        <OptionCollection>
+                          <Name IsNull="true" />
+                          <Options>
+                            <List>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>RestrictToList</Key>
+                                  <OptionType>Boolean</OptionType>
+                                  <Value IsNull="true" />
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>DisplayStyle</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value Type="System.String">Dropdown</Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>DynamicQuery</Key>
+                                  <OptionType>Query</OptionType>
+                                  <Value Type="DataSplice.Data.DataSpliceQuery">
+                                    <Query>
+                                      <Target>
+                                        <Struct>
+                                          <Tokens>
+                                            <List>
+                                              <ListEntry Type="System.String">Maximo</ListEntry>
+                                              <ListEntry Type="System.String">Assets</ListEntry>
+                                              <ListEntry Type="System.String">Location Systems</ListEntry>
+                                            </List>
+                                          </Tokens>
+                                        </Struct>
+                                      </Target>
+                                      <Offset>0</Offset>
+                                      <MaxRecords>0</MaxRecords>
+                                      <Filter>
+                                        <FilterItem>
+                                          <Operator>And</Operator>
+                                          <Arguments>
+                                            <List>
+                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                <FilterItem>
+                                                  <Operator>Equals</Operator>
+                                                  <Arguments>
+                                                    <List>
+                                                      <ListEntry Type="System.String">Org</ListEntry>
+                                                      <ListEntry Type="System.String">${Org}</ListEntry>
+                                                    </List>
+                                                  </Arguments>
+                                                </FilterItem>
+                                              </ListEntry>
+                                              <ListEntry Type="DataSplice.Data.FilterItem">
+                                                <FilterItem>
+                                                  <Operator>Equals</Operator>
+                                                  <Arguments>
+                                                    <List>
+                                                      <ListEntry Type="System.String">Site</ListEntry>
+                                                      <ListEntry Type="System.String">${Site}</ListEntry>
+                                                    </List>
+                                                  </Arguments>
+                                                </FilterItem>
+                                              </ListEntry>
+                                            </List>
+                                          </Arguments>
+                                        </FilterItem>
+                                      </Filter>
+                                      <Sort>
+                                        <SortInfo>
+                                          <Items />
+                                        </SortInfo>
+                                      </Sort>
+                                    </Query>
+                                  </Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>ValueField</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value Type="System.String">System</Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>TargetField</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value IsNull="true" />
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>VisibleFields</Key>
+                                  <OptionType>StringArray</OptionType>
+                                  <Value Type="System.String[]">
+                                    <List>
+                                      <ListEntry Type="System.String">System</ListEntry>
+                                      <ListEntry Type="System.String">Description</ListEntry>
+                                    </List>
+                                  </Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                            </List>
+                          </Options>
+                        </OptionCollection>
+                      </Options>
+                    </ValueSource>
+                  </ValueSource>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </FieldValidationStyle>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Data.FieldValidationStyle">
+                <FieldValidationStyle>
+                  <Name>Type List</Name>
+                  <Format>UpperCase</Format>
+                  <SearchFlags>Default</SearchFlags>
+                  <ValueSource Type="DataSplice.Display.ValueSource">
+                    <ValueSource>
+                      <Type>Dynamic</Type>
+                      <Options>
+                        <OptionCollection>
+                          <Name IsNull="true" />
+                          <Options>
+                            <List>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>RestrictToList</Key>
+                                  <OptionType>Boolean</OptionType>
+                                  <Value Type="System.Boolean">True</Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>DisplayStyle</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value Type="System.String">Dropdown</Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>DynamicQuery</Key>
+                                  <OptionType>Query</OptionType>
+                                  <Value Type="DataSplice.Data.DataSpliceQuery">
+                                    <Query>
+                                      <Target>
+                                        <Struct>
+                                          <Tokens>
+                                            <List>
+                                              <ListEntry Type="System.String">Maximo</ListEntry>
+                                              <ListEntry Type="System.String">Support</ListEntry>
+                                              <ListEntry Type="System.String">Synonym Domain</ListEntry>
+                                            </List>
+                                          </Tokens>
+                                        </Struct>
+                                      </Target>
+                                      <Offset>0</Offset>
+                                      <MaxRecords>0</MaxRecords>
+                                      <Filter>
+                                        <FilterItem>
+                                          <Operator>Equals</Operator>
+                                          <Arguments>
+                                            <List>
+                                              <ListEntry Type="System.String">Domain</ListEntry>
+                                              <ListEntry Type="System.String">LOCTYPE</ListEntry>
+                                            </List>
+                                          </Arguments>
+                                        </FilterItem>
+                                      </Filter>
+                                      <Sort>
+                                        <SortInfo>
+                                          <Items>
+                                            <List>
+                                              <ListEntry Type="DataSplice.Data.SortItem">
+                                                <Struct>
+                                                  <FieldName>Value</FieldName>
+                                                  <Direction>Ascending</Direction>
+                                                </Struct>
+                                              </ListEntry>
+                                            </List>
+                                          </Items>
+                                        </SortInfo>
+                                      </Sort>
+                                    </Query>
+                                  </Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>ValueField</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value Type="System.String">Value</Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>TargetField</Key>
+                                  <OptionType>Text</OptionType>
+                                  <Value IsNull="true" />
+                                </ConfigurationOption>
+                              </ListEntry>
+                              <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                <ConfigurationOption>
+                                  <Key>VisibleFields</Key>
+                                  <OptionType>StringArray</OptionType>
+                                  <Value Type="System.String[]">
+                                    <List>
+                                      <ListEntry Type="System.String">Value</ListEntry>
+                                      <ListEntry Type="System.String">Description</ListEntry>
+                                    </List>
+                                  </Value>
+                                </ConfigurationOption>
+                              </ListEntry>
+                            </List>
+                          </Options>
+                        </OptionCollection>
+                      </Options>
+                    </ValueSource>
+                  </ValueSource>
+                  <Attributes>
+                    <DataSpliceAttributes>
+                      <Attributes />
+                    </DataSpliceAttributes>
+                  </Attributes>
+                </FieldValidationStyle>
+              </ListEntry>
+            </List>
+          </Styles>
+        </ValidationStyleCollection>
+      </Styles>
+      <Events>
+        <EventChainsCollection Version="2">
+          <Events>
+            <List>
+              <ListEntry Type="DataSplice.Events.EventChain">
+                <EventChain Version="2">
+                  <Identifier>
+                    <Struct>
+                      <Name>ServerQuery</Name>
+                      <Qualifier>
+                      </Qualifier>
+                    </Struct>
+                  </Identifier>
+                  <Actions>
+                    <List>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>ModifyFilterAction</ActionType>
+                          <Condition>nvl( ${Site} ) is null</Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>ReplaceFilterOption</Key>
+                                      <OptionType>Boolean</OptionType>
+                                      <Value IsNull="true" />
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>FilterOption</Key>
+                                      <OptionType>Filter</OptionType>
+                                      <Value Type="DataSplice.Data.FilterItem">
+                                        <FilterItem>
+                                          <Operator>Equals</Operator>
+                                          <Arguments>
+                                            <List>
+                                              <ListEntry Type="System.String">Site</ListEntry>
+                                              <ListEntry Type="System.String">${MX_CURRENT_SITE}</ListEntry>
+                                            </List>
+                                          </Arguments>
+                                        </FilterItem>
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>DefaultChainAction</ActionType>
+                          <Condition>
+                          </Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options />
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                    </List>
+                  </Actions>
+                </EventChain>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Events.EventChain">
+                <EventChain Version="2">
+                  <Identifier>
+                    <Struct>
+                      <Name>Keypress</Name>
+                      <Qualifier>F1</Qualifier>
+                    </Struct>
+                  </Identifier>
+                  <Actions>
+                    <List>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>ExecuteCommandAction</ActionType>
+                          <Condition>${Has Children} &gt; 0</Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CommandType</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">ViewAction</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>Disposition</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Local</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>ResetContext</Key>
+                                      <OptionType>Boolean</OptionType>
+                                      <Value IsNull="true" />
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>Command</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">View Children</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                    </List>
+                  </Actions>
+                </EventChain>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Events.EventChain">
+                <EventChain Version="2">
+                  <Identifier>
+                    <Struct>
+                      <Name>Keypress</Name>
+                      <Qualifier>F2</Qualifier>
+                    </Struct>
+                  </Identifier>
+                  <Actions>
+                    <List>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>ExecuteCommandAction</ActionType>
+                          <Condition>${Parent} is null</Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CommandType</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">ViewAction</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>Disposition</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Local</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>ResetContext</Key>
+                                      <OptionType>Boolean</OptionType>
+                                      <Value IsNull="true" />
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>Command</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">View Parent</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>ExecuteCommandAction</ActionType>
+                          <Condition>${Parent} is not null</Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CommandType</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">ViewAction</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>Disposition</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Local</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>ResetContext</Key>
+                                      <OptionType>Boolean</OptionType>
+                                      <Value IsNull="true" />
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>Command</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Parent Location</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                    </List>
+                  </Actions>
+                </EventChain>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Events.EventChain">
+                <EventChain Version="2">
+                  <Identifier>
+                    <Struct>
+                      <Name>PerformAction</Name>
+                      <Qualifier>View Parent</Qualifier>
+                    </Struct>
+                  </Identifier>
+                  <Actions>
+                    <List>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>ModifyAttributesAction</ActionType>
+                          <Condition>
+                          </Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>ModifySessionAttributesOption</Key>
+                                      <OptionType>Boolean</OptionType>
+                                      <Value IsNull="true" />
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>AttributesOption</Key>
+                                      <OptionType>DataSpliceAttributes</OptionType>
+                                      <Value Type="DataSplice.Types.DataSpliceAttributes">
+                                        <DataSpliceAttributes>
+                                          <Attributes>
+                                            <Dictionary>
+                                              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                                                <Struct>
+                                                  <_key Type="System.String">SAVE_PARENT</_key>
+                                                  <_value Type="System.String">${Parent}</_value>
+                                                </Struct>
+                                              </DictionaryEntry>
+                                            </Dictionary>
+                                          </Attributes>
+                                        </DataSpliceAttributes>
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>DefaultChainAction</ActionType>
+                          <Condition>
+                          </Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options />
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>ModifyAttributesAction</ActionType>
+                          <Condition>
+                          </Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>ModifySessionAttributesOption</Key>
+                                      <OptionType>Boolean</OptionType>
+                                      <Value IsNull="true" />
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>AttributesOption</Key>
+                                      <OptionType>DataSpliceAttributes</OptionType>
+                                      <Value Type="DataSplice.Types.DataSpliceAttributes">
+                                        <DataSpliceAttributes>
+                                          <Attributes>
+                                            <Dictionary>
+                                              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                                                <Struct>
+                                                  <_key Type="System.String">PARENT_INDEX</_key>
+                                                  <_value Type="System.String">:= FindRecord( "Location = ${SAVE_PARENT}" )</_value>
+                                                </Struct>
+                                              </DictionaryEntry>
+                                            </Dictionary>
+                                          </Attributes>
+                                        </DataSpliceAttributes>
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>ExecuteCommandAction</ActionType>
+                          <Condition>nvl( ${PARENT_INDEX}, -1 ) &gt;= 0</Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CommandType</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">RawCommand</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>Disposition</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Local</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>ResetContext</Key>
+                                      <OptionType>Boolean</OptionType>
+                                      <Value IsNull="true" />
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>Command</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">SelectRecord( ${PARENT_INDEX} )</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                    </List>
+                  </Actions>
+                </EventChain>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Events.EventChain">
+                <EventChain Version="2">
+                  <Identifier>
+                    <Struct>
+                      <Name>Custom</Name>
+                      <Qualifier>Select System</Qualifier>
+                    </Struct>
+                  </Identifier>
+                  <Actions>
+                    <List>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>PromptAction</ActionType>
+                          <Condition>
+                          </Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>PromptMessage</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Select the active system:</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>AcceptButton</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">OK</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CancelButton</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Cancel</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>PromptItems</Key>
+                                      <OptionType>ConfigurationSection</OptionType>
+                                      <Value Type="DataSplice.Configuration.ConfigurationSection">
+                                        <ConfigurationSection>
+                                          <Key>Name</Key>
+                                          <Flags>AllowReorder</Flags>
+                                          <Template Type="DataSplice.Configuration.OptionCollection">
+                                            <OptionCollection>
+                                              <Name IsNull="true" />
+                                              <Options>
+                                                <List>
+                                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                                    <ConfigurationOption>
+                                                      <Key>Name</Key>
+                                                      <OptionType>Text</OptionType>
+                                                      <Value IsNull="true" />
+                                                    </ConfigurationOption>
+                                                  </ListEntry>
+                                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                                    <ConfigurationOption>
+                                                      <Key>Type</Key>
+                                                      <OptionType>Text</OptionType>
+                                                      <Value Type="System.String">Text</Value>
+                                                    </ConfigurationOption>
+                                                  </ListEntry>
+                                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                                    <ConfigurationOption>
+                                                      <Key>Attribute</Key>
+                                                      <OptionType>Text</OptionType>
+                                                      <Value IsNull="true" />
+                                                    </ConfigurationOption>
+                                                  </ListEntry>
+                                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                                    <ConfigurationOption>
+                                                      <Key>Style</Key>
+                                                      <OptionType>Text</OptionType>
+                                                      <Value IsNull="true" />
+                                                    </ConfigurationOption>
+                                                  </ListEntry>
+                                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                                    <ConfigurationOption>
+                                                      <Key>Default</Key>
+                                                      <OptionType>Text</OptionType>
+                                                      <Value IsNull="true" />
+                                                    </ConfigurationOption>
+                                                  </ListEntry>
+                                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                                    <ConfigurationOption>
+                                                      <Key>Required</Key>
+                                                      <OptionType>Boolean</OptionType>
+                                                      <Value IsNull="true" />
+                                                    </ConfigurationOption>
+                                                  </ListEntry>
+                                                </List>
+                                              </Options>
+                                            </OptionCollection>
+                                          </Template>
+                                          <Collections>
+                                            <List>
+                                              <ListEntry Type="DataSplice.Configuration.OptionCollection">
+                                                <OptionCollection>
+                                                  <Name IsNull="true" />
+                                                  <Options>
+                                                    <List>
+                                                      <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                                        <ConfigurationOption>
+                                                          <Key>Name</Key>
+                                                          <OptionType>Text</OptionType>
+                                                          <Value Type="System.String">SYSTEM</Value>
+                                                        </ConfigurationOption>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                                        <ConfigurationOption>
+                                                          <Key>Type</Key>
+                                                          <OptionType>Text</OptionType>
+                                                          <Value Type="System.String">Text</Value>
+                                                        </ConfigurationOption>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                                        <ConfigurationOption>
+                                                          <Key>Attribute</Key>
+                                                          <OptionType>Text</OptionType>
+                                                          <Value Type="System.String">SYSTEM</Value>
+                                                        </ConfigurationOption>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                                        <ConfigurationOption>
+                                                          <Key>Style</Key>
+                                                          <OptionType>Text</OptionType>
+                                                          <Value Type="System.String">System List</Value>
+                                                        </ConfigurationOption>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                                        <ConfigurationOption>
+                                                          <Key>Default</Key>
+                                                          <OptionType>Text</OptionType>
+                                                          <Value Type="System.String">${MX_CURRENT_SYSTEM}</Value>
+                                                        </ConfigurationOption>
+                                                      </ListEntry>
+                                                      <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                                        <ConfigurationOption>
+                                                          <Key>Required</Key>
+                                                          <OptionType>Boolean</OptionType>
+                                                          <Value Type="System.Boolean">False</Value>
+                                                        </ConfigurationOption>
+                                                      </ListEntry>
+                                                    </List>
+                                                  </Options>
+                                                </OptionCollection>
+                                              </ListEntry>
+                                            </List>
+                                          </Collections>
+                                        </ConfigurationSection>
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>ModifyAttributesAction</ActionType>
+                          <Condition>
+                          </Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>ModifySessionAttributesOption</Key>
+                                      <OptionType>Boolean</OptionType>
+                                      <Value Type="System.Boolean">True</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>AttributesOption</Key>
+                                      <OptionType>DataSpliceAttributes</OptionType>
+                                      <Value Type="DataSplice.Types.DataSpliceAttributes">
+                                        <DataSpliceAttributes>
+                                          <Attributes>
+                                            <Dictionary>
+                                              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                                                <Struct>
+                                                  <_key Type="System.String">MX_CURRENT_SYSTEM</_key>
+                                                  <_value Type="System.String">${SYSTEM}</_value>
+                                                </Struct>
+                                              </DictionaryEntry>
+                                            </Dictionary>
+                                          </Attributes>
+                                        </DataSpliceAttributes>
+                                      </Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                      <ListEntry Type="DataSplice.Events.EventAction">
+                        <EventAction>
+                          <ActionType>ExecuteCommandAction</ActionType>
+                          <Condition>
+                          </Condition>
+                          <ContinueOnFail>False</ContinueOnFail>
+                          <Description>
+                          </Description>
+                          <Options>
+                            <OptionCollection>
+                              <Name IsNull="true" />
+                              <Options>
+                                <List>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>CommandType</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">RawCommand</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>Disposition</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">Local</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>ResetContext</Key>
+                                      <OptionType>Boolean</OptionType>
+                                      <Value IsNull="true" />
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                  <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                                    <ConfigurationOption>
+                                      <Key>Command</Key>
+                                      <OptionType>Text</OptionType>
+                                      <Value Type="System.String">refresh()</Value>
+                                    </ConfigurationOption>
+                                  </ListEntry>
+                                </List>
+                              </Options>
+                            </OptionCollection>
+                          </Options>
+                        </EventAction>
+                      </ListEntry>
+                    </List>
+                  </Actions>
+                </EventChain>
+              </ListEntry>
+            </List>
+          </Events>
+        </EventChainsCollection>
+      </Events>
+      <UiSettings>
+        <ViewUiSettings>
+          <Actions>
+            <List>
+              <ListEntry Type="DataSplice.Display.NavigationAction">
+                <QueryNavigationAction>
+                  <Type>DisplayQuery</Type>
+                  <Name>Location Search</Name>
+                  <Options>
+                    <OptionCollection>
+                      <Name IsNull="true" />
+                      <Options>
+                        <List>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>DisplayMode</Key>
+                              <OptionType>Text</OptionType>
+                              <Value Type="System.String">filter</Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>LocalQuery</Key>
+                              <OptionType>Boolean</OptionType>
+                              <Value IsNull="true" />
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>Query</Key>
+                              <OptionType>Query</OptionType>
+                              <Value Type="DataSplice.Data.DataSpliceQuery">
+                                <Query>
+                                  <Target>
+                                    <Struct>
+                                      <Tokens>
+                                        <List>
+                                          <ListEntry Type="System.String">Maximo</ListEntry>
+                                          <ListEntry Type="System.String">Assets</ListEntry>
+                                          <ListEntry Type="System.String">Locations</ListEntry>
+                                        </List>
+                                      </Tokens>
+                                    </Struct>
+                                  </Target>
+                                  <Offset>0</Offset>
+                                  <MaxRecords>0</MaxRecords>
+                                  <Filter>
+                                    <FilterItem>
+                                      <Operator>And</Operator>
+                                      <Arguments>
+                                        <List>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Location</ListEntry>
+                                                  <ListEntry IsNull="true" />
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Description</ListEntry>
+                                                  <ListEntry IsNull="true" />
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Type</ListEntry>
+                                                  <ListEntry Type="System.String">OPERATING</ListEntry>
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">System</ListEntry>
+                                                  <ListEntry Type="System.String">:= nvl( ${MX_CURRENT_SYSTEM} )</ListEntry>
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                        </List>
+                                      </Arguments>
+                                    </FilterItem>
+                                  </Filter>
+                                  <Sort>
+                                    <SortInfo>
+                                      <Items>
+                                        <List>
+                                          <ListEntry Type="DataSplice.Data.SortItem">
+                                            <Struct>
+                                              <FieldName>Location</FieldName>
+                                              <Direction>Ascending</Direction>
+                                            </Struct>
+                                          </ListEntry>
+                                        </List>
+                                      </Items>
+                                    </SortInfo>
+                                  </Sort>
+                                </Query>
+                              </Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                        </List>
+                      </Options>
+                    </OptionCollection>
+                  </Options>
+                </QueryNavigationAction>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Display.NavigationAction">
+                <QueryNavigationAction>
+                  <Type>DisplayQuery</Type>
+                  <Name>Assets</Name>
+                  <Options>
+                    <OptionCollection>
+                      <Name IsNull="true" />
+                      <Options>
+                        <List>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>DisplayMode</Key>
+                              <OptionType>Text</OptionType>
+                              <Value Type="System.String">grid</Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>LocalQuery</Key>
+                              <OptionType>Boolean</OptionType>
+                              <Value IsNull="true" />
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>Query</Key>
+                              <OptionType>Query</OptionType>
+                              <Value Type="DataSplice.Data.DataSpliceQuery">
+                                <Query>
+                                  <Target>
+                                    <Struct>
+                                      <Tokens>
+                                        <List>
+                                          <ListEntry Type="System.String">Maximo</ListEntry>
+                                          <ListEntry Type="System.String">Assets</ListEntry>
+                                          <ListEntry Type="System.String">Assets</ListEntry>
+                                        </List>
+                                      </Tokens>
+                                    </Struct>
+                                  </Target>
+                                  <Offset>0</Offset>
+                                  <MaxRecords>0</MaxRecords>
+                                  <Filter>
+                                    <FilterItem>
+                                      <Operator>Equals</Operator>
+                                      <Arguments>
+                                        <List>
+                                          <ListEntry Type="System.String">Location</ListEntry>
+                                          <ListEntry Type="System.String">${Location}</ListEntry>
+                                        </List>
+                                      </Arguments>
+                                    </FilterItem>
+                                  </Filter>
+                                  <Sort>
+                                    <SortInfo>
+                                      <Items>
+                                        <List>
+                                          <ListEntry Type="DataSplice.Data.SortItem">
+                                            <Struct>
+                                              <FieldName>Asset</FieldName>
+                                              <Direction>Ascending</Direction>
+                                            </Struct>
+                                          </ListEntry>
+                                        </List>
+                                      </Items>
+                                    </SortInfo>
+                                  </Sort>
+                                </Query>
+                              </Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                        </List>
+                      </Options>
+                    </OptionCollection>
+                  </Options>
+                </QueryNavigationAction>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Display.NavigationAction">
+                <QueryNavigationAction>
+                  <Type>DisplayQuery</Type>
+                  <Name>View Children</Name>
+                  <Options>
+                    <OptionCollection>
+                      <Name IsNull="true" />
+                      <Options>
+                        <List>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>DisplayMode</Key>
+                              <OptionType>Text</OptionType>
+                              <Value Type="System.String">grid</Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>LocalQuery</Key>
+                              <OptionType>Boolean</OptionType>
+                              <Value IsNull="true" />
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>Query</Key>
+                              <OptionType>Query</OptionType>
+                              <Value Type="DataSplice.Data.DataSpliceQuery">
+                                <Query>
+                                  <Target>
+                                    <Struct>
+                                      <Tokens>
+                                        <List>
+                                          <ListEntry Type="System.String">Maximo</ListEntry>
+                                          <ListEntry Type="System.String">Assets</ListEntry>
+                                          <ListEntry Type="System.String">Locations</ListEntry>
+                                        </List>
+                                      </Tokens>
+                                    </Struct>
+                                  </Target>
+                                  <Offset>0</Offset>
+                                  <MaxRecords>0</MaxRecords>
+                                  <Filter>
+                                    <FilterItem>
+                                      <Operator>And</Operator>
+                                      <Arguments>
+                                        <List>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Parent</ListEntry>
+                                                  <ListEntry Type="System.String">${Location}</ListEntry>
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Type</ListEntry>
+                                                  <ListEntry Type="System.String">${Type}</ListEntry>
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">System</ListEntry>
+                                                  <ListEntry Type="System.String">${System}</ListEntry>
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                        </List>
+                                      </Arguments>
+                                    </FilterItem>
+                                  </Filter>
+                                  <Sort>
+                                    <SortInfo>
+                                      <Items>
+                                        <List>
+                                          <ListEntry Type="DataSplice.Data.SortItem">
+                                            <Struct>
+                                              <FieldName>Location</FieldName>
+                                              <Direction>Ascending</Direction>
+                                            </Struct>
+                                          </ListEntry>
+                                        </List>
+                                      </Items>
+                                    </SortInfo>
+                                  </Sort>
+                                </Query>
+                              </Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                        </List>
+                      </Options>
+                    </OptionCollection>
+                  </Options>
+                </QueryNavigationAction>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Display.NavigationAction">
+                <QueryNavigationAction>
+                  <Type>DisplayQuery</Type>
+                  <Name>View Parent</Name>
+                  <Options>
+                    <OptionCollection>
+                      <Name IsNull="true" />
+                      <Options>
+                        <List>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>DisplayMode</Key>
+                              <OptionType>Text</OptionType>
+                              <Value Type="System.String">grid</Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>LocalQuery</Key>
+                              <OptionType>Boolean</OptionType>
+                              <Value IsNull="true" />
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>Query</Key>
+                              <OptionType>Query</OptionType>
+                              <Value Type="DataSplice.Data.DataSpliceQuery">
+                                <Query>
+                                  <Target>
+                                    <Struct>
+                                      <Tokens>
+                                        <List>
+                                          <ListEntry Type="System.String">Maximo</ListEntry>
+                                          <ListEntry Type="System.String">Assets</ListEntry>
+                                          <ListEntry Type="System.String">Locations</ListEntry>
+                                        </List>
+                                      </Tokens>
+                                    </Struct>
+                                  </Target>
+                                  <Offset>0</Offset>
+                                  <MaxRecords>0</MaxRecords>
+                                  <Filter>
+                                    <FilterItem>
+                                      <Operator>And</Operator>
+                                      <Arguments>
+                                        <List>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Location</ListEntry>
+                                                  <ListEntry Type="System.String">:= nvl( ${SAVE_PARENT}, "&lt;null&gt;" )</ListEntry>
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Type</ListEntry>
+                                                  <ListEntry Type="System.String">${Type}</ListEntry>
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">System</ListEntry>
+                                                  <ListEntry Type="System.String">${System}</ListEntry>
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                        </List>
+                                      </Arguments>
+                                    </FilterItem>
+                                  </Filter>
+                                  <Sort>
+                                    <SortInfo>
+                                      <Items>
+                                        <List>
+                                          <ListEntry Type="DataSplice.Data.SortItem">
+                                            <Struct>
+                                              <FieldName>Location</FieldName>
+                                              <Direction>Ascending</Direction>
+                                            </Struct>
+                                          </ListEntry>
+                                        </List>
+                                      </Items>
+                                    </SortInfo>
+                                  </Sort>
+                                </Query>
+                              </Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                        </List>
+                      </Options>
+                    </OptionCollection>
+                  </Options>
+                </QueryNavigationAction>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Display.NavigationAction">
+                <QueryNavigationAction>
+                  <Type>DisplayQuery</Type>
+                  <Name>Root Locations</Name>
+                  <Options>
+                    <OptionCollection>
+                      <Name IsNull="true" />
+                      <Options>
+                        <List>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>DisplayMode</Key>
+                              <OptionType>Text</OptionType>
+                              <Value Type="System.String">grid</Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>LocalQuery</Key>
+                              <OptionType>Boolean</OptionType>
+                              <Value IsNull="true" />
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>Query</Key>
+                              <OptionType>Query</OptionType>
+                              <Value Type="DataSplice.Data.DataSpliceQuery">
+                                <Query>
+                                  <Target>
+                                    <Struct>
+                                      <Tokens>
+                                        <List>
+                                          <ListEntry Type="System.String">Maximo</ListEntry>
+                                          <ListEntry Type="System.String">Assets</ListEntry>
+                                          <ListEntry Type="System.String">Locations</ListEntry>
+                                        </List>
+                                      </Tokens>
+                                    </Struct>
+                                  </Target>
+                                  <Offset>0</Offset>
+                                  <MaxRecords>0</MaxRecords>
+                                  <Filter>
+                                    <FilterItem>
+                                      <Operator>And</Operator>
+                                      <Arguments>
+                                        <List>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>IsNull</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Parent</ListEntry>
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">Type</ListEntry>
+                                                  <ListEntry Type="System.String">OPERATING</ListEntry>
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                          <ListEntry Type="DataSplice.Data.FilterItem">
+                                            <FilterItem>
+                                              <Operator>Equals</Operator>
+                                              <Arguments>
+                                                <List>
+                                                  <ListEntry Type="System.String">System</ListEntry>
+                                                  <ListEntry Type="System.String">:= nvl( ${MX_CURRENT_SYSTEM} )</ListEntry>
+                                                </List>
+                                              </Arguments>
+                                            </FilterItem>
+                                          </ListEntry>
+                                        </List>
+                                      </Arguments>
+                                    </FilterItem>
+                                  </Filter>
+                                  <Sort>
+                                    <SortInfo>
+                                      <Items>
+                                        <List>
+                                          <ListEntry Type="DataSplice.Data.SortItem">
+                                            <Struct>
+                                              <FieldName>Location</FieldName>
+                                              <Direction>Ascending</Direction>
+                                            </Struct>
+                                          </ListEntry>
+                                        </List>
+                                      </Items>
+                                    </SortInfo>
+                                  </Sort>
+                                </Query>
+                              </Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                        </List>
+                      </Options>
+                    </OptionCollection>
+                  </Options>
+                </QueryNavigationAction>
+              </ListEntry>
+              <ListEntry Type="DataSplice.Display.NavigationAction">
+                <QueryNavigationAction>
+                  <Type>DisplayQuery</Type>
+                  <Name>Meters</Name>
+                  <Options>
+                    <OptionCollection>
+                      <Name IsNull="true" />
+                      <Options>
+                        <List>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>DisplayMode</Key>
+                              <OptionType>Text</OptionType>
+                              <Value Type="System.String">grid</Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>LocalQuery</Key>
+                              <OptionType>Boolean</OptionType>
+                              <Value IsNull="true" />
+                            </ConfigurationOption>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Configuration.ConfigurationOption">
+                            <ConfigurationOption>
+                              <Key>Query</Key>
+                              <OptionType>Query</OptionType>
+                              <Value Type="DataSplice.Data.DataSpliceQuery">
+                                <Query>
+                                  <Target>
+                                    <Struct>
+                                      <Tokens>
+                                        <List>
+                                          <ListEntry Type="System.String">Maximo</ListEntry>
+                                          <ListEntry Type="System.String">Assets</ListEntry>
+                                          <ListEntry Type="System.String">Location Meter Readings</ListEntry>
+                                        </List>
+                                      </Tokens>
+                                    </Struct>
+                                  </Target>
+                                  <Offset>0</Offset>
+                                  <MaxRecords>0</MaxRecords>
+                                  <Filter>
+                                    <FilterItem>
+                                      <Operator>Equals</Operator>
+                                      <Arguments>
+                                        <List>
+                                          <ListEntry Type="System.String">Location</ListEntry>
+                                          <ListEntry Type="System.String">${Location}</ListEntry>
+                                        </List>
+                                      </Arguments>
+                                    </FilterItem>
+                                  </Filter>
+                                  <Sort>
+                                    <SortInfo>
+                                      <Items>
+                                        <List>
+                                          <ListEntry Type="DataSplice.Data.SortItem">
+                                            <Struct>
+                                              <FieldName>Meter Name</FieldName>
+                                              <Direction>Ascending</Direction>
+                                            </Struct>
+                                          </ListEntry>
+                                        </List>
+                                      </Items>
+                                    </SortInfo>
+                                  </Sort>
+                                </Query>
+                              </Value>
+                            </ConfigurationOption>
+                          </ListEntry>
+                        </List>
+                      </Options>
+                    </OptionCollection>
+                  </Options>
+                </QueryNavigationAction>
+              </ListEntry>
+            </List>
+          </Actions>
+          <Collections>
+            <Dictionary>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">Child Views</_key>
+                  <_value Type="DataSplice.Display.NavigationActionCollection">
+                    <NavigationActionCollection>
+                      <Actions>
+                        <List>
+                          <ListEntry Type="DataSplice.Display.ActionReference">
+                            <Struct>
+                              <ActionName>Assets</ActionName>
+                              <Weight>2</Weight>
+                              <Condition>!IsPopup()</Condition>
+                              <Enabled>${Asset Count} &gt; 0</Enabled>
+                              <Category>
+                              </Category>
+                              <DisplayType>Normal</DisplayType>
+                            </Struct>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Display.ActionReference">
+                            <Struct>
+                              <ActionName>Meters</ActionName>
+                              <Weight>2</Weight>
+                              <Condition>!IsPopup()</Condition>
+                              <Enabled>${Type} == 'OPERATING'</Enabled>
+                              <Category>
+                              </Category>
+                              <DisplayType>Normal</DisplayType>
+                            </Struct>
+                          </ListEntry>
+                        </List>
+                      </Actions>
+                    </NavigationActionCollection>
+                  </_value>
+                </Struct>
+              </DictionaryEntry>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">Home Screen Actions</_key>
+                  <_value Type="DataSplice.Display.NavigationActionCollection">
+                    <NavigationActionCollection>
+                      <Actions>
+                        <List>
+                          <ListEntry Type="DataSplice.Display.ActionReference">
+                            <Struct>
+                              <ActionName>Location Search</ActionName>
+                              <Weight>100</Weight>
+                              <Condition>
+                              </Condition>
+                              <Enabled>
+                              </Enabled>
+                              <Category>Assets</Category>
+                              <DisplayType>Normal</DisplayType>
+                            </Struct>
+                          </ListEntry>
+                        </List>
+                      </Actions>
+                    </NavigationActionCollection>
+                  </_value>
+                </Struct>
+              </DictionaryEntry>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">Navigation Menu Actions</_key>
+                  <_value Type="DataSplice.Display.NavigationActionCollection">
+                    <NavigationActionCollection>
+                      <Actions>
+                        <List>
+                          <ListEntry Type="DataSplice.Display.ActionReference">
+                            <Struct>
+                              <ActionName>Location Search</ActionName>
+                              <Weight>1</Weight>
+                              <Condition>true</Condition>
+                              <Enabled>
+                              </Enabled>
+                              <Category>
+                              </Category>
+                              <DisplayType>Normal</DisplayType>
+                            </Struct>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Display.ActionReference">
+                            <Struct>
+                              <ActionName>View Children</ActionName>
+                              <Weight>4</Weight>
+                              <Condition>DisplayMode() &lt;&gt; 'filter'</Condition>
+                              <Enabled>${Has Children} == 1</Enabled>
+                              <Category>
+                              </Category>
+                              <DisplayType>Common</DisplayType>
+                            </Struct>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Display.ActionReference">
+                            <Struct>
+                              <ActionName>View Parent</ActionName>
+                              <Weight>5</Weight>
+                              <Condition>DisplayMode() &lt;&gt; 'filter'</Condition>
+                              <Enabled>${Parent} is not null</Enabled>
+                              <Category>
+                              </Category>
+                              <DisplayType>Common</DisplayType>
+                            </Struct>
+                          </ListEntry>
+                          <ListEntry Type="DataSplice.Display.ActionReference">
+                            <Struct>
+                              <ActionName>Root Locations</ActionName>
+                              <Weight>2</Weight>
+                              <Condition>
+                              </Condition>
+                              <Enabled>
+                              </Enabled>
+                              <Category>
+                              </Category>
+                              <DisplayType>Common</DisplayType>
+                            </Struct>
+                          </ListEntry>
+                        </List>
+                      </Actions>
+                    </NavigationActionCollection>
+                  </_value>
+                </Struct>
+              </DictionaryEntry>
+            </Dictionary>
+          </Collections>
+        </ViewUiSettings>
+      </UiSettings>
+      <OfflineQueries>
+        <OfflineQueryCollection>
+          <Queries>
+            <Dictionary>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">current system</_key>
+                  <_value Type="DataSplice.Data.OfflineQuery">
+                    <OfflineQuery>
+                      <Name>Current System</Name>
+                      <Condition>${MX_CURRENT_SYSTEM} is not null</Condition>
+                      <CachePeriod>
+                      </CachePeriod>
+                      <RootQuery Type="DataSplice.Data.DataSpliceQuery">
+                        <Query>
+                          <Target>
+                            <Struct>
+                              <Tokens>
+                                <List>
+                                  <ListEntry Type="System.String">Maximo</ListEntry>
+                                  <ListEntry Type="System.String">Assets</ListEntry>
+                                  <ListEntry Type="System.String">Locations</ListEntry>
+                                </List>
+                              </Tokens>
+                            </Struct>
+                          </Target>
+                          <Offset>0</Offset>
+                          <MaxRecords>0</MaxRecords>
+                          <Filter>
+                            <FilterItem>
+                              <Operator>Equals</Operator>
+                              <Arguments>
+                                <List>
+                                  <ListEntry Type="System.String">System</ListEntry>
+                                  <ListEntry Type="System.String">${MX_CURRENT_SYSTEM}</ListEntry>
+                                </List>
+                              </Arguments>
+                            </FilterItem>
+                          </Filter>
+                          <Sort>
+                            <SortInfo>
+                              <Items />
+                            </SortInfo>
+                          </Sort>
+                        </Query>
+                      </RootQuery>
+                      <RecursiveQueries />
+                    </OfflineQuery>
+                  </_value>
+                </Struct>
+              </DictionaryEntry>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">offline by work location</_key>
+                  <_value Type="DataSplice.Data.OfflineQuery">
+                    <OfflineQuery>
+                      <Name>Offline by Work Location</Name>
+                      <Condition>${MX_WORK_LOCATION} is not null</Condition>
+                      <CachePeriod>
+                      </CachePeriod>
+                      <RootQuery Type="DataSplice.Data.DataSpliceQuery">
+                        <Query>
+                          <Target>
+                            <Struct>
+                              <Tokens>
+                                <List>
+                                  <ListEntry Type="System.String">Maximo</ListEntry>
+                                  <ListEntry Type="System.String">Assets</ListEntry>
+                                  <ListEntry Type="System.String">Locations</ListEntry>
+                                </List>
+                              </Tokens>
+                            </Struct>
+                          </Target>
+                          <Offset>0</Offset>
+                          <MaxRecords>0</MaxRecords>
+                          <Filter>
+                            <FilterItem>
+                              <Operator>RawText</Operator>
+                              <Arguments>
+                                <List>
+                                  <ListEntry Type="System.String">l.location in (select location from locancestor where ancestor = '${MX_WORK_LOCATION}' and siteid = '${MX_CURRENT_SITE}' )</ListEntry>
+                                </List>
+                              </Arguments>
+                            </FilterItem>
+                          </Filter>
+                          <Sort>
+                            <SortInfo>
+                              <Items />
+                            </SortInfo>
+                          </Sort>
+                        </Query>
+                      </RootQuery>
+                      <RecursiveQueries />
+                    </OfflineQuery>
+                  </_value>
+                </Struct>
+              </DictionaryEntry>
+              <DictionaryEntry Type="System.Collections.DictionaryEntry">
+                <Struct>
+                  <_key Type="System.String">offline storerooms</_key>
+                  <_value Type="DataSplice.Data.OfflineQuery">
+                    <OfflineQuery>
+                      <Name>Offline Storerooms</Name>
+                      <Condition>
+                      </Condition>
+                      <CachePeriod>
+                      </CachePeriod>
+                      <RootQuery Type="DataSplice.Data.DataSpliceQuery">
+                        <Query>
+                          <Target>
+                            <Struct>
+                              <Tokens>
+                                <List>
+                                  <ListEntry Type="System.String">Maximo</ListEntry>
+                                  <ListEntry Type="System.String">Assets</ListEntry>
+                                  <ListEntry Type="System.String">Locations</ListEntry>
+                                </List>
+                              </Tokens>
+                            </Struct>
+                          </Target>
+                          <Offset>0</Offset>
+                          <MaxRecords>0</MaxRecords>
+                          <Filter>
+                            <FilterItem>
+                              <Operator>Equals</Operator>
+                              <Arguments>
+                                <List>
+                                  <ListEntry Type="System.String">Type</ListEntry>
+                                  <ListEntry Type="System.String">STOREROOM</ListEntry>
+                                </List>
+                              </Arguments>
+                            </FilterItem>
+                          </Filter>
+                          <Sort>
+                            <SortInfo>
+                              <Items />
+                            </SortInfo>
+                          </Sort>
+                        </Query>
+                      </RootQuery>
+                      <RecursiveQueries />
+                    </OfflineQuery>
+                  </_value>
+                </Struct>
+              </DictionaryEntry>
+            </Dictionary>
+          </Queries>
+        </OfflineQueryCollection>
+      </OfflineQueries>
+    </View>
+  </StorageObject>
+</DataSpliceViewDocument>

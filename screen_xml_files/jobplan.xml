@@ -1,0 +1,1043 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation apphelp="com.ibm.mbs.doc,jobplan/c_job_plans_application.html" beanclass="psdi.webclient.beans.jobplan.JobPlanAppBean" id="jobplan" ismobile="false" keyattribute="jpnum" mboname="JOBPLAN" resultstableid="results_showlist" version="6.2.8">
+	<page id="mainrec" scroll="false">
+		<include controltoclone="pageHeader" id="INCLUDE-pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" label="Job Plans" mboname="JOBPLAN" selectmode="multiple">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="jpnum" filterable="false" id="results_showlist_tablebody_1" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+							<tablecol dataattribute="jpnum" id="1513621934804" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="pluscrevnum" id="results_showlist_tablebody_31"/>
+							<tablecol dataattribute="jpduration" id="results_showlist_tablebody_4"/>
+							<tablecol dataattribute="templatetype" id="results_showlist_tablebody_10" linkedcontrolid="qbe_grid2_col1_4"/>
+							<tablecol dataattribute="lbl_classid" id="results_showlist_tablebody_20" lookup="lbl_jp_classification" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="lbl_building" id="results_showlist_tablebody_21" lookup="lbl_building"/>
+							<tablecol dataattribute="description" id="results_showlist_tablebody_8" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="supervisor" id="results_showlist_tablebody_6" linkedcontrolid="qbe_supervisor"/>
+							<tablecol dataattribute="status" id="results_showlist_tablebody_7" linkedcontrolid="qbe_status"/>
+							<tablecol dataattribute="lbl_frequency" id="1513621945004" lookup="valuelist"/>
+							<tablecol filterable="false" id="results_bookmark" mxevent="BOOKMARK" mxevent_desc="Add to Bookmarks" mxevent_icon="btn_addtobookmarks.gif" sortable="false" type="event"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="Job Plan" type="insert">
+					<section border="true" id="main_grid1">
+						<sectionrow id="main_grid1_row1">
+							<sectioncol id="main_grid1_row1_col1">
+								<section id="main_grid1_row1_col1_1">
+									<multiparttextbox dataattribute="jpnum" descdataattribute="description" id="main_grid1_1"/>
+									<multiparttextbox dataattribute="pluscrevnum" descdataattribute="pluscrevcom" descinputmode="readonly" id="main_grid1_pluscrevnum" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid1_row1_col2">
+								<section id="main_grid1_row1_col2_1">
+									<textbox dataattribute="orgid" id="main_grid1_2" lookup="org"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid1_row1_col3">
+								<section id="main_grid1_row1_col3_1">
+									<textbox dataattribute="siteid" id="main_grid1_3" lookup="site"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid1_row1_col4">
+								<section border="false" id="main_attachments">
+									<attachments id="doclinks"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<defaultvalue dataattribute="SITEID" id="1489512454582" value="FAC"/>
+						<defaultvalue dataattribute="ORGID" id="1489512413241" value="LBNL"/>
+					</section>
+					<section id="details">
+						<sectionrow id="details_row1">
+							<sectioncol id="details_col1">
+								<section id="main_grid2" label="Details">
+									<sectionrow id="main_grid2_1_sec1_row1">
+										<sectioncol id="main_grid2_1_sec1_row1_col1">
+											<section id="main_grid2_1_sec1_row1_col1_sec1">
+												<textbox dataattribute="status" id="main_grid2_a"/>
+												<combobox dataattribute="templatetype" id="main_grid2_d"/>
+												<textbox dataattribute="LBL_FREQUENCY" id="1447455265676" lookup="VALUELIST"/>
+												<textbox dataattribute="jpduration" id="main_grid2_1"/>
+												<textbox applink="assetcat" dataattribute="CLASSSTRUCTURE.HIERARCHYPATH" id="main_grid1_b" menutype="classification"/>
+												<textbox dataattribute="CLASSSTRUCTURE.description_class" id="main_grid1_c" lookup="classification"/>
+												<textbox applink="launch" dataattribute="launchentryname" id="main_grid2_12" lookup="maxlaunchentry" menutype="normal"/>
+												<checkbox dataattribute="inctasksinsched" id="main_grid2_13" ondatachange="resetchildren" synchronous="true"/>
+												<textbox dataattribute="stconoffset" id="main_grid2_14"/>
+												<textbox dataattribute="fnconoffset" id="main_grid2_15"/>
+												<checkbox dataattribute="aos" id="main_grid2_17" licensekey="SCHEDULER_OPT"/>
+												<checkbox dataattribute="los" id="main_grid2_18" licensekey="SCHEDULER_OPT"/>
+												<multiparttextbox applink="inspectorsup" applinkrel="inspectionform.inspformnum" dataattribute="inspformnum" descdataattribute="inspectionform.name" descinputmode="readonly" id="main_grid2_inspformnum" lookup="inspectionform" menutype="normal" synchronous="true"/>
+											</section>
+										</sectioncol>
+										<sectioncol id="main_grid2_1_sec1_row1_col2">
+											<section id="main_grid2_1_sec1_row1_col2_sec1">
+												<textbox dataattribute="defaultwoclass" id="main_grid2_7" lookup="jobplanclass" menutype="showvalue"/>
+												<textbox dataattribute="priority" id="main_grid2_2"/>
+												<checkbox dataattribute="interruptible" id="main_grid2_3"/>
+												<textbox dataattribute="intshift" id="main_grid2_33" lookup="shift"/>
+												<checkbox dataattribute="flowcontrolled" id="main_grid2_8"/>
+												<checkbox dataattribute="suspendflow" id="main_grid2_9"/>
+												<textbox applink="action" dataattribute="flowaction" id="main_grid2_10" lookup="action" menutype="normal"/>
+												<checkbox dataattribute="flowactionassist" id="main_grid2_11"/>
+												<checkbox dataattribute="apptrequired" id="main_grid2_16" licensekey="SCHEDULER_OPT"/>
+												<checkbox dataattribute="ams" id="main_grid2_19" licensekey="SCHEDULER_OPT"/>
+												<checkbox dataattribute="lms" id="main_grid2_20" licensekey="SCHEDULER_OPT"/>
+												<multiparttextbox dataattribute="LBL_CLASSID" descdataattribute="LBL_CLASSIFICATION.DESCRIPTION" descinputmode="readonly" id="1447455661905" lookup="LBL_PMCLASS"/>
+												<multiparttextbox dataattribute="LBL_BUILDING" descdataattribute="LBL_BLDG.DESCRIPTION" descinputmode="readonly" id="1447455779067" lookup="LBL_BUILDING"/>
+												<checkbox dataattribute="repairlocflag" id="main_grid66" licensekey="SCHEDULER_760" sigoption="REPFACILITY"/>
+												<checkbox dataattribute="DYNAMIC" id="main_grid2_isdynamic" sigoption="SHOWDJP"/>
+												<checkbox dataattribute="APPLYNONDYNAMICCALC" id="main_grid2applynondynamic" sigoption="SHOWDJP"/>
+											</section>
+										</sectioncol>
+									</sectionrow>
+								</section>
+							</sectioncol>
+							<sectioncol id="details_col2">
+								<textbox applink="PERSONGR" dataattribute="CREWWORKGROUP" id="1441305177641" lookup="PERSONGROUP"/>
+								<section id="main_grid3" label="Responsibility">
+									<sectionrow id="main_grid3_1_sec1_row1">
+										<sectioncol id="main_grid3_1_sec1_row1_col1">
+											<section id="main_grid3_1_sec1_row1_col1_sec1">
+												<textbox applink="person" dataattribute="supervisor" id="main_grid3_1" lookup="person" menutype="normal"/>
+												<textbox applink="amcrew" dataattribute="amcrew" id="main_grid3_crew_1" label="AMC Crew" licensekey="CREW" lookup="amcrews" menutype="normal"/>
+												<textbox dataattribute="crewid" id="main_grid3_2" lookup="valuelist" sigoption="CREWIDFIELD"/>
+												<textbox applink="PERSONGR" dataattribute="CREWWORKGROUP" id="1441305351659" lookup="PERSONGROUP"/>
+												<textbox applink="craft" dataattribute="LBL_LEADCRAFT" id="1447455449259"/>
+												<textbox applink="person" dataattribute="laborcode" id="main_grid3_3" lookup="person" menutype="normal"/>
+											</section>
+										</sectioncol>
+										<sectioncol id="main_grid3_1_sec1_row1_col2">
+											<section id="main_grid3_1_sec1_row1_col2_sec1">
+												<textbox applink="persongr" dataattribute="persongroup" id="main_grid3_4" lookup="persongroup" menutype="normal"/>
+												<textbox applink="person" dataattribute="owner" id="main_grid3_5" lookup="person" menutype="normal"/>
+												<textbox applink="persongr" dataattribute="ownergroup" id="main_grid3_6" lookup="persongroup" menutype="normal"/>
+												<textbox applink="persongr" dataattribute="crewworkgroup" id="main_grid3_crew_2" licensekey="CREW" lookup="persongroup" menutype="normal"/>
+											</section>
+										</sectioncol>
+									</sectionrow>
+								</section>
+								<section id="main_grid4" label="Dynamic Job Plan Information" sigoption="DYNAMIC">
+									<multiparttextbox dataattribute="UNITSOFWORKMULTIPLIER" descdataattribute="UNITSOFWORK" desclookup="MEASUREUNIT" id="main_grid4_units"/>
+									<textbox dataattribute="calcmethod" id="djp_calcmethod" lookup="VALUELIST"/>
+									<multiparttextbox applink="reslevel" dataattribute="calclevel" descdataattribute="reslevel.description" descinputmode="readonly" id="djp_calclevel" lookup="RESLEVEL" menutype="NORMAL" sigoption="DYNAMIC_LEVEL"/>
+									<textbox dataattribute="CALCEXPRESSION" id="djp_calcattribute" menutype="DYNEXPBUILDER" sigoption="DYNAMIC_PROPATTR"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="main_jpop_table" label="Job Plan Tasks" listeners="specification_jobtaskspectable" orderby="tasksequence,jptask" relationship="JOBTASK">
+						<tablebody displayrowsperpage="4" filterable="true" id="main_jpop_table_tablebody">
+							<tablecol filterable="false" id="main_jpop_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="tasksequence" id="main_jpop_table_tablebody_2" linkedcontrolid="main_jpop_table_1_grid4_3"/>
+							<tablecol dataattribute="jptask" id="main_jpop_table_tablebody_3"/>
+							<tablecol dataattribute="description" id="main_jpop_table_tablebody_4" lookup="longdesc"/>
+							<tablecol dataattribute="nestedjpnum" id="main_jpop_table_tablebody_5" linkedcontrolid="main_jpop_table_1_grid4_4"/>
+							<tablecol dataattribute="taskduration" id="main_jpop_table_tablebody_6" linkedcontrolid="main_jpop_table_1_grid6_1"/>
+							<tablecol dataattribute="metername" id="main_jpop_table_tablebody_7" linkedcontrolid="main_jpop_table_1_grid6_2"/>
+							<tablecol dataattribute="apptrequired" id="main_jpop_table_tablebody_9" licensekey="SCHEDULER_OPT" linkedcontrolid="main_jpop_table_1_grid6_11"/>
+							<tablecol dataattribute="inctasksinsched" id="main_jpop_table_tablebody_10" licensekey="SCHEDULER_OPT" linkedcontrolid="main_jpop_table_1_grid6_12"/>
+							<tablecol filterable="false" id="main_jpop_table_tablebody_8" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="main_jpop_table_1">
+							<section id="main_jpop_table_1_sec1" label="Details">
+								<sectionrow id="main_jpop_table_1_sec1_row1">
+									<sectioncol id="main_jpop_table_1_sec1_row1_col1">
+										<section id="main_jpop_table_1_sec1_row1_col1_sec1">
+											<textbox dataattribute="orgid" defaultfocus="true" id="main_jpop_table_1_grid2_1" lookup="org"/>
+											<textbox dataattribute="siteid" id="main_jpop_table_1_grid2_2" lookup="site"/>
+											<multiparttextbox dataattribute="jptask" descdataattribute="description" id="main_jpop_table_1_grid4_1"/>
+											<textbox dataattribute="tasksequence" id="main_jpop_table_1_grid4_3"/>
+											<textbox dataattribute="nestedjpnum" id="main_jpop_table_1_grid4_4" lookup="jobplan"/>
+											<textbox applink="assetcat" dataattribute="CLASSSTRUCTURE.HIERARCHYPATH" id="main_jpop_table_1_grid4_5" menutype="classification" ondatachange="refreshtable"/>
+											<textbox dataattribute="CLASSSTRUCTURE.description_class" id="main_jpop_table_1_grid4_6" lookup="classification"/>
+											<textbox applink="launch" dataattribute="launchentryname" id="main_jpop_table_1_grid6_9" lookup="maxlaunchentry" menutype="normal"/>
+											<multiparttextbox applink="condexpmgr" dataattribute="conditionnum" descdataattribute="condition.description" descinputmode="readonly" id="main_jpop_table_1_grid6_9_1" lookup="conditionexp" menutype="normal" moreinformation="com.ibm.mbs.doc,jobplan/c_jobplan_conditions.html" sigoption="USECONDITIONALJP"/>
+											<checkbox dataattribute="apptrequired" id="main_jpop_table_1_grid6_11" licensekey="SCHEDULER_OPT"/>
+											<checkbox dataattribute="inctasksinsched" id="main_jpop_table_1_grid6_12" licensekey="SCHEDULER_OPT"/>
+											<multiparttextbox applink="inspectorsup" applinkrel="inspectionform.inspformnum" dataattribute="inspformnum" descdataattribute="inspectionform.name" descinputmode="readonly" id="main_jpop_table_1_inspformnum" lookup="inspectionform" menutype="normal" synchronous="true"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="main_jpop_table_1_sec2_row1_col1">
+										<section id="main_jpop_table_1_sec2_row1_col1_sec1">
+											<textbox dataattribute="taskduration" id="main_jpop_table_1_grid6_1"/>
+											<textbox applink="meter" applinkkey="metername" applinkreturn="metername" dataattribute="metername" id="main_jpop_table_1_grid6_2" lookup="meter" menutype="normal"/>
+											<textbox applink="person" dataattribute="owner" id="main_jpop_table_1_grid6_3" lookup="person" menutype="normal"/>
+											<textbox applink="persongr" dataattribute="ownergroup" id="main_jpop_table_1_grid6_4" lookup="persongroup" menutype="normal"/>
+											<checkbox dataattribute="flowcontrolled" id="main_jpop_table_1_grid6_5"/>
+											<checkbox dataattribute="suspendflow" id="main_jpop_table_1_grid6_6"/>
+											<textbox applink="action" dataattribute="flowaction" id="main_jpop_table_1_grid6_7" lookup="action" menutype="normal"/>
+											<checkbox dataattribute="flowactionassist" id="main_jpop_table_1_grid6_8"/>
+											<textbox dataattribute="predecessortasks" id="main_jpop_table_1_grid6_10" menutype="SELECTJPTASKS" smartfilloff="true"/>
+											<checkbox dataattribute="interruptible" id="main_grid10_1_1_grid12_9" value="interruptible"/>
+											<textbox dataattribute="intshift" id="main_grid10_1_1_grid12_9b" lookup="shift"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="main_jpop_table_1_sec3_row1_col1">
+										<section id="main_jpop_table_1_sec3_row1_col1_sec1">
+											<attachments event="drviewattachments" id="jobtask_doclinks" menutype="drattachments"/>
+										</section>
+										<section id="main_jpop_table_1_sec3_row1_col1_sec2" label="Dynamic Job Plan Information" sigoption="DYNAMIC" sigoptiondatasrc="mainrecord">
+											<textbox dataattribute="CALCMETHOD" id="task_method" lookup="VALUELIST"/>
+											<textbox applink="reslevel" dataattribute="CALCLEVEL" id="task_level" lookup="RESLEVEL" menutype="NORMAL" sigoption="DYNAMIC_LEVEL"/>
+											<textbox dataattribute="CALCEXPRESSION" id="task_attribute" menutype="DYNEXPBUILDER" sigoption="DYNAMIC_PROPATTR"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="main_jpop_table_2">
+							<pushbutton default="true" id="main_jpop_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+					<tabgroup id="main_jobplan">
+						<tab default="true" id="jobplan_labor" label="Labor">
+							<table id="jobplan_labor_table" label="Planned Labor" relationship="JOBLABOR">
+								<tablebody displayrowsperpage="4" filterable="true" id="jobplan_labor_tablebody">
+									<tablecol filterable="false" id="jobplan_labor_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+									<tablecol dataattribute="jptask" id="jobplan_labor_tablebody_2" linkedcontrolid="jobplan_labor_table1_grid1_3"/>
+									<tablecol applink="amcrewt" dataattribute="amcrewtype" id="jobplan_labor_tablebody_crew_1" licensekey="CREW" lookup="amcrewtype" menutype="normal"/>
+									<tablecol applink="craft" dataattribute="craft" id="jobplan_labor_tablebody_3" lookup="craftrate" menutype="normal"/>
+									<tablecol dataattribute="skilllevel" id="jobplan_labor_tablebody_4" linkedcontrolid="jobplan_labor_table1_grid2_3"/>
+									<tablecol applink="labor" dataattribute="laborcode" id="jobplan_labor_tablebody_5" lookup="laboronly" menutype="normal"/>
+									<tablecol applink="amcrew" dataattribute="amcrew" id="jobplan_labor_tablebody_crew_2" licensekey="CREW" lookup="amcrews" menutype="normal"/>
+									<tablecol dataattribute="quantity" id="jobplan_labor_tablebody_6" linkedcontrolid="jobplan_labor_table1_grid3_2"/>
+									<tablecol dataattribute="laborhrs" id="jobplan_labor_tablebody_7" linkedcontrolid="jobplan_labor_table1_grid3_3"/>
+									<tablecol dataattribute="payrate" id="jobplan_labor_tablebody_8" linkedcontrolid="jobplan_labor_table1_grid3_4" sortable="false"/>
+									<tablecol dataattribute="linecost" id="jobplan_labor_tablebody_9" linkedcontrolid="jobplan_labor_table1_grid3_5" sortable="false"/>
+									<tablecol dataattribute="apptrequired" id="jobplan_labor_tablebody_11" licensekey="SCHEDULER_OPT" linkedcontrolid="jobplan_labor_table1_grid3_11" ondatachange="resetchildren"/>
+									<tablecol dataattribute="calcapplyto" id="jobplan_labor_tablebody_djp_calcapplyto" linkedcontrolid="labor_applyto"/>
+									<tablecol dataattribute="calcmethod" id="jobplan_labor_tablebody_djp_calcmethod" linkedcontrolid="labor_method"/>
+									<tablecol filterable="false" id="jobplan_labor_tablebody_10" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+								</tablebody>
+								<tabledetails id="jobplan_labor_table1">
+									<section id="jobplan_labor_table1_sec1" label="Details">
+										<sectionrow id="jobplan_labor_table1_sec1_row1">
+											<sectioncol id="jobplan_labor_table1_sec1_row1_col1">
+												<section id="jobplan_labor_table1_sec1_row1_col1_sec1">
+													<textbox dataattribute="orgid" defaultfocus="true" id="jobplan_labor_table1_grid1_1" lookup="org"/>
+													<textbox dataattribute="siteid" id="jobplan_labor_table1_grid1_2" lookup="site"/>
+													<textbox dataattribute="jptask" id="jobplan_labor_table1_grid1_3" lookup="jptask" sizeintable="5" smartfilloff="true"/>
+													<textbox applink="persongr" dataattribute="crewworkgroup" id="jobplan_labor_table1_grid1_crew_1" licensekey="CREW" lookup="persongroup" menutype="normal" smartfilloff="true"/>
+													<multiparttextbox applink="condexpmgr" dataattribute="conditionnum" descdataattribute="condition.description" descinputmode="readonly" id="jobplan_labor_table1_grid1_3_1" lookup="conditionexp" menutype="normal" moreinformation="com.ibm.mbs.doc,jobplan/c_jobplan_conditions.html" sigoption="USECONDITIONALJP"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="jobplan_labor_table1_sec1_row1_col2">
+												<section id="jobplan_labor_table1_sec1_row1_col2_sec1">
+													<multiparttextbox applink="labor" dataattribute="laborcode" descdataattribute="labor.person.displayname" descinputmode="readonly" id="jobplan_labor_table1_grid2_1" longdescreadonly="true" lookup="laboronly" menutype="normal"/>
+													<multiparttextbox applink="craft" dataattribute="craft" descdataattribute="craftskill.description" descinputmode="readonly" id="jobplan_labor_table1_grid2_2" longdescreadonly="true" lookup="craftrate" menutype="normal" smartfilloff="true"/>
+													<textbox dataattribute="skilllevel" id="jobplan_labor_table1_grid2_3" lookup="craftrate" smartfilloff="true"/>
+													<multiparttextbox applink="company" applinkkey="company" dataattribute="vendor" descdataattribute="company.name" descinputmode="readonly" id="jobplan_labor_table1_grid2_4" longdescreadonly="true" lookup="craftrate" menutype="normal" smartfilloff="true"/>
+													<textbox applink="contlabor" dataattribute="contractnum" id="jobplan_labor_table1_grid2_5" lookup="craftrate" menutype="normal" smartfilloff="true"/>
+													<multiparttextbox applink="amcrewt" dataattribute="amcrewtype" descdataattribute="AMCREWT.description" descinputmode="readonly" id="jobplan_labor_table1_grid2_crew_1" licensekey="CREW" longdescreadonly="true" lookup="amcrewtype" menutype="NORMAL"/>
+													<multiparttextbox applink="amcrew" dataattribute="amcrew" descdataattribute="AMCREW.description" descinputmode="readonly" id="jobplan_labor_table1_grid2_crew_2" licensekey="CREW" longdescreadonly="true" lookup="amcrews" menutype="normal"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="jobplan_labor_table1_sec1_row1_col3">
+												<section id="jobplan_labor_table1_sec1_row1_col3_sec1">
+													<textbox dataattribute="quantity" id="jobplan_labor_table1_grid3_2"/>
+													<textbox dataattribute="laborhrs" id="jobplan_labor_table1_grid3_3"/>
+													<textbox dataattribute="payrate" id="jobplan_labor_table1_grid3_4" inputmode="readonly"/>
+													<textbox dataattribute="linecost" id="jobplan_labor_table1_grid3_5" inputmode="readonly"/>
+													<checkbox dataattribute="apptrequired" id="jobplan_labor_table1_grid3_11" licensekey="SCHEDULER_OPT"/>
+												</section>
+												<section id="jobplan_labor_table1_sec1_row1_col3_sec2" label="Dynamic Job Plan Information" sigoption="DYNAMIC" sigoptiondatasrc="mainrecord">
+													<textbox dataattribute="CALCAPPLYTO" id="labor_applyto" lookup="VALUELIST"/>
+													<textbox dataattribute="CALCMETHOD" id="labor_method" lookup="VALUELIST"/>
+													<textbox applink="reslevel" dataattribute="CALCLEVEL" id="labor_level" lookup="RESLEVEL" menutype="NORMAL" sigoption="DYNAMIC_LEVEL"/>
+													<textbox dataattribute="CALCEXPRESSION" id="labor_attribute" menutype="DYNEXPBUILDER" sigoption="DYNAMIC_PROPATTR"/>
+													<textbox dataattribute="CALCEXPRESSIONHOURS" id="labor_attributehours" menutype="DYNEXPBUILDER" sigoption="DYNAMICBOTH"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+								</tabledetails>
+								<buttongroup id="main_jobplan_labor_jplabor_table_2">
+									<pushbutton default="true" id="main_jobplan_labor_jplabor_table_2_1" label="New Row" mxevent="addrow"/>
+								</buttongroup>
+							</table>
+						</tab>
+						<tab default="false" id="main_jobplan_materials" label="Materials">
+							<table beanclass="psdi.webclient.beans.jobplan.MaterialBean" id="main_jobplan_materials_jpmaterial_table" label="Planned Materials" relationship="JOBMATERIAL">
+								<tablebody displayrowsperpage="4" filterable="true" id="main_jobplan_materials_jpmaterial_table_tablebody">
+									<tablecol filterable="false" id="main_jobplan_materials_jpmaterial_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+									<tablecol dataattribute="jptask" id="main_jobplan_materials_jpmaterial_table_tablebody_2" linkedcontrolid="main_jobplan_materials_jpmaterial_table_1_grid10_3"/>
+									<tablecol applink="item,inventor" dataattribute="itemnum" id="main_jobplan_materials_jpmaterial_table_tablebody_3" lookup="itemwithitemset" menutype="normal"/>
+									<tablecol dataattribute="item.description" id="main_jobplan_materials_jpmaterial_table_tablebody_4">
+										<textbox dataattribute="item.description" id="altitem_desc" inputmode="readonly" longdescreadonly="true" lookup="longdesc"/>
+									</tablecol>
+									<tablecol dataattribute="location" id="main_jobplan_materials_jpmaterial_table_tablebody_6" linkedcontrolid="main_jobplan_materials_jpmaterial_table_1_grid8_1"/>
+									<tablecol dataattribute="itemqty" id="main_jobplan_materials_jpmaterial_table_tablebody_7" linkedcontrolid="main_jobplan_materials_jpmaterial_table_1_grid8_2"/>
+									<tablecol dataattribute="unitcost" id="main_jobplan_materials_jpmaterial_table_tablebody_8" linkedcontrolid="main_jobplan_materials_jpmaterial_table_1_grid8_3" sortable="false"/>
+									<tablecol dataattribute="linecost" id="main_jobplan_materials_jpmaterial_table_tablebody_9" linkedcontrolid="main_jobplan_materials_jpmaterial_table_1_grid8_4" sortable="false"/>
+									<tablecol applink="company" dataattribute="vendor" id="main_jobplan_materials_jpmaterial_table_tablebody_11" lookup="companies" menutype="normal"/>
+									<tablecol filterable="false" id="main_jobplan_materials_jpmaterial_table_tablebody_12" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+								</tablebody>
+								<tabledetails id="main_jobplan_materials_jpmaterial_table_1">
+									<section id="main_jobplan_materials_jpmaterial_table_1_sec1" label="Details">
+										<sectionrow id="main_jobplan_materials_jpmaterial_table_1_sec1_row1">
+											<sectioncol id="main_jobplan_materials_jpmaterial_table_1_sec1_row1_col1">
+												<section id="main_jobplan_materials_jpmaterial_table_1_sec1_row1_col1_sec1">
+													<textbox dataattribute="orgid" defaultfocus="true" id="main_jobplan_materials_jpmaterial_table_1_grid10_1" lookup="org"/>
+													<textbox dataattribute="siteid" id="main_jobplan_materials_jpmaterial_table_1_grid10_2" lookup="site"/>
+													<textbox dataattribute="jptask" id="main_jobplan_materials_jpmaterial_table_1_grid10_3" lookup="jptask" sizeintable="5" smartfilloff="true"/>
+													<multiparttextbox applink="condexpmgr" dataattribute="conditionnum" descdataattribute="condition.description" descinputmode="readonly" id="main_jobplan_materials_jpmaterial_table_1_grid10_3_1" lookup="conditionexp" menutype="normal" moreinformation="com.ibm.mbs.doc,jobplan/c_jobplan_conditions.html" sigoption="USECONDITIONALJP"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="main_jobplan_materials_jpmaterial_table_1_sec2_row1_col1">
+												<section id="main_jobplan_materials_jpmaterial_table_1_sec2_row1_col1_sec1">
+													<multiparttextbox dataattribute="itemsetid" descdataattribute="SETS.DESCRIPTION" descinputmode="readonly" id="main_jobplan_materials_jpmaterial_table_1_grid7_1" lookup="itemset"/>
+													<multiparttextbox applink="item,inventor" dataattribute="itemnum" descdataattribute="item.description" descinputmode="readonly" id="main_jobplan_materials_jpmaterial_table_1_grid7_2" lookup="itemwithitemset" menutype="normal"/>
+													<textbox dataattribute="itemqty" id="main_jobplan_materials_jpmaterial_table_1_grid8_2"/>
+													<multiparttextbox applink="company" dataattribute="vendor" descdataattribute="company.name" descinputmode="readonly" id="main_jobplan_materials_jpmaterial_table_1_grid9_1" lookup="companies" menutype="normal"/>
+													<checkbox dataattribute="directreq" id="main_jobplan_materials_jpmaterial_table_1_grid9_3"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="main_jobplan_materials_jpmaterial_table_1_sec1_row2_col2">
+												<section id="main_jobplan_materials_jpmaterial_table_1_sec1_row2_col2_sec1">
+													<textbox applink="storeroom,ipc" dataattribute="location" id="main_jobplan_materials_jpmaterial_table_1_grid8_1" lookup="storelocsite" menutype="NORMAL"/>
+													<textbox dataattribute="storelocsite" id="main_jobplan_materials_jpmaterial_table_1_grid8_1A" lookup="storelocsite"/>
+													<textbox dataattribute="unitcost" id="main_jobplan_materials_jpmaterial_table_1_grid8_3" inputmode="readonly"/>
+													<textbox dataattribute="linecost" id="main_jobplan_materials_jpmaterial_table_1_grid8_4" inputmode="readonly"/>
+												</section>
+												<section id="main_jobplan_materials_jpmaterial_table_1_sec1_row2_col2_sec2" label="Dynamic Job Plan Information" sigoption="DYNAMIC" sigoptiondatasrc="mainrecord">
+													<textbox dataattribute="CALCMETHOD" id="material_method" lookup="VALUELIST"/>
+													<textbox applink="reslevel" dataattribute="CALCLEVEL" id="material_level" lookup="RESLEVEL" menutype="NORMAL" sigoption="DYNAMIC_LEVEL"/>
+													<textbox dataattribute="CALCEXPRESSION" id="material_attribute" menutype="DYNEXPBUILDER" sigoption="DYNAMIC_PROPATTR"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+									<section id="main_jobplan_materials_jpmaterial_table_1_sec2" label="Condition">
+										<sectionrow id="main_jobplan_materials_jpmaterial_table_1_sec2_row2">
+											<sectioncol id="main_jobplan_materials_jpmaterial_table_1_sec2_row2_col1">
+												<section id="main_jobplan_materials_jpmaterial_table_1_sec2_row2_col1_sec1">
+													<checkbox dataattribute="item.conditionenabled" id="main_jobplan_materials_jpmaterial_table_1_grid7_4" inputmode="readonly"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="main_jobplan_materials_jpmaterial_table_1_sec2_row2_col2">
+												<section id="main_jobplan_materials_jpmaterial_table_1_sec2_row2_col2_sec1">
+													<textbox dataattribute="conditioncode" id="main_jobplan_materials_jpmaterial_table_1_grid7A_1" lookup="conditioncode"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="main_jobplan_materials_jpmaterial_table_1_sec2_row2_col3">
+												<section id="main_jobplan_materials_jpmaterial_table_1_sec2_row2_col3_sec1">
+													<textbox dataattribute="itemcondition.condrate" id="main_jobplan_materials_jpmaterial_table_1_grid7A_2" inputmode="readonly"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="main_jobplan_materials_jpmaterial_table_1_sec2_row2_col4">
+												<section id="main_jobplan_materials_jpmaterial_table_1_sec2_row2_col4_sec1">
+													<textbox dataattribute="inventory.category" id="main_jobplan_materials_jpmaterial_table_1_grid7A_3" inputmode="readonly"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+								</tabledetails>
+								<buttongroup id="main_jobplan_materials_jpmaterial_table_2">
+									<pushbutton id="main_jobplan_materials_jpmaterial_table_2_1" label="Select Spare Parts" mxevent="selasparts"/>
+									<pushbutton default="true" id="main_jobplan_materials_jpmaterial_table_2_2" label="New Row" mxevent="addrow"/>
+								</buttongroup>
+							</table>
+						</tab>
+						<tab default="false" id="main_jobplan_services" label="Services">
+							<table id="main_jobplan_services_jpservices_table" label="Planned Services" relationship="JOBSERVICE">
+								<tablebody displayrowsperpage="4" filterable="true" id="main_jobplan_services_jpservices_table_tablebody">
+									<tablecol filterable="false" id="main_jobplan_services_jpservices_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+									<tablecol dataattribute="jptask" id="main_jobplan_services_jpservices_table_tablebody_2" linkedcontrolid="main_jobplan_services_jpservices_table_1_grid7_1"/>
+									<tablecol applink="srvitem" dataattribute="itemnum" id="main_jobplan_services_jpservices_table_tablebody_3" lookup="serviceitem" menutype="normal"/>
+									<tablecol dataattribute="item.description" id="main_jobplan_services_jpservices_table_tablebody_4" inputmode="readonly" lookup="longdesc"/>
+									<tablecol dataattribute="itemqty" id="main_jobplan_services_jpservices_table_tablebody_5" linkedcontrolid="main_jobplan_services_jpservices_table_1_grid8_1"/>
+									<tablecol dataattribute="unitcost" id="main_jobplan_services_jpservices_table_tablebody_6" linkedcontrolid="main_jobplan_services_jpservices_table_1_grid8_6" sortable="false"/>
+									<tablecol dataattribute="linecost" id="main_jobplan_services_jpservices_table_tablebody_8" linkedcontrolid="main_jobplan_services_jpservices_table_1_grid8_8" sortable="false"/>
+									<tablecol applink="company" dataattribute="vendor" id="main_jobplan_services_jpservices_table_tablebody_9" lookup="companies" menutype="normal"/>
+									<tablecol filterable="false" id="main_jobplan_services_jpservices_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+								</tablebody>
+								<tabledetails id="main_jobplan_services_jpservices_table_1">
+									<section id="main_jobplan_services_jpservices_table_1_sec1" label="Details">
+										<sectionrow id="main_jobplan_services_jpservices_table_1_sec1_row1">
+											<sectioncol id="main_jobplan_services_jpservices_table_1_sec1_row1_col1">
+												<section id="main_jobplan_services_jpservices_1_sec1_row1_col1_sec1">
+													<textbox dataattribute="orgid" defaultfocus="true" id="main_jobplan_services_jpservices_table_1_grid9_1" lookup="org"/>
+													<textbox dataattribute="siteid" id="main_jobplan_services_jpservices_table_1_grid9_2" lookup="site"/>
+													<textbox dataattribute="jptask" id="main_jobplan_services_jpservices_table_1_grid7_1" lookup="jptask" sizeintable="5" smartfilloff="true"/>
+													<multiparttextbox applink="condexpmgr" dataattribute="conditionnum" descdataattribute="condition.description" descinputmode="readonly" id="main_jobplan_services_jpservices_table_1_grid9_2_1" lookup="conditionexp" menutype="normal" moreinformation="com.ibm.mbs.doc,jobplan/c_jobplan_conditions.html" sigoption="USECONDITIONALJP"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="main_jobplan_services_jpservices_table_1_sec2_row1_col1">
+												<section id="main_jobplan_services_jpservices_table_1_sec2_row1_col1_sec1">
+													<multiparttextbox dataattribute="itemsetid" descdataattribute="SETS.DESCRIPTION" descinputmode="readonly" id="main_jobplan_services_jpservices_table_1_grid7_3" lookup="itemset"/>
+													<multiparttextbox applink="srvitem" dataattribute="itemnum" descdataattribute="item.description" descinputmode="readonly" id="main_jobplan_services_jpservices_table_1_grid7_2" lookup="serviceitem" menutype="normal"/>
+													<textbox dataattribute="itemqty" id="main_jobplan_services_jpservices_table_1_grid8_1"/>
+													<textbox dataattribute="unitcost" id="main_jobplan_services_jpservices_table_1_grid8_6" inputmode="readonly"/>
+													<textbox dataattribute="linecost" id="main_jobplan_services_jpservices_table_1_grid8_8" inputmode="readonly"/>
+													<multiparttextbox applink="company" dataattribute="vendor" descdataattribute="company.name" descinputmode="readonly" id="main_jobplan_services_jpservices_table_1_grid8_2" lookup="companies" menutype="normal"/>
+												</section>
+												<section id="main_jobplan_services_jpservices_table_1_sec2_row1_col1_sec2" label="Dynamic Job Plan Information" sigoption="DYNAMIC" sigoptiondatasrc="mainrecord">
+													<textbox dataattribute="CALCMETHOD" id="service_method" lookup="VALUELIST"/>
+													<textbox applink="reslevel" dataattribute="CALCLEVEL" id="service_level" lookup="RESLEVEL" menutype="NORMAL" sigoption="DYNAMIC_LEVEL"/>
+													<textbox dataattribute="CALCEXPRESSION" id="service_attribute" menutype="DYNEXPBUILDER" sigoption="DYNAMIC_PROPATTR"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+								</tabledetails>
+								<buttongroup id="main_jobplan_services_jpservices_table_2">
+									<pushbutton default="true" id="main_jobplan_services_jpservices_table_2_1" label="New Row" mxevent="addrow"/>
+								</buttongroup>
+							</table>
+						</tab>
+						<tab default="false" id="main_jobplan_tools" label="Tools">
+							<table beanclass="com.ibm.tivoli.maximo.amcrew.jobplan.beans.JobToolsBean" id="main_jobplan_tools_jptools_table" label="Planned Tools" relationship="JOBTOOL">
+								<tablebody displayrowsperpage="4" filterable="true" id="main_jobplan_tools_jptools_table_tablebody">
+									<tablecol filterable="false" id="main_jobplan_tools_jptools_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+									<tablecol dataattribute="jptask" id="main_jobplan_tools_jptools_table_tablebody_2" linkedcontrolid="main_jobplan_tools_jptools_table_1_grid7_1"/>
+									<tablecol applink="tool" dataattribute="itemnum" id="main_jobplan_tools_jptools_table_tablebody_3" lookup="tools" menutype="normal"/>
+									<tablecol dataattribute="item.description" id="main_jobplan_tools_jptools_table_tablebody_4" inputmode="readonly" lookup="longdesc"/>
+									<tablecol dataattribute="itemqty" id="main_jobplan_tools_jptools_table_tablebody_5" linkedcontrolid="main_jobplan_tools_jptools_table_1_grid8_1"/>
+									<tablecol dataattribute="hours" id="main_jobplan_tools_jptools_table_tablebody_6" linkedcontrolid="main_jobplan_tools_jptools_table_1_grid8_2"/>
+									<tablecol dataattribute="rate" id="main_jobplan_tools_jptools_table_tablebody_7" linkedcontrolid="main_jobplan_tools_jptools_table_1_grid8_3" sortable="false"/>
+									<tablecol dataattribute="linecost" id="main_jobplan_tools_jptools_table_tablebody_8" linkedcontrolid="main_jobplan_tools_jptools_table_1_grid8_4" sortable="false"/>
+									<tablecol dataattribute="calcapplyto" id="main_jobplan_tools_jptools_table_tablebody_djp_calcapplyto" linkedcontrolid="tool_applyto"/>
+									<tablecol dataattribute="calcmethod" id="main_jobplan_tools_jptools_table_tablebody_djp_calcmethod" linkedcontrolid="tool_method"/>
+									<tablecol filterable="false" id="main_jobplan_tools_jptools_table_tablebody_9" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+								</tablebody>
+								<tabledetails id="main_jobplan_tools_jptools_table_1">
+									<section id="main_jobplan_tools_jptools_table_1_sec1" label="Details">
+										<sectionrow id="main_jobplan_tools_jptools_table_1_sec1_row1">
+											<sectioncol id="main_jobplan_tools_jptools_table_1_sec1_row1_col1">
+												<section id="main_jobplan_tools_jptools_table_1_sec1_row1_col1_sec1">
+													<textbox dataattribute="orgid" defaultfocus="true" id="main_jobplan_tools_jptools_table_1_grid9_1" lookup="org"/>
+													<textbox dataattribute="siteid" id="main_jobplan_tools_jptools_table_1_grid9_2" lookup="site"/>
+													<textbox dataattribute="jptask" id="main_jobplan_tools_jptools_table_1_grid7_1" lookup="jptask" sizeintable="5" smartfilloff="true"/>
+													<multiparttextbox applink="condexpmgr" dataattribute="conditionnum" descdataattribute="condition.description" descinputmode="readonly" id="main_jobplan_tools_jptools_table_1_grid9_2_1" lookup="conditionexp" menutype="normal" moreinformation="com.ibm.mbs.doc,jobplan/c_jobplan_conditions.html" sigoption="USECONDITIONALJP"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="main_jobplan_tools_jptools_table_1_sec1_row1_col2">
+												<section id="main_jobplan_tools_jptools_table_1_sec1_row1_col2_sec1">
+													<multiparttextbox dataattribute="itemsetid" descdataattribute="SETS.DESCRIPTION" descinputmode="readonly" id="main_jobplan_tools_jptools_table_1_grid7_12" lookup="itemset"/>
+													<multiparttextbox applink="tool" dataattribute="itemnum" descdataattribute="item.description" descinputmode="readonly" id="main_jobplan_tools_jptools_table_1_grid7_2" lookup="tools" menutype="normal"/>
+													<textbox dataattribute="itemqty" id="main_jobplan_tools_jptools_table_1_grid8_1"/>
+													<textbox dataattribute="hours" id="main_jobplan_tools_jptools_table_1_grid8_2"/>
+													<textbox dataattribute="rate" id="main_jobplan_tools_jptools_table_1_grid8_3"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="main_jobplan_tools_jptools_table_1_sec2_row1_col1">
+												<section id="main_jobplan_tools_jptools_table_1_sec2_row1_col1_sec1">
+													<textbox applink="storeroom,ipc" dataattribute="location" id="main_jobplan_tools_jptools_table_1_grid8_5" lookup="storelocsite" menutype="NORMAL"/>
+													<textbox dataattribute="storelocsite" id="main_jobplan_tools_jptools_table_1_grid8_6" lookup="storelocsite"/>
+													<checkbox dataattribute="reservereq" id="main_jobplan_tools_jptools_table_1_grid8_7"/>
+													<textbox dataattribute="linecost" id="main_jobplan_tools_jptools_table_1_grid8_4" inputmode="readonly"/>
+												</section>
+												<section id="main_jobplan_tools_jptools_table_1_sec2_row1_col1_sec2" label="Dynamic Job Plan Information" sigoption="DYNAMIC" sigoptiondatasrc="mainrecord">
+													<textbox dataattribute="CALCAPPLYTO" id="tool_applyto" lookup="VALUELIST"/>
+													<textbox dataattribute="CALCMETHOD" id="tool_method" lookup="VALUELIST"/>
+													<textbox applink="reslevel" dataattribute="CALCLEVEL" id="tool_level" lookup="RESLEVEL" menutype="NORMAL" sigoption="DYNAMIC_LEVEL"/>
+													<textbox dataattribute="CALCEXPRESSION" id="tool_attribute" menutype="DYNEXPBUILDER" sigoption="DYNAMIC_PROPATTR"/>
+													<textbox dataattribute="CALCEXPRESSIONHOURS" id="tool_attributehours" menutype="DYNEXPBUILDER" sigoption="DYNAMICBOTH"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+								</tabledetails>
+								<buttongroup id="main_jobplan_tools_jptools_table_2">
+									<pushbutton default="true" id="main_jobplan_tools_jptools_table_2_1" label="New Row" mxevent="addrow"/>
+								</buttongroup>
+							</table>
+						</tab>
+					</tabgroup>
+				</tab>
+				<tab id="assets" label="Work Assets">
+					<section border="true" id="assets_grid1">
+						<sectionrow id="assets_grid1_row1">
+							<sectioncol id="assets_grid1_row1_col1">
+								<section id="assets_grid1_row1_col1_1">
+									<multiparttextbox dataattribute="jpnum" descdataattribute="description" id="assets_grid1_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="assets_grid1_row1_col2">
+								<section id="assets_grid1_row1_col2_1">
+									<textbox dataattribute="orgid" id="assets_grid1_2" lookup="org"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="assets_grid1_row1_col3">
+								<section id="assets_grid1_row1_col3_1">
+									<textbox dataattribute="siteid" id="assets_grid1_3" lookup="site"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="assets_jpassets_table" label="Work Assets and Safety Plans" relationship="JPASSETSPLINK">
+						<tablebody displayrowsperpage="18" filterable="true" id="assets_jpassets_table_tablebody">
+							<tablecol filterable="false" id="assets_jpassets_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="location" id="assets_jpassets_table_tablebody_2" linkedcontrolid="assets_jpassets_table_1_grid3_3"/>
+							<tablecol dataattribute="assetnum" id="assets_jpassets_table_tablebody_3" linkedcontrolid="assets_jpassets_table_1_grid3_6"/>
+							<tablecol dataattribute="itemnum" id="assets_jpassets_table_tablebody_4" linkedcontrolid="assets_jpassets_table_1_grid3_8"/>
+							<tablecol dataattribute="assetdescription" id="assets_jpassets_table_tablebody_5" linkedcontrolid="assets_jpassets_table_1_grid4_1" sortable="false"/>
+							<tablecol applink="safeplan" dataattribute="safetyplanid" id="assets_jpassets_table_tablebody_6" lookup="safetyplan" menutype="normal"/>
+							<tablecol dataattribute="isdefaultassetsp" id="assets_jpassets_table_tablebody_8" linkedcontrolid="assets_jpassets_table_1_grid3_7"/>
+							<tablecol filterable="false" id="assets_jpassets_table_tablebody_10" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="assets_jpassets_table_1">
+							<section id="assets_jpassets_table_1_sec1" label="Details">
+								<sectionrow id="assets_jpassets_table_table_1_sec1_row1">
+									<sectioncol id="assets_jpassets_table_table_1_sec1_row1_col1">
+										<section id="assets_jpassets_table_table_1_sec1_row1_col1_sec1">
+											<textbox applink="location,ipc" dataattribute="location" id="assets_jpassets_table_1_grid3_3" lookup="locations" menutype="locations"/>
+											<textbox applink="asset,ipc" dataattribute="assetnum" id="assets_jpassets_table_1_grid3_6" lookup="asset" menutype="assetmain"/>
+											<textbox applink="item,tool,srvitem,inventor" dataattribute="itemnum" id="assets_jpassets_table_1_grid3_8" lookup="itemsallwithitemset" menutype="itemwithitemset"/>
+											<textbox dataattribute="item.itemtype" id="assets_jpassets_table_1_grid3_9" inputmode="readonly"/>
+											<textbox dataattribute="assetdescription" id="assets_jpassets_table_1_grid4_1" inputmode="readonly" longdescreadonly="true" lookup="longdesc" sizeintable="30"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="assets_jpassets_table_table_1_sec2_row1_col1">
+										<section id="assets_jpassets_table_table_1_sec2_row1_col1_sec1">
+											<textbox dataattribute="orgid" defaultfocus="true" id="assets_jpassets_table_1_grid3_1" lookup="org"/>
+											<textbox dataattribute="siteid" id="assets_jpassets_table_1_grid3_2" lookup="site"/>
+											<multiparttextbox applink="safeplan" dataattribute="safetyplanid" descdataattribute="safetyplan.description" descinputmode="readonly" id="assets_jpassets_table_1_grid3_4" lookup="safetyplan" menutype="normal"/>
+											<checkbox dataattribute="isdefaultassetsp" id="assets_jpassets_table_1_grid3_7"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+							<section id="assets_jpassets_table_2_sec1" label="Purchasing Details">
+								<sectionrow id="assets_jpassets_table_table_2_sec1_row1">
+									<sectioncol id="assets_jpassets_table_table_2_sec1_row1_col1">
+										<section id="assets_jpassets_table_table_2_sec1_row1_col1_sec1">
+											<checkbox dataattribute="woreqwhenpurch" id="assets_jpassets_table_2_grid4_1"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="assets_jpassets_table_table_2_sec1_row1_col2">
+										<section id="assets_jpassets_table_table_2_sec1_row1_col2_sec1">
+											<textbox dataattribute="wotypewhenpurch" id="assets_jpassets_table_2_grid4_3" lookup="jpworktype"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="assets_jpassets_table_2">
+							<pushbutton default="true" id="assets_jpassets_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+					<table id="ds_jpassets_table" label="Data Sheets" licensekey="CALIBRATION" orderby="sequence" parentdatasrc="assets_jpassets_table" relationship="PLUSCJPDSASSETSPLINK">
+						<helpgrid id="Cal_jp_help" innerhtml="You can associate data sheets with a work asset on a calibration job plan." morehelp="com.ibm.cal.doc,pluscjp/c_job_plan_cal.html"/>
+						<tablebody displayrowsperpage="18" filterable="true" id="ds_jpassets_table_tablebody">
+							<tablecol filterable="false" id="ds_jpassets_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="sequence" id="ds_jpassets_table_col_sequence" label="Sequence"/>
+							<tablecol applink="plusdsplan" dataattribute="dsplannum" id="ds_jpassets_table_col1" lookup="jp_datasheet" menutype="normal" smartfilloff="false"/>
+							<tablecol dataattribute="PLUSCJPDATASHEET.description" id="ds_jpassets_table_col2" inputmode="readonly">
+								<textbox dataattribute="PLUSCJPDATASHEET.description" id="ds_jpassets_table_col2_2_2a" inputmode="readonly"/>
+							</tablecol>
+							<tablecol dataattribute="assetnum" id="ds_jpassets_table_col4" linkedcontrolid="ds_jpassets_table_table_1_sec1_row1_col3_sec1_assetnum"/>
+							<tablecol dataattribute="location" id="ds_jpassets_table_location" linkedcontrolid="ds_jpassets_table_table_1_sec1_row1_col4_sec1_location"/>
+							<tablecol dataattribute="required" id="ds_jpassets_table_required" linkedcontrolid="ds_jpassets_table_table_1_sec1_row1_col5_sec1_required"/>
+							<tablecol filterable="false" id="main_instr_table_tablebody_deleterow" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="ds_jpassets_table_1">
+							<section id="ds_jpassets_table_1_sec1" label="Details">
+								<sectionrow id="ds_jpassets_table_table_1_sec1_row1">
+									<sectioncol id="ds_jpassets_table_table_1_sec1_row1_col_sequence">
+										<section id="ds_jpassets_table_table_1_sec1_row1_col_sequence_sec1">
+											<textbox dataattribute="sequence" id="ds_jpassets_table_table_1_sec1_row1_col_sequence_sec1_sequence" label="Sequence"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="ds_jpassets_table_table_1_sec1_row1_col1">
+										<section id="ds_jpassets_table_table_1_sec1_row1_col1_sec1">
+											<multiparttextbox applink="plusdsplan" dataattribute="dsplannum" descdataattribute="PLUSCJPDATASHEET.description" descinputmode="readonly" id="ds_jpassets_table_1_grid3_3" lookup="jp_datasheet" menutype="normal" smartfilloff="false"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="ds_jpassets_table_table_1_sec1_row1_col3">
+										<section id="ds_jpassets_table_table_1_sec1_row1_col3_sec1">
+											<textbox applink="asset" dataattribute="assetnum" id="ds_jpassets_table_table_1_sec1_row1_col3_sec1_assetnum" lookup="asset" menutype="assetmain"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="ds_jpassets_table_table_1_sec1_row1_col4">
+										<section id="ds_jpassets_table_table_1_sec1_row1_col4_sec1">
+											<textbox applink="location,ipc" dataattribute="location" id="ds_jpassets_table_table_1_sec1_row1_col4_sec1_location" lookup="locations" menutype="locations"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="ds_jpassets_table_table_1_sec1_row1_col5">
+										<section id="ds_jpassets_table_table_1_sec1_row1_col5_sec1">
+											<checkbox dataattribute="required" id="ds_jpassets_table_table_1_sec1_row1_col5_sec1_required"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="ds_jpassets_table_2">
+							<pushbutton default="true" id="ds_jpassets_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="specification" label="Specifications">
+					<section border="true" id="specifications_grid2_sec">
+						<sectionrow id="specifications_grid2_row1">
+							<sectioncol id="specifications_grid2_row1_col1">
+								<section id="specifications_grid2_row1_col1_1">
+									<multiparttextbox dataattribute="JPNUM" descdataattribute="DESCRIPTION" id="specification_grid2_row1_1_1" menutype="jobplan"/>
+									<textbox applink="assetcat" dataattribute="CLASSSTRUCTURE.HIERARCHYPATH" id="specification_grid2_row2_1" menutype="classification" ondatachange="resetchildren"/>
+									<textbox dataattribute="CLASSSTRUCTURE.description_class" id="specification_grid2_row3_1" lookup="classification"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="specifications_grid2_row1_col2">
+								<section id="specifications_grid2_row1_col2_1">
+									<textbox dataattribute="orgid" id="specifications_grid2_row1_col2_1_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="specifications_grid2_row1_col3">
+								<section id="specifications_grid2_row1_col3_1">
+									<textbox dataattribute="siteid" id="specifications_grid2_row1_col3_1_1"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="specification_jobplanspectable" label="Specifications" orderby="displaysequence" relationship="JOBPLANSPECCLASS">
+						<tablebody displayrowsperpage="10" filterable="true" id="specification_jobplanspectable_tablebody">
+							<tablecol filterable="false" id="specification_jobplanspectable_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="assetattrid" id="specification_jobplanspectable_tablebody_2" lookup="assetattribute"/>
+							<tablecol dataattribute="assetattribute.description" id="specification_jobplanspectable_tablebody_3" inputmode="readonly" showfilterfield="true" sortable="false"/>
+							<tablecol dataattribute="assetattribute.datatype" id="specification_jobplanspectable_tablebody_4" linkedcontrolid="specification_jobplanspectable_1_griddetails_3" showfilterfield="true" sortable="false"/>
+							<tablecol dataattribute="alnvalue" id="specification_jobplanspectable_tablebody_5" linkedcontrolid="specification_jobplanspectable_1_griddetails_4"/>
+							<tablecol dataattribute="numvalue" id="specification_jobplanspectable_tablebody_6" linkedcontrolid="specification_jobplanspectable_1_griddetails_5"/>
+							<tablecol dataattribute="measureunitid" id="specification_jobplanspectable_tablebody_7" linkedcontrolid="specification_jobplanspectable_1_griddetails_6"/>
+							<tablecol dataattribute="tablevalue" id="specification_jobplanspectable_tablebody_8" linkedcontrolid="specification_jobplanspectable_1_griddetails_5a"/>
+							<tablecol filterable="false" id="specification_jobplanspectable_tablebody_9" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="specification_jobplanspectable_1">
+							<section id="specification_jobplanspectable_1_griddetails" label="Details">
+								<sectionrow id="specifications_specifications_table_1_griddetails1_row">
+									<sectioncol id="specifications_specifications_table_1_griddetails1_row_col1">
+										<section id="specifications_specifications_table_1_griddetails1_row_col1_sec">
+											<multiparttextbox dataattribute="assetattrid" defaultfocus="true" descdataattribute="assetattribute.description" descinputmode="readonly" id="specification_jobplanspectable_1_griddetails_1" lookup="assetattribute"/>
+											<textbox dataattribute="assetattribute.datatype" id="specification_jobplanspectable_1_griddetails_3" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="specifications_specifications_table_1_griddetails1_row_col2">
+										<section id="specifications_specifications_table_1_griddetails1_row_col2_sec">
+											<textbox dataattribute="alnvalue" id="specification_jobplanspectable_1_griddetails_4" lookup="alndomain" smartfilloff="true"/>
+											<textbox dataattribute="numvalue" id="specification_jobplanspectable_1_griddetails_5" lookup="numericdomain" smartfilloff="true"/>
+											<textbox dataattribute="measureunitid" id="specification_jobplanspectable_1_griddetails_6" lookup="measureunit"/>
+											<textbox dataattribute="tablevalue" id="specification_jobplanspectable_1_griddetails_5a" menutype="normal"/>
+											<textbox dataattribute="section" id="specification_jobplanspectable_1_griddetails_7"/>
+											<textbox dataattribute="classspec.inheritedfrom" id="specification_jobplanspectable_1_griddetails_5b" inputmode="readonly"/>
+											<textbox dataattribute="classspec.applydownhier" id="specification_jobplanspectable_1_griddetails_5c" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="specification_jobplanspectable_2">
+							<pushbutton default="true" id="specification_jobplanspectable_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+					<table id="specification_jobtaskspectable" label="Task Specifications" orderby="displaysequence" relationship="JOBTASKSPECCLASS">
+						<tablebody displayrowsperpage="10" filterable="true" id="specification_jobtaskspectable_tablebody">
+							<tablecol filterable="false" id="specification_jobtaskspectable_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="jptask" id="specification_jobtaskspectable_tablebody_1_1" lookup="jptask"/>
+							<tablecol applink="assetcat" dataattribute="CLASSSTRUCTURE.HIERARCHYPATH" id="specification_jobtaskspectable_tablebody_1_2" inputmode="readonly" menutype="classification" ondatachange="resetchildren"/>
+							<tablecol dataattribute="assetattrid" id="specification_jobtaskspectable_tablebody_2" lookup="assetattribute"/>
+							<tablecol dataattribute="assetattribute.description" id="specification_jobtaskspectable_tablebody_3" inputmode="readonly" showfilterfield="true" sortable="false"/>
+							<tablecol dataattribute="assetattribute.datatype" id="specification_jobtaskspectable_tablebody_4" linkedcontrolid="specification_jobplanspectable_1_griddetails_3" showfilterfield="true" sortable="false"/>
+							<tablecol dataattribute="alnvalue" id="specification_jobtaskspectable_tablebody_5" linkedcontrolid="specification_jobplanspectable_1_griddetails_4"/>
+							<tablecol dataattribute="numvalue" id="specification_jobtaskspectable_tablebody_6" linkedcontrolid="specification_jobplanspectable_1_griddetails_5"/>
+							<tablecol dataattribute="measureunitid" id="specification_jobtaskspectable_tablebody_7" linkedcontrolid="specification_jobplanspectable_1_griddetails_6"/>
+							<tablecol dataattribute="tablevalue" id="specification_jobtaskspectable_tablebody_8" linkedcontrolid="specification_jobtaskspectable_2_griddetails_5a"/>
+							<tablecol filterable="false" id="specification_jobtaskspectable_tablebody_9" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="specification_jobtaskspectable_1">
+							<section id="specification_jobtaskspectable_1_griddetails" label="Details">
+								<sectionrow id="specifications_specifications_table_2_griddetails1_row">
+									<sectioncol id="specifications_specifications_table_2_griddetails1_row_col1">
+										<section id="specifications_specifications_table_2_griddetails1_row_col1_sec">
+											<multiparttextbox dataattribute="assetattrid" defaultfocus="true" descdataattribute="assetattribute.description" descinputmode="readonly" id="specification_jobtaskspectablee_2_griddetails_1" lookup="assetattribute"/>
+											<textbox dataattribute="jptask" id="specification_jobtaskspectable_2_griddetails_2" lookup="jptask" smartfilloff="true"/>
+											<textbox dataattribute="assetattribute.datatype" id="specification_jobtaskspectable_2_griddetails_3" inputmode="readonly"/>
+											<textbox applink="assetcat" dataattribute="CLASSSTRUCTURE.HIERARCHYPATH" id="specification_jobtaskspectable_2_griddetails_3_1" inputmode="readonly" menutype="classification" ondatachange="resetchildren"/>
+											<textbox dataattribute="CLASSSTRUCTURE.description_class" id="specification_jobtaskspectable_2_griddetails_3_2" inputmode="readonly" lookup="classification"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="specifications_specifications_table_2_griddetails1_row_col2">
+										<section id="specifications_specifications_table_2_griddetails1_row_col2_sec">
+											<textbox dataattribute="alnvalue" id="specification_jobtaskspectable_2_griddetails_4" lookup="alndomain" smartfilloff="true"/>
+											<textbox dataattribute="numvalue" id="specification_jobtaskspectable_2_griddetails_5" lookup="numericdomain" smartfilloff="true"/>
+											<textbox dataattribute="measureunitid" id="specification_jobtaskspectable_2_griddetails_6" lookup="measureunit"/>
+											<textbox dataattribute="tablevalue" id="specification_jobtaskspectable_2_griddetails_5a" menutype="normal"/>
+											<textbox dataattribute="section" id="specification_jobtaskspectable_2_griddetails_7"/>
+											<textbox dataattribute="classspec.inheritedfrom" id="specification_jobtaskspectable_2_griddetails_5b" inputmode="readonly"/>
+											<textbox dataattribute="classspec.applydownhier" id="specification_jobtaskspectable_2_griddetails_5c" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="specification_jobtaskspectable_2">
+							<pushbutton default="true" id="specification_jobtaskspectable_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include controltoclone="pageFooter" id="INCLUDE-pageFooter"/>
+	</page>
+
+	<dialog beanclass="psdi.webclient.beans.jobplan.JPPredTaskBean" id="selectjptasks" label="Select Predecessor Tasks">
+		<table id="selectjptaskstable" orderby="jptask" selectmode="multiple">
+			<tablebody displayrowsperpage="20" filterable="false" filterexpanded="false" id="selectjptasks_lookup_tablebody">
+				<tablecol filterable="false" id="selectjptasks_lookup_tablebody_col_0" mxevent="toggleselectrow" sortable="true" type="event"/>
+				<tablecol dataattribute="jptask" id="selectjptasks_lookup_tablebody_col_1" inputmode="readonly"/>
+				<tablecol dataattribute="description" id="selectjptasks_lookup_tablebody_col_2" inputmode="readonly"/>
+				<tablecol dataattribute="conditionnum" id="selectjptasks_lookup_tablebody_col_2a" inputmode="readonly" sigoption="USECONDITIONALJP" sigoptiondatasrc="MAINRECORD"/>
+				<tablecol dataattribute="condition.description" id="selectjptasks_lookup_tablebody_col_2b" inputmode="readonly" sigoption="USECONDITIONALJP" sigoptiondatasrc="MAINRECORD"/>
+				<tablecol dataattribute="orgid" id="selectjptasks_lookup_tablebody_col_3" inputmode="readonly"/>
+				<tablecol dataattribute="siteid" id="selectjptasks_lookup_tablebody_col_4" inputmode="readonly"/>
+				<tablecol dataattribute="reltype" detailimage="img_lookup.gif" id="selectjptasks_lookup_tablebody_col_5" menutype="SELECTPREDRELTYPE"/>
+				<tablecol dataattribute="leadlaghours" id="selectjptasks_lookup_tablebody_col_6"/>
+			</tablebody>
+		</table>
+		<buttongroup id="selectjptasks_2">
+			<pushbutton default="true" id="selectjptasks_2_1" label="OK" mxevent="selectPredecessorTasks"/>
+			<pushbutton default="true" id="selectjptasks_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="revhistory" label="View Revision History">
+		<table id="revhistory_table" inputmode="readonly" label="Job Plan Details" orderby="pluscrevnum desc" relationship="PLUSCJPREVHIST" width="960">
+			<tablebody displayrowsperpage="6" filterable="true" id="revhistory_table_tablebody">
+				<tablecol dataattribute="pluscrevnum" id="revhistory_table_tablebody_0" label="Revision Number"/>
+				<tablecol dataattribute="status" id="revhistory_table_tablebody_1"/>
+				<tablecol dataattribute="pluscchangeby" id="revhistory_table_tablebody_3" label="Changed By"/>
+				<tablecol dataattribute="pluscchangedate" id="revhistory_table_tablebody_2"/>
+				<tablecol dataattribute="pluscrevcom" id="revhistory_table_tablebody_4" label="Revison Comments"/>
+			</tablebody>
+		</table>
+		<table id="revhist_comparerevhist_table" inputmode="readonly" label="Job Task Details" orderby="jptask desc" parentdatasrc="revhistory_table" relationship="PLUSCJPREVHISTLINE">
+			<tablebody displayrowsperpage="8" filterable="true" id="revhist_comparerevhist_table_tablebody">
+				<tablecol dataattribute="tasksequence" id="revhist_comparerevhist_table_tablebody_1"/>
+				<tablecol dataattribute="jptask" id="revhist_comparerevhist_table_tablebody_2"/>
+				<tablecol dataattribute="pluscjprevnum" id="revhist_comparerevhist_table_tablebody_3" label="Revision"/>
+				<tablecol dataattribute="pluscrevstatus" id="revhist_comparerevhist_table_tablebody_4" label="Revision Status"/>
+				<tablecol dataattribute="description" id="revhist_comparerevhist_table_tablebody_5" lookup="longdesc"/>
+				<tablecol dataattribute="taskduration" id="revhist_comparerevhist_table_tablebody_6"/>
+				<tablecol dataattribute="metername" id="revhist_comparerevhist_table_tablebody_7"/>
+			</tablebody>
+		</table>
+		<buttongroup id="revhistory_2">
+			<pushbutton default="true" id="revhistory_2_1" label="OK" mxevent="dialogclose"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="viewhistor" label="View History">
+		<table id="viewhist_viewhist_history_jpStatustbl" inputmode="readonly" label="Status History" orderby="changedate desc" relationship="PLUSCJPSTATUS">
+			<tablebody displayrowsperpage="15" filterable="true" id="viewhist_viewhist_history_jpStatustbl_tablebody">
+				<tablecol dataattribute="status" id="viewhist_viewhist_history_jpStatustbl_tablebody_1"/>
+				<tablecol dataattribute="changedate" id="viewhist_viewhist_history_jpStatustbl_tablebody_2"/>
+				<tablecol dataattribute="changeby" id="viewhist_viewhist_history_jpStatustbl_tablebody_3"/>
+				<tablecol dataattribute="memo" id="viewhist_viewhist_history_jpStatustbl_tablebody_4"/>
+			</tablebody>
+		</table>
+		<buttongroup id="viewhist_2">
+			<pushbutton default="true" id="viewhist_2_1" label="OK" mxevent="dialogclose"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.plusc.webclient.beans.jobplan.JPDataSheetBean" icon="img_lookup.gif" id="lookup_jp_datasheet" label="Select Value">
+		<section border="true" datasrc="MAINRECORD" id="jobplan_pm_grid1">
+			<sectionrow id="jobplan_pm_grid1_1">
+				<sectioncol id="jobplan_pm_grid1_1_1">
+					<section id="jobplan_pm_grid1_1_1_grid2">
+						<checkbox dataattribute="usembodata" id="plusdsplanswo_r1_c1_s1_a1" label="Show only Data Sheets associated with the current Work Asset"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+			<buttongroup id="jobplan_pm_grid1_1_1_Tblbuttons2">
+				<pushbutton id="jobplan_pm_grid1_1_1_Tblbuttons2_1" label="Refresh" mxevent="REFRESHLIST"/>
+			</buttongroup>
+		</section>
+		<table id="jobplan_pm_table" inputmode="readonly" selectmode="single">
+			<tablebody displayrowsperpage="15" filterable="true" filterexpanded="true" id="jobplan_pm_lookup_tablebody">
+				<tablecol dataattribute="dsplannum" id="plusdsplanswo_lookup_tablebody_col_1" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="true" type="link"/>
+				<tablecol dataattribute="description" id="plusdsplanswo_lookup_tablebody_col_2" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="true" type="link"/>
+				<tablecol dataattribute="status" id="plusdsplanswo_lookup_tablebody_col_3" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="true" type="link"/>
+			</tablebody>
+		</table>
+		<buttongroup id="jobplan_pm_2">
+			<pushbutton default="true" id="jobplan_pm_2_1" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.jobplan.JPChangeStatusBean" id="list_STATUS" label="Change Status" listaction="true" relationship="JPCHANGESTATUS" savemode="ONUNLOAD">
+		<section id="listchangestatus_grid1_section2">
+			<combobox dataattribute="status" defaultfocus="true" id="listchangestatus_grid1_3"/>
+		</section>
+		<buttongroup id="listchangestatus_2">
+			<pushbutton default="true" id="listchangestatus_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="listchangestatus_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="viewtotals" label="View Costs" relationship="JPTOTAL">
+		<section id="viewtotals_grid2" label="Site">
+			<textbox dataattribute="siteid" id="viewtotals_grid2_1" lookup="site"/>
+		</section>
+		<section id="viewtotals_grid1_1_col1_1" label="Total Labor Hours">
+			<textbox dataattribute="LABORHRS" id="viewtotals_grid1_1_col1_1_1" inputmode="readonly"/>
+		</section>
+		<section id="viewtotals_grid1_2_col1_1" label="Costs">
+			<textbox dataattribute="laborcost" id="viewtotals_grid1_2_col1_1_1" inputmode="readonly"/>
+			<textbox dataattribute="materialcost" id="viewtotals_grid1_2_col1_1_2" inputmode="readonly"/>
+			<textbox dataattribute="servicecost" id="viewtotals_grid1_2_col1_1_3" inputmode="readonly"/>
+			<textbox dataattribute="toolcost" id="viewtotals_grid1_2_col1_1_4" inputmode="readonly"/>
+			<textbox dataattribute="totalcost" id="viewtotals_grid1_2_col1_1_5" inputmode="readonly"/>
+		</section>
+		<buttongroup id="viewtotals_2">
+			<pushbutton default="true" id="viewtotals_2_1" label="OK" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="STATUS" label="Change Status" relationship="JPCHANGESTATUS" savemode="ONLOADUNLOAD">
+		<section border="true" datasrc="MAINRECORD" id="changestatus_grid1_section1">
+			<multiparttextbox dataattribute="jpnum" descdataattribute="description" descinputmode="readonly" id="changestatus_grid1_1" inputmode="readonly" longdescreadonly="true"/>
+			<textbox dataattribute="pluscrevnum" id="changestatus_grid1_pluscrevnum" inputmode="readonly"/>
+			<multiparttextbox dataattribute="status" descdataattribute="statusdesc.description" descinputmode="readonly" id="changestatus_grid1_2" inputmode="readonly"/>
+		</section>
+		<section id="changestatus_grid1_section2">
+			<combobox dataattribute="status" defaultfocus="true" id="changestatus_grid1_3"/>
+			<textbox dataattribute="pluscstatusdate" id="changestatus_grid1_4" lookup="datelookup"/>
+			<textbox dataattribute="memo" id="changestatus_grid1_5"/>
+		</section>
+		<buttongroup id="changestatus_2">
+			<pushbutton default="true" id="changestatus_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="changestatus_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.plusc.webclient.beans.jobplan.ReviseJobPlanBean" id="revise" label="Revise Job Plan" relationship="PLUSCJPREVISIONINPUT">
+		<helpgrid id="revjp_help" innerhtml="Enter a description for the revised Job Plan. Click OK when finished."/>
+		<section id="revjp_grid_s1">
+			<textbox dataattribute="jpnum" id="revjp_grid_s1_1"/>
+			<textbox dataattribute="pluscrevnum" id="revjp_grid_s1_2"/>
+			<textbox dataattribute="pluscrevcom" id="revjp_grid_s1_3" lookup="longdesc"/>
+		</section>
+		<buttongroup id="revjp_2">
+			<pushbutton default="true" id="revjp_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="revjp_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.QbeBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<section id="qbe_grid1">
+			<sectionrow id="qbe_grid1_r1">
+				<sectioncol id="qbe_grid1_r1_c1">
+					<section id="qbe_grid2">
+						<sectionrow id="qbe_grid2_r1">
+							<sectioncol id="qbe_grid2_r1_c1">
+								<section id="qbe_grid21">
+									<multiparttextbox dataattribute="jpnum" descdataattribute="description" descinputmode="query" id="qbe_jpnum" inputmode="query" longdescreadonly="true"/>
+									<blankline id="qbe_blkline1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_grid2_r1_c2">
+								<section id="qbe_grid22">
+									<textbox applink="multisite" dataattribute="orgid" id="qbe_orgid" inputmode="query" lookup="org" menutype="normal"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_grid2_r1_c3">
+								<section id="qbe_grid23">
+									<textbox dataattribute="siteid" id="qbe_siteid" inputmode="query" lookup="site"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="qbe_grid3">
+						<sectionrow id="qbe_grid3_r1">
+							<sectioncol id="qbe_grid3_r1_c1">
+								<section id="qbe_grid31" label="Details">
+									<sectionrow id="qbe_grid31_r1">
+										<sectioncol id="qbe_grid31_r1_c1">
+											<section id="qbe_grid311">
+												<textbox dataattribute="status" id="qbe_status" inputmode="query" lookup="valuelist"/>
+												<textbox dataattribute="jpduration" id="qbe_jpduration" inputmode="query"/>
+												<textbox dataattribute="LBL_WORKCNTRHAZARD" id="qbe_lbl_workcnthazard" label="Work Control Hazards" lookup="VALUELIST"/>
+											</section>
+										</sectioncol>
+										<sectioncol id="qbe_grid31_r1_c2">
+											<section id="qbe_grid312">
+												<textbox dataattribute="priority" id="qbe_priority" inputmode="query"/>
+												<textbox dataattribute="interruptible" id="qbe_interruptible" inputmode="query"/>
+											</section>
+										</sectioncol>
+									</sectionrow>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_grid3_r1_c2">
+								<section id="qbe_grid32" label="Responsibility">
+									<sectionrow id="qbe_grid32_r1">
+										<sectioncol id="qbe_grid32_r1_c1">
+											<section id="qbe_grid321">
+												<textbox applink="person" dataattribute="supervisor" id="qbe_supervisor" inputmode="query" lookup="person" menutype="normal"/>
+												<textbox dataattribute="crewid" id="qbe_crewid" inputmode="query" lookup="valuelist"/>
+												<textbox applink="person" dataattribute="laborcode" id="qbe_laborcode" inputmode="query" lookup="person" menutype="normal"/>
+											</section>
+										</sectioncol>
+										<sectioncol id="qbe_grid32_r1_c2">
+											<section id="qbe_grid322">
+												<textbox applink="persongr" dataattribute="persongroup" id="qbe_persongroup" inputmode="query" lookup="persongroup" menutype="normal"/>
+												<textbox applink="person" dataattribute="owner" id="qbe_owner" inputmode="query" lookup="person" menutype="normal"/>
+												<textbox applink="persongr" dataattribute="ownergroup" id="qbe_ownergroup" inputmode="query" lookup="persongroup" menutype="normal"/>
+											</section>
+										</sectioncol>
+									</sectionrow>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="qbe_grid4">
+						<sectionrow id="qbe_grid4_r1">
+							<sectioncol id="qbe_grid4_r1_c1">
+								<section id="qbe_grid41" label="Intended Use">
+									<textbox align="left" dataattribute="lbl_frequency" id="qbe_lbl_frequency" inputmode="query" lookup="valuelist"/>
+									<multiparttextbox align="left" dataattribute="lbl_classid" descdataattribute="lbl_classification.description" descinputmode="query" id="qbe_lbl_classid" inputmode="query" lookup="lbl_jp_classification"/>
+									<multiparttextbox align="left" dataattribute="lbl_building" descdataattribute="lbl_bldg.description" descinputmode="query" id="qbe_lbl_building" inputmode="query" lookup="lbl_building"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_grid4_r1_c2">
+								<section id="qbe_grid42" label="Work Assets">
+									<multiparttextbox applink="location,ipc" dataattribute="jpassetsplink.location" descdataattribute="jpassetsplink.assetdescription" descinputmode="query" id="qbe_jpasset_location" inputmode="query" lookup="locations" menutype="locations"/>
+									<multiparttextbox applink="asset,ipc" dataattribute="jpassetsplink.assetnum" descdataattribute="jpassetsplink.assetdescription" descinputmode="query" id="qbe_jpasset_assetnum" inputmode="query" lookup="asset" menutype="assetmain"/>
+									<multiparttextbox applink="item,inventor" dataattribute="jpassetsplink.itemnum" descdataattribute="jpassetsplink.assetdescription" descinputmode="query" id="qbe_jpasset_itemnum" inputmode="query" lookup="itemwithitemset" menutype="itemwithitemset"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="qbe_buttongroup_1">
+			<pushbutton default="true" id="qbe_button_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="qbe_restoreappdefault_button" label="Restore Application Defaults" mxevent="qbeclear"/>
+			<pushbutton id="qbe_revisebutton" label="Revise" menutype="SEARCHMOREREVISE" targetid="searchmore"/>
+			<pushbutton id="qbe_button_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.ViewBookmarksBean" id="searchbook" label="My Bookmarks" mboname="JOBPLAN">
+		<table id="bookmarks_table" inputmode="readonly" label="Job Plans" selectmode="single">
+			<tablebody displayrowsperpage="20" filterable="true" id="bookmarks_table_tablebody">
+				<tablecol dataattribute="jpnum" id="bookmarks_tablebody_1" mxevent="selectrecord" type="link"/>
+				<tablecol dataattribute="description" id="bookmarks_table_tablebody_2"/>
+				<tablecol filterable="false" id="bookmarks_table_tablebody_delete" mxevent="instantdelete" mxevent_desc="Delete" mxevent_icon="btn_delete.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="bookmarks_2">
+			<pushbutton default="true" id="bookmarks_2_1" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+	<configurationblock id="datastore_configurationblock"/>
+
+	<dialog beanclass="psdi.webclient.beans.jobplan.SimulationBean" id="simulate" label="Dynamic Job Plan Simulation" relationship="SIMULATION" savemode="ONLOADUNLOAD">
+		<section id="simulate_main">
+			<section id="simulate_header">
+				<multiparttextbox dataattribute="jobplan.unitsofworkmultiplier" descdataattribute="jobplan.unitsofwork" descinputmode="readonly" id="simulate_units" inputmode="readonly"/>
+				<textbox dataattribute="UNITSOFWORK" id="simulate_unitsofwork" inputmode="required" lookup="MEASUREUNIT"/>
+				<textbox dataattribute="ESTDUR" id="simulate_estdur" inputmode="readonly"/>
+			</section>
+			<section id="simulate_measures">
+				<table id="simulate_multiassettable" label="Multi assets / locations / CI" relationship="ALLMULTIASSETLOCCI">
+					<tablebody id="simulate_multiassettablebody">
+						<tablecol dataattribute="assetnum" id="simulate_multiassettablecol1" lookup="asset" menutype="multiasset"/>
+						<tablecol dataattribute="location" id="simulate_multiassettablecol2" lookup="location" menutype="multiloc"/>
+						<tablecol dataattribute="cinum" id="simulate_multiassettablecol3" lookup="ci" menutype="multici"/>
+						<tablecol dataattribute="startmeasure" id="simulate_multiassettablecol4"/>
+						<tablecol dataattribute="startmeasureunitid" id="simulate_multiassettablecol5" lookup="measureunit"/>
+						<tablecol dataattribute="endmeasure" id="simulate_multiassettablecol6"/>
+						<tablecol dataattribute="endmeasureunitid" id="simulate_multiassettablecol7" lookup="measureunit"/>
+						<tablecol dataattribute="totalworkunits" id="simulate_multiassettablecol8"/>
+						<tablecol id="simulate_multiassettablecol9" mxevent="delete" mxevent_desc="Delete row" mxevent_icon="btn_garbage.gif" type="event"/>
+					</tablebody>
+					<buttongroup id="simulate_multiassettableactions">
+						<pushbutton id="simulate_multiassettableaddrow" label="New row" mxevent="addrow"/>
+					</buttongroup>
+				</table>
+			</section>
+			<table id="simulate_tasks" inputmode="readonly" label="Tasks" relationship="TASKS">
+				<tablebody id="simulate_tasks_tbody">
+					<tablecol dataattribute="jobtask.tasksequence" id="simulate_tasks_col1"/>
+					<tablecol dataattribute="jobtask.jptask" id="simulate_tasks_col2"/>
+					<tablecol dataattribute="jobtask.description" id="simulate_tasks_col3"/>
+					<tablecol dataattribute="jobtask.taskduration" id="simulate_tasks_col4"/>
+					<tablecol dataattribute="jobtask.calcmethod" id="simulate_tasks_col5"/>
+					<tablecol dataattribute="estdur" id="simulate_tasks_col6"/>
+				</tablebody>
+			</table>
+			<tabgroup id="simulate_tabs">
+				<tab id="simulate_crafts_tab" label="Labors">
+					<table id="simulate_crafts" inputmode="readonly" label="Planned Labors" relationship="LABORS">
+						<tablebody id="simulate_crafts_tbody">
+							<tablecol dataattribute="joblabor.jptask" id="simulate_crafts_1"/>
+							<tablecol dataattribute="joblabor.craft" id="simulate_crafts_2"/>
+							<tablecol dataattribute="joblabor.skilllevel" id="simulate_crafts_3"/>
+							<tablecol dataattribute="joblabor.laborcode" id="simulate_crafts_4"/>
+							<tablecol dataattribute="joblabor.quantity" id="simulate_crafts_5"/>
+							<tablecol dataattribute="joblabor.laborhrs" id="simulate_crafts_6"/>
+							<tablecol dataattribute="quantity" id="simulate_crafts_7"/>
+							<tablecol dataattribute="laborhrs" id="simulate_crafts_8"/>
+							<tablecol dataattribute="joblabor.calcapplyto" id="simulate_crafts_9"/>
+							<tablecol dataattribute="joblabor.calcmethod" id="simulate_crafts_10"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="simulate_materials_tab" label="Materials">
+					<table id="simulate_metarials" inputmode="readonly" label="Planned Materials" relationship="MATERIALS">
+						<tablebody id="simulate_materials_tbody">
+							<tablecol dataattribute="jobmaterial.jptask" id="simulate_materials_1"/>
+							<tablecol dataattribute="jobmaterial.itemnum" id="simulate_materials_2"/>
+							<tablecol dataattribute="jobmaterial.item.description" id="simulate_materials_3"/>
+							<tablecol dataattribute="jobmaterial.location" id="simulate_materials_4"/>
+							<tablecol dataattribute="jobmaterial.itemqty" id="simulate_materials_5"/>
+							<tablecol dataattribute="jobmaterial.vendor" id="simulate_materials_6"/>
+							<tablecol dataattribute="itemqty" id="simulate_materials_7"/>
+							<tablecol dataattribute="jobmaterial.calcmethod" id="simulate_materials_8"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="simulate_services_tab" label="Services">
+					<table id="simulate_services" inputmode="readonly" label="Planned Services" relationship="SERVICES">
+						<tablebody id="simulate_services_tbody">
+							<tablecol dataattribute="jobservice.jptask" id="simulate_services_1"/>
+							<tablecol dataattribute="jobservice.itemnum" id="simulate_services_2"/>
+							<tablecol dataattribute="jobservice.item.description" id="simulate_services_3"/>
+							<tablecol dataattribute="jobservice.location" id="simulate_services_4"/>
+							<tablecol dataattribute="jobservice.itemqty" id="simulate_services_5"/>
+							<tablecol dataattribute="jobservice.vendor" id="simulate_services_6"/>
+							<tablecol dataattribute="itemqty" id="simulate_services_7"/>
+							<tablecol dataattribute="jobservice.calcmethod" id="simulate_services_8"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="simulate_tools_tab" label="Tools">
+					<table id="simulate_tools" inputmode="readonly" label="Planned Tools" relationship="TOOLS">
+						<tablebody id="simulate_tools_tbody">
+							<tablecol dataattribute="jobtool.jptask" id="simulate_tools_1"/>
+							<tablecol dataattribute="jobtool.itemnum" id="simulate_tools_2"/>
+							<tablecol dataattribute="jobtool.item.description" id="simulate_tools_3"/>
+							<tablecol dataattribute="jobtool.location" id="simulate_tools_4"/>
+							<tablecol dataattribute="jobtool.itemqty" id="simulate_tools_5"/>
+							<tablecol dataattribute="jobtool.hours" id="simulate_tools_6"/>
+							<tablecol dataattribute="jobtool.vendor" id="simulate_tools_7"/>
+							<tablecol dataattribute="itemqty" id="simulate_tools_8"/>
+							<tablecol dataattribute="hours" id="simulate_tools_9"/>
+							<tablecol dataattribute="jobtool.calcapplyto" id="simulate_tools_10"/>
+							<tablecol dataattribute="jobtool.calcmethod" id="simulate_tools_11"/>
+						</tablebody>
+					</table>
+				</tab>
+			</tabgroup>
+		</section>
+		<buttongroup id="simulate_actions">
+			<pushbutton id="simulate_do" label="Simulate" mxevent="simulate"/>
+			<pushbutton id="simulate_close" label="Close" mxevent="dialogclose"/>
+		</buttongroup>
+	</dialog>
+</presentation>

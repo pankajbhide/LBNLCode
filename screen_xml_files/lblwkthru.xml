@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation beanclass="psdi.webclient.beans.common.StatefulAppBean" id="lblwkthru" ismobile="false" keyattribute="wkthruid" mboname="LBL_WKTHRU" resultstableid="results_showlist" version="6.2.6">
+	<page id="mainrec" scroll="false">
+		<include controltoclone="pageHeader" id="INCLUDE-pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" label="Planning Template" mboname="LBL_WKTHRU" selectmode="multiple">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="wkthruid" filterable="false" id="results_showlist_tablebody_1" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+							<tablecol dataattribute="wkthruid" id="results_showlist_tablebody_2" label="Planning Template Id" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="description" id="results_showlist_tablebody_3"/>
+							<tablecol dataattribute="orgid" id="results_showlist_tablebody_8" linkedcontrolid="qbe_grid2_3_1_grid3_3"/>
+							<tablecol dataattribute="siteid" id="results_showlist_tablebody_9" linkedcontrolid="qbe_grid2_3_1_grid3_4"/>
+							<tablecol filterable="false" id="results_bookmark" mxevent="BOOKMARK" mxevent_desc="Add to Bookmarks" mxevent_icon="btn_addtobookmarks.gif" sortable="false" type="event"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="Planning template" type="insert">
+					<section border="true" id="main_grid1">
+						<sectionrow id="main_grid1_row1">
+							<sectioncol id="main_grid1_row1_col1">
+								<section id="main_grid1_row1_col1_1">
+									<multiparttextbox dataattribute="wkthruid" descdataattribute="description" id="main_grid1_1" label="Planning template id"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid1_row1_col2">
+								<section id="main_grid1_row1_col2_1">
+									<attachments id="new_attachments"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid1_row1_col3">
+								<section id="new_section">
+									<textbox dataattribute="wonum" id="new_textbox" inputmode="READONLY" label="Work order from which&lt;BR&gt; planning template is created"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="details">
+						<sectioncol id="details_col1">
+							<section id="main_grid2" label="Details">
+								<sectionrow id="main_grid2_1_sec1_row1">
+									<sectioncol id="main_grid2_1_sec1_row1_col1">
+										<section id="main_grid2_1_sec1_row1_col1_sec1">
+											<multilinetextbox columns="25" dataattribute="SCOPE_OF_WORK" id="copy_new_multilinetextbox" label="Scope of work" lookup="LONGDESC" rows="2"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+								<sectionrow id="main_grid2_1_sec1_row2"/>
+								<sectionrow id="main_grid2_1_sec1_row3"/>
+								<sectionrow id="main_grid2_1_sec1_row4"/>
+								<sectionrow id="main_grid2_1_sec1_row6"/>
+								<sectionrow id="main_grid2_1_sec1_row5"/>
+							</section>
+						</sectioncol>
+					</section>
+					<tabgroup id="main_lbl_wkthru">
+						<tab default="true" id="lbl_wkthru_labor" label="Operational Steps">
+							<table description="Sequenced and Specific Task(s) Necessary to accomplish the scope of work are identified; Work Boundaries including hold points for tasks are clearly identified; Warning, Caution and Notes statements are included." id="lbl_wkthru_labor_table" label="Operations" orderby="OPSEQUENCE" relationship="lbl_wkthru2wkthops">
+								<tablebody displayrowsperpage="5" filterable="true" id="lbl_wkthru_labor_tablebody">
+									<tablecol filterable="false" id="lbl_wkthru_labor_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+									<tablecol dataattribute="OPSEQUENCE" id="lbl_wkthru_labor_tablebody_2" label="Operation Sequence"/>
+									<tablecol dataattribute="Description" id="lbl_wkthru_labor_tablebody_3" label="Description" lookup="LONGDESC"/>
+									<tablecol dataattribute="craft" id="lbl_wkthru_labor_tablebody_5" label="Craft" lookup="CRAFT"/>
+									<tablecol dataattribute="QUANTITY" id="lbl_wkthru_labor_tablebody_6" label="Quantity"/>
+									<tablecol dataattribute="OPDURATION" id="lbl_wkthru_labor_tablebody_4" label="Hours (Duration)"/>
+									<tablecol filterable="false" id="lbl_wkthru_labor_tablebody_10" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+								</tablebody>
+								<tabledetails id="lbl_wkthru_labor_table1">
+									<section id="lbl_wkthru_labor_table1_sec1" label="Details">
+										<sectionrow id="lbl_wkthru_labor_table1_sec1_row1">
+											<sectioncol id="lbl_wkthru_labor_table1_sec1_row1_col3">
+												<section id="lbl_wkthru_labor_table1_sec1_row1_col3_sec1">
+													<textbox dataattribute="OPSEQUENCE" id="lbl_wkthru_labor_table1_grid3_2" label="Operation Sequence"/>
+													<textbox dataattribute="DESCRIPTION" id="lbl_wkthru_labor_table1_grid3_3" label="Description" lookup="LONGDESC"/>
+													<textbox dataattribute="craft" id="WOWkthruop_table_details_row1_sec1_3" lookup="CRAFT"/>
+													<textbox dataattribute="QUANTITY" id="WOWkthruop_table_details_row1_sec1_4"/>
+													<textbox dataattribute="OPDURATION" id="lbl_wkthru_labor_table1_grid3_5" label="Hours(duration)"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+								</tabledetails>
+								<buttongroup id="main_lbl_wkthru_labor_jplabor_table_2">
+									<pushbutton default="true" id="main_lbl_wkthru_labor_jplabor_table_2_1" label="New Row" mxevent="addrow"/>
+								</buttongroup>
+							</table>
+						</tab>
+						<tab default="false" id="copy_main_lbl_wkthru_services" label="Hazards">
+							<table description="Choose from High Hazards for the entire job.  Specific Hazards (as needed) will be at the Work Order Level." id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table" label="Hazards" relationship="LBL_WKTHRU2WKTHHAZ">
+								<tablebody displayrowsperpage="4" filterable="true" id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody">
+									<tablecol filterable="false" id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+									<tablecol dataattribute="HAZARDID" id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_2" label="Hazard id" lookup="HAZARDS"/>
+									<tablecol dataattribute="LBL_WKTHRUHAZ2HAZARD.DESCRIPTION" id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_3" inputmode="readonly"/>
+									<tablecol filterable="false" id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+								</tablebody>
+								<tabledetails id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1">
+									<section id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_sec1" label="Details">
+										<sectionrow id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_sec1_row1">
+											<sectioncol id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_sec1_row1_col1">
+												<section id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_1_sec1_row1_col1_sec1">
+													<textbox dataattribute="hazardid" defaultfocus="true" id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_grid9_1" lookup="HAZARDS"/>
+													<textbox dataattribute="LBL_WKTHRUHAZ2HAZARD.DESCRIPTION" id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_grid7_1" inputmode="readonly" sizeintable="5" smartfilloff="true"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+								</tabledetails>
+								<buttongroup id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_2">
+									<pushbutton default="true" id="copy_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_2_1" label="New Row" mxevent="addrow"/>
+								</buttongroup>
+							</table>
+						</tab>
+						<tab default="false" id="copy2_main_lbl_wkthru_services" label="Materials">
+							<table description="WPC: Include materials from Stores and any materials ordered." id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table" label="Materials" relationship="LBL_WKTHRU2WKTHMAT">
+								<tablebody displayrowsperpage="5" filterable="true" id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody">
+									<tablecol filterable="false" id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+									<tablecol dataattribute="ITEMNUM" id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_2" label="Item Number" lookup="ITEM"/>
+									<tablecol dataattribute="LBL_WKTHRUMAT2ITEM.DESCRIPTION" id="copy_copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_3" inputmode="readonly" label="Description"/>
+									<tablecol dataattribute="location_info" id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_3" label="Location Information"/>
+									<tablecol dataattribute="QUANTITY" id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_4" label="Quantity"/>
+									<tablecol filterable="false" id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+								</tablebody>
+								<tabledetails id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1">
+									<section id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_sec1" label="Details">
+										<sectionrow id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_sec1_row1">
+											<sectioncol id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_sec1_row1_col1">
+												<section id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_1_sec1_row1_col1_sec1">
+													<textbox dataattribute="ITEMNUM" defaultfocus="true" id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_grid9_1" label="Item Number" lookup="ITEM"/>
+													<textbox dataattribute="LBL_WKTHRUMAT2ITEM.DESCRIPTION" id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_grid9_2" inputmode="readonly" label="Description"/>
+													<textbox dataattribute="location_info" id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_grid9_3" label="Location Information"/>
+													<textbox dataattribute="QUANTITY" id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_grid9_4" label="Quantity" sizeintable="5" smartfilloff="true"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+								</tabledetails>
+								<buttongroup id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_2">
+									<pushbutton default="true" id="copy2_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_2_1" label="New Row" mxevent="addrow"/>
+								</buttongroup>
+							</table>
+						</tab>
+						<tab default="false" id="copy3_main_lbl_wkthru_services" label="Field Support">
+							<table description="WPC: Include EH&amp;S SMEs needed for job and if there auhorizations." id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table" label="Field Support" relationship="LBL_WKTHRU2WKTHRES_EHSSUPP">
+								<defaultvalue dataattribute="RESOURCE_TYPE" defaulttype="query" id="1425684407055" value="EHS_SUPPORT"/>
+								<tablebody displayrowsperpage="5" filterable="true" id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody">
+									<tablecol filterable="false" id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+									<tablecol dataattribute="EHS_SUPPORT" id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_2" label="Field Support" lookup="valuelist"/>
+									<tablecol dataattribute="EHS_SUPPORT_COMMENTS" id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_3" label="Comments" lookup="LONGDESC"/>
+									<tablecol applink="PERSON" dataattribute="ehs_support_cont" id="1486506169652" label="Contact Information" lookup="PERSONNAME"/>
+									<tablecol dataattribute="LBL_FIELDSUPPORT_CONTNAME.DISPLAYNAME" id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_4" label="Contact Name"/>
+									<tablecol filterable="false" id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+								</tablebody>
+								<tabledetails id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1">
+									<section id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_sec1" label="Details">
+										<sectionrow id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_sec1_row1">
+											<sectioncol id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_sec1_row1_col1">
+												<section id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_1_sec1_row1_col1_sec1">
+													<defaultvalue dataattribute="RESOURCE_TYPE" defaulttype="insert" id="1425684935624" value="EHS_SUPPORT"/>
+													<textbox dataattribute="EHS_SUPPORT" defaultfocus="true" id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_grid9_1" label="Field Support" lookup="VALUELIST"/>
+													<textbox dataattribute="EHS_SUPPORT_COMMENTS" id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_grid9_3" label="Comments" sizeintable="5" smartfilloff="true"/>
+													<textbox applink="PERSON" dataattribute="ehs_support_cont" id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_grid9_4" label="Contact" lookup="PERSONNAME"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+								</tabledetails>
+								<buttongroup id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_2">
+									<pushbutton default="true" id="copy3_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_2_1" label="New Row" mxevent="addrow"/>
+								</buttongroup>
+							</table>
+						</tab>
+						<tab default="false" id="copy4_main_lbl_wkthru_services" label="Permits Required">
+							<table description="WPC: Permits required for this task." id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table" label="Permits Needed" relationship="LBL_WKTHRU2WKTHRES_PERMITS">
+								<defaultvalue dataattribute="RESOURCE_TYPE" defaulttype="query" id="1425684276731" value="PERMITS"/>
+								<tablebody displayrowsperpage="5" filterable="true" id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody">
+									<tablecol filterable="false" id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+									<tablecol dataattribute="PERMIT_NUMBER" id="1486746995758" label="Permit #"/>
+									<tablecol dataattribute="PERMITS" id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_2" label="Permits" lookup="valuelist"/>
+									<tablecol applink="PERSON" dataattribute="PERMIT_RESPONSIBLE_INDIVIDUAL" id="1486746990921" label="Permit Responsible Individual" lookup="PERSONNAME"/>
+									<tablecol dataattribute="PERMITS_COMMENTS" id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_3" label="Comments" lookup="LONGDESC"/>
+									<tablecol filterable="false" id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+								</tablebody>
+								<tabledetails id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1">
+									<section id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_sec1" label="Details">
+										<sectionrow id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_sec1_row1">
+											<sectioncol id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_sec1_row1_col1">
+												<section id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_1_sec1_row1_col1_sec1">
+													<defaultvalue dataattribute="RESOURCE_TYPE" defaulttype="insert" id="1425684973318" value="PERMITS"/>
+													<textbox dataattribute="PERMITS" defaultfocus="true" id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_grid9_1" label="Permits" lookup="valuelist"/>
+													<textbox dataattribute="PERMITS_COMMENTS" id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_1_grid7_1" label="Comments" lookup="LONGDESC" sizeintable="5" smartfilloff="true"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+								</tabledetails>
+								<buttongroup id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_2">
+									<pushbutton default="true" id="copy4_main_lbl_wkthru_services_main_lbl_wkthru_services_jpservices_table_2_1" label="New Row" mxevent="addrow"/>
+								</buttongroup>
+							</table>
+						</tab>
+						<tab default="false" id="main_lbl_wkthru_services" label="Drawing Needed">
+							<table id="main_lbl_wkthru_services_jpservices_table" label="Drawing Needed" relationship="LBL_WKTHRU2WKTHRES_DRAWINGS">
+								<defaultvalue dataattribute="RESOURCE_TYPE" defaulttype="query" id="1425684171790" value="DRAWINGS"/>
+								<tablebody displayrowsperpage="5" filterable="true" id="main_lbl_wkthru_services_jpservices_table_tablebody">
+									<tablecol filterable="false" id="main_lbl_wkthru_services_jpservices_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+									<tablecol dataattribute="DRAWINGS" id="main_lbl_wkthru_services_jpservices_table_tablebody_2" label="Drawings" lookup="valuelist"/>
+									<tablecol dataattribute="DRAWINGS_COMMENTS" id="main_lbl_wkthru_services_jpservices_table_tablebody_3" label="Comments"/>
+									<tablecol filterable="false" id="main_lbl_wkthru_services_jpservices_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+								</tablebody>
+								<tabledetails id="main_lbl_wkthru_services_jpservices_table_1">
+									<section id="main_lbl_wkthru_services_jpservices_table_1_sec1" label="Details">
+										<sectionrow id="main_lbl_wkthru_services_jpservices_table_1_sec1_row1">
+											<sectioncol id="main_lbl_wkthru_services_jpservices_table_1_sec1_row1_col1">
+												<section id="main_lbl_wkthru_services_jpservices_1_sec1_row1_col1_sec1">
+													<defaultvalue dataattribute="RESOURCE_TYPE" defaulttype="insert" id="1425685014278" value="DRAWINGS"/>
+													<textbox dataattribute="DRAWINGS" defaultfocus="true" id="main_lbl_wkthru_services_jpservices_table_1_grid9_1" label="Drawings" lookup="valuelist"/>
+													<textbox dataattribute="DRAWINGS_COMMENTS" id="main_lbl_wkthru_services_jpservices_table_1_grid7_1" label="Comments" sizeintable="5" smartfilloff="true"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+								</tabledetails>
+								<buttongroup id="main_lbl_wkthru_services_jpservices_table_2">
+									<pushbutton default="true" id="main_lbl_wkthru_services_jpservices_table_2_1" label="New Row" mxevent="addrow"/>
+								</buttongroup>
+							</table>
+						</tab>
+					</tabgroup>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include controltoclone="pageFooter" id="INCLUDE-pageFooter"/>
+	</page>
+
+	<dialog beanclass="lblwebui.webclient.beans.lbl_walkthru.LblWkthruBean" id="WkthruDup" label="Duplicate planning template" mboname="lbl_wkthru">
+		<buttongroup id="mydialog_2">
+			<pushbutton default="true" id="mydialog_2_1" label="Duplicate" mxevent="WkthruDup"/>
+			<pushbutton id="mydialog_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.QbeBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<section id="qbe_s1">
+			<sectionrow id="qbe_s1_sr1">
+				<sectioncol id="qbe_s1_sr1_sc1">
+					<section id="qbe_s1_sr1_sc1_s1">
+						<textbox dataattribute="wkthruid" id="qbe_s1_sr1_sc1_s1_tb1" inputmode="query"/>
+						<textbox dataattribute="description" id="qbe_s1_sr1_sc1_s1_tb1a" inputmode="query"/>
+						<textbox dataattribute="type" id="qbe_s1_sr1_sc1_s1_tb9" inputmode="query"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+			<sectionrow id="qbe_s1_sr2">
+				<sectioncol id="qbe_s1_sr2_sc1">
+					<section id="qbe_s1_sr2_sc1_s1">
+						<textbox dataattribute="planning_reqd" id="qbe_s1_sr2_sc1_s1_tb1" inputmode="query" label="Planning required"/>
+						<textbox dataattribute="feedrev_lesnlrn" id="qbe_s1_sr2_sc1_s1_tb1a" inputmode="query" label="Feedback/Lessons learned"/>
+						<textbox dataattribute="scope_of_work" id="qbe_s1_sr2_sc1_s1_tb9" inputmode="query" label="Scope of work"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="qbe_buttongrid">
+			<pushbutton default="true" id="qbe_buttongrid_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="qbe_restoreappdefault_button" label="Restore Application Defaults" mxevent="qbeclear"/>
+			<pushbutton id="qbe_revisebutton" label="Revise" menutype="SEARCHMOREREVISE" targetid="searchmore"/>
+			<pushbutton id="qbe_buttongrid_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+	<configurationblock id="datastore_configurationblock">
+	</configurationblock>
+</presentation>

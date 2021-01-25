@@ -1,0 +1,29 @@
+CREATE OR REPLACE PACKAGE LBL_MISC_QUERY01
+IS
+
+
+FUNCTION GET_UNIFORMAT_DESC(SITEID_I IN VARCHAR2,
+                            UNIFORMAT_I IN VARCHAR2)
+                            RETURN VARCHAR2;
+
+
+FUNCTION GET_CLASSSTRUCT_DESC(CLASSSTRUCTUREID_I IN VARCHAR2                              )
+                            RETURN VARCHAR2;
+
+FUNCTION GET_PM_INFO(SITEID_I      IN VARCHAR2,
+                     ASSETNUM_I    IN VARCHAR2  )
+                            RETURN VARCHAR2;
+
+FUNCTION GET_PMWORKORDER_INFO(SITEID_I      IN VARCHAR2,
+                           ASSETNUM_I    IN VARCHAR2  )
+                            RETURN VARCHAR2;
+
+FUNCTION GET_NONPMWORKORDER_INFO(SITEID_I      IN VARCHAR2,
+                           ASSETNUM_I    IN VARCHAR2  )
+                            RETURN VARCHAR2;
+
+FUNCTION GET_PRIORITY_DESC(PRIORITY_I ASSET.priority%TYPE)
+
+                            RETURN VARCHAR2;
+
+END;

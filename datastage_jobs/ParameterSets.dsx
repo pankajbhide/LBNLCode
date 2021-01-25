@@ -1,0 +1,312 @@
+BEGIN HEADER
+   CharacterSet "ENGLISH"
+   ExportingTool "IBM InfoSphere DataStage Export"
+   ToolVersion "8"
+   ServerName "ETL-APP01.LBL.GOV"
+   ToolInstanceID "FAC"
+   MDISVersion "1.0"
+   Date "2019-10-01"
+   Time "10.36.38"
+   ServerVersion "11.7"
+END HEADER
+BEGIN DSPARAMETERSETS
+   BEGIN DSRECORD
+      Identifier "paramSetMAXIMO"
+      DateModified "2019-06-17"
+      TimeModified "14.36.59"
+      OLEType "CParameterSet"
+      Readonly "0"
+      Category "\\Jobs\\ParameterSets"
+      ShortDesc "Paramters Set used for MAXIMO Integration"
+      Description "Parameter set created for MAXIMO Integration jobs"
+      Parameters "CParameters"
+      BEGIN DSSUBRECORD
+         Name "paramMAXHost"
+         Prompt "MAXIMO Host"
+         Default "maximo.fac.lbl.gov"
+         HelpTxt "MAXIMO host name for HTTP Get/Post"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramSeqFilePath"
+         Prompt "Directory path for sequential file"
+         Default "/home/dsadm/itbs_shared/fac/"
+         HelpTxt "Data stage directory for sequential files (TBD)"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramAuthorization"
+         Prompt "Auth header for http request"
+         Default "{iisenc}+0H8+gdqovuOOBvJCGL2Mf2nOHvg57yOifKvLju3AlE3Dq2XpI8lyGQ/XBoOluJ1qzXLAWaH8rlxlbtk7i4vSw=="
+         HelpTxt "Auth Header (Simple) for MAXIMO HTTP Get/Post"
+         ParamType "1"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramArchDBName"
+         Prompt "Archibus Database Name"
+         Default "ARCHPRD"
+         HelpTxt "Archibus database name"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramArchUserName"
+         Prompt "Archibus DB User Name"
+         Default "AFM"
+         HelpTxt "Archibus DB User name"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramArchPassword"
+         Prompt "Archibus DB Password"
+         Default "{iisenc}Er9oPOlfv8dUI/Oq4xu9nw=="
+         HelpTxt "Archibus DB User Password"
+         ParamType "1"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramMAXURI4Tooltrans"
+         Prompt "MAXIMO URI for deleting the Tooltrans"
+         Default "_UjEwMDAwL0ZBQy8zNDA5NzMzNg--"
+         HelpTxt "Unique URI for deleting the records from tooltrans MBO"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramRESDBName"
+         Prompt "RESPRD database"
+         Default "RESPRD"
+         HelpTxt "RES database name"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramRESUserName"
+         Prompt "RESPRD User Name"
+         Default "MMO_LINK_ID"
+         HelpTxt "RES DB User name"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramRESPassword"
+         Prompt "RESPRD Password"
+         Default "{iisenc}luZljhdQbgZPexrSh79wQQ=="
+         HelpTxt "RES DB User Password"
+         ParamType "1"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramFMSDBName"
+         Prompt "FMS Database name"
+         Default "FMS9PRD"
+         HelpTxt "FMS database name"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramFMSUserName"
+         Prompt "FMS DB User Name"
+         Default "MMO_LINK_ID"
+         HelpTxt "FMS DB User name"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramFMSPassword"
+         Prompt "FMS DB Password"
+         Default "{iisenc}luZljhdQbgZPexrSh79wQQ=="
+         HelpTxt "FMS DB User Password"
+         ParamType "1"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramGLCompGLAcctobjstruct"
+         Prompt "paramGLCompGLAcctobjstruct"
+         Default "lbl_ds_glcomp"
+         HelpTxt "GL Components object structure name "
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramMAXUserBDWEDB"
+         Prompt "Maximo user on BDWEPRD"
+         Default "maximo"
+         HelpTxt "MAXIMO Link User name on datawarehouse DB"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramMAXPasswdBDWEDB"
+         Prompt "Maximo password on BDWEPRD"
+         Default "{iisenc}luZljhdQbgZPexrSh79wQQ=="
+         HelpTxt "MAXIMO Link User password on datawarehouse DB"
+         ParamType "1"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramMAXBDWEDB"
+         Prompt "Maximo DB Name for BDWEPRD"
+         Default "BDWEPRD"
+         HelpTxt "Datawarehouse DB Name"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramMAXURI4COA"
+         Prompt "paramMAXURI4COA"
+         Default "_MTAzNTMxLjAxMS9MQk5M"
+         HelpTxt "Unique URI for MAXIMO's Chart of accounts MBO update"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramLETSDBName"
+         Prompt "LETS DB Name"
+         Default "LETSPRD"
+         HelpTxt "LETS Database Name"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramLETSUserName"
+         Prompt "LETS DB User Name"
+         Default "MMO_LINK_ID"
+         HelpTxt "LETS Database User Name"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramLETSPassword"
+         Prompt "LETS DB Password"
+         Default "{iisenc}luZljhdQbgZPexrSh79wQQ=="
+         HelpTxt "LETS Database User Password"
+         ParamType "1"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramTLSv12argument"
+         Prompt "Optional TLS v1.2 Argument"
+         Default "-Dcom.ibm.jsse2.overrideDefaultTLS=true -Dcom.ibm.jsse2.overrideDefaultProtocol=TLSv12"
+         HelpTxt "Arguments to pass for TLS ver 1.2 ciphers"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramWOFeedbackMainSamplePct"
+         Prompt "Work order Feedback Main Sample Percent"
+         Default "75"
+         HelpTxt "Work order feedback main sample percentage"
+         ParamType "2"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramWOFeedbackReminingPct"
+         Prompt "Work order Feedback remaing sample percentage"
+         Default "25"
+         HelpTxt "Work order Feedback remaing sample percentage"
+         ParamType "2"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramFeederEmailTo"
+         Prompt "Feeder email To"
+         Default "JYoung@lbl.gov,gacloseteam@lbl.gov"
+         HelpTxt "List of email ids for Facilities Feeders"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramMaxROUser"
+         Prompt "MAXIMO Read-only user name"
+         Default "mobileadm"
+         HelpTxt "MAXIMO read-only user name"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramMaxROPassword"
+         Prompt "MAXIMO Read-only user password"
+         Default "{iisenc}luZljhdQbgZPexrSh79wQQ=="
+         HelpTxt "MAXIMO read-only user password"
+         ParamType "1"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramMaxRODBName"
+         Prompt "MAXIMO Read-only database name"
+         Default "mmoprd"
+         HelpTxt "MAXIMO read-only database name"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramMaxEnvironment"
+         Prompt "MAXIMO Environment"
+         Default "PRODUCTION"
+         HelpTxt "MAXIMO Application environment"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramLockKeyDB"
+         Prompt "Key Services DB Name"
+         Default "RESPRD"
+         HelpTxt "Lockshop KeyServices Database"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramLockKeyUser"
+         Prompt "Key Service DB User Name"
+         Default "LOCKADM"
+         HelpTxt "Lockshop KeyServices User name"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "paramLockKeyPassword"
+         Prompt "Key Service DB Password"
+         Default "{iisenc}WhhvswIdNCTPeZxPQlz58Q=="
+         HelpTxt "Lockshop Key Service User Password"
+         ParamType "1"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+   END DSRECORD
+END DSPARAMETERSETS

@@ -1,0 +1,1988 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">IBM Confidential
+
+OCO Source Materials
+
+5724-M19
+
+(C) COPYRIGHT IBM CORP. 2006
+
+The source code for this program is not published or otherwise
+divested of its trade secrets, irrespective of what has been
+deposited with the U.S. Copyright Office.
+
+09-19764@000</property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.3.1.v201309091055 Build &lt;4.3.1.v20130918-1142></property>
+    <html-property name="description">This template will create a report having a single header with multiple rows of data.</html-property>
+    <property name="units">in</property>
+    <method name="initialize"><![CDATA[importPackage(Packages.com.ibm.tivoli.maximo.report.script);
+
+mxReportScriptContext = MXReportScriptContext.initialize(reportContext);]]></method>
+    <method name="beforeFactory"><![CDATA[// Remove page break intervals from PDF output
+if ( (reportContext.getParameterValue("usepagebreaks") == "false")|| reportContext.getOutputFormat() == "pdf" ) {
+	// Give each table in the report a name, and add the names to the list below, e.g. ["mainTable", "childTable1"]
+	var tableListing = ["mainTable"];
+	for each(var tableName in tableListing) {
+		var table = reportContext.getReportRunnable().designHandle.getDesignHandle().findElement(tableName)
+		if (table != null)
+		{
+			table.setProperty("pageBreakInterval", 0);
+		}
+	}
+}]]></method>
+    <method name="afterFactory"><![CDATA[MXReportScriptContext.close();]]></method>
+    <property name="theme">MaximoSystemLibrary.maximoTheme</property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">MaximoSystemLibrary.rptlibrary</property>
+            <property name="namespace">MaximoSystemLibrary</property>
+        </structure>
+        <structure>
+            <property name="fileName">lbnlreportlibrary.rptlibrary</property>
+            <property name="namespace">lbnlreportlibrary</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="where" id="25">
+            <property name="valueType">static</property>
+            <property name="isRequired">true</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1=1</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="appname" id="200">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramdelimiter" id="202">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramstring" id="201">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="usepagebreaks" id="342">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">true</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <script-data-source name="maximoDataSource" id="64" extends="MaximoSystemLibrary.maximoDataSource"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="mainDataSet" id="5">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">wonum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">description</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">location</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">assetnum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">schedstart</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">schedfinish</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">worktype</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">status</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">lbl_release_status</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">lbl_rescort_reqd</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">wopriority</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">lbl_wcdcatg_finl</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">wo5</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">reportedby</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">lbl_wkthruid</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">clientname</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">clientphone</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">clientlocation</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">reportedname</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">reportedphone</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">reportedlocation</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">22</property>
+                    <property name="name">orgid</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">23</property>
+                    <property name="name">siteid</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">wonum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">location</property>
+                </structure>
+                <structure>
+                    <property name="columnName">assetnum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">schedstart</property>
+                </structure>
+                <structure>
+                    <property name="columnName">schedfinish</property>
+                </structure>
+                <structure>
+                    <property name="columnName">worktype</property>
+                </structure>
+                <structure>
+                    <property name="columnName">status</property>
+                </structure>
+                <structure>
+                    <property name="columnName">lbl_release_status</property>
+                </structure>
+                <structure>
+                    <property name="columnName">lbl_rescort_reqd</property>
+                </structure>
+                <structure>
+                    <property name="columnName">wopriority</property>
+                </structure>
+                <structure>
+                    <property name="columnName">lbl_wcdcatg_finl</property>
+                </structure>
+                <structure>
+                    <property name="columnName">wo5</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportedby</property>
+                </structure>
+                <structure>
+                    <property name="columnName">lbl_wkthruid</property>
+                </structure>
+                <structure>
+                    <property name="columnName">clientname</property>
+                </structure>
+                <structure>
+                    <property name="columnName">clientphone</property>
+                </structure>
+                <structure>
+                    <property name="columnName">clientlocation</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportedname</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportedphone</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportedlocation</property>
+                </structure>
+                <structure>
+                    <property name="columnName">orgid</property>
+                </structure>
+                <structure>
+                    <property name="columnName">siteid</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">wonum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">location</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">assetnum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">schedstart</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">schedfinish</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">worktype</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">status</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">lbl_release_status</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">lbl_rescort_reqd</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">wopriority</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">lbl_wcdcatg_finl</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">wo5</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">reportedby</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">lbl_wkthruid</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">clientname</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">clientphone</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">clientlocation</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">reportedname</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">reportedphone</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">reportedlocation</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">orgid</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
+                        <property name="name">siteid</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+var sqlText = new String();
+
+// Add query to sqlText variable.
+sqlText = "select workorder.wonum, workorder.description, workorder.location, workorder.assetnum, workorder.schedstart, workorder.schedfinish, " 
++ " workorder.worktype, workorder.status, workorder.lbl_release_status, workorder.lbl_escort_reqd, workorder.wopriority, workorder.lbl_wcdcatg_finl, "
++ " workorder.wo5, workorder.reportedby, workorder.lbl_wkthruid, workorder.orgid, workorder.siteid,"
++ " (select person.displayname from person where personid = workorder.wo5) clientname, "
++ " (select phone.phonenum from phone where personid = workorder.wo5) clientphone, "
++ " (select person.location from person where personid = workorder.wo5) clientlocation, "
++ " (select person.displayname from person where personid = workorder.reportedby) reportedname, "
++ " (select phone.phonenum from phone where personid = workorder.reportedby) reportedphone, "
++ " (select person.location from person where personid = workorder.reportedby) reportedlocation "
++ " from workorder "
++ " where " + params["where"]
+//+ " and workorder.orgid = '" + params["parmOrgid"].replace("=" , "") + "' "
+//+ " and workorder.siteid = '" + params["parmSiteid"].replace("=" , "") + "' " 
+
+;
+
+maximoDataSet.setQuery(sqlText);]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["wonum"] = maximoDataSet.getString("wonum");
+row["description"] = maximoDataSet.getString("description");
+row["location"] = maximoDataSet.getString("location");
+row["assetnum"] = maximoDataSet.getString("assetnum");
+row["schedstart"] = maximoDataSet.getTimestamp("schedstart");
+row["schedfinish"] = maximoDataSet.getTimestamp("schedfinish");		
+row["worktype"] = maximoDataSet.getString("worktype");
+row["status"] = maximoDataSet.getString("status");
+row["lbl_release_status"] = maximoDataSet.getString("lbl_release_status");
+row["lbl_escort_reqd"] = maximoDataSet.getString("lbl_escort_reqd");
+row["wopriority"] = maximoDataSet.getString("wopriority");
+row["lbl_wcdcatg_finl"] = maximoDataSet.getString("lbl_wcdcatg_finl");
+row["wo5"] = maximoDataSet.getString("wo5");	
+row["reportedby"] = maximoDataSet.getString("reportedby");	
+row["lbl_wkthruid"] = maximoDataSet.getString("lbl_wkthruid");	
+row["clientname"] = maximoDataSet.getString("clientname");	
+row["clientphone"] = maximoDataSet.getString("clientphone");	
+row["clientlocation"] = maximoDataSet.getString("clientlocation");
+row["reportedname"] = maximoDataSet.getString("reportedname");	
+row["reportedphone"] = maximoDataSet.getString("reportedphone");	
+row["reportedlocation"] = maximoDataSet.getString("reportedlocation");		
+row["siteid"] = maximoDataSet.getString("siteid");
+row["orgid"] = maximoDataSet.getString("orgid");	
+
+return (true);
+
+
+]]></method>
+        </script-data-set>
+        <script-data-set name="ScopeOfWorkDataSet" id="733">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">scope_of_work</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">longdesc</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">scope_of_work</property>
+                </structure>
+                <structure>
+                    <property name="columnName">longdesc</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">scope_of_work</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">longdesc</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[ScopeOfWorkDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+ScopeOfWorkDataSet.open();
+
+var sqlText = new String();
+
+sqlText = "select scope_of_work, (select ldtext from longdescription where ldownertable = "
++ " 'LBL_WOWKTHRU' and ldownercol = 'SCOPE_OF_WORK' and ldkey = lbl_wowkthruid) longdesc "
++ " from lbl_wowkthru "
++ " where orgid = '" + rows[0]["orgid"] + "' "
++ " and siteid = '" + rows[0]["siteid"] + "' "
++ " and wonum = '" + rows[0]["wonum"].replace(/'/g,"''") + "' "
++ " and wkthruid = '" + rows[0]["lbl_wkthruid"].replace(/'/g,"''") + "' "
+;
+
+ScopeOfWorkDataSet.setQuery(sqlText);
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!ScopeOfWorkDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["scope_of_work"] = ScopeOfWorkDataSet.getString("scope_of_work");
+row["longdesc"] = ScopeOfWorkDataSet.getString("longdesc");
+
+return (true);
+]]></method>
+        </script-data-set>
+        <script-data-set name="AcceptCriteriaDataSet" id="1470">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">longdesc</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">accept_criteria</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">longdesc</property>
+                </structure>
+                <structure>
+                    <property name="columnName">accept_criteria</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">longdesc</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">accept_criteria</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[AcceptCriteriaDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+AcceptCriteriaDataSet.open();
+
+var sqlText = new String();
+
+sqlText = "select accept_criteria, "
++ "(select ldtext from longdescription where ldownertable = 'LBL_WKTHRU' and ldownercol = 'ACCEPT_CRITERIA' and ldkey = lbl_wowkthruid) longdesc " 
++ " from lbl_wowkthru "
++ " where orgid = '" + rows[0]["orgid"] + "' "
++ " and siteid = '" + rows[0]["siteid"] + "' "
++ " and wonum = '" + rows[0]["wonum"].replace(/'/g,"''") + "' "
++ " and wkthruid = '" + rows[0]["lbl_wkthruid"].replace(/'/g,"''") + "' "
+;
+
+AcceptCriteriaDataSet.setQuery(sqlText);
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!AcceptCriteriaDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["accept_criteria"] = AcceptCriteriaDataSet.getString("accept_criteria");
+row["longdesc"] = AcceptCriteriaDataSet.getString("longdesc");
+
+return (true);
+]]></method>
+        </script-data-set>
+        <script-data-set name="SpecialPlanningDataSet" id="1459">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">planning_reqd</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">longdesc</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">planning_reqd</property>
+                </structure>
+                <structure>
+                    <property name="columnName">longdesc</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">planning_reqd</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">longdesc</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[SpecialPlanningDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+SpecialPlanningDataSet.open();
+
+var sqlText = new String();
+
+sqlText = "select planning_reqd, "
++ " (select ldtext from longdescription where ldownertable = 'LBL_WKTHRU' and ldownercol = 'PLANNING_REQD' and ldkey = lbl_wowkthruid) longdesc " 
++ " from lbl_wowkthru "
++ " where orgid = '" + rows[0]["orgid"] + "' "
++ " and siteid = '" + rows[0]["siteid"] + "' "
++ " and wonum = '" + rows[0]["wonum"].replace(/'/g,"''") + "' "
++ " and wkthruid = '" + rows[0]["lbl_wkthruid"].replace(/'/g,"''") + "' "
+;
+
+SpecialPlanningDataSet.setQuery(sqlText);
+
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!SpecialPlanningDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["planning_reqd"] = SpecialPlanningDataSet.getString("planning_reqd");
+row["longdesc"] = SpecialPlanningDataSet.getString("longdesc");
+
+return (true);
+]]></method>
+        </script-data-set>
+        <script-data-set name="LocationNoteDataSet" id="993">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">location_notes</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">sched_issues</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">asset_desc</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">sched_issues_dtl</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">location_notes</property>
+                </structure>
+                <structure>
+                    <property name="columnName">sched_issues</property>
+                </structure>
+                <structure>
+                    <property name="columnName">asset_desc</property>
+                </structure>
+                <structure>
+                    <property name="columnName">sched_issues_dtl</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">location_notes</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">sched_issues</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">asset_desc</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">sched_issues_dtl</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[LocationNoteDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+LocationNoteDataSet.open();
+
+var sqlText = new String();
+
+sqlText = "select location_notes, sched_issues, sched_issues_dtl, asset_desc " 
++ " from lbl_workorderext "
++ " where orgid = '" + rows[0]["orgid"] + "' "
++ " and siteid = '" + rows[0]["siteid"] + "' "
++ " and wonum = '" + rows[0]["wonum"].replace(/'/g,"''") + "' "
+;
+
+LocationNoteDataSet.setQuery(sqlText);
+
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!LocationNoteDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["location_notes"] = LocationNoteDataSet.getString("location_notes");
+row["sched_issues"] = LocationNoteDataSet.getString("sched_issues");
+row["asset_desc"] = LocationNoteDataSet.getString("asset_desc");
+row["sched_issues_dtl"] = LocationNoteDataSet.getString("sched_issues_dtl");
+
+return (true);
+
+]]></method>
+        </script-data-set>
+        <script-data-set name="OpSeqDataSet" id="967">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">description</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">longdesc</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">opsequence</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">longdesc</property>
+                </structure>
+                <structure>
+                    <property name="columnName">opsequence</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">longdesc</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">opsequence</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[OpSeqDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+OpSeqDataSet.open();
+
+var sqlText = new String();
+
+sqlText = "select opsequence, description, (select ldtext from longdescription where ldownertable = "
++ " 'LBL_WOWKTHRUOPS' and ldownercol = 'DESCRIPTION' and ldkey = lbl_wowkthruopsid) longdesc " 
++ " from lbl_wowkthruops " 
++ " where orgid = '" + rows[0]["orgid"] + "' "
++ " and siteid = '" + rows[0]["siteid"] + "' "
++ " and wonum = '" + rows[0]["wonum"].replace(/'/g,"''") + "' "
++ " and wkthruid = '" + rows[0]["lbl_wkthruid"] +  "' "
+//+ " order by opsequence "
+;
+
+OpSeqDataSet.setQuery(sqlText);
+
+
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!OpSeqDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["opsequence"] = OpSeqDataSet.getString("opsequence");
+row["description"] = OpSeqDataSet.getString("description");
+row["longdesc"] = OpSeqDataSet.getString("longdesc");
+return (true);
+]]></method>
+        </script-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab-cell" id="729">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="730">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="PortraitWithoutLogo" id="1553" extends="lbnlreportlibrary.PortraitWithoutLogo">
+            <property name="bottomMargin">0.25in</property>
+            <property name="borderBottomStyle">none</property>
+            <property name="borderLeftStyle">none</property>
+            <property name="borderRightStyle">none</property>
+            <property name="borderTopStyle">none</property>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table name="mainTable" id="7">
+            <property name="comments">09-19764@000</property>
+            <property name="width">100%</property>
+            <property name="dataSet">mainDataSet</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">wonum</property>
+                    <text-property name="displayName">wonum</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["wonum"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">description</property>
+                    <text-property name="displayName">description</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["description"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">location</property>
+                    <text-property name="displayName">location</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["location"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">assetnum</property>
+                    <text-property name="displayName">assetnum</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["assetnum"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">schedstart</property>
+                    <text-property name="displayName">schedstart</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["schedstart"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">schedfinish</property>
+                    <text-property name="displayName">schedfinish</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["schedfinish"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">worktype</property>
+                    <text-property name="displayName">worktype</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["worktype"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">status</property>
+                    <text-property name="displayName">status</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["status"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">lbl_release_status</property>
+                    <text-property name="displayName">lbl_release_status</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["lbl_release_status"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">lbl_rescort_reqd</property>
+                    <text-property name="displayName">lbl_rescort_reqd</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["lbl_rescort_reqd"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">wopriority</property>
+                    <text-property name="displayName">wopriority</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["wopriority"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">lbl_wcdcatg_finl</property>
+                    <text-property name="displayName">lbl_wcdcatg_finl</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["lbl_wcdcatg_finl"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">wo5</property>
+                    <text-property name="displayName">wo5</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["wo5"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportedby</property>
+                    <text-property name="displayName">reportedby</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportedby"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">lbl_wkthruid</property>
+                    <text-property name="displayName">lbl_wkthruid</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["lbl_wkthruid"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">clientname</property>
+                    <text-property name="displayName">clientname</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["clientname"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">clientphone</property>
+                    <text-property name="displayName">clientphone</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["clientphone"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">clientlocation</property>
+                    <text-property name="displayName">clientlocation</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["clientlocation"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportedname</property>
+                    <text-property name="displayName">reportedname</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportedname"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportedphone</property>
+                    <text-property name="displayName">reportedphone</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportedphone"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportedlocation</property>
+                    <text-property name="displayName">reportedlocation</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportedlocation"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">orgid</property>
+                    <text-property name="displayName">orgid</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["orgid"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">siteid</property>
+                    <text-property name="displayName">siteid</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["siteid"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">Column Binding</property>
+                    <text-property name="displayName">WONUM</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["wonum"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">50</property>
+            <column id="83"/>
+            <column id="87"/>
+            <column id="17"/>
+            <column id="18"/>
+            <header>
+                <row id="180">
+                    <property name="style">title</property>
+                    <property name="backgroundColor">#ADC1D6</property>
+                    <cell id="181">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                        <text-data id="1547">
+                            <property name="fontSize">small</property>
+                            <expression name="valueExpr">BirtStr.concat(' Run Date: ', BirtDateTime.now())</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="1548">
+                        <property name="colSpan">2</property>
+                        <property name="rowSpan">1</property>
+                        <label id="895">
+                            <property name="fontSize">16pt</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">LBNL Facilities Work Order</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1550"/>
+                </row>
+            </header>
+            <detail>
+                <row id="1487">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="backgroundColor">#ADC1D6</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="borderTopColor">#000000</property>
+                    <property name="borderTopStyle">solid</property>
+                    <cell id="1488">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                    </cell>
+                    <cell id="1489">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                    </cell>
+                    <cell id="1490">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">2</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="backgroundColor">#ADC1D6</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <text-data id="1561">
+                            <property name="fontFamily">"IDAutomationHC39M Free Version"</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">BirtStr.concat('*', row["wonum"], '*')</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="1491">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <grid id="1513">
+                            <column id="1514"/>
+                            <column id="1515"/>
+                            <row id="1516">
+                                <cell id="1517">
+                                    <label id="1493">
+                                        <property name="backgroundColor">black</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <property name="color">white</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">WCD</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1518">
+                                    <label id="1494">
+                                        <property name="backgroundColor">black</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="fontWeight">bold</property>
+                                        <property name="color">white</property>
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Priority</text-property>
+                                    </label>
+                                </cell>
+                            </row>
+                        </grid>
+                    </cell>
+                </row>
+                <row id="1481">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="backgroundColor">#ADC1D6</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <cell id="1482">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                    </cell>
+                    <cell id="1483">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                    </cell>
+                    <cell id="1485">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <grid id="1519">
+                            <column id="1520">
+                                <property name="width">1.1770833333333333in</property>
+                            </column>
+                            <column id="1521">
+                                <property name="width">0.78125in</property>
+                            </column>
+                            <row id="1522">
+                                <cell id="1523">
+                                    <data id="1492">
+                                        <property name="backgroundColor">white</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="color">black</property>
+                                        <property name="textAlign">left</property>
+                                        <property name="resultSetColumn">lbl_wcdcatg_finl</property>
+                                    </data>
+                                </cell>
+                                <cell id="1524">
+                                    <data id="1486">
+                                        <property name="backgroundColor">white</property>
+                                        <property name="fontSize">10pt</property>
+                                        <property name="textAlign">left</property>
+                                        <property name="resultSetColumn">wopriority</property>
+                                    </data>
+                                </cell>
+                            </row>
+                        </grid>
+                    </cell>
+                </row>
+                <row id="897">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <cell id="898">
+                        <property name="colSpan">3</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <text-data id="937">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["description"] != null)&#13;
+{BirtStr.concat('Short Description: ', row["description"])}&#13;
+else {'Short Description: '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="901">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <text-data id="948">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["worktype"] != null)&#13;
+{BirtStr.concat('Work Type ', row["worktype"])}&#13;
+else {'Work Type '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                </row>
+                <row id="902">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <cell id="903">
+                        <property name="colSpan">2</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <text-data id="938">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["location"] != null)&#13;
+{BirtStr.concat('Location of Work: ', row["location"])}&#13;
+else {'Location of Work: '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="941">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <text-data id="945">
+                            <property name="fontSize">10pt</property>
+                            <property name="color">red</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["lbl_release_status"] != null)&#13;
+{BirtStr.concat('Release Status ', row["lbl_release_status"])}&#13;
+else {'Release Status '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="906">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <text-data id="949">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["status"] != null)&#13;
+{BirtStr.concat('Status ', row["status"])}&#13;
+else {'Status '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                </row>
+                <row id="932">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <cell id="933">
+                        <property name="colSpan">2</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <text-data id="939">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["assetnum"] != null)&#13;
+{BirtStr.concat('Asset: ', row["assetnum"])}&#13;
+else {'Asset: '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="943">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <text-data id="946">
+                            <property name="fontSize">10pt</property>
+                            <property name="color">red</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["lbl_rescort_reqd"] != null)&#13;
+{BirtStr.concat('Escort Required ', row["lbl_rescort_reqd"])}&#13;
+else {'Escort Required '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="936">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                    </cell>
+                </row>
+                <row id="927">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="borderBottomColor">#000000</property>
+                    <property name="borderBottomStyle">solid</property>
+                    <property name="borderRightColor">#000000</property>
+                    <property name="borderRightStyle">solid</property>
+                    <property name="height">0.4375in</property>
+                    <cell id="928">
+                        <property name="colSpan">2</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <text-data id="944">
+                            <property name="fontSize">10pt</property>
+                            <property name="color">red</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["schedstart"] != null)&#13;
+{BirtStr.concat('Scheduled Start ', row["schedstart"])}&#13;
+else {'Scheduled Start '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="930">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <text-data id="947">
+                            <property name="fontSize">10pt</property>
+                            <property name="color">red</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["schedfinish"] != null)&#13;
+{BirtStr.concat('Scheduled Finish ', row["schedfinish"])}&#13;
+else {'Scheduled Finish ' }</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="931">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                    </cell>
+                </row>
+                <row id="922">
+                    <property name="style">tabledetailsdatarow</property>
+                    <cell id="923">
+                        <property name="colSpan">2</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <label id="965">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="paddingTop">15pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">CONTACT INFORMATION</text-property>
+                        </label>
+                    </cell>
+                    <cell id="925">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                    </cell>
+                    <cell id="926">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                    </cell>
+                </row>
+                <row id="917">
+                    <property name="style">tabledetailsdatarow</property>
+                    <cell id="918">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <text-data id="951">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if ( row["clientname"] != null)&#13;
+{BirtStr.concat('Customer/Client:  ', row["clientname"])}&#13;
+else&#13;
+{'Customer/Client:  '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="919">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <text-data id="953">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["clientphone"] != null)&#13;
+{BirtStr.concat('Phone ', row["clientphone"])}&#13;
+else {'Phone  '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="920">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <text-data id="955">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">BirtStr.concat('Cell Phone ')</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="921">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <text-data id="957">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["clientlocation"] != null)&#13;
+{BirtStr.concat('Location ', row["clientlocation"])}&#13;
+else {'Location '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                </row>
+                <row id="912">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="borderLeftColor">#000000</property>
+                    <property name="borderLeftStyle">solid</property>
+                    <cell id="913">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <text-data id="952">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["reportedname"] != null)&#13;
+{BirtStr.concat('Requestor: ', row["reportedname"])}&#13;
+else {'Requestor:  '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="914">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <text-data id="954">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["reportedphone"] != null)&#13;
+{BirtStr.concat('Phone ', row["reportedphone"])}&#13;
+else {'Phone '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="915">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <text-data id="959">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">BirtStr.concat('Cell Phone ')</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="916">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <text-data id="958">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["reportedlocation"] != null)&#13;
+{BirtStr.concat('Location ', row["reportedlocation"])}&#13;
+else {'Location '}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                </row>
+                <row id="870">
+                    <property name="style">tabledetailsdatarow</property>
+                    <cell id="871">
+                        <property name="colSpan">4</property>
+                        <property name="rowSpan">1</property>
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">medium</property>
+                        <property name="borderLeftColor">#000000</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderRightColor">#000000</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <table id="875">
+                            <property name="dataSet">ScopeOfWorkDataSet</property>
+                            <list-property name="boundDataColumns">
+                                <structure>
+                                    <property name="name">scope_of_work</property>
+                                    <text-property name="displayName">scope_of_work</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["scope_of_work"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">longdesc</property>
+                                    <text-property name="displayName">longdesc</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["longdesc"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                            </list-property>
+                            <column id="888"/>
+                            <column id="889"/>
+                            <column id="890"/>
+                            <header>
+                                <row id="876">
+                                    <property name="borderLeftColor">#000000</property>
+                                    <property name="borderLeftStyle">solid</property>
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <property name="borderTopColor">#000000</property>
+                                    <property name="borderTopStyle">solid</property>
+                                    <cell id="877">
+                                        <label id="892">
+                                            <property name="fontSize">12pt</property>
+                                            <property name="fontWeight">bold</property>
+                                            <property name="textUnderline">underline</property>
+                                            <property name="paddingTop">15pt</property>
+                                            <property name="textAlign">left</property>
+                                            <text-property name="text">SCOPE OF WORK</text-property>
+                                        </label>
+                                    </cell>
+                                    <cell id="878"/>
+                                    <cell id="879"/>
+                                </row>
+                            </header>
+                            <detail>
+                                <row id="960">
+                                    <property name="borderBottomColor">#000000</property>
+                                    <property name="borderBottomStyle">solid</property>
+                                    <property name="borderLeftColor">#000000</property>
+                                    <property name="borderLeftStyle">solid</property>
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <cell id="961">
+                                        <property name="colSpan">3</property>
+                                        <property name="rowSpan">1</property>
+                                        <label id="964">
+                                            <property name="fontSize">10pt</property>
+                                            <property name="textAlign">left</property>
+                                            <text-property name="text">What is to be accomplished, condition to be achieved or problem being corrected?</text-property>
+                                        </label>
+                                    </cell>
+                                </row>
+                                <row id="880">
+                                    <property name="borderBottomColor">#000000</property>
+                                    <property name="borderBottomStyle">solid</property>
+                                    <property name="borderLeftColor">#000000</property>
+                                    <property name="borderLeftStyle">solid</property>
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <cell id="881">
+                                        <property name="colSpan">3</property>
+                                        <property name="rowSpan">1</property>
+                                        <text-data id="966">
+                                            <property name="fontSize">10pt</property>
+                                            <property name="textAlign">left</property>
+                                            <expression name="valueExpr">if ((row["scope_of_work"] != null) &amp;&amp; (row["longdesc"] != null))&#13;
+{BirtStr.concat(row["scope_of_work"], row["longdesc"])}&#13;
+else if ((row["scope_of_work"] != null) &amp;&amp; (row["longdesc"] == null))&#13;
+{BirtStr.concat(row["scope_of_work"])}&#13;
+else if ((row["scope_of_work"] == null) &amp;&amp; (row["longdesc"] != null))&#13;
+{BirtStr.concat(row["longdesc"])}</expression>
+                                            <property name="contentType">html</property>
+                                        </text-data>
+                                    </cell>
+                                </row>
+                                <row id="1369">
+                                    <property name="borderBottomColor">#000000</property>
+                                    <property name="borderBottomStyle">solid</property>
+                                    <property name="borderLeftColor">#000000</property>
+                                    <property name="borderLeftStyle">solid</property>
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <cell id="1370">
+                                        <property name="colSpan">3</property>
+                                        <property name="rowSpan">1</property>
+                                        <table id="1407">
+                                            <property name="dataSet">LocationNoteDataSet</property>
+                                            <list-property name="boundDataColumns">
+                                                <structure>
+                                                    <property name="name">location_notes</property>
+                                                    <text-property name="displayName">location_notes</text-property>
+                                                    <expression name="expression" type="javascript">dataSetRow["location_notes"]</expression>
+                                                    <property name="dataType">string</property>
+                                                </structure>
+                                                <structure>
+                                                    <property name="name">sched_issues</property>
+                                                    <text-property name="displayName">sched_issues</text-property>
+                                                    <expression name="expression" type="javascript">if (dataSetRow["sched_issues"] == 0)&#13;
+{'No'}&#13;
+else {'Yes'}</expression>
+                                                    <property name="dataType">string</property>
+                                                    <property name="allowExport">true</property>
+                                                </structure>
+                                                <structure>
+                                                    <property name="name">asset_desc</property>
+                                                    <text-property name="displayName">asset_desc</text-property>
+                                                    <expression name="expression" type="javascript">dataSetRow["asset_desc"]</expression>
+                                                    <property name="dataType">string</property>
+                                                </structure>
+                                                <structure>
+                                                    <property name="name">sched_issues_dtl</property>
+                                                    <text-property name="displayName">sched_issues_dtl</text-property>
+                                                    <expression name="expression" type="javascript">dataSetRow["sched_issues_dtl"]</expression>
+                                                    <property name="dataType">string</property>
+                                                </structure>
+                                            </list-property>
+                                            <column id="1422"/>
+                                            <column id="1423"/>
+                                            <column id="1424"/>
+                                            <detail>
+                                                <row id="1408">
+                                                    <cell id="1409">
+                                                        <property name="colSpan">3</property>
+                                                        <property name="rowSpan">1</property>
+                                                        <text-data id="1410">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <expression name="valueExpr">if (row["location_notes"] != null)&#13;
+{BirtStr.concat('Location Note: ',  row["location_notes"])}&#13;
+else {'Location Note: '}</expression>
+                                                            <property name="contentType">html</property>
+                                                        </text-data>
+                                                    </cell>
+                                                </row>
+                                                <row id="1411">
+                                                    <cell id="1412">
+                                                        <property name="colSpan">2</property>
+                                                        <property name="rowSpan">1</property>
+                                                        <label id="1413">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <text-property name="text">Scheduling issues which require the task to be performed by the requested target dates?</text-property>
+                                                        </label>
+                                                    </cell>
+                                                    <cell id="1414">
+                                                        <data id="1415">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <property name="resultSetColumn">sched_issues</property>
+                                                        </data>
+                                                    </cell>
+                                                </row>
+                                                <row id="1416">
+                                                    <cell id="1417">
+                                                        <property name="colSpan">3</property>
+                                                        <property name="rowSpan">1</property>
+                                                        <data id="1418">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <property name="resultSetColumn">sched_issues_dtl</property>
+                                                        </data>
+                                                    </cell>
+                                                </row>
+                                                <row id="1419">
+                                                    <cell id="1420">
+                                                        <property name="colSpan">3</property>
+                                                        <property name="rowSpan">1</property>
+                                                        <text-data id="1421">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <expression name="valueExpr">if (row["asset_desc"] != null)&#13;
+{BirtStr.concat('Equipment Identification: ',  row["asset_desc"])}&#13;
+else {'Equipment Identification: '}</expression>
+                                                            <property name="contentType">html</property>
+                                                        </text-data>
+                                                    </cell>
+                                                </row>
+                                            </detail>
+                                        </table>
+                                    </cell>
+                                </row>
+                                <row id="1535">
+                                    <cell id="1536">
+                                        <label id="1539"/>
+                                    </cell>
+                                    <cell id="1537"/>
+                                    <cell id="1538"/>
+                                </row>
+                                <row id="1377">
+                                    <property name="borderBottomColor">#000000</property>
+                                    <property name="borderBottomStyle">solid</property>
+                                    <property name="borderLeftColor">#000000</property>
+                                    <property name="borderLeftStyle">solid</property>
+                                    <property name="borderRightColor">#000000</property>
+                                    <property name="borderRightStyle">solid</property>
+                                    <property name="borderTopColor">#000000</property>
+                                    <property name="borderTopStyle">solid</property>
+                                    <cell id="1378">
+                                        <property name="colSpan">3</property>
+                                        <property name="rowSpan">1</property>
+                                        <table id="1425">
+                                            <property name="dataSet">OpSeqDataSet</property>
+                                            <list-property name="boundDataColumns">
+                                                <structure>
+                                                    <property name="name">description</property>
+                                                    <text-property name="displayName">description</text-property>
+                                                    <expression name="expression" type="javascript">dataSetRow["description"]</expression>
+                                                    <property name="dataType">string</property>
+                                                </structure>
+                                                <structure>
+                                                    <property name="name">longdesc</property>
+                                                    <text-property name="displayName">longdesc</text-property>
+                                                    <expression name="expression" type="javascript">dataSetRow["longdesc"]</expression>
+                                                    <property name="dataType">string</property>
+                                                </structure>
+                                                <structure>
+                                                    <property name="name">opsequence</property>
+                                                    <text-property name="displayName">opsequence</text-property>
+                                                    <expression name="expression" type="javascript">dataSetRow["opsequence"]</expression>
+                                                    <property name="dataType">string</property>
+                                                </structure>
+                                            </list-property>
+                                            <column id="1446"/>
+                                            <column id="1447"/>
+                                            <column id="1448"/>
+                                            <column id="1449"/>
+                                            <column id="1450"/>
+                                            <header>
+                                                <row id="1426">
+                                                    <cell id="1427">
+                                                        <property name="colSpan">2</property>
+                                                        <property name="rowSpan">1</property>
+                                                        <label id="1428">
+                                                            <property name="fontSize">12pt</property>
+                                                            <property name="fontWeight">bold</property>
+                                                            <property name="paddingTop">15pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <text-property name="text">Operation Sequence:</text-property>
+                                                        </label>
+                                                    </cell>
+                                                    <cell id="1429"/>
+                                                    <cell id="1430"/>
+                                                    <cell id="1431"/>
+                                                </row>
+                                                <row id="1432">
+                                                    <cell id="1433">
+                                                        <label id="1434">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="fontWeight">normal</property>
+                                                            <property name="textAlign">left</property>
+                                                            <text-property name="text">Sequence</text-property>
+                                                        </label>
+                                                    </cell>
+                                                    <cell id="1435">
+                                                        <property name="colSpan">2</property>
+                                                        <property name="rowSpan">1</property>
+                                                        <label id="1436">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="fontWeight">normal</property>
+                                                            <property name="textAlign">left</property>
+                                                            <text-property name="text">Description</text-property>
+                                                        </label>
+                                                    </cell>
+                                                    <cell id="1437">
+                                                        <property name="colSpan">2</property>
+                                                        <property name="rowSpan">1</property>
+                                                        <label id="1438">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="fontWeight">normal</property>
+                                                            <property name="textAlign">left</property>
+                                                            <text-property name="text">Long Description</text-property>
+                                                        </label>
+                                                    </cell>
+                                                </row>
+                                            </header>
+                                            <detail>
+                                                <row id="1439">
+                                                    <cell id="1440">
+                                                        <data id="1441">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <property name="resultSetColumn">opsequence</property>
+                                                        </data>
+                                                    </cell>
+                                                    <cell id="1442">
+                                                        <property name="colSpan">2</property>
+                                                        <property name="rowSpan">1</property>
+                                                        <data id="1443">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <property name="resultSetColumn">description</property>
+                                                        </data>
+                                                    </cell>
+                                                    <cell id="1444">
+                                                        <property name="colSpan">2</property>
+                                                        <property name="rowSpan">1</property>
+                                                        <data id="1445">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <property name="resultSetColumn">longdesc</property>
+                                                        </data>
+                                                    </cell>
+                                                </row>
+                                            </detail>
+                                        </table>
+                                    </cell>
+                                </row>
+                                <row id="1540">
+                                    <cell id="1541">
+                                        <label id="1544"/>
+                                    </cell>
+                                    <cell id="1542"/>
+                                    <cell id="1543"/>
+                                </row>
+                                <row id="1373">
+                                    <cell id="1374">
+                                        <property name="colSpan">3</property>
+                                        <property name="rowSpan">1</property>
+                                        <property name="borderBottomColor">#000000</property>
+                                        <property name="borderBottomStyle">solid</property>
+                                        <property name="borderLeftColor">#000000</property>
+                                        <property name="borderLeftStyle">solid</property>
+                                        <property name="borderLeftWidth">medium</property>
+                                        <property name="borderRightColor">#000000</property>
+                                        <property name="borderRightStyle">solid</property>
+                                        <property name="borderTopColor">#000000</property>
+                                        <property name="borderTopStyle">solid</property>
+                                        <table id="1460">
+                                            <property name="dataSet">SpecialPlanningDataSet</property>
+                                            <list-property name="boundDataColumns">
+                                                <structure>
+                                                    <property name="name">longdesc</property>
+                                                    <text-property name="displayName">longdesc</text-property>
+                                                    <expression name="expression" type="javascript">dataSetRow["longdesc"]</expression>
+                                                    <property name="dataType">string</property>
+                                                </structure>
+                                                <structure>
+                                                    <property name="name">planning_reqd</property>
+                                                    <text-property name="displayName">planning_reqd</text-property>
+                                                    <expression name="expression" type="javascript">dataSetRow["planning_reqd"]</expression>
+                                                    <property name="dataType">string</property>
+                                                </structure>
+                                            </list-property>
+                                            <column id="1467"/>
+                                            <header>
+                                                <row id="1461">
+                                                    <cell id="1462">
+                                                        <label id="1479">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <text-property name="text">Special Planning Requirements: System, Equipment Structure, Components and documents impacted by the work - are identified.</text-property>
+                                                        </label>
+                                                    </cell>
+                                                </row>
+                                            </header>
+                                            <detail>
+                                                <row id="1463">
+                                                    <cell id="1464">
+                                                        <text-data id="1469">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <expression name="valueExpr">if ((row["planning_reqd"] != null) &amp;&amp; (row["longdesc"] != null))&#13;
+{BirtStr.concat(row["planning_reqd"], row["longdesc"])}&#13;
+else if ((row["planning_reqd"] != null) &amp;&amp; (row["longdesc"] == null))&#13;
+{BirtStr.concat(row["planning_reqd"])}&#13;
+else if ((row["planning_reqd"] == null) &amp;&amp; (row["longdesc"] != null))&#13;
+{BirtStr.concat(row["longdesc"])}</expression>
+                                                            <property name="contentType">html</property>
+                                                        </text-data>
+                                                    </cell>
+                                                </row>
+                                            </detail>
+                                        </table>
+                                    </cell>
+                                </row>
+                                <row id="1530">
+                                    <property name="showIfBlank">false</property>
+                                    <property name="overflow">hidden</property>
+                                    <cell id="1531">
+                                        <property name="color">white</property>
+                                        <property name="showIfBlank">true</property>
+                                        <label id="1534">
+                                            <text-property name="text"></text-property>
+                                        </label>
+                                    </cell>
+                                    <cell id="1532"/>
+                                    <cell id="1533">
+                                        <property name="borderTopColor">#000000</property>
+                                        <property name="borderTopStyle">solid</property>
+                                    </cell>
+                                </row>
+                                <row id="1451">
+                                    <property name="pageBreakAfter">always</property>
+                                    <cell id="1452">
+                                        <property name="colSpan">3</property>
+                                        <property name="rowSpan">1</property>
+                                        <property name="borderBottomColor">#000000</property>
+                                        <property name="borderBottomStyle">solid</property>
+                                        <property name="borderLeftColor">#000000</property>
+                                        <property name="borderLeftStyle">solid</property>
+                                        <property name="borderRightColor">#000000</property>
+                                        <property name="borderRightStyle">solid</property>
+                                        <property name="borderTopColor">#000000</property>
+                                        <property name="borderTopStyle">solid</property>
+                                        <table id="1471">
+                                            <property name="dataSet">AcceptCriteriaDataSet</property>
+                                            <list-property name="boundDataColumns">
+                                                <structure>
+                                                    <property name="name">longdesc</property>
+                                                    <text-property name="displayName">longdesc</text-property>
+                                                    <expression name="expression" type="javascript">dataSetRow["longdesc"]</expression>
+                                                    <property name="dataType">string</property>
+                                                </structure>
+                                                <structure>
+                                                    <property name="name">accept_criteria</property>
+                                                    <text-property name="displayName">accept_criteria</text-property>
+                                                    <expression name="expression" type="javascript">dataSetRow["accept_criteria"]</expression>
+                                                    <property name="dataType">string</property>
+                                                </structure>
+                                            </list-property>
+                                            <column id="1478"/>
+                                            <header>
+                                                <row id="1472">
+                                                    <cell id="1473">
+                                                        <label id="1468">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <text-property name="text">Acceptance Criteria: Established for conclusively determing whether the work is accomplished successfully, and has not cause other problems or deficiencies.</text-property>
+                                                        </label>
+                                                    </cell>
+                                                </row>
+                                            </header>
+                                            <detail>
+                                                <row id="1474">
+                                                    <cell id="1475">
+                                                        <text-data id="1480">
+                                                            <property name="fontSize">10pt</property>
+                                                            <property name="textAlign">left</property>
+                                                            <expression name="valueExpr">if ((row["accept_criteria"] != null) &amp;&amp; (row["longdesc"] != null))&#13;
+{BirtStr.concat(row["accept_criteria"], row["longdesc"])}&#13;
+else if ((row["accept_criteria"] != null) &amp;&amp; (row["longdesc"] == null))&#13;
+{BirtStr.concat(row["accept_criteria"])}&#13;
+else if ((row["accept_criteria"] == null) &amp;&amp; (row["longdesc"] != null))&#13;
+{BirtStr.concat(row["longdesc"])}</expression>
+                                                            <property name="contentType">html</property>
+                                                        </text-data>
+                                                    </cell>
+                                                </row>
+                                            </detail>
+                                        </table>
+                                    </cell>
+                                </row>
+                            </detail>
+                        </table>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+    </body>
+</report>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation id="lbl_seq" ismobile="false" mboname="LBL_SEQUENCE" resultstableid="results_showlist" version="6.2.6">
+	<page id="mainrec" scroll="false">
+		<include controltoclone="pageHeader" id="INCLUDE-pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar1" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" label="Sequence Master" mboname="LBL_SEQUENCE" selectmode="multiple">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="seq_no" id="new_tablecol_3" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" type="EVENT"/>
+							<tablecol dataattribute="LBL_SEQUENCEID" id="new_tablecol_13" label="ID"/>
+							<tablecol dataattribute="SEQ_NO" id="new_tablecol_4" label="Sequence" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="true" type="LINK"/>
+							<tablecol dataattribute="LBL_SEQUENCE_LOCATIONS.LOCATION" id="new_tablecol_2" inputmode="PASSWORD" mxevent="selectrecord" mxevent_desc="Go To %1" showfilterfield="true" sortable="false" type="LINK"/>
+							<tablecol dataattribute="STATUS" id="new_tablecol"/>
+							<tablecol dataattribute="DESCRIPTION" id="col1"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="Main" type="insert">
+					<section id="new_section">
+						<sectionrow id="new_sectionrow">
+							<sectioncol id="new_sectioncol">
+								<section id="new_section_2" label="Sequence Number">
+									<defaultvalue dataattribute="STATUS" defaulttype="INSERT" id="new_defaultvalue" value="INACTIVE"/>
+									<textbox dataattribute="SEQ_NO" id="new_textbox_2" label="Sequence"/>
+									<textbox dataattribute="lbl_sequenceid" id="new_textbox_12" label="ID"/>
+									<textbox dataattribute="SEQ_TYPE" id="new_textbox_4" label="Sequence Type &lt;br&gt; (Room / Division / &lt;br&gt; GGM / GM / Asset )" lookup="VALUELIST"/>
+									<textbox dataattribute="key_cut_string" id="new_textbox_5"/>
+									<textbox dataattribute="keyway" id="new_textbox_6" label="Key Way"/>
+									<multilinetextbox dataattribute="DESCRIPTION" id="new_multilinetextbox" label="Description" rows="2"/>
+									<multilinetextbox dataattribute="DESCRIPTION_LONGDESCRIPTION" id="new_multilinetextbox_3" label="More Details" rows="10"/>
+									<textbox dataattribute="LOCATION" id="new_textbox" label="For Building"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="new_sectionrow_ctrl_sectioncol">
+								<section id="new_section_3" label="Status">
+									<textbox dataattribute="status" id="new_textbox_8" lookup="valuelist"/>
+									<textbox dataattribute="statusdate" id="new_textbox_9" inputmode="READONLY" label="Status Date"/>
+									<textbox dataattribute="statuschangeby" id="new_textbox_10" inputmode="READONLY" label="Status Changeby"/>
+									<textbox dataattribute="changedate" id="new_textbox_11" inputmode="READONLY"/>
+									<textbox dataattribute="changeby" id="new_textbox_7" inputmode="READONLY" label="Changeby"/>
+								</section>
+								<table collapsed="false" datasrc="1481143717713" id="1481143717713" label="Keys with Sequence" relationship="lbl_sequence_keys" rowdetailsexpanded="true">
+									<tablebody displayrowsperpage="5" id="1481143717721">
+										<tablecol dataattribute="assetnum" id="1481143717724" label="K Number"/>
+										<tablecol dataattribute="status" id="1481145324667" label="KEY Status"/>
+										<tablecol dataattribute="CHANGEDATE" id="1481152791973" inputmode="READONLY" label="Last Updated"/>
+										<tablecol dataattribute="DESCRIPTION" id="1481143717725" inputmode="READONLY"/>
+										<tablecol dataattribute="PRIMARYASSETUSERCUST.PERSONID" id="1481152986858" inputmode="READONLY" label="Custodian Emp #"/>
+										<tablecol dataattribute="PRIMARYASSETUSERCUST.PERSON.LBL_STATUS" id="1481153600516" inputmode="READONLY" label="Custodian Status"/>
+										<tablecol dataattribute="PRIMARYASSETUSERCUST.PERSON.DISPLAYNAME" id="1481143717727" inputmode="READONLY" label="Custodian Name"/>
+									</tablebody>
+									<tabledetails id="1481143717731"/>
+								</table>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table collapsed="false" id="new_table" label="Locations For Sequence" relationship="LBL_SEQUENCE_LOCATIONS_BYID" rowdetailsexpanded="true">
+						<buttongroup id="new_buttongroup">
+							<pushbutton default="true" id="new_buttongroup_ctrl_pushbutton" label="New Location" mxevent="addrow"/>
+						</buttongroup>
+						<tablebody displayrowsperpage="30" id="new_table_ctrl_tablebody">
+							<tablecol id="new_tablecol_8" mxevent="toggledetailstate" mxevent_desc="Show Detail" type="EVENT"/>
+							<tablecol applink="LOCATION" dataattribute="LOCATION" id="new_tablecol_7" inputmode="required" lookup="LOCATIONS" menutype="LOCATIONS"/>
+							<tablecol dataattribute="LBL_LOCATION.DESCRIPTION" id="new_tablecol_5" inputmode="READONLY" label="Location Description"/>
+							<tablecol dataattribute="DESCRIPTION" id="new_tablecol_6" inputmode="READONLY" label="Lockshop Comments"/>
+							<tablecol id="new_table_ctrl_tablecol" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" type="EVENT"/>
+						</tablebody>
+						<tabledetails id="new_table_ctrl_tabledetails">
+							<section id="new_section_4">
+								<sectionrow id="new_sectionrow_2">
+									<sectioncol id="new_sectioncol_2">
+										<section id="new_section_5">
+											<multiparttextbox applink="LOCATION" dataattribute="LOCATION" descdataattribute="LBL_LOCATION.DESCRIPTION" descinputmode="READONLY" id="new_multiparttextbox_3" inputmode="required" lookup="LOCATIONS" menutype="LOCATIONS"/>
+											<textbox dataattribute="changeby" id="new_textbox_3" inputmode="READONLY"/>
+											<textbox dataattribute="changedate" id="new_textbox_16" inputmode="READONLY"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="new_sectionrow_2_ctrl_sectioncol">
+										<section id="new_section_6">
+											<textbox dataattribute="DESCRIPTION" id="new_textbox_14" label="Lockshop Comments"/>
+											<multilinetextbox dataattribute="DESCRIPTION_LONGDESCRIPTION" hidelabel="false" id="new_multilinetextbox_2" label="Instructions and More" rows="8"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+					</table>
+				</tab>
+				<tab id="new_tab" label="Location Analysis" type="LIST">
+					<table id="new_table_2" inputmode="READONLY" relationship="LBL_SEQUENCE_LOCATIONS_ALL" rowdetailsexpanded="true">
+						<tablebody displayrowsperpage="25" filterexpanded="true" id="new_table_2_ctrl_tablebody">
+							<tablecol dataattribute="LBL_SEQUENCEID" id="new_tablecol_10" label="ID"/>
+							<tablecol dataattribute="SEQ_NO" id="new_tablecol_14"/>
+							<tablecol dataattribute="LOCATION" id="new_tablecol_15"/>
+							<tablecol dataattribute="LBL_LOCATION.DESCRIPTION" id="new_tablecol_16"/>
+							<tablecol dataattribute="description" id="new_tablecol_11" label="Lockshop Comments"/>
+						</tablebody>
+						<tabledetails id="new_table_2_ctrl_tabledetails">
+							<section id="new_section_7">
+								<sectionrow id="new_sectionrow_3">
+									<sectioncol id="new_sectioncol_3">
+										<section id="copy_new_section_2" label="Sequence Number">
+											<defaultvalue dataattribute="STATUS" defaulttype="INSERT" id="copy_new_section_2_new_defaultvalue" value="INACTIVE"/>
+											<textbox applink="LBL_SEQ" dataattribute="LBL_SEQUENCE.SEQ_NO" id="copy_new_section_2_new_textbox_2" label="Sequence Number" menutype="HYPERLINK"/>
+											<textbox dataattribute="LBL_SEQUENCE.LBL_SEQUENCEID" id="copy_new_section_2_new_textbox_12" label="ID"/>
+											<textbox dataattribute="LBL_SEQUENCE.SEQ_TYPE" id="copy_new_section_2_new_textbox_4" label="Sequence Type (Room / Division / GGM / GM / Asset )" lookup="VALUELIST"/>
+											<textbox dataattribute="LBL_SEQUENCE.KEY_CUT_STRING" id="copy_new_section_2_new_textbox_5" label="Key Cut String"/>
+											<textbox dataattribute="LBL_SEQUENCE.KEYWAY" id="copy_new_section_2_new_textbox_6" label="Key Way"/>
+											<multilinetextbox dataattribute="LBL_SEQUENCE.DESCRIPTION" id="copy_new_section_2_new_multilinetextbox" label="Description" rows="1"/>
+											<multilinetextbox dataattribute="LBL_SEQUENCE.DESCRIPTION_LONGDESCRIPTION" id="copy_new_section_2_new_multilinetextbox_3" label="Comments" rows="6"/>
+											<textbox dataattribute="LBL_SEQUENCE.LOCATION" id="copy_new_section_2_new_textbox" label="For Building"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="new_sectionrow_3_ctrl_sectioncol">
+										<section id="copy_new_section_3" label="Status">
+											<textbox dataattribute="LBL_SEQUENCE.STATUS" id="copy_new_section_3_new_textbox_8" label="Status" lookup="valuelist"/>
+											<textbox dataattribute="LBL_SEQUENCE.STATUSDATE" id="copy_new_section_3_new_textbox_9" inputmode="READONLY" label="Status Date"/>
+											<textbox dataattribute="LBL_SEQUENCE.STATUSCHANGEBY" id="copy_new_section_3_new_textbox_10" inputmode="READONLY" label="Status Changeby"/>
+											<textbox dataattribute="LBL_SEQUENCE.CHANGEDATE" id="copy_new_section_3_new_textbox_11" inputmode="READONLY"/>
+											<textbox dataattribute="LBL_SEQUENCE.CHANGEBY" id="copy_new_section_3_new_textbox_7" inputmode="READONLY" label="Changeby"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+					</table>
+				</tab>
+			</tabgroup>
+		</clientarea>
+	</page>
+
+	<dialog id="seqstatus" label="Change Status">
+		<section border="true" datasrc="MAINRECORD" id="changestatus_grid1_1_1_grid3">
+			<textbox dataattribute="STATUS" id="100" inputmode="READONLY" label="Current Status"/>
+		</section>
+		<section border="false" id="changestatus_grid1_1_1_grid4">
+			<combobox dataattribute="status" id="changestatus_grid1_1_1_grid4_1"/>
+		</section>
+		<buttongroup id="changestatus_2">
+			<pushbutton clickmessage=" status has been changed." default="true" id="changestatus_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="changestatus_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.QbeBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<section id="searchmore_1">
+			<textbox id="searchmore_queryfield_1" inputmode="query"/>
+		</section>
+		<buttongroup id="searchmore_buttongroup">
+			<pushbutton default="true" id="searchmore_buttongroup_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="qbe_restoreappdefault_button" label="Restore Application Defaults" mxevent="qbeclear"/>
+			<pushbutton id="qbe_revisebutton" label="Revise" menutype="SEARCHMOREREVISE" targetid="searchmore"/>
+			<pushbutton id="searchmore_buttongroup_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.ViewBookmarksBean" id="searchbook" label="My Bookmarks" mboname="LBL_SEQUENCE">
+		<table id="bookmarks_table" inputmode="readonly" selectmode="single">
+			<tablebody displayrowsperpage="20" filterable="true" id="bookmarks_table_tablebody">
+				<tablecol id="bookmarks_tablecolumn_1" mxevent="selectrecord" type="link"/>
+				<tablecol dataattribute="description" id="bookmarks_tablecolumn_2"/>
+				<tablecol filterable="false" id="bookmarks_tablecolumn_3" mxevent="instantdelete" mxevent_desc="Delete" mxevent_icon="btn_delete.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="bookmarks_2">
+			<pushbutton default="true" id="bookmarks_2_1" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+	<configurationblock id="datastore_configurationblock">
+	</configurationblock>
+</presentation>

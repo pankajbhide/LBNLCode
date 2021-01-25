@@ -1,0 +1,1912 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">IBM Confidential
+
+OCO Source Materials
+
+5724-M19
+
+(C) COPYRIGHT IBM CORP. 2006
+
+The source code for this program is not published or otherwise
+divested of its trade secrets, irrespective of what has been
+deposited with the U.S. Copyright Office.
+
+09-19764@000</property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.3.1.v201309091055 Build &lt;4.3.1.v20130917-1035></property>
+    <html-property name="description">This template will create a report having a single header with multiple rows of data.</html-property>
+    <property name="units">in</property>
+    <method name="initialize"><![CDATA[importPackage(Packages.com.ibm.tivoli.maximo.report.script);
+
+mxReportScriptContext = MXReportScriptContext.initialize(reportContext);
+
+]]></method>
+    <method name="beforeFactory"><![CDATA[// Remove page break intervals from PDF output
+if ( (reportContext.getParameterValue("usepagebreaks") == "false")|| reportContext.getOutputFormat() == "pdf" ) {
+	// Give each table in the report a name, and add the names to the list below, e.g. ["mainTable", "childTable1"]
+	var tableListing = ["mainTable"];
+	for each(var tableName in tableListing) {
+		var table = reportContext.getReportRunnable().designHandle.getDesignHandle().findElement(tableName)
+		if (table != null)
+		{
+			table.setProperty("pageBreakInterval", 0);
+		}
+	}
+}]]></method>
+    <method name="afterFactory"><![CDATA[MXReportScriptContext.close();]]></method>
+    <property name="theme">MaximoSystemLibrary.maximoTheme</property>
+    <text-property name="displayName">Tivoli Maximo List Template</text-property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">MaximoSystemLibrary.rptlibrary</property>
+            <property name="namespace">MaximoSystemLibrary</property>
+        </structure>
+        <structure>
+            <property name="fileName">lbnlreportlibrary.rptlibrary</property>
+            <property name="namespace">lbnlreportlibrary</property>
+        </structure>
+    </list-property>
+    <template-parameter-definitions>
+        <template-parameter-definition name="NewTemplateParameterDefinition" id="71">
+            <property name="allowedType">Label</property>
+            <text-property name="description">Double-click to enter the report title.</text-property>
+            <default>
+                <label id="72">
+                    <text-property name="text">Report Title</text-property>
+                </label>
+            </default>
+        </template-parameter-definition>
+    </template-parameter-definitions>
+    <parameters>
+        <scalar-parameter name="where" id="25">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1=1</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="appname" id="200">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramdelimiter" id="202">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramstring" id="201">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="usepagebreaks" id="342">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">true</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <script-data-source name="maximoDataSource" id="64" extends="MaximoSystemLibrary.maximoDataSource"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="TotalUsageDataSet" id="5">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">building_number</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">total_usable_area</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">building_number</property>
+                </structure>
+                <structure>
+                    <property name="columnName">total_usable_area</property>
+                </structure>
+            </list-property>
+            <list-property name="parameters"/>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">building_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">total_usable_area</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+var sqlText = new String();
+
+// Add query to sqlText variable.
+sqlText = "select spadm.space_building.building_number, sum(spadm.space_room.area) total_usable_area  "
++ " from spadm.space_building, spadm.space_room "
+//+ " where " + params["where"] 
++ " where spadm.space_building.building_number = spadm.space_room.building_number "
++ " and spadm.space_building.inactive = 0 "
++ " and spadm.space_room.inactive = 0 "
++ " and spadm.space_room.area > 0 "
+//+ " and spadm.space_building.building_number = '" +  rows[0]["building_number"]  + "' " 
++ " group by spadm.space_building.building_number, spadm.space_room.building_number "
++ " order by spadm.space_building.building_number "
+;
+
+maximoDataSet.setQuery(sqlText);]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["building_number"] = maximoDataSet.getString("building_number");	
+row["total_usable_area"] = maximoDataSet.getString("total_usable_area");	
+//row["datefield"] = maximoDataSet.getTimestamp("datefield");	
+
+return (true);]]></method>
+        </script-data-set>
+        <script-data-set name="TotalUsableDataSet" id="1368">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">building_number</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">total_usable</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">building_number</property>
+                </structure>
+                <structure>
+                    <property name="columnName">total_usable</property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">param_bldg_no</property>
+                    <property name="dataType">string</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">0</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">building_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">total_usable</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+var sqlText = new String();
+
+// Add query to sqlText variable.
+sqlText = "select spadm.space_building.building_number, sum(spadm.space_room.area) total_usable  "
++ " from spadm.space_building, spadm.space_room "
+//+ " where " + params["where"] 
++ " where spadm.space_building.building_number = spadm.space_room.building_number "
++ " and spadm.space_building.inactive = 0 "
++ " and spadm.space_room.inactive = 0 "
++ " and spadm.space_room.area > 0 "
++ " and spadm.space_building.building_number = '" +  rows[0]["building_number"]  + "' " 
++ " group by spadm.space_building.building_number, spadm.space_room.building_number "
++ " order by spadm.space_building.building_number "
+;
+
+maximoDataSet.setQuery(sqlText);]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["building_number"] = maximoDataSet.getString("building_number");	
+row["total_usable"] = maximoDataSet.getString("total_usable");	
+//row["datefield"] = maximoDataSet.getTimestamp("datefield");	
+
+return (true);]]></method>
+        </script-data-set>
+        <script-data-set name="SumActiveDataSet" id="1324">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">building_number</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">total_active_area</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">building_number</property>
+                </structure>
+                <structure>
+                    <property name="columnName">total_active_area</property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">param_bldg_no</property>
+                    <property name="dataType">string</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">0</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">building_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">total_active_area</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+var sqlText = new String();
+
+// Add query to sqlText variable.
+sqlText = "select spadm.space_building.building_number, sum(spadm.space_room.area) total_active_area  "
++ " from spadm.space_building, spadm.space_room "
++ " where spadm.space_building.building_number = spadm.space_room.building_number "
++ " and spadm.space_building.inactive = 0 "
++ " and spadm.space_room.inactive = 0 "
++ " and spadm.space_room.current_use <> 'NU' "
++ " and spadm.space_building.building_number = '" +  rows[0]["building_number"]  + "' " 
++ " group by spadm.space_building.building_number, spadm.space_room.building_number "
+
+;
+
+maximoDataSet.setQuery(sqlText);
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["building_number"] = maximoDataSet.getString("building_number");	
+row["total_active_area"] = maximoDataSet.getString("total_active_area");	
+//row["datefield"] = maximoDataSet.getTimestamp("datefield");	
+
+return (true);]]></method>
+        </script-data-set>
+        <script-data-set name="CurrentUseAreaDataSet" id="737">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">area</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">current_use</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">building_number</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">p_an</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">p_cp</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">p_dl</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">p_hl</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">p_mi</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">p_nu</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">p_of</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">p_sh</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">p_st</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">p_wl</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">area</property>
+                </structure>
+                <structure>
+                    <property name="columnName">current_use</property>
+                </structure>
+                <structure>
+                    <property name="columnName">building_number</property>
+                </structure>
+                <structure>
+                    <property name="columnName">p_an</property>
+                </structure>
+                <structure>
+                    <property name="columnName">p_cp</property>
+                </structure>
+                <structure>
+                    <property name="columnName">p_dl</property>
+                </structure>
+                <structure>
+                    <property name="columnName">p_hl</property>
+                </structure>
+                <structure>
+                    <property name="columnName">p_mi</property>
+                </structure>
+                <structure>
+                    <property name="columnName">p_nu</property>
+                </structure>
+                <structure>
+                    <property name="columnName">p_of</property>
+                </structure>
+                <structure>
+                    <property name="columnName">p_sh</property>
+                </structure>
+                <structure>
+                    <property name="columnName">p_st</property>
+                </structure>
+                <structure>
+                    <property name="columnName">p_wl</property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">param_bldg_no</property>
+                    <property name="dataType">string</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">0</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">area</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">current_use</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">building_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">p_an</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">p_cp</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">p_dl</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">p_hl</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">p_mi</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">p_nu</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">p_of</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">p_sh</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">p_st</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">p_wl</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[CurrentUseAreaDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+CurrentUseAreaDataSet.open();
+
+var sqlText = new String();
+
+
+// Add query to sqlText variable.
+
+
+sqlText = "select spadm.space_room.building_number, sum(spadm.space_room.area) area, spadm.space_room.current_use "
++ " from spadm.space_room, spadm.space_building "
++ " where spadm.space_room.building_number = spadm.space_building.building_number "
+//+ " and spadm.space_room.building_number = '069' " 
++ " and spadm.space_room.building_number = '" +  rows[0]["building_number"]  + "' " 
++ " and spadm.space_room.inactive = 0 "
++ " and spadm.space_building.inactive = 0 "
++ " group by spadm.space_room.building_number, spadm.space_room.current_use "
+;
+
+
+				
+				
+//			Case "DL" '** dry lab
+//				P_DRY_LAB_AREA = tempRow.GetValue("AREA")
+//			Case "HL" '** Heavy Lab
+//				P_HEAVY_LAB_AREA = tempRow.GetValue("AREA")
+//			Case "MI" '** Misc
+//				P_MI_AREA = tempRow.GetValue("AREA")
+//			Case "NU" '** Not Usable
+//					P_NOT_USABLE_AREA = tempRow.GetValue("AREA")
+//			Case "OF" '** Office
+//				P_OFFICE_AREA = tempRow.GetValue("AREA")
+//			Case "SH" '** Shops
+//				P_SHOPS_AREA = tempRow.GetValue("AREA")
+//			Case "ST" '** Storage
+//				P_STORAGE_AREA = tempRow.GetValue("AREA")
+//			Case "WL" '** Wet Lab
+//				P_WET_LAB_AREA = tempRow.GetValue("AREA")
+//			Case Else
+//				ShowFactoryStatus("ERROR: CurrentUseArea doesn't belong to any Category")
+
+
+CurrentUseAreaDataSet.setQuery(sqlText);
+
+ 
+ ]]></method>
+            <method name="fetch"><![CDATA[if (!CurrentUseAreaDataSet.fetch())
+	return (false);
+
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column
+
+	row["building_number"] = CurrentUseAreaDataSet.getString("building_number");	
+	row["area"] = CurrentUseAreaDataSet.getString("area");	
+	row["current_use"] = CurrentUseAreaDataSet.getString("current_use");	
+	
+	if (CurrentUseAreaDataSet.getString("current_use") == 'AN')
+	{row["p_an"] = CurrentUseAreaDataSet.getString("area")};
+	
+	if (CurrentUseAreaDataSet.getString("current_use") == 'CP')
+	{row["p_cp"] = CurrentUseAreaDataSet.getString("area")};
+	
+	if (CurrentUseAreaDataSet.getString("current_use") == 'DL')
+	{row["p_dl"] = CurrentUseAreaDataSet.getString("area")};
+	
+	if (CurrentUseAreaDataSet.getString("current_use") == 'HL')
+	{row["p_hl"] = CurrentUseAreaDataSet.getString("area")};
+	
+	if (CurrentUseAreaDataSet.getString("current_use") == 'MI')
+	{row["p_mi"] = CurrentUseAreaDataSet.getString("area")};
+	
+	if (CurrentUseAreaDataSet.getString("current_use") == 'NU')
+	{row["p_nu"] = CurrentUseAreaDataSet.getString("area")};
+
+	if (CurrentUseAreaDataSet.getString("current_use") == 'OF')
+	{row["p_of"] = CurrentUseAreaDataSet.getString("area")};
+	
+	if (CurrentUseAreaDataSet.getString("current_use") == 'SH')
+	{row["p_sh"] = CurrentUseAreaDataSet.getString("area")};
+	
+	if (CurrentUseAreaDataSet.getString("current_use") == 'ST')
+	{row["p_st"] = CurrentUseAreaDataSet.getString("area")};
+	
+	if (CurrentUseAreaDataSet.getString("current_use") == 'WL')
+	{row["p_wl"] = CurrentUseAreaDataSet.getString("area")};
+		
+//			Case Else
+//				ShowFactoryStatus("ERROR: CurrentUseArea doesn't belong to any Category")
+	
+//row["datefield"] = maximoDataSet.getTimestamp("datefield");	
+
+return (true);
+
+]]></method>
+        </script-data-set>
+        <script-data-set name="TotalActiveDataSet" id="346">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">building_number</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">construction_year</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">building_number</property>
+                </structure>
+                <structure>
+                    <property name="columnName">construction_year</property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">param_bldg_no</property>
+                    <property name="dataType">string</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">0</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">building_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">construction_year</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[TotalActivedataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+TotalActivedataSet.open();
+
+var sqlText = new String();
+
+// Add query to sqlText variable.
+sqlText = " select spadm.space_building.building_number, spadm.space_building.building_name, spadm.space_building.locality,  "
++ " (select description from alndomain where domainid = 'SP_LOCALITY' and value = spadm.space_building.locality) locality_name, "
++ " spadm.space_building.report_category, (select description from alndomain where domainid = 'SP_REPORT_CATEGORY' and value = spadm.space_building.report_category) report_category_name, "
++ " spadm.space_building.functional_plan_area, (select description from alndomain where domainid = 'SP_FPA' and value = spadm.space_building.functional_plan_area) functional_plan_area_name, "
++ " spadm.space_building.construction_year, spadm.space_building.structure_type, "
++ " (select description from alndomain where domainid = 'SP_STRUCTURE_TYPE' and value = spadm.space_building.structure_type) structure_type_name "
++ " from spadm.space_building "
++ " where spadm.space_building.building_number = '" +  rows[0]["building_number"]  + "' " 
++ " and spadm.space_building.inactive = 0 "
+;
+TotalActivedataSet.setQuery(sqlText);]]></method>
+            <method name="fetch"><![CDATA[if (!TotalActivedataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["building_number"] = TotalActivedataSet.getString("building_number");	
+row["construction_year"] = TotalActivedataSet.getString("construction_year");	
+//row["datefield"] = maximoDataSet.getTimestamp("datefield");	
+
+return (true);]]></method>
+        </script-data-set>
+    </data-sets>
+    <cubes>
+        <tabular-cube name="Data Cube - CurrentUseAreaDataSet" id="842">
+            <property name="dimensions">
+                <tabular-dimension name="Group" id="843">
+                    <property name="defaultHierarchy">NewTabularHierarchy</property>
+                    <property name="hierarchies">
+                        <tabular-hierarchy name="NewTabularHierarchy" id="844">
+                            <property name="levels">
+                                <tabular-level name="building_number" id="845">
+                                    <property name="dataType">string</property>
+                                    <property name="columnName">building_number</property>
+                                </tabular-level>
+                            </property>
+                        </tabular-hierarchy>
+                    </property>
+                </tabular-dimension>
+            </property>
+            <property name="dataSet">CurrentUseAreaDataSet</property>
+        </tabular-cube>
+        <tabular-cube name="Data Cube - CurrentUseAreaDataSet1" id="1090">
+            <property name="dimensions">
+                <tabular-dimension name="Group1" id="1091">
+                    <property name="defaultHierarchy">NewTabularHierarchy1</property>
+                    <property name="hierarchies">
+                        <tabular-hierarchy name="NewTabularHierarchy1" id="1092">
+                            <property name="levels">
+                                <tabular-level name="building_number" id="1093">
+                                    <property name="dataType">string</property>
+                                    <property name="columnName">building_number</property>
+                                </tabular-level>
+                            </property>
+                        </tabular-hierarchy>
+                    </property>
+                </tabular-dimension>
+            </property>
+            <property name="dataSet">CurrentUseAreaDataSet</property>
+        </tabular-cube>
+        <tabular-cube name="Data Cube - CurrentUseAreaDataSet2" id="1098">
+            <property name="dimensions">
+                <tabular-dimension name="Group2" id="1099">
+                    <property name="isTimeType">false</property>
+                    <property name="defaultHierarchy">NewTabularHierarchy2</property>
+                    <property name="hierarchies">
+                        <tabular-hierarchy name="NewTabularHierarchy2" id="1100"/>
+                    </property>
+                </tabular-dimension>
+                <tabular-dimension name="Group3" id="1104">
+                    <property name="defaultHierarchy">NewTabularHierarchy3</property>
+                    <property name="hierarchies">
+                        <tabular-hierarchy name="NewTabularHierarchy3" id="1105">
+                            <property name="levels">
+                                <tabular-level name="building_number" id="1106">
+                                    <property name="dataType">string</property>
+                                    <property name="columnName">building_number</property>
+                                </tabular-level>
+                            </property>
+                        </tabular-hierarchy>
+                    </property>
+                </tabular-dimension>
+            </property>
+            <property name="measureGroups">
+                <tabular-measure-group name="Summary Field" id="1102">
+                    <property name="measures">
+                        <tabular-measure name="current_use" id="1103">
+                            <property name="function">sum</property>
+                            <property name="isCalculated">false</property>
+                            <expression name="measureExpression" type="javascript">dataSetRow["current_use"]</expression>
+                            <property name="dataType">float</property>
+                            <property name="isVisible">true</property>
+                        </tabular-measure>
+                    </property>
+                </tabular-measure-group>
+            </property>
+            <property name="dataSet">CurrentUseAreaDataSet</property>
+        </tabular-cube>
+        <tabular-cube name="Data Cube - CurrentUseAreaDataSet3" id="1109">
+            <property name="dimensions">
+                <tabular-dimension name="Group4" id="1110">
+                    <property name="defaultHierarchy">NewTabularHierarchy4</property>
+                    <property name="hierarchies">
+                        <tabular-hierarchy name="NewTabularHierarchy4" id="1111">
+                            <property name="levels">
+                                <tabular-level name="building_number" id="1112">
+                                    <property name="dataType">string</property>
+                                    <property name="levelType">dynamic</property>
+                                    <property name="columnName">building_number</property>
+                                </tabular-level>
+                            </property>
+                        </tabular-hierarchy>
+                    </property>
+                </tabular-dimension>
+            </property>
+            <property name="measureGroups">
+                <tabular-measure-group name="Summary Field1" id="1113">
+                    <property name="measures">
+                        <tabular-measure name="area" id="1114">
+                            <property name="function">sum</property>
+                            <property name="isCalculated">false</property>
+                            <expression name="measureExpression" type="javascript">dataSetRow["area"]</expression>
+                            <property name="dataType">float</property>
+                            <property name="isVisible">true</property>
+                        </tabular-measure>
+                    </property>
+                </tabular-measure-group>
+            </property>
+            <property name="dataSet">CurrentUseAreaDataSet</property>
+        </tabular-cube>
+    </cubes>
+    <styles>
+        <style name="crosstab" id="343">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab-cell" id="344">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="LandscapeWithoutLogo" id="906" extends="lbnlreportlibrary.LandscapeWithoutLogo">
+            <property name="type">us-legal</property>
+            <overridden-values>
+                <ref-entry baseId="32" name="NewGrid21" id="32"/>
+                <ref-entry baseId="33" id="33"/>
+                <ref-entry baseId="34" id="34"/>
+                <ref-entry baseId="35" id="35"/>
+                <ref-entry baseId="36" id="36"/>
+                <ref-entry baseId="37" id="37"/>
+                <ref-entry baseId="38" name="NewImage2" id="38"/>
+                <ref-entry baseId="39" name="NewGrid3" id="39"/>
+                <ref-entry baseId="40" id="40"/>
+                <ref-entry baseId="41" id="41"/>
+                <ref-entry baseId="42" id="42"/>
+                <ref-entry baseId="43" id="43"/>
+                <ref-entry baseId="44" name="NewText2" id="44"/>
+                <ref-entry baseId="45" id="45"/>
+                <ref-entry baseId="46" name="NewGrid11" id="46"/>
+                <ref-entry baseId="47" id="907"/>
+                <ref-entry baseId="48" id="48"/>
+                <ref-entry baseId="49" id="49"/>
+                <ref-entry baseId="50" id="50"/>
+                <ref-entry baseId="51" id="51"/>
+                <ref-entry baseId="52" name="NewAutoText2" id="52"/>
+                <ref-entry baseId="53" id="53"/>
+                <ref-entry baseId="54" name="NewText11" id="54"/>
+                <ref-entry baseId="55" id="55"/>
+                <ref-entry baseId="56" name="NewAutoText11" id="56"/>
+            </overridden-values>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table name="mainTable" id="7">
+            <property name="comments">09-19764@000</property>
+            <property name="width">100%</property>
+            <property name="dataSet">TotalUsageDataSet</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">building_number</property>
+                    <text-property name="displayName">building_number</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["building_number"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">total_usable_area</property>
+                    <text-property name="displayName">total_usable_area</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["total_usable_area"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">50</property>
+            <column id="83"/>
+            <header>
+                <row id="180">
+                    <property name="style">title</property>
+                    <cell id="181">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                        <label id="1019">
+                            <property name="fontSize">larger</property>
+                            <property name="textAlign">center</property>
+                            <property name="refTemplateParameter">NewTemplateParameterDefinition</property>
+                            <text-property name="text">LBNL Space Odyssey Report - Building Detail</text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="1017">
+                    <cell id="1018">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderTopColor">#000000</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <grid id="1029">
+                            <property name="height">0.5in</property>
+                            <column id="1030"/>
+                            <column id="1031"/>
+                            <column id="1032"/>
+                            <column id="1034"/>
+                            <column id="1038"/>
+                            <column id="1039"/>
+                            <column id="1040"/>
+                            <column id="1041"/>
+                            <column id="1232"/>
+                            <column id="1246"/>
+                            <column id="1244"/>
+                            <column id="1240"/>
+                            <column id="1238"/>
+                            <column id="1236"/>
+                            <row id="1117">
+                                <property name="textAlign">left</property>
+                                <property name="height">0.23958333333333334in</property>
+                                <cell id="1118">
+                                    <label id="849">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Building #</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1119">
+                                    <label id="1320">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Contrustied</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1120">
+                                    <label id="1356">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">NSF (SF)</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1122">
+                                    <label id="1068">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">GSF (SF)</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1126">
+                                    <label id="834">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Animal colony</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1127">
+                                    <label id="938">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Computer Lab</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1128">
+                                    <label id="939">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Dry Lab</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1129">
+                                    <label id="944">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Heavy Lab</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1231">
+                                    <label id="945">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">MI</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1245">
+                                    <label id="852">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Office</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1243">
+                                    <label id="949">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Shop</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1239">
+                                    <label id="833">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">No Usable</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1237">
+                                    <label id="964">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Storage</text-property>
+                                    </label>
+                                </cell>
+                                <cell id="1235">
+                                    <label id="965">
+                                        <property name="textAlign">left</property>
+                                        <text-property name="text">Wet Lab</text-property>
+                                    </label>
+                                </cell>
+                            </row>
+                        </grid>
+                    </cell>
+                </row>
+            </header>
+            <group id="1167">
+                <property name="groupName">NewTableGroup1</property>
+                <expression name="keyExpr" type="javascript">row["building_number"]</expression>
+                <structure name="toc">
+                    <expression name="expressionValue" type="javascript">row["building_number"]</expression>
+                </structure>
+                <property name="hideDetail">false</property>
+                <header>
+                    <row id="1168">
+                        <list-property name="visibility">
+                            <structure>
+                                <property name="format">all</property>
+                                <expression name="valueExpr" type="javascript">true</expression>
+                            </structure>
+                        </list-property>
+                        <cell id="1169"/>
+                    </row>
+                </header>
+                <footer>
+                    <row id="1170">
+                        <list-property name="visibility">
+                            <structure>
+                                <property name="format">all</property>
+                                <expression name="valueExpr" type="javascript">true</expression>
+                            </structure>
+                        </list-property>
+                        <cell id="1171"/>
+                    </row>
+                </footer>
+            </group>
+            <detail>
+                <row id="574">
+                    <property name="style">tabledetailsdatarow</property>
+                    <cell id="575">
+                        <property name="style">tabledetailsdatacell</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
+                        <table id="800">
+                            <property name="dataSet">CurrentUseAreaDataSet</property>
+                            <list-property name="paramBindings">
+                                <structure>
+                                    <property name="paramName">param_bldg_no</property>
+                                    <simple-property-list name="expression">
+                                        <value type="javascript">row["building_number"]</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <list-property name="boundDataColumns">
+                                <structure>
+                                    <property name="name">area</property>
+                                    <text-property name="displayName">area</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["area"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">current_use</property>
+                                    <text-property name="displayName">current_use</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["current_use"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">building_number</property>
+                                    <text-property name="displayName">building_number</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["building_number"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">p_nu</property>
+                                    <text-property name="displayName">p_nu</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["p_nu"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">p_an</property>
+                                    <text-property name="displayName">p_an</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["p_an"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">p_of</property>
+                                    <text-property name="displayName">p_of</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["p_of"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">Aggregation</property>
+                                    <property name="dataType">float</property>
+                                    <simple-property-list name="aggregateOn">
+                                        <value>NewTableGroup1</value>
+                                    </simple-property-list>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_nu"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">Aggregation_1</property>
+                                    <property name="dataType">float</property>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_an"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">Aggregation_2</property>
+                                    <property name="dataType">float</property>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_of"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">Aggregation_3</property>
+                                    <text-property name="displayName">AN</text-property>
+                                    <property name="dataType">float</property>
+                                    <simple-property-list name="aggregateOn">
+                                        <value>NewTableGroup1</value>
+                                    </simple-property-list>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_an"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">CP</property>
+                                    <property name="dataType">float</property>
+                                    <simple-property-list name="aggregateOn">
+                                        <value>NewTableGroup1</value>
+                                    </simple-property-list>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_cp"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">DL</property>
+                                    <text-property name="displayName">DL</text-property>
+                                    <property name="dataType">float</property>
+                                    <simple-property-list name="aggregateOn">
+                                        <value>NewTableGroup1</value>
+                                    </simple-property-list>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_dl"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">HL</property>
+                                    <property name="dataType">float</property>
+                                    <simple-property-list name="aggregateOn">
+                                        <value>NewTableGroup1</value>
+                                    </simple-property-list>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_hl"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">MI</property>
+                                    <property name="dataType">float</property>
+                                    <simple-property-list name="aggregateOn">
+                                        <value>NewTableGroup1</value>
+                                    </simple-property-list>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_mi"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">OF</property>
+                                    <property name="dataType">float</property>
+                                    <simple-property-list name="aggregateOn">
+                                        <value>NewTableGroup1</value>
+                                    </simple-property-list>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_of"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">SH</property>
+                                    <property name="dataType">float</property>
+                                    <simple-property-list name="aggregateOn">
+                                        <value>NewTableGroup1</value>
+                                    </simple-property-list>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_sh"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">NU</property>
+                                    <property name="dataType">float</property>
+                                    <simple-property-list name="aggregateOn">
+                                        <value>NewTableGroup1</value>
+                                    </simple-property-list>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_nu"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">ST</property>
+                                    <property name="dataType">float</property>
+                                    <simple-property-list name="aggregateOn">
+                                        <value>NewTableGroup1</value>
+                                    </simple-property-list>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_st"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">WL</property>
+                                    <property name="dataType">float</property>
+                                    <simple-property-list name="aggregateOn">
+                                        <value>NewTableGroup1</value>
+                                    </simple-property-list>
+                                    <property name="aggregateFunction">SUM</property>
+                                    <list-property name="arguments">
+                                        <structure>
+                                            <property name="name">Expression</property>
+                                            <expression name="value" type="javascript">dataSetRow["p_wl"]</expression>
+                                        </structure>
+                                    </list-property>
+                                    <property name="allowExport">true</property>
+                                </structure>
+                            </list-property>
+                            <column id="813">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="1258">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="1263">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="814">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="913">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="825">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="919">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="937">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="931">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="925">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="832">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="815">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="957">
+                                <property name="numberAlign">left</property>
+                                <property name="textAlign">left</property>
+                            </column>
+                            <column id="963">
+                                <property name="textAlign">left</property>
+                            </column>
+                            <header>
+                                <row id="1070">
+                                    <list-property name="visibility">
+                                        <structure>
+                                            <property name="format">all</property>
+                                            <expression name="valueExpr" type="javascript">true</expression>
+                                        </structure>
+                                    </list-property>
+                                    <cell id="1071">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1254">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1259">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1072">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1073">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1074">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1075">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1076">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1077">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1078">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1079">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1080">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1081">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1082">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                </row>
+                            </header>
+                            <group id="884">
+                                <property name="groupName">NewTableGroup1</property>
+                                <expression name="keyExpr" type="javascript">row["building_number"]</expression>
+                                <structure name="toc">
+                                    <expression name="expressionValue" type="javascript">row["building_number"]</expression>
+                                </structure>
+                                <property name="hideDetail">false</property>
+                                <header>
+                                    <row id="885">
+                                        <list-property name="visibility">
+                                            <structure>
+                                                <property name="format">all</property>
+                                                <expression name="valueExpr" type="javascript">true</expression>
+                                            </structure>
+                                        </list-property>
+                                        <cell id="886">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="1255">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="1260">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="887">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="909">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="888">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="915">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="933">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="927">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="921">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="889">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="890">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="953">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                        <cell id="959">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                        </cell>
+                                    </row>
+                                </header>
+                                <footer>
+                                    <row id="891">
+                                        <cell id="892">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <table id="1358">
+                                                <property name="dataSet">TotalActiveDataSet</property>
+                                                <list-property name="paramBindings">
+                                                    <structure>
+                                                        <property name="paramName">param_bldg_no</property>
+                                                        <simple-property-list name="expression">
+                                                            <value type="javascript">row._outer["building_number"]</value>
+                                                        </simple-property-list>
+                                                    </structure>
+                                                </list-property>
+                                                <list-property name="boundDataColumns">
+                                                    <structure>
+                                                        <property name="name">building_number</property>
+                                                        <text-property name="displayName">building_number</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["building_number"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                    <structure>
+                                                        <property name="name">construction_year</property>
+                                                        <text-property name="displayName">construction_year</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["construction_year"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                </list-property>
+                                                <column id="1365"/>
+                                                <detail>
+                                                    <row id="1361">
+                                                        <cell id="1362">
+                                                            <data id="898">
+                                                                <property name="textAlign">left</property>
+                                                                <property name="resultSetColumn">building_number</property>
+                                                            </data>
+                                                        </cell>
+                                                    </row>
+                                                </detail>
+                                            </table>
+                                        </cell>
+                                        <cell id="1257">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <table id="1415">
+                                                <property name="dataSet">TotalActiveDataSet</property>
+                                                <list-property name="paramBindings">
+                                                    <structure>
+                                                        <property name="paramName">param_bldg_no</property>
+                                                        <simple-property-list name="expression">
+                                                            <value type="javascript">row._outer["building_number"]</value>
+                                                        </simple-property-list>
+                                                    </structure>
+                                                </list-property>
+                                                <list-property name="boundDataColumns">
+                                                    <structure>
+                                                        <property name="name">building_number</property>
+                                                        <text-property name="displayName">building_number</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["building_number"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                    <structure>
+                                                        <property name="name">construction_year</property>
+                                                        <text-property name="displayName">construction_year</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["construction_year"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                </list-property>
+                                                <column id="1422"/>
+                                                <detail>
+                                                    <row id="1418">
+                                                        <cell id="1419">
+                                                            <data id="1395">
+                                                                <property name="resultSetColumn">construction_year</property>
+                                                            </data>
+                                                        </cell>
+                                                    </row>
+                                                </detail>
+                                            </table>
+                                        </cell>
+                                        <cell id="1262">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <table id="1407">
+                                                <property name="dataSet">SumActiveDataSet</property>
+                                                <list-property name="paramBindings">
+                                                    <structure>
+                                                        <property name="paramName">param_bldg_no</property>
+                                                        <simple-property-list name="expression">
+                                                            <value type="javascript">row._outer["building_number"]</value>
+                                                        </simple-property-list>
+                                                    </structure>
+                                                </list-property>
+                                                <list-property name="boundDataColumns">
+                                                    <structure>
+                                                        <property name="name">building_number</property>
+                                                        <text-property name="displayName">building_number</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["building_number"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                    <structure>
+                                                        <property name="name">total_active_area</property>
+                                                        <text-property name="displayName">total_active_area</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["total_active_area"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                </list-property>
+                                                <column id="1414"/>
+                                                <detail>
+                                                    <row id="1410">
+                                                        <cell id="1411">
+                                                            <data id="1423">
+                                                                <property name="resultSetColumn">total_active_area</property>
+                                                            </data>
+                                                        </cell>
+                                                    </row>
+                                                </detail>
+                                            </table>
+                                        </cell>
+                                        <cell id="893">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <table id="1378">
+                                                <property name="dataSet">TotalUsableDataSet</property>
+                                                <list-property name="paramBindings">
+                                                    <structure>
+                                                        <property name="paramName">param_bldg_no</property>
+                                                        <simple-property-list name="expression">
+                                                            <value type="javascript">row._outer["building_number"]</value>
+                                                        </simple-property-list>
+                                                    </structure>
+                                                </list-property>
+                                                <list-property name="boundDataColumns">
+                                                    <structure>
+                                                        <property name="name">total_usable</property>
+                                                        <text-property name="displayName">total_usable</text-property>
+                                                        <expression name="expression" type="javascript">dataSetRow["total_usable"]</expression>
+                                                        <property name="dataType">string</property>
+                                                    </structure>
+                                                </list-property>
+                                                <column id="1385"/>
+                                                <detail>
+                                                    <row id="1381">
+                                                        <cell id="1382">
+                                                            <data id="1424">
+                                                                <property name="resultSetColumn">total_usable</property>
+                                                            </data>
+                                                        </cell>
+                                                    </row>
+                                                </detail>
+                                            </table>
+                                        </cell>
+                                        <cell id="911">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <data id="940">
+                                                <property name="resultSetColumn">Aggregation_3</property>
+                                            </data>
+                                        </cell>
+                                        <cell id="894">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <data id="942">
+                                                <property name="resultSetColumn">CP</property>
+                                            </data>
+                                        </cell>
+                                        <cell id="917">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <data id="943">
+                                                <property name="resultSetColumn">DL</property>
+                                            </data>
+                                        </cell>
+                                        <cell id="935">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <data id="946">
+                                                <property name="resultSetColumn">HL</property>
+                                            </data>
+                                        </cell>
+                                        <cell id="929">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <data id="947">
+                                                <property name="resultSetColumn">MI</property>
+                                            </data>
+                                        </cell>
+                                        <cell id="923">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <data id="948">
+                                                <property name="resultSetColumn">OF</property>
+                                            </data>
+                                        </cell>
+                                        <cell id="895">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <data id="950">
+                                                <property name="resultSetColumn">SH</property>
+                                            </data>
+                                        </cell>
+                                        <cell id="896">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <data id="951">
+                                                <property name="resultSetColumn">NU</property>
+                                            </data>
+                                        </cell>
+                                        <cell id="955">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <data id="966">
+                                                <property name="resultSetColumn">ST</property>
+                                            </data>
+                                        </cell>
+                                        <cell id="961">
+                                            <property name="borderLeftColor">blue</property>
+                                            <property name="borderLeftStyle">none</property>
+                                            <property name="borderRightStyle">none</property>
+                                            <property name="numberAlign">left</property>
+                                            <data id="967">
+                                                <property name="resultSetColumn">WL</property>
+                                            </data>
+                                        </cell>
+                                    </row>
+                                </footer>
+                            </group>
+                            <detail>
+                                <row id="855">
+                                    <property name="height">0.23958333333333334in</property>
+                                    <list-property name="visibility">
+                                        <structure>
+                                            <property name="format">all</property>
+                                            <expression name="valueExpr" type="javascript">true</expression>
+                                        </structure>
+                                    </list-property>
+                                    <cell id="856">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1256">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="1261">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="857">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="910">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="858">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="916">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="934">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="928">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="922">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="859">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="860">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="954">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                    <cell id="960">
+                                        <property name="borderLeftColor">blue</property>
+                                        <property name="borderLeftStyle">none</property>
+                                        <property name="borderRightStyle">none</property>
+                                        <property name="numberAlign">left</property>
+                                    </cell>
+                                </row>
+                            </detail>
+                        </table>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+    </body>
+</report>

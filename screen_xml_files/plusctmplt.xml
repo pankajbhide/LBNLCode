@@ -1,0 +1,961 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation apphelp="com.ibm.mbs.doc,plusctmplt/c_asset_tmplt_cal_app.html" beanclass="psdi.plusc.webclient.beans.plusctmplt.PlusCAssetTemplateAppBean" id="plusctmplt" ismobile="false" mboname="PLUSCTEMPLATE" resultstableid="results_showlist" version="7.5.0.0">
+	<page id="mainrec" scroll="false">
+		<include controltoclone="pageHeader" id="INCLUDE-pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar" sourcemethod="getAppSearchOptions"/>
+					<table id="results_showlist" inputmode="readonly" label="Asset Templates" mboname="PLUSCTEMPLATE" selectmode="multiple">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="templateid" filterable="false" id="results_showlist_tablebody_1" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+							<tablecol dataattribute="templateid" id="results_showlist_tablebody_2" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="description" id="results_showlist_tablebody_3"/>
+							<tablecol applink="company" dataattribute="manufacturer" id="results_showlist_tablebody_5" lookup="companies" menutype="normal"/>
+							<tablecol dataattribute="pluscmodelnum" id="results_showlist_tablebody_6" licensekey="CALIBRATION"/>
+							<tablecol dataattribute="assettype" id="results_showlist_tablebody_7" lookup="valuelist"/>
+							<tablecol dataattribute="pluscismte" id="results_showlist_tablebody_4" licensekey="CALIBRATION"/>
+							<tablecol dataattribute="status" id="results_showlist_tablebody_8" lookup="valuelist"/>
+							<tablecol filterable="false" id="results_bookmark" mxevent="BOOKMARK" mxevent_desc="Add to Bookmarks" mxevent_icon="btn_addtobookmarks.gif" sortable="false" type="event"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="Asset Template" type="insert">
+					<section border="true" id="main_grid">
+						<sectionrow id="main_grid_row1">
+							<sectioncol id="main_grid_row1_col1">
+								<section id="main_grid_row1_col1_1">
+									<multiparttextbox dataattribute="templateid" descdataattribute="description" id="main_grid_row1_col1_1_1"/>
+									<textbox dataattribute="status" id="main_grid_row1_col1_1_2" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid_row1_col2">
+								<section id="main_grid_row1_col2_1">
+									<attachments id="doclinks"/>
+									<textbox dataattribute="orgid" id="main_grid_row1_col2_1_1" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="det_grid" label="Details">
+						<sectionrow id="det_grid_row1">
+							<sectioncol id="det_grid_row1_col1">
+								<section id="det_grid_row1_col1_1">
+									<textbox dataattribute="assetdescription" id="det_grid_row1_col1_1_1" lookup="longdesc"/>
+									<multiparttextbox dataattribute="assettype" descdataattribute="assettype.description" descinputmode="readonly" id="det_grid_row1_col1_1_5" lookup="valuelist"/>
+									<textbox dataattribute="LBL_ASSETSYSTEM" id="1520993127247" label="Asset System" lookup="valuelist"/>
+									<multiparttextbox applink="company" dataattribute="manufacturer" descdataattribute="manufacturer.name" descinputmode="readonly" id="det_grid_row1_col1_1_4" longdescreadonly="true" lookup="companies" menutype="normal"/>
+									<multiparttextbox applink="company" dataattribute="vendor" descdataattribute="vendor.name" descinputmode="readonly" id="det_grid_row1_col1_1_6" longdescreadonly="true" lookup="companies" menutype="normal"/>
+									<textbox dataattribute="usage" id="det_grid_row1_col2_1_1" lookup="valuelist"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="det_grid_row1_col3empty">
+								<section id="det_grid_row1_col3_1empty"/>
+							</sectioncol>
+							<sectioncol id="det_grid_row1_col2">
+								<section id="det_grid_row1_col2_1">
+									<textbox dataattribute="purchaseprice" id="det_grid_row1_col2_1_3"/>
+									<textbox dataattribute="replacecost" id="det_grid_row1_col2_1_4"/>
+									<textbox dataattribute="budgetcost" id="det_grid_row1_col2_1_5"/>
+									<textbox dataattribute="priority" id="det_grid_row1_col2_1_6"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="det_grid_cal" label="Calibration Details" licensekey="CALIBRATION">
+						<sectionrow id="det_grid_row1c">
+							<sectioncol id="det_grid_row1_col1c">
+								<section id="det_grid_row1_col1_1c">
+									<checkbox dataattribute="ISCALIBRATION" id="det_grid_row1_col1_1_7_2a"/>
+									<textbox dataattribute="pluscmodelnum" id="det_grid_row1_col1_1_7c"/>
+									<textbox dataattribute="pluscismteclass" id="det_grid_row1_col1_1_9c" longdescreadonly="true" lookup="valuelist"/>
+									<textbox dataattribute="plusciscondesc" id="det_grid_row1_col1_1_11c" longdescreadonly="true" lookup="longdesc"/>
+									<textbox dataattribute="pluscassetdept" id="det_grid_row1_col1_1_12c" lookup="valuelist"/>
+									<textbox dataattribute="pluscclass" id="det_grid_row1_col3_1_1_4" lookup="valuelist"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="det_grid_row1_col3">
+								<section id="det_grid_row1_col3_1">
+									<radiobuttongroup border="false" dataattribute="pluscisinhousecal" id="det_grid_row1_col3_1_rbg1" label="Internal Calibration?" synchronous="true">
+										<radiobutton id="det_grid_row1_col3_1_rbg1_rb1" label="Yes" value="1"/>
+										<radiobutton id="det_grid_row1_col3_1_rbg1_rb2" label="No" value="0"/>
+									</radiobuttongroup>
+									<radiobuttongroup border="false" dataattribute="pluscismte" id="det_grid_row1_col3_1_rbg2" label="Is M&amp;TE?" synchronous="true">
+										<radiobutton id="det_grid_row1_col3_1_rbg2_rb1" label="Yes" value="1"/>
+										<radiobutton id="det_grid_row1_col3_1_rbg2_rb2" label="No" value="0"/>
+									</radiobuttongroup>
+									<radiobuttongroup border="false" dataattribute="plusciscontam" id="det_grid_row1_col3_1_rbg3" label="Is Contaminated?" synchronous="true">
+										<radiobutton id="det_grid_row1_col3_1_rbg3_rb1" label="Yes" value="1"/>
+										<radiobutton id="det_grid_row1_col3_1_rbg3_rb2" label="No" value="0"/>
+									</radiobuttongroup>
+								</section>
+							</sectioncol>
+							<sectioncol id="det_grid_row1_col2c">
+								<section id="det_grid_row1_col2_1c">
+									<textbox dataattribute="PLUSCOPRGEFROM_NP" id="det_grid_row1_col3_1_1_5"/>
+									<textbox dataattribute="pluscoprgeto_NP" id="det_grid_row1_col3_1_1_6"/>
+									<textbox dataattribute="pluscoprgeeu" id="det_grid_row1_col3_1_1_7" lookup="valuelist"/>
+									<textbox dataattribute="pluscsumeu_np" id="pluscasset_fld_91" label="Accuracy EU +"/>
+									<textbox dataattribute="pluscsumspan_np" id="det_grid_row1_col3_1_1_8" label="%Span +"/>
+									<textbox dataattribute="pluscsumurv_np" id="det_grid_row1_col3_1_1_9" label="%URV +"/>
+									<textbox dataattribute="PLUSCSUMREAD_NP" id="det_grid_row1_col3_1_1_10" label="%Reading"/>
+									<textbox dataattribute="pluscsumdir" id="det_grid_row1_col3_1_1_11" lookup="valuelist"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</tab>
+				<tab id="sparepartsform" label="Spare Parts">
+					<section border="true" id="sparepartsform_grid1">
+						<sectionrow id="sparepartsform_grid1_row1">
+							<sectioncol id="sparepartsform_grid1_row1_col1">
+								<section id="sparepartsform_grid1_row1_col1_1">
+									<multiparttextbox dataattribute="templateid" descdataattribute="description" id="sparepartsform_grid1_row1_col1_1_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="sparepartsform_grid1_row1_col2">
+								<section id="sparepartsform_grid1_row1_col2_1">
+									<textbox dataattribute="orgid" id="sparepartsform_grid1_row1_col2_1_1" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="sparepartsform_grid1_row1_col3">
+								<section id="sparepartsform_grid1_row1_col3_1">
+									<textbox dataattribute="status" id="sparepartsform_grid1_row1_col3_1_1" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="sparepartsform_table" label="Spare Parts" relationship="PLUSCTPSPAREPART">
+						<tablebody displayrowsperpage="10" filterable="true" id="sparepartsform_table_tablebody">
+							<tablecol filterable="false" id="sparepartsform_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="itemnum" id="sparepartsform_table_tablebody_2" lookup="item" menutype="normal"/>
+							<tablecol dataattribute="item.description" id="sparepartsform_table_tablebody_3" inputmode="readonly"/>
+							<tablecol dataattribute="quantity" id="sparepartsform_table_tablebody_4"/>
+							<tablecol dataattribute="description" id="sparepartsform_table_tablebody_5" lookup="longdesc"/>
+							<tablecol filterable="false" id="sparepartsform_table_tablebody_6" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="sparepartsform_tabledetails">
+							<section id="sparepartsform_tabledetails_sec1" label="Details">
+								<multiparttextbox applink="item,inventor" dataattribute="itemnum" defaultfocus="true" descdataattribute="item.description" descinputmode="readonly" desclookup="longdesc" id="sparepartsform_tabledetails_sec1_1" lookup="item" menutype="ITEM"/>
+								<textbox dataattribute="quantity" id="sparepartsform_tabledetails_sec1_2"/>
+								<textbox dataattribute="description" id="sparepartsform_tabledetails_sec1_3" lookup="longdesc"/>
+							</section>
+						</tabledetails>
+						<buttongroup id="sparepartsform_parts_table_2">
+							<pushbutton id="sparepartsform_parts_table_2_1" label="Select Spare Parts" mxevent="pluscselspareparts"/>
+							<pushbutton default="true" id="sparepartsform_parts_table_2_2" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="pm" label="PMs">
+					<section border="true" id="pm_grid1">
+						<sectionrow id="pm_grid1_row1">
+							<sectioncol id="pm_grid1_row1_col1">
+								<section id="pm_grid1_row1_col1_1">
+									<multiparttextbox dataattribute="templateid" descdataattribute="description" id="pm_grid1_row1_col1_1_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pm_grid1_row1_col2">
+								<section id="pm_grid1_row1_col2_1">
+									<textbox dataattribute="orgid" id="pm_grid1_row1_col2_1_1" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pm_grid1_row1_col3">
+								<section id="pm_grid1_row1_col3_1">
+									<textbox dataattribute="status" id="pm_grid1_row1_col3_1_1" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="pm_table" label="PMs" relationship="PLUSCTPMASTERPM">
+						<tablebody displayrowsperpage="10" filterable="true" id="pm_table_tablebody">
+							<tablecol filterable="false" id="pm_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol applink="masterpm" dataattribute="masterpmnum" id="pm_table_tablebody_2" lookup="masterpm" menutype="normal"/>
+							<tablecol dataattribute="masterpm.description" id="pm_table_tablebody_3" inputmode="readonly"/>
+							<tablecol dataattribute="masterpm.frequency" id="pm_table_tablebody_4" inputmode="readonly"/>
+							<tablecol dataattribute="masterpm.frequnit" id="pm_table_tablebody_5" inputmode="readonly" lookup="valuelist"/>
+							<tablecol filterable="false" id="pm_table_tablebody_6" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="pm_tabledetails">
+							<section id="pm_tabledetails_1" label="Details">
+								<sectioncol id="pm_tabledetails_1_col1">
+									<section id="pm_tabledetails_1_col1_1">
+										<multiparttextbox applink="masterpm" dataattribute="masterpmnum" defaultfocus="true" descdataattribute="masterpm.description" descinputmode="readonly" desclookup="longdesc" id="pm_tabledetails_1_grid1_1" lookup="masterpm" menutype="normal"/>
+										<textbox dataattribute="masterpm.frequency" id="pm_tabledetails_1_grid1_2" inputmode="readonly"/>
+										<textbox dataattribute="masterpm.frequnit" id="pm_tabledetails_1_grid1_3" inputmode="readonly" lookup="valuelist"/>
+									</section>
+								</sectioncol>
+							</section>
+						</tabledetails>
+						<buttongroup id="pm_parts_table_2">
+							<pushbutton default="true" id="pm_parts_table_2_2" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="meter" label="Meters">
+					<section border="true" id="meter_grid1">
+						<sectionrow id="meter_grid1_row1">
+							<sectioncol id="meter_grid1_row1_col1">
+								<section id="meter_grid1_row1_col1_1">
+									<multiparttextbox dataattribute="templateid" descdataattribute="description" id="meter_grid1_row1_col1_1_1"/>
+									<multiparttextbox applink="metergrp" dataattribute="groupname" descdataattribute="metergroup.description" descinputmode="readonly" desclookup="longdesc" id="meter_grid1_row1_col1_1_2" lookup="metergroup" menutype="normal" ondatachange="resetchildren"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="meter_grid1_row1_col2">
+								<section id="meter_grid1_row1_col2_1">
+									<textbox dataattribute="orgid" id="meter_grid1_row1_col2_1_1" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="meter_grid1_row1_col3">
+								<section id="meter_grid1_row1_col3_1">
+									<textbox dataattribute="status" id="meter_grid1_row1_col3_1_1" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="meter_table" label="Meters" relationship="PLUSCTMPLTMETER">
+						<tablebody displayrowsperpage="10" filterable="true" id="meter_table_tablebody">
+							<tablecol filterable="false" id="meter_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol applink="meter" dataattribute="metername" id="meter_table_tablebody_2" lookup="meter" menutype="normal"/>
+							<tablecol dataattribute="meter.description" id="meter_table_tablebody_3" inputmode="readonly"/>
+							<tablecol dataattribute="sequence" id="meter_table_tablebody_8" inputmode="readonly"/>
+							<tablecol dataattribute="meter.metertype" id="meter_table_tablebody_4" inputmode="readonly" linkedcontrolid="meter_tabledetails_1_col2_1_1" sortable="false"/>
+							<tablecol dataattribute="meter.measureunitid" id="meter_table_tablebody_5" linkedcontrolid="meter_tabledetails_1_col2_1_2" sortable="true"/>
+							<tablecol filterable="false" id="meter_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="meter_tabledetails">
+							<section id="meter_tabledetails_1" label="Meter Details">
+								<sectioncol id="meter_tabledetails_1_col1">
+									<section id="meter_tabledetails_1_col1_1">
+										<multiparttextbox applink="meter" dataattribute="metername" defaultfocus="true" descdataattribute="meter.description" descinputmode="readonly" desclookup="longdesc" id="meter_tabledetails_1_col1_1_1" lookup="meter" menutype="normal"/>
+										<textbox dataattribute="remarks" id="meter_tabledetails_1_col1_1_4" lookup="longdesc"/>
+										<textbox dataattribute="sequence" id="meter_tabledetails_1_col1_1_5"/>
+									</section>
+								</sectioncol>
+								<sectioncol id="meter_tabledetails_1_col2">
+									<section id="meter_tabledetails_1_col2_1">
+										<textbox dataattribute="meter.metertype" id="meter_tabledetails_1_col2_1_1" inputmode="readonly"/>
+										<textbox dataattribute="measureunitid" id="meter_tabledetails_1_col2_1_2" lookup="measureunit"/>
+									</section>
+								</sectioncol>
+							</section>
+							<section id="meter_tabledetails_2" label="Continuous Meter Details">
+								<sectioncol id="meter_tabledetails_2_col1">
+									<section id="meter_tabledetails_2_col1_1">
+										<multiparttextbox dataattribute="avgcalcmethod" descdataattribute="averagemethod.description" descinputmode="readonly" desclookup="longdesc" id="meter_tabledetails_2_col1_1_1" lookup="valuelist"/>
+										<textbox dataattribute="slidingwindowsize" id="meter_tabledetails_2_col1_1_4"/>
+										<textbox dataattribute="average" id="meter_tabledetails_2_col1_1_5"/>
+									</section>
+								</sectioncol>
+								<sectioncol id="meter_tabledetails_2_col2">
+									<section id="meter_tabledetails_2_col2_1">
+										<textbox dataattribute="rollover" id="meter_tabledetails_2_col2_1_1"/>
+										<textbox dataattribute="readingtype" id="meter_tabledetails_2_col2_1_2" lookup="valuelist"/>
+										<textbox dataattribute="rolldownsource" id="meter_tabledetails_2_col2_1_3" lookup="valuelist"/>
+									</section>
+								</sectioncol>
+							</section>
+						</tabledetails>
+						<buttongroup id="meter_table_buttongroup">
+							<pushbutton default="true" id="meter_table_buttongroup_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="specifications" label="Specifications">
+					<section border="true" id="specifications_grid1">
+						<sectionrow id="specifications_grid1_11">
+							<sectioncol id="specifications_grid1_11_1">
+								<section id="specifications_grid1_11_1_1">
+									<multiparttextbox dataattribute="templateid" descdataattribute="description" id="specifications_grid1_1"/>
+									<textbox applink="assetcat" dataattribute="CLASSSTRUCTURE.HIERARCHYPATH" id="specifications_grid2_1_1_grid21_3" menutype="classification" ondatachange="resetchildren"/>
+									<textbox dataattribute="CLASSSTRUCTURE.description_class" id="specifications_grid2_1_1_grid21_4" lookup="classification" ondatachange="resetchildren"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="specifications_grid1_11_2">
+								<section id="specifications_grid1_11_2_1">
+									<textbox dataattribute="orgid" id="specifications_grid1_3"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="specifications_grid1_11_3">
+								<section id="specifications_grid1_11_3_1">
+									<textbox dataattribute="status" id="specifications_grid1_11_3_1_1" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="specifications_specifications_table" label="Specifications" relationship="PLUSCTPSPEC">
+						<tablebody displayrowsperpage="10" filterable="true" id="specifications_specifications_table_tablebody">
+							<tablecol filterable="false" id="specifications_specifications_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="assetattrid" id="specifications_specifications_table_tablebody_2"/>
+							<tablecol dataattribute="assetattribute.description" id="specifications_specifications_table_tablebody_3" showfilterfield="true" sortable="false">
+								<textbox id="specifications_specifications_table_tablebody_3a" inputmode="readonly"/>
+							</tablecol>
+							<tablecol dataattribute="assetattribute.datatype" id="specifications_specifications_table_tablebody_4" linkedcontrolid="specifications_specifications_table_1_griddetails1_2" showfilterfield="true" sortable="false"/>
+							<tablecol dataattribute="alnvalue" id="specifications_specifications_table_tablebody_5" linkedcontrolid="specifications_specifications_table_1_griddetails2_2" smartfilloff="true"/>
+							<tablecol dataattribute="numvalue" id="specifications_specifications_table_tablebody_6" linkedcontrolid="specifications_specifications_table_1_griddetails2_3" smartfilloff="true"/>
+							<tablecol dataattribute="measureunitid" id="specifications_specifications_table_tablebody_7" linkedcontrolid="specifications_specifications_table_1_griddetails2_4" smartfilloff="true"/>
+							<tablecol dataattribute="section" id="specifications_specifications_table_tablebody_9" linkedcontrolid="specifications_specifications_table_1_griddetails2_5" smartfilloff="true"/>
+							<tablecol filterable="false" id="specification_ispecifications_tablebody_10" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="specifications_specifications_table_1">
+							<section id="specifications_specifications_table_1_griddetails1" label="Details">
+								<sectionrow id="specifications_specifications_table_1_griddetails1_row">
+									<sectioncol id="specifications_specifications_table_1_griddetails1_row_col1">
+										<section id="specifications_specifications_table_1_griddetails1_row_col1_sec">
+											<multiparttextbox dataattribute="assetattrid" defaultfocus="true" descdataattribute="assetattribute.description" descinputmode="readonly" desclookup="longdesc" id="specifications_specifications_table_1_griddetails1_1" inputmode="readonly"/>
+											<textbox dataattribute="assetattribute.datatype" id="specifications_specifications_table_1_griddetails1_2" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="specifications_specifications_table_1_griddetails1_row_col2">
+										<section id="specifications_specifications_table_1_griddetails1_row_col2_sec">
+											<textbox dataattribute="alnvalue" id="specifications_specifications_table_1_griddetails2_2" lookup="alndomain" smartfilloff="true"/>
+											<textbox dataattribute="numvalue" id="specifications_specifications_table_1_griddetails2_3" lookup="numericdomain" smartfilloff="true"/>
+											<textbox dataattribute="measureunitid" id="specifications_specifications_table_1_griddetails2_4" lookup="measureunit"/>
+											<textbox dataattribute="section" id="specifications_specifications_table_1_griddetails2_5" inputmode="readonly"/>
+											<textbox dataattribute="tablevalue" id="specifications_specifications_table_1_griddetails2_6"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+					</table>
+				</tab>
+				<tab id="dsform" label="Data Sheets" licensekey="CALIBRATION">
+					<section border="true" id="dsform_grid1">
+						<sectionrow id="dsform_grid1_row1">
+							<sectioncol id="dsform_grid1_row1_col1">
+								<section id="dsform_grid1_row1_col1_1">
+									<multiparttextbox dataattribute="templateid" descdataattribute="description" id="dsform_grid1_row1_col1_1_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="dsform_grid1_row1_col2">
+								<section id="dsform_grid1_row1_col2_1">
+									<textbox dataattribute="orgid" id="dsform_grid1_row1_col2_1_1" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="dsform_grid1_row1_col3">
+								<section id="dsform_grid1_row1_col3_1">
+									<textbox dataattribute="status" id="dsform_grid1_row1_col3_1_1" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="dsform_table" label="Data Sheets" relationship="PLUSCTPDATASHEET">
+						<tablebody displayrowsperpage="10" filterable="true" id="dsform_table_tablebody">
+							<tablecol filterable="false" id="dsform_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol applink="plusdsplan" dataattribute="dsplannum" id="dsform_table_tablebody_2" lookup="pluscdsassetlink" menutype="normal" ondatachange="resetchildren"/>
+							<tablecol dataattribute="PLUSDSPLAN.description" id="dsform_table_tablebody_3" inputmode="readonly"/>
+							<tablecol filterable="false" id="dsform_table_tablebody_6" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="dsform_tabledetails">
+							<section id="dsform_tabledetails_sec1" label="Details">
+								<multiparttextbox applink="plusdsplan" dataattribute="dsplannum" descdataattribute="PLUSDSPLAN.description" descinputmode="readonly" id="dsform_tabledetails_sec1_1" longdescreadonly="true" lookup="pluscdsassetlink" menutype="normal" ondatachange="resetchildren"/>
+							</section>
+						</tabledetails>
+						<buttongroup id="dsform_parts_table_2">
+							<pushbutton default="true" id="dsform_parts_table_2_2" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include controltoclone="pageFooter" id="INCLUDE-pageFooter"/>
+	</page>
+
+	<dialog id="VIEWPRVAST" label="View Asset Template Usage">
+		<table id="viewprvast_view_assetstatus" orderby="assetnum,modified" relationship="PLUSCTPASSET">
+			<tablebody displayrowsperpage="15" filterable="true" filterexpanded="false" id="viewprvast_view_assets_tablebody" inputmode="readonly">
+				<tablecol dataattribute="assetnum" id="viewprvast_view_asset_tablebody_1"/>
+				<tablecol dataattribute="siteid" id="viewprvast_view_asset_tablebody_2"/>
+				<tablecol dataattribute="changedate" id="viewprvast_view_asset_tablebody_3"/>
+				<tablecol dataattribute="changeby" id="viewprvast_view_asset_tablebody_4"/>
+				<tablecol dataattribute="created" id="viewprvast_view_asset_tablebody_5"/>
+				<tablecol dataattribute="modified" id="viewprvast_view_asset_tablebody_6"/>
+			</tablebody>
+		</table>
+		<buttongroup id="viewprvast_2">
+			<pushbutton default="true" id="viewprvast_2_1" label="OK" mxevent="dialogclose"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.plusc.webclient.beans.plusctmplt.PlusCSelectAssetsBean" hidehelp="true" id="pluscselectassets" label="Select Assets" mboname="ASSET">
+		<table id="pluscselectassets_table" inputmode="readonly" label="Assets" selectmode="multiple">
+			<tablebody displayrowsperpage="15" filterable="true" id="pluscselectassets_tablebody">
+				<tablecol filterable="false" id="pluscselectassets_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+				<tablecol dataattribute="assetnum" id="pluscselectassets_tablebody_2"/>
+				<tablecol dataattribute="description" id="pluscselectassets_tablebody_3" lookup="longdesc"/>
+				<tablecol dataattribute="manufacturer" id="pluscselectassets_tablebody_5"/>
+				<tablecol dataattribute="TEMPLATEID" id="pluscselectassets_tablebody_6"/>
+			</tablebody>
+		</table>
+		<buttongroup id="selectassets_2">
+			<pushbutton id="selectallassets_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="selectallassets_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog datasrc="MAINRECORD" hidehelp="true" id="applynew" label="Select Site" savemode="ONLOAD">
+		<section border="true" id="applynew_section1">
+			<multiparttextbox dataattribute="siteid" descdataattribute="SITE.description" descinputmode="readonly" id="applynew_section1_1" lookup="site"/>
+		</section>
+		<buttongroup id="applynew_buttongroup" show="true">
+			<pushbutton default="true" id="applynew_buttongroup_1" label="OK" mxevent="NEXTDIALOG" value="pluscgenerateassets"/>
+			<pushbutton id="applynew_buttongroup_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.plusc.webclient.beans.plusctmplt.PlusCViewDepreciationScheduleBean" id="VIEWDEP" label="View Depreciation Schedules" relationship="PLUSCDEPSCHEDULE">
+		<section id="pluscvwdep_section0">
+			<sectionrow id="pluscvwdep_section0_row0">
+				<sectioncol id="pluscvwdep_section0_row0_col1">
+					<section id="pluscvwdep_section0_row0_col1_section1" inputmode="readonly">
+						<sectionrow id="pluscvwdep_section0_row0_col1_section1_row1">
+							<sectioncol id="pluscvwdep_section0_row0_col1_section1_row1_col1">
+								<section id="pluscvwdep_section0_row0_col1_section1_row1_col1_sec">
+									<textbox dataattribute="STARTINGCOST" id="pluscvwdep_section0_row0_col1_section1_row1_col1_sec_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pluscvwdep_section0_row0_col1_section1_row1_col2">
+								<section id="pluscvwdep_section0_row0_col1_section1_row1_col2_sec">
+									<textbox dataattribute="SALVAGEAMT" id="pluscvwdep_section0_row0_col1_section1_row1_col2_sec_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pluscvwdep_section0_row0_col1_section1_row1_col3">
+								<section id="pluscvwdep_section0_row0_col1_section1_row1_col3_sec">
+									<textbox dataattribute="DEPRECIATIONNUM" id="pluscvwdep_section0_row0_col1_section1_row1_col3_sec_1"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="pluscvwdep_section0_row0_table1" inputmode="readonly" label="Schedules" orderby="DEPSCHEDNUM" relationship="DEPSCHEDULE">
+						<tablebody displayrowsperpage="10" id="pluscvwdep_section0_row0_table1_tablebody">
+							<tablecol filterable="false" id="pluscvwdep_section0_row0_table1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail:" sortable="false" type="event"/>
+							<tablecol dataattribute="DEPSCHEDNUM" id="pluscvwdep_section0_row0_table1_tablebody_2" label="Schedule"/>
+							<tablecol dataattribute="METHOD" id="pluscvwdep_section0_row0_table1_tablebody_3" label="Method"/>
+							<tablecol dataattribute="PERIODTYPE" id="pluscvwdep_section0_row0_table1_tablebody_4" label="Period Type"/>
+							<tablecol dataattribute="PERIODS" id="pluscvwdep_section0_row0_table1_tablebody_5" label="Periods"/>
+							<tablecol dataattribute="RATIO" id="pluscvwdep_section0_row0_table1_tablebody_6" label="Ratio"/>
+							<tablecol dataattribute="EXPECTEDLIFEUOM" id="pluscvwdep_section0_row0_table1_tablebody_7" label="Period Units"/>
+							<tablecol dataattribute="STARTDATE" id="pluscvwdep_section0_row0_table1_tablebody_8" label="Start Date"/>
+							<tablecol dataattribute="METERNAME" id="pluscvwdep_section0_row0_table1_tablebody_9" label="Meter"/>
+							<tablecol dataattribute="METERSTART" id="pluscvwdep_section0_row0_table1_tablebody_10" label="Starting Reading"/>
+							<tablecol dataattribute="EXPECTEDLIFE" id="pluscvwdep_section0_row0_table1_tablebody_11" label="Expected Life"/>
+						</tablebody>
+						<tabledetails id="pluscvwdep_section0_row0_table1_tabledetails1" inputmode="readonly">
+							<section id="pluscvwdep_section0_row0_table1_tabledetails1_section1" label="Details">
+								<sectionrow id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0">
+									<sectioncol id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col1">
+										<section id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col1_sec">
+											<textbox dataattribute="DEPSCHEDNUM" id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col1_sec_1" label="Schedule"/>
+											<multiparttextbox dataattribute="METHOD" descdataattribute="DEPMETHOD.description" descinputmode="readonly" id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col1_sec_2" label="Method" lookup="valuelist"/>
+											<multiparttextbox dataattribute="PERIODTYPE" descdataattribute="DEPPERIODTYPE.description" descinputmode="readonly" id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col1_sec_3" label="Period Type" lookup="valuelist"/>
+											<textbox dataattribute="PERIODS" id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col1_sec_4"/>
+											<textbox dataattribute="RATIO" id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col1_sec_5" label="Ratio"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col2">
+										<section id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col2_sec">
+											<checkbox dataattribute="FINANCIAL" id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col2_sec_1" label="Financial Schedule"/>
+											<checkbox dataattribute="CREATEGLTRANS" id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col2_sec_2" label="Create GL Transactions"/>
+											<textbox dataattribute="GLDEBITACCT" id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col2_sec_3" label="GL Debit Account" lookup="glnavigator"/>
+											<textbox dataattribute="GLCREDITACCT" id="pluscvwdep_section0_row0_table1_tabledetails1_section1_row0_col2_sec_4" label="GL Credit Account" lookup="glnavigator"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+							<section id="pluscvwdep_section0_row0_table1_tabledetails1_section2" inputmode="readonly">
+								<sectionrow id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0">
+									<sectioncol id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col1">
+										<section id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col1_section1" label="Date Periods">
+											<sectioncol id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col1_section1_col1">
+												<textbox dataattribute="EXPECTEDLIFEUOM" id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col1_section1_col1_1" label="Period Units" lookup="valuelist"/>
+											</sectioncol>
+											<sectioncol id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col1_section1_col2">
+												<textbox dataattribute="CALCDAY" id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col1_section1_col2_1" label="Calculation Day" lookup="valuelist"/>
+											</sectioncol>
+										</section>
+									</sectioncol>
+									<sectioncol id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col2">
+										<section id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1" label="Meter Periods">
+											<sectionrow id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1">
+												<sectioncol id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col1">
+													<section id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col1_sec">
+														<textbox dataattribute="METERNAME" id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col1_sec_1" label="Meter" lookup="meter"/>
+														<textbox dataattribute="MEASUREUNITID" id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col1_sec_2" label="Unit of Measure"/>
+													</section>
+												</sectioncol>
+												<sectioncol id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col2">
+													<section id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col2_sec">
+														<textbox dataattribute="METERSTART" id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col2_sec_1" label="Starting Reading"/>
+														<textbox dataattribute="EXPECTEDLIFE" id="pluscvwdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col2_sec_2" label="Expected Life"/>
+													</section>
+												</sectioncol>
+											</sectionrow>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+					</table>
+					<buttongroup id="pluscvwdep_section0_row0_col1_section2_buttongroup1">
+						<pushbutton default="true" id="pluscvwdep_section0_row0_col1_section2_buttongroup1_1" label="OK" mxevent="dialogclose"/>
+					</buttongroup>
+				</sectioncol>
+			</sectionrow>
+		</section>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.common.ChangeStatusBean" id="list_status" label="Change Status" listaction="true" relationship="PLUSCTMPLTCHSTAT" savemode="ONUNLOAD">
+		<section id="list_status_grid1">
+			<combobox dataattribute="status" defaultfocus="true" id="list_status_grid1_1"/>
+		</section>
+		<buttongroup id="list_status_buttongroup">
+			<pushbutton default="true" id="list_status_buttongroup_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="list_status_buttongroup_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.common.ChangeStatusBean" id="status" label="Change Status" relationship="PLUSCTMPLTCHSTAT" savemode="ONLOADUNLOAD">
+		<section border="true" datasrc="MAINRECORD" id="status_grid1_section1">
+			<multiparttextbox dataattribute="templateid" descdataattribute="description" descinputmode="readonly" id="status_grid1_section1_1" inputmode="readonly" longdescreadonly="true"/>
+			<multiparttextbox dataattribute="status" descdataattribute="PLUSCTPSTATUSDESC.description" descinputmode="readonly" id="status_grid1_section1_2" inputmode="readonly"/>
+		</section>
+		<section id="status_grid1_section2">
+			<combobox dataattribute="status" defaultfocus="true" id="status_grid1_section2_1"/>
+		</section>
+		<buttongroup id="status_buttongroup">
+			<pushbutton default="true" id="status_buttongroup_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="status_buttongroup_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.plusc.webclient.beans.asset.PlusCClassificationBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<section id="qbe_grid">
+			<sectionrow id="qbe_grid_1">
+				<sectioncol id="qbe_grid_1_1">
+					<section id="qbe_grid_1_1_sec1">
+						<multiparttextbox dataattribute="templateid" descdataattribute="description" descinputmode="query" id="qbe_grid_1_1_sec1_1" inputmode="query" title="Template"/>
+						<textbox dataattribute="assetdescription" id="qbe_grid_1_1_sec1_2" inputmode="query" lookup="longdesc"/>
+						<textbox applink="company" dataattribute="vendor" id="qbe_grid_1_1_sec1_3_2" inputmode="query" lookup="companies" menutype="normal"/>
+						<textbox applink="company" dataattribute="manufacturer" id="qbe_grid_1_1_sec1_4" inputmode="query" lookup="companies" menutype="normal"/>
+						<textbox applink="assetcat" dataattribute="CLASSSTRUCTURE.HIERARCHYPATH" id="qbe_grid_1_1_sec1_7" inputmode="query" menutype="classificationqbe"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_grid_1_2">
+					<section id="qbe_grid_1_2_sec2">
+						<textbox applink="multisite" dataattribute="orgid" id="qbe_grid_1_2_sec2_00" inputmode="query" lookup="org" menutype="normal"/>
+						<textbox dataattribute="assettype" id="qbe_grid_1_2_sec2_0" inputmode="query" lookup="valuelist"/>
+						<textbox dataattribute="status" id="qbe_grid_1_2_sec2_1" inputmode="query" lookup="valuelist"/>
+						<textbox applink="masterpm" dataattribute="plusctpmasterpm.masterpmnum" id="qbe_grid_1_2_sec2_2" inputmode="query" lookup="masterpm" menutype="normal"/>
+						<textbox applink="item,inventor" dataattribute="plusctpsparepart.itemnum" id="qbe_grid_1_2_sec2_3" inputmode="query" label="Spare Part" lookup="item" menutype="normal"/>
+						<textbox applink="meter" dataattribute="plusctmpltmeter.metername" id="qbe_grid_1_2_sec2_4" inputmode="query" lookup="meter" menutype="normal"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<section id="qbe_gridc" label="Calibration" licensekey="CALIBRATION">
+			<sectionrow id="qbe_grid_1c">
+				<sectioncol id="qbe_grid_1_1c">
+					<section id="qbe_grid_1_1_sec1c">
+						<multiparttextbox applink="plusdsplan" dataattribute="PLUSCTPDATASHEET.dsplannum" descdataattribute="PLUSCTPDATASHEET.PLUSDSPLAN.description" descinputmode="query" id="qbe_grid_1_1_sec1_7_1" inputmode="query" lookup="pluscdsassetlink" menutype="normal"/>
+						<textbox dataattribute="pluscismte" id="qbe_grid_1_1_sec1_3_3" inputmode="query"/>
+						<textbox dataattribute="pluscismteclass" id="qbe_grid_1_1_sec1_3_3_1" inputmode="query" lookup="valuelist"/>
+						<textbox dataattribute="plusciscontam" id="qbe_grid_1_1_sec1_3_4" inputmode="query"/>
+						<textbox dataattribute="plusciscondesc" id="qbe_grid_1_1_sec1_3_4_1" inputmode="query" lookup="longdesc"/>
+						<textbox dataattribute="pluscassetdept" id="qbe_grid_1_1_sec1_3_5" inputmode="query" lookup="valuelist"/>
+						<textbox dataattribute="pluscoprgefrom" id="qbe_grid_1_1_sec1_3_6" inputmode="query"/>
+						<textbox dataattribute="pluscoprgeto" id="qbe_grid_1_1_sec1_3_7" inputmode="query"/>
+						<textbox dataattribute="pluscoprgeeu" id="qbe_grid_1_1_sec1_3_8" inputmode="query" lookup="valuelist"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_grid_1_2c">
+					<section id="qbe_grid_1_2_sec2c">
+						<textbox dataattribute="pluscclass" id="qbe_grid_1_2_sec2_4_1" inputmode="query" lookup="valuelist"/>
+						<textbox dataattribute="pluscmodelnum" id="qbe_grid_1_2_sec2_4_2" inputmode="query"/>
+						<textbox dataattribute="pluscsumeu" id="qbe_grid_1_2_sec2_4_3" inputmode="query" label="Accuracy EU +"/>
+						<textbox dataattribute="pluscsumspan" id="qbe_grid_1_2_sec2_4_4" inputmode="query" label="%Span +"/>
+						<textbox dataattribute="pluscsumurv" id="qbe_grid_1_2_sec2_4_5" inputmode="query" label="%URV +"/>
+						<textbox dataattribute="PLUSCSUMREAD" id="qbe_grid_1_2_sec2_4_6" inputmode="query" label="%Reading"/>
+						<textbox dataattribute="pluscsumdir" id="qbe_grid_1_2_sec2_4_7" inputmode="query" lookup="valuelist"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="qbe_buttongrid">
+			<pushbutton default="true" id="qbe_buttongrid_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="qbe_restoreappdefault_button" label="Restore Application Defaults" mxevent="qbeclear"/>
+			<pushbutton id="qbe_revisebutton" label="Revise" menutype="SEARCHMOREREVISE" targetid="searchmore"/>
+			<pushbutton id="qbe_buttongrid_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.plusc.webclient.beans.plusctmplt.PlusCGenerateNewAssetsBean" id="pluscgenerateassets" label="Generate New Assets" mboname="PLUSCDASSETDATA">
+		<section border="true" id="pluscgenerateassets_section1">
+			<multiparttextbox dataattribute="siteid" descdataattribute="SITE.description" descinputmode="readonly" id="pluscgenerateassets_section1_1" inputmode="readonly"/>
+		</section>
+		<helpgrid id="pluscgenerateassets_help" innerhtml="Use the Default Asset Table Data section to set default values for new rows inserted in the Assets table window.&lt;br&gt;To generate a series of asset numbers, use the Generate Asset Numbers section below."/>
+		<section id="pluscgenerateassets_section2" label="Default Asset Table Data">
+			<sectionrow id="pluscgenerateassets_section2_row1">
+				<sectioncol id="pluscgenerateassets_section2_row1_col1">
+					<section id="pluscgenerateassets_section2_row1_col1_grid1">
+						<textbox applink="location" dataattribute="location" id="pluscgenerateassets_section2_row1_col1_grid1_1" lookup="locations" menutype="normal"/>
+						<textbox dataattribute="status" id="pluscgenerateassets_section2_row1_col1_grid1_2" lookup="valuelist"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="pluscgenerateassets_section2_row1_col2">
+					<section id="pluscgenerateassets_section2_row1_col2_grid1">
+						<textbox dataattribute="serialnum" id="pluscgenerateassets_section2_row1_col2_grid1_1"/>
+						<textbox dataattribute="installdate" id="pluscgenerateassets_section2_row1_col1_grid1_3" lookup="datelookup"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="pluscgenerateassets_section2_row1_col3">
+					<section id="pluscgenerateassets_section2_row1_col3_grid1">
+						<textbox dataattribute="deprstartdate" id="pluscgenerateassets_section2_row1_col3_grid1_1" lookup="datelookup"/>
+						<textbox dataattribute="pmstartdate" id="pluscgenerateassets_section2_row1_col3_grid1_2" lookup="datelookup"/>
+						<textbox applink="storeroom" dataattribute="pmstoreroom" id="pluscgenerateassets_section2_row1_col3_grid1_3" lookup="storeroom" menutype="normal"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<section id="pluscgenerateassets_section3" label="Generate Asset Numbers">
+			<sectionrow id="pluscgenerateassets_section3_row1">
+				<sectioncol id="pluscgenerateassets_section3_row1_col1">
+					<section id="pluscgenerateassets_section3_row1_col1_grid1">
+						<textbox dataattribute="quantity" id="pluscgenerateassets_section3_row1_col1_grid1_1" inputmode="required"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="pluscgenerateassets_section3_row1_col2">
+					<section id="pluscgenerateassets_section3_row1_col2_grid1">
+						<textbox dataattribute="startnum" id="pluscgenerateassets_section3_row1_col2_grid1_1"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="pluscgenerateassets_section3_row1_col3">
+					<section id="pluscgenerateassets_section3_row1_col3_grid1">
+						<textbox dataattribute="prefix" id="pluscgenerateassets_section3_row1_col3_grid1_1"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="pluscgenerateassets_section3_row1_col4">
+					<section id="pluscgenerateassets_section3_row1_col4_grid1">
+						<textbox dataattribute="suffix" id="pluscgenerateassets_section3_row1_col4_grid1_1"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+			<buttongroup id="pluscgenerateassets_section3_buttongroup" show="true">
+				<pushbutton id="pluscgenerateassets_section3_buttongroup_1" label="Generate Assets" mxevent="GENERATEASSETSPREVIEW"/>
+				<pushbutton id="pluscgenerateassets_section3_buttongroup_2" label="Clear" mxevent="CLEARFIELDS"/>
+			</buttongroup>
+		</section>
+		<table beanclass="psdi.plusc.webclient.beans.plusctmplt.PlusCNewAssetsPreviewTableBean" id="pluscgenerateassets_table" label="Assets" relationship="PLUSCPREGENASSET">
+			<tablebody displayrowsperpage="5" id="pluscgenerateassets_table_tablebody">
+				<tablecol filterable="false" id="pluscgenerateassets_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="assetnum" id="pluscgenerateassets_table_tablebody_2"/>
+				<tablecol applink="location" dataattribute="location" id="pluscgenerateassets_table_tablebody_3" lookup="locations" menutype="normal"/>
+				<tablecol dataattribute="status" id="pluscgenerateassets_table_tablebody_4" lookup="valuelist"/>
+				<tablecol dataattribute="serialnum" id="pluscgenerateassets_table_tablebody_5"/>
+				<tablecol dataattribute="installdate" id="pluscgenerateassets_table_tablebody_6" lookup="datelookup"/>
+				<tablecol filterable="false" id="pluscgenerateassets_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="pluscgenerateassets_table_tabledetails">
+				<section id="pluscgenerateassets_table_tabledetails_section1">
+					<sectionrow id="pluscgenerateassets_table_tabledetails_section1_row1">
+						<sectioncol id="pluscgenerateassets_table_tabledetails_section1_row1_col1">
+							<section id="pluscgenerateassets_table_tabledetails_section1_row1_col1_grid1">
+								<textbox dataattribute="assetnum" id="pluscgenerateassets_table_tabledetails_section1_row1_col1_grid1_1"/>
+								<textbox applink="location" dataattribute="location" id="pluscgenerateassets_table_tabledetails_section1_row1_col1_grid1_2" lookup="locations" menutype="normal"/>
+								<textbox dataattribute="status" id="pluscgenerateassets_table_tabledetails_section1_row1_col1_grid1_3" lookup="valuelist"/>
+							</section>
+						</sectioncol>
+						<sectioncol id="pluscgenerateassets_table_tabledetails_section1_row1_col2">
+							<section id="pluscgenerateassets_table_tabledetails_section1_row1_col2_grid1">
+								<textbox dataattribute="serialnum" id="pluscgenerateassets_table_tabledetails_section1_row1_col2_grid1_1"/>
+								<textbox dataattribute="installdate" id="pluscgenerateassets_table_tabledetails_section1_row1_col1_grid1_4" lookup="datelookup"/>
+								<textbox dataattribute="deprstartdate" id="pluscgenerateassets_table_tabledetails_section1_row1_col2_grid1_4" lookup="datelookup"/>
+							</section>
+						</sectioncol>
+						<sectioncol id="pluscgenerateassets_table_tabledetails_section1_row1_col3">
+							<section id="pluscgenerateassets_table_tabledetails_section1_row1_col3_grid1">
+								<textbox dataattribute="pmstartdate" id="pluscgenerateassets_table_tabledetails_section1_row1_col3_grid1_1" lookup="datelookup"/>
+								<textbox applink="storeroom" dataattribute="pmstoreroom" id="pluscgenerateassets_table_tabledetails_section1_row1_col3_grid1_2" lookup="storeroom" menutype="normal"/>
+							</section>
+						</sectioncol>
+					</sectionrow>
+				</section>
+			</tabledetails>
+			<buttongroup id="pluscgenerateassets_section4_buttongroup" show="true">
+				<pushbutton default="true" id="pluscgenerateassets_section4_buttongroup_1" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="pluscgenerateassets_buttongroup" show="true">
+			<pushbutton default="true" id="pluscgenerateassets_buttongroup_1" label="OK" mxevent="dolongop"/>
+			<pushbutton id="pluscgenerateassets_buttongroup_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.plusc.webclient.beans.plusctmplt.PlusCApplyToExistingAssetsBean" id="pluscapplytoexitingassets" label="Apply to Existing Assets" mboname="PLUSCDASSETDATA">
+		<section border="true" id="pluscapplytoexitingassets_section1">
+			<multiparttextbox dataattribute="siteid" descdataattribute="SITE.description" descinputmode="readonly" id="pluscapplytoexitingassets_section1_1" inputmode="readonly"/>
+		</section>
+		<helpgrid id="pluscapplytoexitingassets_help" innerhtml="Use the Default Asset Table Data section to set default values for new rows inserted in the Assets table window.&lt;br&gt;Existing data will be overwritten when the template is applied."/>
+		<section id="pluscapplytoexitingassets_section2" label="Default Asset Table Data">
+			<sectionrow id="pluscapplytoexitingassets_section2_row1">
+				<sectioncol id="pluscapplytoexitingassets_section2_row1_col1">
+					<section id="pluscapplytoexitingassets_section2_row1_col1_grid1">
+						<textbox applink="location" dataattribute="location" id="pluscapplytoexitingassets_section2_row1_col1_grid1_1" lookup="locations" menutype="normal"/>
+						<textbox dataattribute="status" id="pluscapplytoexitingassets_section2_row1_col1_grid1_2" lookup="valuelist"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="pluscapplytoexitingassets_section2_row1_col2">
+					<section id="pluscapplytoexitingassets_section2_row1_col2_grid1">
+						<textbox dataattribute="serialnum" id="pluscapplytoexitingassets_section2_row1_col2_grid1_1"/>
+						<textbox dataattribute="installdate" id="pluscapplytoexitingassets_section2_row1_col1_grid1_3" lookup="datelookup"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="pluscapplytoexitingassets_section2_row1_col3">
+					<section id="pluscapplytoexitingassets_section2_row1_col3_grid1">
+						<textbox dataattribute="deprstartdate" id="pluscapplytoexitingassets_section2_row1_col3_grid1_1" lookup="datelookup"/>
+						<textbox dataattribute="pmstartdate" id="pluscapplytoexitingassets_section2_row1_col3_grid1_2" lookup="datelookup"/>
+						<textbox applink="storeroom" dataattribute="pmstoreroom" id="pluscapplytoexitingassets_section2_row1_col3_grid1_3" lookup="storeroom" menutype="normal"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<table beanclass="psdi.plusc.webclient.beans.plusctmplt.PlusCAssetsToTemplateApplicationTableBean" id="pluscapplytoexitingassets_table" label="Assets" relationship="PLUSCPREGENASSET">
+			<tablebody displayrowsperpage="15" id="pluscapplytoexitingassets_table_tablebody">
+				<tablecol filterable="false" id="pluscapplytoexitingassets_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol applink="asset,ipc" dataattribute="existingassetnum" id="plustapplytoexitingassets_table_tablebody_2" lookup="asset"/>
+				<tablecol applink="location" dataattribute="location" id="pluscapplytoexitingassets_table_tablebody_3" lookup="locations" menutype="normal"/>
+				<tablecol dataattribute="status" id="pluscapplytoexitingassets_table_tablebody_4" lookup="valuelist"/>
+				<tablecol dataattribute="serialnum" id="pluscapplytoexitingassets_table_tablebody_5"/>
+				<tablecol dataattribute="installdate" id="pluscapplytoexitingassets_table_tablebody_6" lookup="datelookup"/>
+				<tablecol filterable="false" id="pluscapplytoexitingassets_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="pluscapplytoexitingassets_table_tabledetails">
+				<section id="pluscapplytoexitingassets_table_tabledetails_section1">
+					<sectionrow id="pluscapplytoexitingassets_table_tabledetails_section1_row1">
+						<sectioncol id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col1">
+							<section id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col1_grid1">
+								<textbox applink="asset,ipc" dataattribute="existingassetnum" id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col1_grid1_1" lookup="asset"/>
+								<textbox applink="location" dataattribute="location" id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col1_grid1_2" lookup="locations" menutype="normal"/>
+								<textbox dataattribute="status" id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col1_grid1_3" lookup="valuelist"/>
+							</section>
+						</sectioncol>
+						<sectioncol id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col2">
+							<section id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col2_grid1">
+								<textbox dataattribute="serialnum" id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col2_grid1_1"/>
+								<textbox dataattribute="installdate" id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col1_grid1_4" lookup="datelookup"/>
+								<textbox dataattribute="deprstartdate" id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col2_grid1_4" lookup="datelookup"/>
+							</section>
+						</sectioncol>
+						<sectioncol id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col3">
+							<section id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col3_grid1">
+								<textbox dataattribute="pmstartdate" id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col3_grid1_1" lookup="datelookup"/>
+								<textbox applink="storeroom" dataattribute="pmstoreroom" id="pluscapplytoexitingassets_table_tabledetails_section1_row1_col3_grid1_2" lookup="storeroom" menutype="normal"/>
+							</section>
+						</sectioncol>
+					</sectionrow>
+				</section>
+			</tabledetails>
+			<buttongroup id="pluscapplytoexitingassets_section4_buttongroup" show="true">
+				<pushbutton id="pluscapplytoexitingassets_section4_buttongroup_1" label="Select Assets" mxevent="pluscselectassets"/>
+				<pushbutton default="true" id="pluscapplytoexitingassets_section4_buttongroup_2" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="pluscapplytoexitingassets_buttongroup" show="true">
+			<pushbutton default="true" id="pluscapplytoexitingassets_buttongroup_1" label="OK" mxevent="dolongop"/>
+			<pushbutton id="pluscapplytoexitingassets_buttongroup_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.plusc.webclient.beans.plusctmplt.PlusCManageDepreciationScheduleBean" id="MANAGEDEP" label="Manage Depreciation Schedules" relationship="PLUSCDEPSCHEDULE" savemode="ONLOAD">
+		<section id="pluscmngdep_section0">
+			<sectionrow id="pluscmngdep_section0_row0">
+				<sectioncol id="pluscmngdep_section0_row0_col1">
+					<section id="pluscmngdep_section0_row0_col1_section1">
+						<sectionrow id="pluscmngdep_section0_row0_col1_section1_row1">
+							<sectioncol id="pluscmngdep_section0_row0_col1_section1_row1_col1">
+								<section id="pluscmngdep_section0_row0_col1_section1_row1_col1_sec">
+									<textbox dataattribute="STARTINGCOST" id="pluscmngdep_section0_row0_col1_section1_row1_col1_sec_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pluscmngdep_section0_row0_col1_section1_row1_col2">
+								<section id="pluscmngdep_section0_row0_col1_section1_row1_col2_sec">
+									<textbox dataattribute="SALVAGEAMT" id="pluscmngdep_section0_row0_col1_section1_row1_col2_sec_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pluscmngdep_section0_row0_col1_section1_row1_col3">
+								<section id="pluscmngdep_section0_row0_col1_section1_row1_col3_sec">
+									<textbox dataattribute="DEPRECIATIONNUM" id="pluscmngdep_section0_row0_col1_section1_row1_col3_sec_1" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pluscmngdep_section0_row0_col1_section1_row1_col4">
+								<section id="pluscmngdep_section0_row0_col1_section1_row1_col4_sec">
+									<checkbox dataattribute="DELETEDEPRECIATION" id="pluscmngdep_section0_row0_col1_section1_row1_col4_sec_1" label="Delete Depreciation"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="pluscmngdep_section0_row0_table1" label="Schedules" orderby="DEPSCHEDNUM" relationship="DEPSCHEDULE">
+						<tablebody displayrowsperpage="10" id="pluscmngdep_section0_row0_table1_tablebody" inputmode="readonly">
+							<tablecol filterable="false" id="pluscmngdep_section0_row0_table1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail:" sortable="false" type="event"/>
+							<tablecol dataattribute="DEPSCHEDNUM" id="pluscmngdep_section0_row0_table1_tablebody_2" label="Schedule"/>
+							<tablecol dataattribute="METHOD" id="pluscmngdep_section0_row0_table1_tablebody_3" label="Method"/>
+							<tablecol dataattribute="PERIODTYPE" id="pluscmngdep_section0_row0_table1_tablebody_4" label="Period Type"/>
+							<tablecol dataattribute="PERIODS" id="pluscmngdep_section0_row0_table1_tablebody_5" label="Periods"/>
+							<tablecol dataattribute="RATIO" id="pluscmngdep_section0_row0_table1_tablebody_6" label="Ratio"/>
+							<tablecol dataattribute="EXPECTEDLIFEUOM" id="pluscmngdep_section0_row0_table1_tablebody_7" label="Period Units"/>
+							<tablecol dataattribute="STARTDATE" id="pluscmngdep_section0_row0_table1_tablebody_8" label="Start Date"/>
+							<tablecol dataattribute="METERNAME" id="pluscmngdep_section0_row0_table1_tablebody_9" label="Meter"/>
+							<tablecol dataattribute="METERSTART" id="pluscmngdep_section0_row0_table1_tablebody_10" label="Starting Reading"/>
+							<tablecol dataattribute="EXPECTEDLIFE" id="pluscmngdep_section0_row0_table1_tablebody_11" label="Expected Life"/>
+							<tablecol filterable="false" id="pluscmngdep_section0_row0_table1_tablebody_12" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="pluscmngdep_section0_row0_table1_tabledetails1">
+							<section id="pluscmngdep_section0_row0_table1_tabledetails1_section1" label="Details">
+								<sectionrow id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0">
+									<sectioncol id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col1">
+										<section id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col1_sec">
+											<textbox dataattribute="DEPSCHEDNUM" id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col1_sec_1" inputmode="readonly" label="Schedule"/>
+											<multiparttextbox dataattribute="METHOD" descdataattribute="DEPMETHOD.description" descinputmode="readonly" id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col1_sec_2" label="Method" lookup="valuelist"/>
+											<multiparttextbox dataattribute="PERIODTYPE" descdataattribute="DEPPERIODTYPE.description" descinputmode="readonly" id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col1_sec_3" label="Period Type" lookup="valuelist"/>
+											<textbox dataattribute="PERIODS" id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col1_sec_4"/>
+											<textbox dataattribute="RATIO" id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col1_sec_5" label="Ratio"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col2">
+										<section id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col2_sec">
+											<checkbox dataattribute="FINANCIAL" id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col2_sec_1" label="Financial Schedule"/>
+											<checkbox dataattribute="CREATEGLTRANS" id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col2_sec_2" label="Create GL Transactions"/>
+											<textbox dataattribute="GLDEBITACCT" id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col2_sec_3" label="GL Debit Account" lookup="glnavigator"/>
+											<textbox dataattribute="GLCREDITACCT" id="pluscmngdep_section0_row0_table1_tabledetails1_section1_row0_col2_sec_4" label="GL Credit Account" lookup="glnavigator"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+							<section id="pluscmngdep_section0_row0_table1_tabledetails1_section2">
+								<sectionrow id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0">
+									<sectioncol id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col1">
+										<section id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col1_section1" label="Date Periods">
+											<sectioncol id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col1_section1_col1">
+												<textbox dataattribute="EXPECTEDLIFEUOM" id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col1_section1_col1_1" label="Period Units" lookup="valuelist"/>
+											</sectioncol>
+											<sectioncol id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col1_section1_col2">
+												<textbox dataattribute="CALCDAY" id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col1_section1_col2_1" label="Calculation Day" lookup="valuelist"/>
+											</sectioncol>
+										</section>
+									</sectioncol>
+									<sectioncol id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col2">
+										<section id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1" label="Meter Periods">
+											<sectionrow id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1">
+												<sectioncol id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col1">
+													<section id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col1_sec">
+														<textbox dataattribute="METERNAME" id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col1_sec_1" label="Meter" lookup="meter"/>
+														<textbox dataattribute="MEASUREUNITID" id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col1_sec_2" inputmode="readonly" label="Unit of Measure"/>
+													</section>
+												</sectioncol>
+												<sectioncol id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col2">
+													<section id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col2_sec">
+														<textbox dataattribute="METERSTART" id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col2_sec_1" label="Starting Reading"/>
+														<textbox dataattribute="EXPECTEDLIFE" id="pluscmngdep_section0_row0_table1_tabledetails1_section2_row0_col2_section1_row1_col2_sec_2" label="Expected Life"/>
+													</section>
+												</sectioncol>
+											</sectionrow>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="pluscmngdep_section0_row0_table1_buttongroup1">
+							<pushbutton default="true" id="pluscmngdep_section0_row0_table1_buttongroup1_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</sectioncol>
+				<sectioncol id="pluscmngdep_section0_row0_col2">
+					<section id="pluscmngdep_section0_row0_col2_section0" label="Preview Schedule">
+						<section id="pluscmngdep_row1_col2_s_s1">
+							<sectioncol id="pluscmngdep_section0_row0_col2_section0_col1">
+								<textbox dataattribute="STARTDATE" datasrc="pluscmngdep_section0_row0_table1" id="pluscmngdep_section0_row0_col2_section0_col1_1" label="Start Date" lookup="datelookup"/>
+							</sectioncol>
+							<sectioncol id="pluscmngdep_section0_row0_col2_section0_col2">
+								<buttongroup id="pluscmngdep_section0_row0_col2_section0_col2_buttongroup1">
+									<pushbutton default="true" id="pluscmngdep_section0_row0_col2_section0_col2_buttongroup1_1" label="Refresh" mxevent="generatePreview"/>
+								</buttongroup>
+							</sectioncol>
+						</section>
+						<table id="pluscmngdep_section0_row0_col2_table1" inputmode="readonly" label="Schedule {0}" parentdatasrc="pluscmngdep_section0_row0_table1" parentemptylabel="Schedule" relationship="DEPPREVIEW" selectmode="single" titleattributes="DEPSCHEDNUM">
+							<sectionheader id="pluscmngdep_section0_row0_col2_table1_reader">
+								<paramvalues id="pluscmngdep_section0_row0_col2_table1_reader_paramvalues" property="label">
+									<paramvalue dataattribute="DEPSCHEDNUM" datasrc="pluscmngdep_section0_row0_table1" id="pluscmngdep_section0_row0_col2_table1_reader_paramvalues_1" position="0"/>
+								</paramvalues>
+							</sectionheader>
+							<tablebody displayrowsperpage="15" id="pluscmngdep_section0_row0_col2_table1_tablebody">
+								<tablecol dataattribute="periodnum" id="pluscmngdep_section0_row0_col2_table1_tablebody_1" inputmode="readonly"/>
+								<tablecol dataattribute="depdate" id="pluscmngdep_section0_row0_col2_table1_tablebody_2" inputmode="readonly"/>
+								<tablecol dataattribute="depmeterltd" id="pluscmngdep_section0_row0_col2_table1_tablebody_3" inputmode="readonly"/>
+								<tablecol dataattribute="depamt" id="pluscmngdep_section0_row0_col2_table1_tablebody_4" inputmode="readonly"/>
+								<tablecol dataattribute="currentvalue" id="pluscmngdep_section0_row0_col2_table1_tablebody_5" inputmode="readonly"/>
+								<tablecol dataattribute="totaldep" id="pluscmngdep_section0_row0_col2_table1_tablebody_6" inputmode="readonly"/>
+							</tablebody>
+						</table>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="pluscmngdep_section0_row0_col2_buttongroup1">
+			<pushbutton default="true" id="pluscmngdep_section0_row0_col2_buttongroup1_1" label="OK" mxevent="dialogok"/>
+			<pushbutton default="true" id="pluscmngdep_section0_row0_col2_buttongroup1_2" label="Cancel" mxevent="dialogclose"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog datasrc="MAINRECORD" hidehelp="true" id="applyexist" label="Select Site" savemode="ONLOAD">
+		<section border="true" id="applyexist_section1">
+			<multiparttextbox dataattribute="siteid" descdataattribute="SITE.description" descinputmode="readonly" id="applyexist_section1_1" lookup="site"/>
+		</section>
+		<buttongroup id="applyexist_buttongroup" show="true">
+			<pushbutton default="true" id="applyexist_buttongroup_1" label="OK" mxevent="NEXTDIALOG" value="pluscapplytoexitingassets"/>
+			<pushbutton id="applyexist_buttongroup_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.plusc.webclient.beans.plusctmplt.PlusCSparePartsBean" hidehelp="true" id="pluscselspareparts" label="Select Asset Spare Parts" mboname="SPAREPART">
+		<section border="true" id="sparepart_grid1">
+			<sectionrow id="sparepart_grid1_1">
+				<sectioncol id="sparepart_grid1_1_1">
+					<section id="sparepart_grid1_1_1_grid2">
+						<textbox dataattribute="assetnum" id="sparepart_grid1_1_1_grid2_1" inputmode="query" lookup="asset" menutype="normal"/>
+					</section>
+					<buttongroup id="sparepart_grid1_1_1_grid3">
+						<pushbutton default="true" id="sparepart_grid1_1_1_grid3_1" label="Refine" mxevent="doRefresh"/>
+					</buttongroup>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<table id="sparepart_Spare_PartsTable" inputmode="readonly" label="Items" selectmode="multiple">
+			<tablebody displayrowsperpage="12" filterable="true" filterexpanded="false" id="sparepart_Spare_PartsTable_tablebody">
+				<tablecol filterable="false" id="sparepart_Spare_PartsTable_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+				<tablecol dataattribute="itemnum" id="sparepart_Spare_PartsTable_tablebody_2" sortable="true"/>
+				<tablecol dataattribute="item.description" id="sparepart_Spare_PartsTable_tablebody_3" showfilterfield="true" sortable="false"/>
+				<tablecol dataattribute="quantity" id="sparepart_Spare_PartsTable_tablebody_4" sortable="true"/>
+				<tablecol dataattribute="description" id="sparepart_Spare_PartsTable_tablebody_5" sortable="true"/>
+			</tablebody>
+		</table>
+		<buttongroup id="sparepart_2">
+			<pushbutton default="true" id="sparepart_2_1" label="OK" mxevent="dialogok" value="setSpareParts"/>
+			<pushbutton id="sparepart_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.ViewBookmarksBean" id="searchbook" label="My Bookmarks" mboname="PLUSCTEMPLATE">
+		<table id="bookmarks_table" inputmode="readonly" label="Asset Templates" selectmode="single">
+			<tablebody displayrowsperpage="20" filterable="true" id="bookmarks_table_tablebody">
+				<tablecol dataattribute="templateid" id="bookmarks_table_tablebody_1" mxevent="selectrecord" type="link"/>
+				<tablecol dataattribute="description" id="bookmarks_table_tablebody_2" label="Description"/>
+				<tablecol filterable="false" id="bookmarks_table_tablebody_delete" mxevent="instantdelete" mxevent_desc="Delete" mxevent_icon="btn_delete.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="bookmarks_2">
+			<pushbutton default="true" id="bookmarks_2_1" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+	<configurationblock id="datastore_configurationblock">
+	</configurationblock>
+</presentation>

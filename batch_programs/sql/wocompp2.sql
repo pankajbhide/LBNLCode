@@ -1,0 +1,197 @@
+/*************************************************************************
+ NAME                   : WOCOMPP2.SQL
+
+ DATE WRITTEN           : 02/24/99
+
+ AUTHOR                 : PANKAJ
+
+ PURPOSE                : PL/SQL SCRIPT READS RECORDS FROM WORKORDER TABLE
+                          FOR ALL WCLOSE WORK ORDERS. IF THE NUMBER OF DAYS
+                          BETWEEN LAST STATUS DATE AND TODAY'S DATE ARE MORE
+                          THAN 30, THEN IT CLOSES THE WORK ORDER
+
+MODIFICATION HISTORY    : 01/24/00 CLOSE WORKORDERS WITH WORKTYPE NC
+                          08/16/04 CHANGES FOR MAXIMO REL 5.2
+                          08/16/09 CHANGES FOR MAXIMO REL 6
+                          
+                          12/21/12 DO NOT CLOSE PM WORK ORDERS. THIS IS  
+                                   TEMPORARAY UNTIL NEW GLACCOUNTS ARE 
+                                   MAPPED AS PER FACILITIES STAFF 
+                                   
+                                   CHANGE NUMBER OF DAYS FROM 30 TO 60
+ 
+                          03/15/13 COMMENT SKIPPING PM WORK ORDERS FROM NOT
+                                   GETTING CLOSED.
+                                   
+                          03/10/15 EXTEND TIME WINDOW FOR THE WORK ORDERS 
+                                   FOR CHAGING THEIR STATUS FROM WCLOSE TO 
+                                   CLOSE (FROM 60 DAYS TO 90 DAYS). INSTEAD
+                                   OF HARDCODING IT INTO THE PROGRAM, KEEP THIS
+                                   NUMBER IN LBL_MAXVARS TABLE. 
+***************************************************************************/
+WHENEVER SQLERROR EXIT 1 ROLLBACK;
+
+DECLARE
+
+    STARTUP_DATE   WORKORDER.CHANGEDATE%TYPE   := '31-AUG-1998';
+    APPROVAL_DATE  WORKORDER.CHANGEDATE%TYPE;
+    WONUM_G        WORKORDER.WONUM%TYPE;
+    --NO_DAYS        INTEGER :=30;
+
+    NO_DAYS        INTEGER :=90;     -- PANKAJ REVISED ON 03/10/15 DEFAULT 
+    -- MXES 
+    ORGID_T         WORKORDER.ORGID%TYPE;
+    SITEID_T        WORKORDER.SITEID%TYPE;
+
+    /* CURSOR TO READ ALL WORKORDER WITH STATUS AS WCLOSE */
+
+    CURSOR INP_REC_CUR IS
+     SELECT WONUM, SUPERVISOR, GLACCOUNT, LOCATION, STATUSDATE,
+            ORGID, SITEID
+     FROM WORKORDER
+     WHERE STATUS='WCLOSE' AND WONUM LIKE 'W%' AND
+           WORKTYPE   NOT IN (SELECT WORKTYPE.WORKTYPE FROM WORKTYPE WHERE
+                              WORKTYPE.TYPE ='NOCHARGE')
+           --WORKTYPE NOT IN ('VM','VMH','HW','NW','SW','SW-EN','FOCUS',
+           --                 'PSDI', 'MXSW','RPT','SEC','XF','MIS')
+           AND TRUNC(STATUSDATE) >= TRUNC(STARTUP_DATE)
+           AND SUPERVISOR IS NOT NULL
+           AND LOCATION   IS NOT NULL
+           AND GLACCOUNT  IS NOT NULL
+           AND ORGID=ORGID_T               -- MXES 
+           AND SITEID=SITEID_T
+           --AND WORKTYPE NOT LIKE 'PM%'  -- PANKAJ 12/21 DO NOT CLOSE PM WORK ORDERS
+     ORDER BY WONUM, STATUSDATE;
+
+   /***************************************************************
+    PROCEDURE TO PROCESS THE WORK ORDER RECORD TO CHANGE ITS STATUS
+    TO CLOSE.
+   ***************************************************************/
+   PROCEDURE PROCESS_CLOSE(ORGID_I  IN WORKORDER.ORGID%TYPE,
+                           SITEID_I IN WORKORDER.SITEID%TYPE,
+                           WONUM_I  IN WORKORDER.WONUM%TYPE)
+             IS
+             WOSTAT_CNT  INTEGER :=0;
+             STATUS_NOW  WORKORDER.STATUS%TYPE;
+             GLACCOUNT_T WORKORDER.GLACCOUNT%TYPE;
+     BEGIN
+
+       SELECT STATUS, GLACCOUNT 
+       INTO   STATUS_NOW, GLACCOUNT_T 
+       FROM WORKORDER
+       WHERE  ORGID=ORGID_I
+       AND    SITEID=SITEID_I
+       AND    WONUM=WONUM_I;
+
+       IF LTRIM(RTRIM(STATUS_NOW)) != 'CLOSE'
+        THEN
+            -- FIND OUT WHETHER RECORD EXISTS
+
+            SELECT COUNT(*) INTO WOSTAT_CNT 
+            FROM WOSTATUS
+            WHERE  ORGID=ORGID_I
+            AND    SITEID=SITEID_I
+            AND    WONUM=WONUM_I
+            AND    STATUS='CLOSE';
+
+            IF (WOSTAT_CNT) = 0  THEN
+
+              INSERT INTO WOSTATUS(WONUM, STATUS, CHANGEDATE,
+                 CHANGEBY,GLACCOUNT, ORGID, SITEID,
+                 WOSTATUS.wostatusid) 
+                  VALUES (WONUM_I, 'CLOSE',SYSDATE,
+                  'BATCH_CLOSE', GLACCOUNT_T, ORGID_I,SITEID_I,
+                  WOSTATUSSEQ.NEXTVAL);
+                  
+              UPDATE WORKORDER 
+              SET STATUS='CLOSE', STATUSDATE=SYSDATE,
+                   HISTORYFLAG=1, CHANGEDATE=SYSDATE, 
+                   CHANGEBY='BATCH_CLOSE'
+              WHERE  ORGID=ORGID_I
+              AND    SITEID=SITEID_I
+              AND    WONUM=WONUM_I;
+            
+            END IF;
+       END IF;
+    END;
+
+ /* MAIN PROGRAM START FROM HERE */
+
+ BEGIN
+   
+
+   -- GET THE VALUE OF ORG ID AND SITEID FROM THE ARUGEMENTS 
+    ORGID_T   :=UPPER('&1');
+    SITEID_T  :=UPPER('&2');
+      
+    IF (ORGID_T IS NULL OR LENGTH(ORGID_T)=0) THEN
+       ORGID_T :='LBNL';
+    END IF;
+    
+    IF (SITEID_T IS NULL OR LENGTH(SITEID_T)=0) THEN
+       SITEID_T :='FAC';
+    END IF;
+    
+    
+    -- ADDED BY PANKAJ ON 3/10/15. GET THE TIME WINDOW FOR 
+    -- CLOSING THE WORK ORDERS FROM LBL_MAXVARS TABLE
+    BEGIN
+       SELECT TO_NUMBER(VARVALUE) INTO NO_DAYS
+       --FROM  BATCH_MAXIMO.LBL_MAXVARS
+       FROM  LBL_MAXVARS
+       WHERE VARNAME='WCLOSE_CLOSE_DAYS'
+       AND   ORGID=ORGID_T
+       AND   SITEID=SITEID_T;
+    EXCEPTION WHEN OTHERS THEN
+       NO_DAYS :=90; -- DEFAULT 
+    END;
+       
+    
+  /* START READING RECORDS FROM THE CURSOR */
+
+  FOR INP_REC IN INP_REC_CUR
+
+  LOOP
+
+  WONUM_G       := INP_REC.WONUM;
+
+  -- GET FIRST APPOROAL DATE
+  APPROVAL_DATE := MAXIMO.LBL_MAXIMO_PKG.GET_FRST_APPR_DATE(
+                   INP_REC.ORGID, INP_REC.SITEID,                   
+                   WONUM_G);
+
+  -- BYPASS ALL SUCH WORK ORDERS WHOSE FIRST APPROVAL DATE IS LESSER THAN
+  -- THE STARTUP DATE
+
+  IF TO_DATE(APPROVAL_DATE,'DD-MON-RR') >=
+     TO_DATE(STARTUP_DATE, 'DD-MON-RR')  THEN
+
+   -- IF THE DIFFERENCE BETWEEN LAST STATUS DATE AND TODAY IS GREATER THAN
+   -- OR EQUAL TO NO_DAYS THEN, PROCESS THAT WORK ORDER FOR CLOSURE.
+
+   IF ((TRUNC(SYSDATE) - TRUNC(INP_REC.STATUSDATE)) >= NO_DAYS)
+   THEN
+       PROCESS_CLOSE(INP_REC.ORGID, INP_REC.SITEID,  WONUM_G);
+   END IF;
+
+    << SKIP_RECORD >>
+    NULL;
+
+  END IF;
+
+  END LOOP;
+  
+  COMMIT; 
+
+  EXCEPTION
+
+     WHEN OTHERS
+      THEN
+        DBMS_OUTPUT.PUT_LINE('ERROR CODE ' || SQLCODE);
+        DBMS_OUTPUT.PUT_LINE('ERROR DESCR ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('LAST WO ' || WONUM_G);
+
+ END;
+
+
+/

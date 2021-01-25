@@ -1,0 +1,229 @@
+/*****************************************************************************
+ PROGRAM NAME           : SYNC_ORG_STRUCTURE.SQL
+
+ DATE WRITTEN           : 09-DEC-2009
+
+ AUTHOR                 : PANKAJ BHIDE
+
+ USAGE                  :
+
+
+ PURPOSE                : PROGRAM TO SYNCCHRONIZE THE ORGANIZATION STRUCTURE DATA
+                          FROM MAXIMO TO ARCHIBUS.
+
+                         THIS PROGRAM ASSUMES A DATABASE LINK TITLED "ARCHIBUS"
+                         THAT CONNECT TO AFM@SHRXXX DATABASE ON WHICH ARCHIBUS
+                         APPLICATION IS HOSTED ON.
+ ******************************************************************************/
+WHENEVER SQLERROR EXIT 1 ROLLBACK;
+
+DECLARE
+
+  CURSOR DEPT_CUR  IS SELECT DEPTID, SUBSTR(DESCR,1,25) DESCR FROM DW.ORG_DEPARTMENT;
+
+  CURSOR GROUP_CUR IS SELECT DEPTID, ZZ_GROUP, SUBSTR(DESCR,1,25) DESCR FROM DW.ORG_GROUP
+                      WHERE DEPTID IN (SELECT DISTINCT
+                      DV_ID FROM DV@archibus21);
+
+  CURSOR UNIT_CUR  IS SELECT DEPTID,ZZ_GROUP, ZZ_UNIT,SUBSTR(DESCR,1,25) DESCR FROM DW.ORG_UNIT
+                      WHERE DEPTID || ZZ_GROUP IN
+                      (SELECT DISTINCT DV_ID ||
+                                       DP_ID
+                                       FROM DP@archibus21);
+
+  CURSOR LEVEL4_CUR IS SELECT DEPTID,ZZ_GROUP,ZZ_UNIT, ZZ_LEVEL4, SUBSTR(DESCR,1,25) DESCR FROM DW.ORG_LEVEL4
+                      WHERE DEPTID || ZZ_GROUP || ZZ_UNIT IN
+                      (SELECT DISTINCT DV_ID ||
+                                       DP_ID ||
+                                       LBL_ORG_LEVEL_3_CODE
+                                       FROM LBL_ORG_LEVEL_3@archibus21);
+
+
+
+  T_NAME_DV VARCHAR2(200);
+  T_NAME_DP VARCHAR2(200);
+  T_ORG_LEVEL_3_DESCRIPTION VARCHAR2(200);
+  T_ORG_LEVEL_4_DESCRIPTION VARCHAR2(200);
+
+
+ BEGIN
+
+  -- READ ALL THE DEPARTMENTS (LEVEL-1), IF EXISTS, THEN, UPDATE
+  -- DESCRIPTION, ELSE, INSERT A NEW RECORD
+
+  FOR DEPT_REC IN DEPT_CUR
+
+   LOOP
+
+     BEGIN
+
+      SELECT NAME
+      INTO   T_NAME_DV
+      FROM    DV@archibus21
+      WHERE   DV_ID=DEPT_REC.DEPTID;
+
+      IF (T_NAME_DV !=
+          DEPT_REC.DESCR)
+      THEN
+
+           UPDATE DV@archibus21
+           SET NAME=DEPT_REC.DESCR
+           WHERE   DV_ID=DEPT_REC.DEPTID;
+      END IF;
+
+     EXCEPTION
+
+      WHEN NO_DATA_FOUND THEN
+           INSERT INTO DV@archibus21
+           (AREA_AVG_EM,AREA_CHARGABLE,AREA_COMN,AREA_COMN_GP,AREA_COMN_NOCUP,
+            AREA_COMN_RM,
+            AREA_COMN_OCUP,AREA_COMN_SERV,AREA_GP,
+            NAME,AREA_NOCUP,AREA_OCUP,AREA_RM,AREA_SECOND_CIRC,
+            COST, COUNT_EM,DV_ID)
+           VALUES(0,0,0,0,0,
+                  0,
+                  0,0,0,
+                  T_NAME_DV,0,0,0,0,
+                  0,0,DEPT_REC.DEPTID);
+     END;
+
+
+   END LOOP;
+
+
+   -- READ ALL THE GROUPS (LEVEL-2), IF EXISTS, THEN, UPDATE
+   -- DESCRIPTION, ELSE, INSERT A NEW RECORD
+
+  FOR GROUP_REC IN GROUP_CUR
+
+   LOOP
+
+     BEGIN
+
+      SELECT NAME
+      INTO   T_NAME_DP
+      FROM    DP@archibus21
+      WHERE   DV_ID=GROUP_REC.DEPTID
+      AND     DP_ID=GROUP_REC.ZZ_GROUP;
+
+      IF (T_NAME_DP !=
+          GROUP_REC.DESCR)
+           THEN
+
+           UPDATE DP@archibus21
+           SET     NAME=GROUP_REC.DESCR
+           WHERE   DV_ID=GROUP_REC.DEPTID
+           AND     DP_ID=GROUP_REC.ZZ_GROUP;
+      END IF;
+
+     EXCEPTION
+
+      WHEN NO_DATA_FOUND THEN
+            INSERT INTO DP@archibus21
+           (AREA_AVG_EM,AREA_CHARGABLE,AREA_COMN,AREA_COMN_GP,AREA_COMN_NOCUP,
+            AREA_COMN_RM,
+            AREA_COMN_OCUP,AREA_COMN_SERV,AREA_GP,
+            NAME,AREA_NOCUP,AREA_OCUP,AREA_RM,AREA_SECOND_CIRC,
+            COST, COUNT_EM,DV_ID,DP_ID)
+           VALUES(0,0,0,0,0,
+                  0,
+                  0,0,0,
+                  T_NAME_DV,0,0,0,0,
+                  0,0,GROUP_REC.DEPTID, GROUP_REC.ZZ_GROUP);
+     END;
+
+  END LOOP;
+
+   -- READ ALL THE UNITS  (LEVEL-3), IF EXISTS, THEN, UPDATE
+   -- DESCRIPTION, ELSE, INSERT A NEW RECORD
+
+  FOR UNIT_REC IN UNIT_CUR
+
+   LOOP
+
+     BEGIN
+
+      SELECT LBL_ORG_LEVEL_3_DESC
+      INTO   T_ORG_LEVEL_3_DESCRIPTION
+      FROM    LBL_ORG_LEVEL_3@archibus21
+      WHERE   DV_ID=UNIT_REC.DEPTID
+      AND     DP_ID=UNIT_REC.ZZ_GROUP
+      AND     LBL_ORG_LEVEL_3_CODE=UNIT_REC.ZZ_UNIT;
+
+      IF (T_ORG_LEVEL_3_DESCRIPTION !=
+          UNIT_REC.DESCR)
+           THEN
+
+           UPDATE LBL_ORG_LEVEL_3@archibus21
+           SET     LBL_ORG_LEVEL_3_DESC=UNIT_REC.DESCR
+           WHERE   DV_ID=UNIT_REC.DEPTID
+           AND     DP_ID=UNIT_REC.ZZ_GROUP
+           AND     LBL_ORG_LEVEL_3_CODE=UNIT_REC.ZZ_UNIT;
+      END IF;
+
+     EXCEPTION
+
+      WHEN NO_DATA_FOUND THEN
+           INSERT INTO LBL_ORG_LEVEL_3@archibus21
+           (DV_ID, DP_ID, LBL_ORG_LEVEL_3_CODE,
+            LBL_ORG_LEVEL_3_DESC)
+           VALUES(UNIT_REC.DEPTID, UNIT_REC.ZZ_GROUP, UNIT_REC.ZZ_UNIT,
+           UNIT_REC.DESCR);
+
+     END;
+
+  END LOOP;
+
+
+   -- READ ALL THE LEVEL4  (LEVEL-4), IF EXISTS, THEN, UPDATE
+   -- DESCRIPTION, ELSE, INSERT A NEW RECORD
+
+  FOR LEVEL4_REC IN LEVEL4_CUR
+
+   LOOP
+
+     BEGIN
+
+      SELECT LBL_ORG_LEVEL_4_DESC
+      INTO   T_ORG_LEVEL_4_DESCRIPTION
+      FROM    LBL_ORG_LEVEL_4@archibus21
+      WHERE   DV_ID=LEVEL4_REC.DEPTID
+      AND     DP_ID=LEVEL4_REC.ZZ_GROUP
+      AND     LBL_ORG_LEVEL_3_CODE=LEVEL4_REC.ZZ_UNIT
+      AND     LBL_ORG_LEVEL_4_CODE=LEVEL4_REC.ZZ_LEVEL4;
+
+      IF (T_ORG_LEVEL_4_DESCRIPTION !=
+          LEVEL4_REC.DESCR)
+           THEN
+
+           UPDATE LBL_ORG_LEVEL_4@archibus21
+           SET     LBL_ORG_LEVEL_4_DESC=LEVEL4_REC.DESCR
+           WHERE   DV_ID=LEVEL4_REC.DEPTID
+           AND     DP_ID=LEVEL4_REC.ZZ_GROUP
+           AND     LBL_ORG_LEVEL_3_CODE=LEVEL4_REC.ZZ_UNIT
+           AND     LBL_ORG_LEVEL_4_CODE=LEVEL4_REC.ZZ_LEVEL4;
+
+
+      END IF;
+
+     EXCEPTION
+
+      WHEN NO_DATA_FOUND THEN
+           INSERT INTO LBL_ORG_LEVEL_4@archibus21
+           (DV_ID, DP_ID, LBL_ORG_LEVEL_3_CODE, LBL_ORG_LEVEL_4_CODE,
+            LBL_ORG_LEVEL_4_DESC)
+           VALUES(LEVEL4_REC.DEPTID, LEVEL4_REC.ZZ_GROUP, LEVEL4_REC.ZZ_UNIT,
+            LEVEL4_REC.ZZ_LEVEL4,LEVEL4_REC.DESCR);
+
+     END;
+
+  END LOOP;
+
+
+
+
+ COMMIT;
+
+END;
+
+/

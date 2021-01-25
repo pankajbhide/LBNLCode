@@ -1,0 +1,171 @@
+
+/*******************************************************************************
+ PROGRAM NAME           : Build_Person_Ancestor.SQL
+
+ DATE WRITTEN           : 17-JULY-2017
+                                                     
+ PURPOSE                : BUILD THE PERSON ANCESTOR TABLE
+*****************************************************************************/
+SET SCAN OFF
+ 
+WHENEVER SQLERROR EXIT 1 ROLLBACK;
+
+
+DECLARE
+ 
+  ORGID_T            LABOR.ORGID%TYPE;
+  SITEID_T           WORKORDER.SITEID%TYPE;
+  SUPERVISOR_T       PERSON.SUPERVISOR%TYPE;
+  CNT_FIXEDCRAFT_T   NUMBER(5) :=0;
+  ROW_ID_T           NUMBER(6) :=0;
+  LEVEL_T            NUMBER(6) :=0;
+  EMPLID_T           PERSON.PERSONID%TYPE; 
+  RESULT_T           VARCHAR2(10);
+  
+
+   CURSOR EMPLOYEE_CUR IS 
+    SELECT LTRIM(RTRIM(EMPLID)) EMPLID, NAME, FIRST_NAME, LAST_NAME, 
+           TRIM(ORG_CODE) ORG_CODE, TERMINATION_DT,  -- TRIMMED ON 10/21/15
+           SUBSTR(MAIL_DROP,1,12) MAIL_DROP, ZZ_BLDG, ZZ_ROOM, 
+           NVL(WORK_PHONE,' ') WORK_PHONE, HIRE_DT,
+           NVL(EMAILID,' ') EMAILID, EMPL_CLASS, EMPL_STATUS, SUPERVISOR_ID,
+           SUBSTR(JOBTITLE,1,30) JOBTITLE,
+           SUBSTR(ORG_LEVEL_3_DESC,1,30) DEPARTMENT,
+           TRIM(ORG_LEVEL_1_CODE)ORG_LEVEL_1_CODE , TRIM(ORG_LEVEL_2_CODE) ORG_LEVEL_2_CODE,  -- ADDED ON 6/14/10 TRIMMED ON 10/21/15
+           TRIM(ORG_LEVEL_3_CODE)ORG_LEVEL_3_CODE,  TRIM(ORG_LEVEL_4_CODE) ORG_LEVEL_4_CODE   -- ADDED ON 6/14/10 TRIMMED ON 10/21/15                
+    --FROM DW.PS_EMPLOYEES_PUBLIC@dwprd 
+    FROM EDW_SHARE.PS_EMPLOYEES_PUBLIC a
+    where not exists (select 1 from EDW_SHARE.PS_EMPLOYEES_PUBLIC b where a.emplid = b.supervisor_id and b.emplid = a.supervisor_id and b.emplid != b.supervisor_id) 
+   ORDER BY EMPLID;
+   
+    CURSOR PARENTEMP_CUR IS 
+    SELECT EMPLID, SUPERVISOR_ID, LEVEL 
+    FROM EDW_SHARE.PS_EMPLOYEES_PUBLIC
+    CONNECT BY NOCYCLE  PRIOR SUPERVISOR_ID=EMPLID
+    START WITH EMPLID= EMPLID_T
+    ORDER BY LEVEL;
+   
+   DISPLAYNAME_T  PERSON.DISPLAYNAME%TYPE;
+   PHONENUM_T     PHONE.PHONENUM%TYPE;
+   EMAILADDRESS_T EMAIL.EMAILADDRESS%TYPE;
+   LABORCODE_T    LABOR.LABORCODE%TYPE;
+   LABORCODE_T2   LABORCRAFTRATE.LABORCODE%TYPE;
+   STATUS_T       PERSONSTATUS.STATUS%TYPE;
+   CRAFT_T        LABORCRAFTRATE.CRAFT%TYPE;
+   DESCRIPTION_T  CRAFT.DESCRIPTION%TYPE;
+   
+      
+     
+   CRAFT_EXISTS_T NUMBER(5) := 0;
+
+/*********************************************************************
+ MAIN PROGRAM STARTS FROM HERE
+*********************************************************************/
+BEGIN
+
+    DBMS_OUTPUT.ENABLE(100000000);  
+          
+  --   GET THE VALUE OF ORG ID FROM THE ARUGEMENT 
+     ORGID_T   :=UPPER('&1');
+    --ORGID_T := 'LBNL';
+      
+    IF (ORGID_T IS NULL OR LENGTH(ORGID_T)=0) THEN
+       ORGID_T :='LBNL';
+    END IF;
+  
+--     GET THE VALUE OF SITEID ID FROM THE ARUGEMENT 
+     SITEID_T   :=UPPER('&2');
+    --SITEID_T := 'FAC'; 
+     
+    IF (SITEID_T IS NULL OR LENGTH(SITEID_T)=0) THEN
+       SITEID_T :='FAC';
+    END IF;
+
+    -- START REFRESHING EMPLOYEE DETAILS
+    FOR EMPLOYEE_REC IN EMPLOYEE_CUR
+     
+     LOOP
+     
+       ROW_ID_T := ROW_ID_T + 1;
+       
+       IF (EMPLOYEE_REC.EMPLID=EMPLOYEE_REC.SUPERVISOR_ID) THEN
+          SUPERVISOR_T :=NULL;
+       ELSE
+          SUPERVISOR_T :=EMPLOYEE_REC.SUPERVISOR_ID;
+       END IF;
+               
+    --***************************************
+    -- REFRESH ROWS OF PERSONANCESTOR TABLE 
+    --***************************************
+    IF (ROW_ID_T=1) THEN   
+      -- RESET THE SEQUENCE FOR PERSONACENSTOR 
+      RESULT_T := LBL_MAXIMO_PKG.RESET_SEQUENCE('PERSONANCESTORSEQ');
+     
+      -- CLEAN UP THE DATA FOR THE EMPLOYEE
+      EXECUTE IMMEDIATE ' TRUNCATE TABLE PERSONANCESTOR ';    
+    END IF;
+    
+    
+      
+    EMPLID_T  := EMPLOYEE_REC.EMPLID;
+    LEVEL_T   :=0;
+    
+        CNT_FIXEDCRAFT_T :=0;
+          
+          SELECT COUNT(*) INTO CNT_FIXEDCRAFT_T 
+          FROM PERSONANCESTOR
+          WHERE ANCESTOR=EMPLID_T
+          AND   PERSONID=EMPLID_T;
+         
+         IF (CNT_FIXEDCRAFT_T =0) THEN 
+    
+             -- SELF ANCESTOR 
+             INSERT INTO PERSONANCESTOR
+             (ANCESTOR, PERSONID, HIERARCHYLEVELS, PERSONANCESTORID)
+              VALUES
+             (EMPLID_T, EMPLID_T , LEVEL_T , PERSONANCESTORSEQ.NEXTVAL);
+         END IF;
+     
+
+    
+    if (EMPLOYEE_REC.emplid != EMPLOYEE_REC.SUPERVISOR_ID) and (EMPLOYEE_REC.SUPERVISOR_ID is not null)  then  
+    -- FIND OUT PARENT/S AND INSERT THEM  
+        FOR  PARENTEMP_REC  IN PARENTEMP_CUR
+    
+          LOOP
+      
+            LEVEL_T := LEVEL_T + 1 ;
+            
+          CNT_FIXEDCRAFT_T :=0;
+          
+          SELECT COUNT(*) INTO CNT_FIXEDCRAFT_T 
+          FROM PERSONANCESTOR
+          WHERE ANCESTOR=PARENTEMP_REC.SUPERVISOR_ID
+          AND   PERSONID=EMPLID_T;
+         
+         IF (CNT_FIXEDCRAFT_T =0) THEN 
+      
+            INSERT INTO PERSONANCESTOR
+           (ANCESTOR, PERSONID, HIERARCHYLEVELS, PERSONANCESTORID)
+            VALUES
+           (PARENTEMP_REC.SUPERVISOR_ID, EMPLID_T, LEVEL_T, PERSONANCESTORSEQ.NEXTVAL);
+           
+       END IF;
+              
+     END LOOP;
+     
+  end if;
+              
+               
+   END LOOP;  --FOR EMPLOYEE_REC IN EMPLOYEE_CUR
+        
+         
+  COMMIT;
+
+END;
+
+/
+
+
+
+

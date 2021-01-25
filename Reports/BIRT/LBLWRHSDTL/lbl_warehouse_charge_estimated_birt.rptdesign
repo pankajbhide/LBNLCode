@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">IBM Confidential
+
+OCO Source Materials
+
+5724-M19
+
+(C) COPYRIGHT IBM CORP. 2006
+
+The source code for this program is not published or otherwise
+divested of its trade secrets, irrespective of what has been
+deposited with the U.S. Copyright Office.
+
+09-19764@000</property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.3.1.v201309091055 Build &lt;4.3.1.v20130918-1142></property>
+    <html-property name="description">This template will create a report having a single header with multiple rows of data.</html-property>
+    <property name="units">in</property>
+    <method name="initialize"><![CDATA[importPackage(Packages.com.ibm.tivoli.maximo.report.script);
+
+mxReportScriptContext = MXReportScriptContext.initialize(reportContext);]]></method>
+    <method name="beforeFactory"><![CDATA[// Remove page break intervals from PDF output
+if ( (reportContext.getParameterValue("usepagebreaks") == "false")|| reportContext.getOutputFormat() == "pdf" ) {
+	// Give each table in the report a name, and add the names to the list below, e.g. ["mainTable", "childTable1"]
+	var tableListing = ["mainTable"];
+	for each(var tableName in tableListing) {
+		var table = reportContext.getReportRunnable().designHandle.getDesignHandle().findElement(tableName)
+		if (table != null)
+		{
+			table.setProperty("pageBreakInterval", 0);
+		}
+	}
+}]]></method>
+    <method name="afterFactory"><![CDATA[MXReportScriptContext.close();]]></method>
+    <property name="theme">MaximoSystemLibrary.maximoTheme</property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">MaximoSystemLibrary.rptlibrary</property>
+            <property name="namespace">MaximoSystemLibrary</property>
+        </structure>
+        <structure>
+            <property name="fileName">lbnlreportlibrary.rptlibrary</property>
+            <property name="namespace">lbnlreportlibrary</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="where" id="25">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1=1</value>
+            </simple-property-list>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="appname" id="200">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramdelimiter" id="202">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramstring" id="201">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="usepagebreaks" id="342">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">true</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ParamOrg" id="729">
+            <text-property name="promptText">Org</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">=LBNL</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="ParamSite" id="730">
+            <text-property name="promptText">Site</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">=FAC</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <script-data-source name="maximoDataSource" id="64" extends="MaximoSystemLibrary.maximoDataSource"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="MainDataSet" id="5">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">proj_act_id</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">accountname</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">lbl_org_level_1</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">description</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">sq_ft_used</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">codetag</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">ownerid</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">financialperiod</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">doe_number</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">owner_name</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">startdate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">enddate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">estimatecost</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">rate</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">proj_act_id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">accountname</property>
+                </structure>
+                <structure>
+                    <property name="columnName">lbl_org_level_1</property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">sq_ft_used</property>
+                </structure>
+                <structure>
+                    <property name="columnName">codetag</property>
+                </structure>
+                <structure>
+                    <property name="columnName">ownerid</property>
+                </structure>
+                <structure>
+                    <property name="columnName">financialperiod</property>
+                </structure>
+                <structure>
+                    <property name="columnName">doe_number</property>
+                </structure>
+                <structure>
+                    <property name="columnName">owner_name</property>
+                </structure>
+                <structure>
+                    <property name="columnName">startdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">enddate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">estimatecost</property>
+                </structure>
+                <structure>
+                    <property name="columnName">rate</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">proj_act_id</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">accountname</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">lbl_org_level_1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">sq_ft_used</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">codetag</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">ownerid</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">financialperiod</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">doe_number</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">owner_name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">startdate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">enddate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">estimatecost</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">rate</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+var sqlText = new String();
+
+// Add query to sqlText variable.
+sqlText = "select lbl_wrhsfeeddtl.proj_act_id, (select accountname from lbl_v_coa where glaccount = lbl_wrhsfeeddtl.proj_act_id and active = 1) accountname, lbl_wrhsfeeddtl.lbl_org_level_1,  "  
++ " lbl_wrhsfeeddtl.description, lbl_wrhsfeeddtl.sq_ft_used, lbl_wrhsfeeddtl.codetag, lbl_wrhsfeeddtl.ownerid, lbl_wrhsfeeddtl.financialperiod, " 
++ " lbl_wrhsfeeddtl.doe_number,  (select displayname from person where personid = lbl_wrhsfeeddtl.ownerid) owner_name, "
++ " (select periodstart from financialperiods where financialperiod = lbl_wrhsfeeddtl.financialperiod) startdate, " 
++ " (select periodend from financialperiods where financialperiod = lbl_wrhsfeeddtl.financialperiod) enddate, "
++ " (select lbl_wrhsfeeddef.rate_per_sqft from lbl_wrhsfeeddef where lbl_wrhsfeeddef.orgid=lbl_wrhsfeeddtl.orgid " 
++ "		and lbl_wrhsfeeddef.siteid=lbl_wrhsfeeddtl.siteid and lbl_wrhsfeeddef.feeder_id='STR' " 
++ " 	and lbl_wrhsfeeddef.effdt = (select max(c.effdt) from lbl_wrhsfeeddef c "  
++ " 									where c.orgid=lbl_wrhsfeeddef.orgid "
++ "										and   c.siteid=lbl_wrhsfeeddef.siteid "
++ "					                    and   c.feeder_id='STR' "
++ "										and   c.effdt <= sysdate)) rate, " 
++ " round (((select  lbl_wrhsfeeddef.rate_per_sqft from lbl_wrhsfeeddef where lbl_wrhsfeeddef.ORGID=lbl_wrhsfeeddtl.orgid "
++ " 	and lbl_wrhsfeeddef.SITEID=lbl_wrhsfeeddtl.siteid and lbl_wrhsfeeddef.FEEDER_ID='STR' "
++ " 	and lbl_wrhsfeeddef.EFFDT = (select max(c.EFFDT) from lbl_wrhsfeeddef c "
++ "					                    where c.orgid=lbl_wrhsfeeddef.orgid "
++ "					                    and   c.siteid=lbl_wrhsfeeddef.siteid "
++ "					                    and   c.feeder_id='STR' "
++ "					                    and   c.effdt <= sysdate))  * lbl_wrhsfeeddtl.sq_ft_used), 2) estimatecost "
++ " from lbl_wrhsfeeddtl " 
++ " where lbl_wrhsfeeddtl.vault_number is null "
++ " and lbl_wrhsfeeddtl.orgid = '" + params["ParamOrg"].replace("=" , "") + "' "
++ " and lbl_wrhsfeeddtl.siteid = '" + params["ParamSite"].replace("=" , "") + "' "
+
++ " union all "
+
++ " select distinct lbl_wrhsfeeddtl.proj_act_id, (select accountname from lbl_v_coa where glaccount = lbl_wrhsfeeddtl.proj_act_id and active = 1) accountname, 'N/A' lbl_org_level_1, vault_number description, "
++ " 0 sq_ft_used, 'N/A' codetag, 'N/A' ownerid, lbl_wrhsfeeddtl.financialperiod, lbl_wrhsfeeddtl.doe_number, (select displayname from person where personid = lbl_wrhsfeeddtl.ownerid) owner_name, "
++ " (select periodstart from financialperiods where financialperiod = lbl_wrhsfeeddtl.financialperiod) startdate, "
++ " (select periodend from financialperiods where financialperiod = lbl_wrhsfeeddtl.financialperiod) enddate, "
++ " (select lbl_wrhsfeeddef.rate_per_vault from lbl_wrhsfeeddef where lbl_wrhsfeeddef.orgid=lbl_wrhsfeeddtl.orgid "
++ " 	and   lbl_wrhsfeeddef.siteid=lbl_wrhsfeeddtl.siteid and lbl_wrhsfeeddef.feeder_id='STR' "
++ " 	and   lbl_wrhsfeeddef.effdt = (select max(g.effdt) from lbl_wrhsfeeddef g "
++ "											where g.orgid=lbl_wrhsfeeddef.orgid "
++ "											and   g.siteid=lbl_wrhsfeeddef.siteid "
++ "											and   g.feeder_id='STR' "
++ "											and   g.effdt <= sysdate)) rate, "
++ " round((select lbl_wrhsfeeddef.rate_per_vault from lbl_wrhsfeeddef where lbl_wrhsfeeddef.orgid=lbl_wrhsfeeddtl.orgid "
++ " and   lbl_wrhsfeeddef.siteid=lbl_wrhsfeeddtl.siteid and   lbl_wrhsfeeddef.feeder_id='STR' "
++ " and   lbl_wrhsfeeddef.effdt = (select max(g.effdt) from lbl_wrhsfeeddef g "
++ "										where g.orgid=lbl_wrhsfeeddef.orgid "
++ "		                                and   g.siteid=lbl_wrhsfeeddef.siteid "
++ "										and   g.feeder_id='STR' "
++ "										and   g.effdt <= sysdate)), 2) estimatecost " 
++ " from lbl_wrhsfeeddtl " 
++ " where lbl_wrhsfeeddtl.vault_number is not null "
++ " and   lbl_wrhsfeeddtl.orgid=  '" + params["ParamOrg"].replace("=" , "") + "' "
++ " and   lbl_wrhsfeeddtl.siteid= '" + params["ParamSite"].replace("=" , "") + "' "
+
+;
+
+maximoDataSet.setQuery(sqlText);
+
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["proj_act_id"] = maximoDataSet.getString("proj_act_id");
+row["accountname"] = maximoDataSet.getString("accountname");
+row["lbl_org_level_1"] = maximoDataSet.getString("lbl_org_level_1");
+row["description"] = maximoDataSet.getString("description");
+row["sq_ft_used"] = maximoDataSet.getString("sq_ft_used");
+row["codetag"] = maximoDataSet.getString("codetag");
+row["ownerid"] = maximoDataSet.getString("ownerid");
+row["financialperiod"] = maximoDataSet.getString("financialperiod");
+row["doe_number"] = maximoDataSet.getString("doe_number");	
+row["owner_name"] = maximoDataSet.getString("owner_name");
+row["startdate"] = maximoDataSet.getTimestamp("startdate");	
+row["enddate"] = maximoDataSet.getTimestamp("enddate");	
+row["rate"] = maximoDataSet.getString("rate");
+row["estimatecost"] = maximoDataSet.getString("estimatecost");
+return (true);
+
+
+]]></method>
+        </script-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab-cell" id="370">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="371">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="LandscapeWithoutLogo" id="945" extends="lbnlreportlibrary.LandscapeWithoutLogo">
+            <overridden-values>
+                <ref-entry baseId="32" name="NewGrid211" id="32"/>
+                <ref-entry baseId="33" id="33"/>
+                <ref-entry baseId="34" id="34"/>
+                <ref-entry baseId="35" id="35"/>
+                <ref-entry baseId="36" id="36"/>
+                <ref-entry baseId="37" id="37"/>
+                <ref-entry baseId="38" name="NewImage21" id="38"/>
+                <ref-entry baseId="39" name="NewGrid31" id="39"/>
+                <ref-entry baseId="40" id="40"/>
+                <ref-entry baseId="41" id="41"/>
+                <ref-entry baseId="42" id="42"/>
+                <ref-entry baseId="43" id="43"/>
+                <ref-entry baseId="44" name="NewText21" id="44"/>
+                <ref-entry baseId="45" id="45"/>
+                <ref-entry baseId="46" name="NewGrid111" id="46"/>
+                <ref-entry baseId="47" id="47"/>
+                <ref-entry baseId="48" id="48"/>
+                <ref-entry baseId="49" id="49"/>
+                <ref-entry baseId="50" id="50"/>
+                <ref-entry baseId="51" id="51"/>
+                <ref-entry baseId="52" name="NewAutoText21" id="52"/>
+                <ref-entry baseId="53" id="53"/>
+                <ref-entry baseId="54" name="NewText111" id="54"/>
+                <ref-entry baseId="55" id="55"/>
+                <ref-entry baseId="56" name="NewAutoText111" id="56"/>
+            </overridden-values>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="765">
+            <property name="dataSet">MainDataSet</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">proj_act_id</property>
+                    <text-property name="displayName">proj_act_id</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["proj_act_id"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">accountname</property>
+                    <text-property name="displayName">accountname</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["accountname"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">lbl_org_level_1</property>
+                    <text-property name="displayName">lbl_org_level_1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["lbl_org_level_1"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">description</property>
+                    <text-property name="displayName">description</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["description"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">sq_ft_used</property>
+                    <text-property name="displayName">sq_ft_used</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["sq_ft_used"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">codetag</property>
+                    <text-property name="displayName">codetag</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["codetag"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">ownerid</property>
+                    <text-property name="displayName">ownerid</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ownerid"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">financialperiod</property>
+                    <text-property name="displayName">financialperiod</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["financialperiod"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">doe_number</property>
+                    <text-property name="displayName">doe_number</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["doe_number"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">owner_name</property>
+                    <text-property name="displayName">owner_name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["owner_name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">startdate</property>
+                    <text-property name="displayName">startdate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["startdate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">enddate</property>
+                    <text-property name="displayName">enddate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["enddate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">estimatecost</property>
+                    <text-property name="displayName">estimatecost</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["estimatecost"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">rate</property>
+                    <text-property name="displayName">rate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["rate"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation</property>
+                    <text-property name="displayName">TotalCharge</text-property>
+                    <property name="dataType">float</property>
+                    <simple-property-list name="aggregateOn">
+                        <value>ProjectID</value>
+                    </simple-property-list>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">dataSetRow["estimatecost"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+                <structure>
+                    <property name="name">Aggregation_1</property>
+                    <text-property name="displayName">GrandTotal</text-property>
+                    <property name="dataType">float</property>
+                    <property name="aggregateFunction">SUM</property>
+                    <list-property name="arguments">
+                        <structure>
+                            <property name="name">Expression</property>
+                            <expression name="value" type="javascript">dataSetRow["estimatecost"]</expression>
+                        </structure>
+                    </list-property>
+                    <property name="allowExport">true</property>
+                </structure>
+            </list-property>
+            <column id="814"/>
+            <column id="815"/>
+            <column id="817"/>
+            <column id="818"/>
+            <column id="819"/>
+            <column id="820"/>
+            <column id="821"/>
+            <column id="822"/>
+            <column id="823"/>
+            <column id="824"/>
+            <header>
+                <row id="915">
+                    <property name="backgroundColor">#C2CDE7</property>
+                    <cell id="916">
+                        <property name="colSpan">10</property>
+                        <property name="rowSpan">1</property>
+                        <text-data id="941">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">bold</property>
+                            <expression name="valueExpr">BirtStr.concat('Details of Warehouse Recharge ', BirtDateTime.now())</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                        <text-data id="942">
+                            <property name="fontSize">12pt</property>
+                            <property name="fontWeight">bold</property>
+                            <expression name="valueExpr">BirtStr.concat('Fiscal Year: ', BirtStr.left(row["financialperiod"], 4), '  &amp; Accounting Period: ', BirtStr.right(row["financialperiod"], 2 ), '  Period Start: ', row["startdate"],  ' Period End: ', row["enddate"])</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                </row>
+                <row id="766">
+                    <cell id="767">
+                        <label id="96">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Project id</text-property>
+                        </label>
+                    </cell>
+                    <cell id="768">
+                        <label id="825">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Chargeable</text-property>
+                        </label>
+                    </cell>
+                    <cell id="770">
+                        <label id="827">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Org Level 1</text-property>
+                        </label>
+                    </cell>
+                    <cell id="771">
+                        <label id="828">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Description</text-property>
+                        </label>
+                    </cell>
+                    <cell id="772">
+                        <label id="829">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Owner</text-property>
+                        </label>
+                    </cell>
+                    <cell id="773">
+                        <label id="830">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">DOE #</text-property>
+                        </label>
+                    </cell>
+                    <cell id="774">
+                        <label id="831">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Code Tag</text-property>
+                        </label>
+                    </cell>
+                    <cell id="775">
+                        <label id="833">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Sq. Ft. Used</text-property>
+                        </label>
+                    </cell>
+                    <cell id="776">
+                        <label id="832">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Rate	</text-property>
+                        </label>
+                    </cell>
+                    <cell id="777">
+                        <label id="834">
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Estimated charge</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <group id="846">
+                <property name="groupName">ProjectID</property>
+                <expression name="keyExpr" type="javascript">row["proj_act_id"]</expression>
+                <structure name="toc">
+                    <expression name="expressionValue" type="javascript">row["proj_act_id"]</expression>
+                </structure>
+                <property name="hideDetail">false</property>
+                <header>
+                    <row id="847">
+                        <property name="pageBreakAfter">avoid</property>
+                        <property name="pageBreakBefore">avoid</property>
+                        <cell id="848">
+                            <data id="936">
+                                <property name="resultSetColumn">proj_act_id</property>
+                            </data>
+                        </cell>
+                        <cell id="849"/>
+                        <cell id="851"/>
+                        <cell id="852"/>
+                        <cell id="853"/>
+                        <cell id="854"/>
+                        <cell id="855"/>
+                        <cell id="856"/>
+                        <cell id="857"/>
+                        <cell id="858"/>
+                    </row>
+                </header>
+                <footer>
+                    <row id="859">
+                        <property name="pageBreakAfter">avoid</property>
+                        <property name="pageBreakBefore">avoid</property>
+                        <cell id="860"/>
+                        <cell id="861"/>
+                        <cell id="863"/>
+                        <cell id="864"/>
+                        <cell id="865"/>
+                        <cell id="866"/>
+                        <cell id="867"/>
+                        <cell id="868"/>
+                        <cell id="869">
+                            <label id="873">
+                                <property name="backgroundColor">#ADC1D6</property>
+                                <property name="fontSize">10pt</property>
+                                <property name="fontWeight">bold</property>
+                                <text-property name="text">TOTAL</text-property>
+                            </label>
+                        </cell>
+                        <cell id="870">
+                            <data id="939">
+                                <property name="backgroundColor">#ADC1D6</property>
+                                <property name="fontSize">10pt</property>
+                                <property name="fontWeight">bold</property>
+                                <property name="resultSetColumn">Aggregation</property>
+                            </data>
+                        </cell>
+                    </row>
+                </footer>
+            </group>
+            <detail>
+                <row id="778">
+                    <list-property name="highlightRules">
+                        <structure>
+                            <property name="operator">eq</property>
+                            <property name="backgroundColor">#EDEDED</property>
+                            <property name="fontSize">7pt</property>
+                            <expression name="testExpr" type="javascript">row[0] % 2</expression>
+                            <simple-property-list name="value1">
+                                <value type="javascript">0</value>
+                            </simple-property-list>
+                        </structure>
+                    </list-property>
+                    <cell id="779">
+                        <data id="933">
+                            <property name="resultSetColumn">proj_act_id</property>
+                        </data>
+                    </cell>
+                    <cell id="780">
+                        <text-data id="836">
+                            <property name="textAlign">left</property>
+                            <property name="pageBreakAfter">avoid</property>
+                            <property name="pageBreakBefore">avoid</property>
+                            <property name="pageBreakInside">avoid</property>
+                            <expression name="valueExpr">if(row["owner_name"] != "" )&#13;
+{ "Y";}&#13;
+else&#13;
+{"N";}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="782">
+                        <data id="838">
+                            <property name="resultSetColumn">lbl_org_level_1</property>
+                        </data>
+                    </cell>
+                    <cell id="783">
+                        <data id="839">
+                            <property name="resultSetColumn">description</property>
+                        </data>
+                    </cell>
+                    <cell id="784">
+                        <data id="840">
+                            <property name="resultSetColumn">owner_name</property>
+                        </data>
+                    </cell>
+                    <cell id="785">
+                        <data id="841">
+                            <property name="resultSetColumn">doe_number</property>
+                        </data>
+                    </cell>
+                    <cell id="786">
+                        <data id="842">
+                            <property name="resultSetColumn">codetag</property>
+                        </data>
+                    </cell>
+                    <cell id="787">
+                        <data id="843">
+                            <property name="resultSetColumn">sq_ft_used</property>
+                        </data>
+                    </cell>
+                    <cell id="788">
+                        <data id="934">
+                            <property name="resultSetColumn">rate</property>
+                        </data>
+                    </cell>
+                    <cell id="789">
+                        <data id="935">
+                            <property name="resultSetColumn">estimatecost</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="802">
+                    <cell id="803"/>
+                    <cell id="804"/>
+                    <cell id="806"/>
+                    <cell id="807"/>
+                    <cell id="808"/>
+                    <cell id="809"/>
+                    <cell id="810"/>
+                    <cell id="811"/>
+                    <cell id="812">
+                        <label id="876">
+                            <property name="backgroundColor">silver</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">GRAND TOTAL</text-property>
+                        </label>
+                    </cell>
+                    <cell id="813">
+                        <data id="940">
+                            <property name="backgroundColor">silver</property>
+                            <property name="fontSize">10pt</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="resultSetColumn">Aggregation_1</property>
+                        </data>
+                    </cell>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

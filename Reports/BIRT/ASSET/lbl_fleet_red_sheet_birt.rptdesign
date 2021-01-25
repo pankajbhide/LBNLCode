@@ -1,0 +1,1642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">IBM Confidential
+
+OCO Source Materials
+
+5724-M19
+
+(C) COPYRIGHT IBM CORP. 2006
+
+The source code for this program is not published or otherwise
+divested of its trade secrets, irrespective of what has been
+deposited with the U.S. Copyright Office.
+
+09-19764@000</property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.3.1.v201309091055 Build &lt;4.3.1.v20130918-1142></property>
+    <html-property name="description">This template will create a report having a single header with multiple rows of data.</html-property>
+    <property name="units">in</property>
+    <method name="initialize"><![CDATA[importPackage(Packages.com.ibm.tivoli.maximo.report.script);
+
+mxReportScriptContext = MXReportScriptContext.initialize(reportContext);]]></method>
+    <method name="beforeFactory"><![CDATA[// Remove page break intervals from PDF output
+if ( (reportContext.getParameterValue("usepagebreaks") == "false")|| reportContext.getOutputFormat() == "pdf" ) {
+	// Give each table in the report a name, and add the names to the list below, e.g. ["mainTable", "childTable1"]
+	var tableListing = ["mainTable"];
+	for each(var tableName in tableListing) {
+		var table = reportContext.getReportRunnable().designHandle.getDesignHandle().findElement(tableName)
+		if (table != null)
+		{
+			table.setProperty("pageBreakInterval", 0);
+		}
+	}
+}]]></method>
+    <method name="afterFactory"><![CDATA[MXReportScriptContext.close();]]></method>
+    <property name="theme">MaximoSystemLibrary.maximoTheme</property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">MaximoSystemLibrary.rptlibrary</property>
+            <property name="namespace">MaximoSystemLibrary</property>
+        </structure>
+        <structure>
+            <property name="fileName">lbnlreportlibrary.rptlibrary</property>
+            <property name="namespace">lbnlreportlibrary</property>
+        </structure>
+    </list-property>
+    <template-parameter-definitions>
+        <template-parameter-definition name="NewTemplateParameterDefinition" id="71">
+            <property name="allowedType">Label</property>
+            <text-property name="description">Double-click to enter the report title.</text-property>
+            <default>
+                <label id="72">
+                    <text-property name="text">Report Title</text-property>
+                </label>
+            </default>
+        </template-parameter-definition>
+    </template-parameter-definitions>
+    <parameters>
+        <scalar-parameter name="where" id="25">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1=1</value>
+            </simple-property-list>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="appname" id="200">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramdelimiter" id="202">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramstring" id="201">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="usepagebreaks" id="342">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">true</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <script-data-source name="maximoDataSource" id="64" extends="MaximoSystemLibrary.maximoDataSource"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="mainDataSet" id="5">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">assetnum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">description</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">fmile</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">fdate</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">bmile</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">bdate</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">mmile</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">mdate</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">tmile</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">tdate</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">qdate</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">btfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">btunit</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">bmfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">mtfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">mtunit</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">mmfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">ttfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">ttunit</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">tmfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">qtfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">22</property>
+                    <property name="name">emergency</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">23</property>
+                    <property name="name">brake</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">24</property>
+                    <property name="name">maint</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">25</property>
+                    <property name="name">tire</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">26</property>
+                    <property name="name">brakedate</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">27</property>
+                    <property name="name">maintdate</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">28</property>
+                    <property name="name">tiredate</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">assetnum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">fmile</property>
+                </structure>
+                <structure>
+                    <property name="columnName">fdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">bmile</property>
+                </structure>
+                <structure>
+                    <property name="columnName">bdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">mmile</property>
+                </structure>
+                <structure>
+                    <property name="columnName">mdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">tmile</property>
+                </structure>
+                <structure>
+                    <property name="columnName">tdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">qdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">btfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">btunit</property>
+                </structure>
+                <structure>
+                    <property name="columnName">bmfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">mtfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">mtunit</property>
+                </structure>
+                <structure>
+                    <property name="columnName">mmfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">ttfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">ttunit</property>
+                </structure>
+                <structure>
+                    <property name="columnName">tmfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">qtfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">emergency</property>
+                </structure>
+                <structure>
+                    <property name="columnName">brake</property>
+                </structure>
+                <structure>
+                    <property name="columnName">maint</property>
+                </structure>
+                <structure>
+                    <property name="columnName">tire</property>
+                </structure>
+                <structure>
+                    <property name="columnName">brakedate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">maintdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">tiredate</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">assetnum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">fmile</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">fdate</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">bmile</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">bdate</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">mmile</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">mdate</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">tmile</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">tdate</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">qdate</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">btfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">btunit</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">bmfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">mtfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">mtunit</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">mmfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">ttfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">ttunit</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">tmfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">qtfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">22</property>
+                        <property name="name">emergency</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">23</property>
+                        <property name="name">brake</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">24</property>
+                        <property name="name">maint</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">25</property>
+                        <property name="name">tire</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">26</property>
+                        <property name="name">brakedate</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">27</property>
+                        <property name="name">maintdate</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">28</property>
+                        <property name="name">tiredate</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+var sqlText = new String();
+
+// Add query to sqlText variable.
+sqlText = "select a.assetnum, a.description, " 
++ "f.lastreading fmile, f.lastreadingdate fdate, "
++ "b.lastreading bmile, b.lastreadingdate bdate, " 
++ "m.lastreading mmile, m.lastreadingdate mdate, " 
++ "t.lastreading tmile, t.lastreadingdate tdate, "
++ "(q.lastreadingdate + qt.frequency) qdate, "
++ "bt.frequency btfreq, bt.frequnit btunit, "
++ " bm.frequency bmfreq, " 
++ "mt.frequency mtfreq, mt.frequnit mtunit, "
++ "mm.frequency mmfreq, "
++ "tt.frequency ttfreq, tt.frequnit ttunit, "
++ "tm.frequency tmfreq, "
++ "qt.frequency qtfreq, "
++ "(select ALNVALUE from assetspec where assetattrid = 'FL-EM' and assetnum = a.assetnum) emergency, "
++ "decode(instr(b.lastreading, ','),0, b.lastreading, to_number(substr(b.lastreading, 1, (instr(b.lastreading, ',')-1)) ||  substr(b.lastreading, (instr(b.lastreading, ',')+ 1), 3))) + to_number(bm.frequency) brake, "
++ "decode(instr(m.lastreading, ','),0, m.lastreading, to_number(substr(m.lastreading, 1, (instr(m.lastreading, ',')-1)) ||  substr(m.lastreading, (instr(m.lastreading, ',')+ 1), 3))) + to_number(mm.frequency)maint, "
++ "decode(instr(t.lastreading, ','),0, t.lastreading, to_number(substr(t.lastreading, 1, (instr(t.lastreading, ',')-1)) ||  substr(t.lastreading, (instr(t.lastreading, ',')+ 1), 3))) + to_number(tm.frequency)tire, "
++ "decode (bt.frequnit, 'DAYS', add_months(b.lastreadingdate, bt.frequency / 365), 'WEEKS',  add_months(b.lastreadingdate, bt.frequency / 52), 'MONTHS', add_months(b.lastreadingdate, bt.frequency), 'YEARS', add_months(b.lastreadingdate, bt.frequency*12)) brakedate, "
++ "decode (mt.frequnit, 'DAYS', add_months(m.lastreadingdate, mt.frequency / 365), 'WEEKS',  add_months(m.lastreadingdate, mt.frequency / 52), 'MONTHS', add_months(m.lastreadingdate, mt.frequency), 'YEARS', add_months(m.lastreadingdate, mt.frequency*12)) maintdate, "
++ "decode (tt.frequnit, 'DAYS', add_months(t.lastreadingdate, tt.frequency / 365), 'WEEKS',  add_months(t.lastreadingdate, tt.frequency / 52), 'MONTHS', add_months(t.lastreadingdate, tt.frequency), 'YEARS', add_months(t.lastreadingdate, bt.frequency*12)) tiredate "
++ "from asset a, assetmeter b, assetmeter m, assetmeter t, assetmeter f, assetmeter q, pm bt, pmmeter bm, pm mt, pmmeter mm, pm tt, pmmeter tm, pm qt "
++ "where  a.assetnum in (select assetnum from asset where isrunning = 1 and assetnum in (select distinct assetnum from assetmeter where metername in ('FLEET-BRAKE', 'FLEET-TIRE', 'FLEET-MAINT', 'FLEET-QTR'))) "
++ "and a.assetnum = f.assetnum and f.metername = 'FLEET' "
++ "and a.assetnum = b.assetnum and b.metername = 'FLEET-BRAKE' "
++ "and a.assetnum = m.assetnum and m.metername = 'FLEET-MAINT' "
++ "and a.assetnum = t.assetnum and t.metername = 'FLEET-TIRE' "
++ "and a.assetnum = bt.assetnum and bt.pmnum like 'FLB%' "
++ "and a.assetnum = bm.assetnum and bm.metername = 'FLEET-BRAKE' "
++ "and a.assetnum = mt.assetnum and mt.pmnum like  'FLM%' "
++ "and a.assetnum = mm.assetnum and mm.metername = 'FLEET-MAINT' "
++ "and a.assetnum = tt.assetnum and tt.pmnum like 'FLT%' "
++ "and a.assetnum = tm.assetnum and tm.metername = 'FLEET-TIRE' "
++ "and a.assetnum = qt.assetnum and qt.pmnum like 'FLQ%' "
++ "and a.assetnum = q.assetnum and q.metername = 'FLEET-QTR' "
+" order by a.assetnum  asc"
+// Include the Maximo where clause
+//+ " where " + params["where"]
+;
+
+maximoDataSet.setQuery(sqlText);
+
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["assetnum"] = maximoDataSet.getString("assetnum");
+row["description"] = maximoDataSet.getString("description");
+row["fmile"] = maximoDataSet.getString("fmile");
+row["fdate"] = maximoDataSet.getTimestamp("fdate");
+row["bmile"] = maximoDataSet.getString("bmile");
+row["bdate"] = maximoDataSet.getTimestamp("bdate");		
+row["mmile"] = maximoDataSet.getString("mmile");
+row["mdate"] = maximoDataSet.getTimestamp("mdate");	
+row["tmile"] = maximoDataSet.getString("tmile");
+row["tdate"] = maximoDataSet.getTimestamp("tdate");	
+row["qdate"] = maximoDataSet.getTimestamp("qdate");	
+row["btfreq"] = maximoDataSet.getString("btfreq");
+row["btunit"] = maximoDataSet.getString("btunit");
+row["bmfreq"] = maximoDataSet.getString("bmfreq");	
+row["mtfreq"] = maximoDataSet.getString("mtfreq");
+row["mtunit"] = maximoDataSet.getString("mtunit");
+row["mmfreq"] = maximoDataSet.getString("mmfreq");	
+row["ttfreq"] = maximoDataSet.getString("ttfreq");
+row["ttunit"] = maximoDataSet.getString("ttunit");
+row["tmfreq"] = maximoDataSet.getString("tmfreq");	
+row["qtfreq"] = maximoDataSet.getString("qtfreq");
+row["emergency"] = maximoDataSet.getString("emergency");
+row["brake"] = maximoDataSet.getString("brake");
+row["maint"] = maximoDataSet.getString("maint");
+row["tire"] = maximoDataSet.getString("tire");
+row["brakedate"] = maximoDataSet.getTimestamp("brakedate");	
+row["maintdate"] = maximoDataSet.getTimestamp("maintdate");	
+row["tiredate"] = maximoDataSet.getTimestamp("tiredate");	
+
+
+return (true);]]></method>
+        </script-data-set>
+        <script-data-set name="FleetWithNoMaintDataSet" id="645">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">assetnum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">description</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">fmile</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">fdate</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">bmile</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">bdate</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">mmile</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">mdate</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">tmile</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">tdate</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">btfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">btunit</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">bmfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">mtfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">mtunit</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">mmfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">ttfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">ttunit</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">tmfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">20</property>
+                    <property name="name">qtfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">21</property>
+                    <property name="name">qtunit</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">assetnum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">fmile</property>
+                </structure>
+                <structure>
+                    <property name="columnName">fdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">bmile</property>
+                </structure>
+                <structure>
+                    <property name="columnName">bdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">mmile</property>
+                </structure>
+                <structure>
+                    <property name="columnName">mdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">tmile</property>
+                </structure>
+                <structure>
+                    <property name="columnName">tdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">btfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">btunit</property>
+                </structure>
+                <structure>
+                    <property name="columnName">bmfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">mtfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">mtunit</property>
+                </structure>
+                <structure>
+                    <property name="columnName">mmfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">ttfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">ttunit</property>
+                </structure>
+                <structure>
+                    <property name="columnName">tmfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">qtfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">qtunit</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">assetnum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">fmile</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">fdate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">bmile</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">bdate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">mmile</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">mdate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">tmile</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">tdate</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">btfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">btunit</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">bmfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">mtfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">mtunit</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">mmfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">ttfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">ttunit</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">tmfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">20</property>
+                        <property name="name">qtfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">21</property>
+                        <property name="name">qtunit</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+var sqlText = new String();
+
+// Add query to sqlText variable.
+sqlText = "select a.assetnum, a.description, " 
++ "nvl((select lastreading from assetmeter where metername = 'FLEET' and assetnum = a.assetnum), 0) fmile, "
++ "decode((select lastreadingdate from assetmeter where metername = 'FLEET' and assetnum = a.assetnum), NULL, 'NULL', to_char((select lastreadingdate from assetmeter where metername = 'FLEET' and assetnum = a.assetnum), 'MM/DD/YYYY')) fdate, "
++ "nvl((select lastreading from assetmeter where metername = 'FLEET-BRAKE' and assetnum = a.assetnum), 0) bmile, "
++ "decode((select lastreadingdate from assetmeter where metername = 'FLEET-BRAKE' and assetnum = a.assetnum), NULL, 'NULL', to_char((select lastreadingdate from assetmeter where metername = 'FLEET-BRAKE' and assetnum = a.assetnum), 'MM/DD/YYYY')) bdate, "
++ "nvl((select lastreading from assetmeter where metername = 'FLEET-TIRE' and assetnum = a.assetnum), 0) tmile, "
++ "decode((select lastreadingdate from assetmeter where metername = 'FLEET-TIRE' and assetnum = a.assetnum), NULL, 'NULL', to_char((select lastreadingdate from assetmeter where metername = 'FLEET-TIRE' and assetnum = a.assetnum), 'MM/DD/YYYY')) tdate, "
++ "nvl((select lastreading from assetmeter where metername = 'FLEET-MAINT' and assetnum = a.assetnum), 0) mmile, "
++ "decode((select lastreadingdate from assetmeter where metername = 'FLEET-MAINT' and assetnum = a.assetnum), NULL, 'NULL', to_char((select lastreadingdate from assetmeter where metername = 'FLEET-MAINT' and assetnum = a.assetnum), 'MM/DD/YYYY')) mdate, "
++ "nvl((select frequency from pm where pmnum like'FLB%' and assetnum = a.assetnum), 0)btfreq, "
++ "decode((select frequnit from pm where pmnum like'FLB%' and assetnum = a.assetnum), NULL, 'NULL', (select frequnit from pm where pmnum like'FLB%' and assetnum = a.assetnum))btunit, "
++ "nvl((select frequency from pmmeter where metername like'FLEET-BRAKE' and assetnum = a.assetnum), 0)bmfreq, " 
++ "nvl((select frequency from pm where pmnum like'FLT%' and assetnum = a.assetnum), 0)ttfreq, " 
++ "decode((select frequnit from pm where pmnum like'FLT%' and assetnum = a.assetnum), NULL, 'NULL', (select frequnit from pm where pmnum like'FLT%' and assetnum = a.assetnum))ttunit, "
++ "nvl((select frequency from pmmeter where metername like'FLEET-TIRE' and assetnum = a.assetnum), 0)tmfreq, "
++ "nvl((select frequency from pm where pmnum like'FLM%' and assetnum = a.assetnum), 0)mtfreq, "
++ "decode((select frequnit from pm where pmnum like'FLM%' and assetnum = a.assetnum), NULL, 'NULL',(select frequnit from pm where pmnum like'FLM%' and assetnum = a.assetnum))mtunit, " 
++ "nvl((select frequency from pmmeter where metername like'FLEET-MAINT' and assetnum = a.assetnum), 0)mmfreq, " 
++ "nvl((select frequency from pm where pmnum like'FLQ%' and assetnum = a.assetnum), 0)qtfreq, " 
++ "decode((select frequnit from pm where pmnum like'FLQ%' and assetnum = a.assetnum), NULL, 'NULL', (select frequnit from pm where pmnum like'FLQ%' and assetnum = a.assetnum) )qtunit " 
++ "from asset a, assetmeter m "
++ "where a.isrunning = 1 and m.metername = 'FLEET' "
++ "and a.assetnum = m.assetnum "
++ "and (a.assetnum like 'G%' or a.assetnum like 'E%') "
++ "and  a.assetnum not in (select assetnum from assetspec where assetattrid = 'FL-TYPE' and ALNVALUE = 'GEM') "
++ "order by a.assetnum "
+// Include the Maximo where clause
+//+ " where " + params["where"]
+;
+
+maximoDataSet.setQuery(sqlText);
+
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["assetnum"] = maximoDataSet.getString("assetnum");
+row["description"] = maximoDataSet.getString("description");
+row["fmile"] = maximoDataSet.getString("fmile");
+row["fdate"] = maximoDataSet.getString("fdate");
+row["bmile"] = maximoDataSet.getString("bmile");
+row["bdate"] = maximoDataSet.getString("bdate");	
+row["tmile"] = maximoDataSet.getString("tmile");
+row["tdate"] = maximoDataSet.getString("tdate");
+row["mmile"] = maximoDataSet.getString("mmile");
+row["mdate"] = maximoDataSet.getString("mdate");	
+row["btfreq"] = maximoDataSet.getString("btfreq");
+row["btunit"] = maximoDataSet.getString("btunit");
+row["bmfreq"] = maximoDataSet.getString("bmfreq");
+row["ttfreq"] = maximoDataSet.getString("ttfreq");
+row["ttunit"] = maximoDataSet.getString("ttunit");
+row["tmfreq"] = maximoDataSet.getString("tmfreq");	
+row["mtfreq"] = maximoDataSet.getString("mtfreq");
+row["mtunit"] = maximoDataSet.getString("mtunit");
+row["mmfreq"] = maximoDataSet.getString("mmfreq");	
+row["qtfreq"] = maximoDataSet.getString("qtfreq");
+row["qtunit"] = maximoDataSet.getString("qtunit");
+	
+ 
+return (true);]]></method>
+        </script-data-set>
+        <script-data-set name="GEMData Set" id="345">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">assetnum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">parking</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">description</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">fmile</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">fdate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">qdate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">qtfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">nextdue</property>
+                    <property name="dataType">date</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">assetnum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">parking</property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">fmile</property>
+                </structure>
+                <structure>
+                    <property name="columnName">fdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">qdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">qtfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">nextdue</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">assetnum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">parking</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">fmile</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">fdate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">qdate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">qtfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">nextdue</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+var sqlText = new String();
+
+// Add query to sqlText variable.
+
+
+sqlText = "select a.assetnum, (select alnvalue from assetspec where assetattrid = 'FL-PARK' and assetnum = a.assetnum) parking, a.description, "
++ "f.lastreading fmile, f.lastreadingdate fdate, " 
++ "q.lastreadingdate qdate, "
++ "qt.frequency qtfreq, "
++ "(q.lastreadingdate + qt.frequency) nextdue "
++ "from asset a, pm qt,  assetmeter f, assetmeter q "
++ "where  a.assetnum in (select assetnum from assetspec where assetattrid = 'FL-TYPE' and ALNVALUE in ('GEM', 'CLUB CAR')) "
++ "and a.isrunning = 1  and a.assetnum like 'EV%' "
++ "and a.assetnum = f.assetnum and f.metername = 'FLEET' "
++ "and a.assetnum = qt.assetnum and qt.pmnum like 'FLM%' "
++ "and a.assetnum = q.assetnum and q.metername = 'FLEET-MAINT' "
++ "order by (q.lastreadingdate + qt.frequency), a.assetnum "
+
+//+ " and " + params["where"]
+
+;
+maximoDataSet.setQuery(sqlText);
+
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["assetnum"] = maximoDataSet.getString("assetnum");
+row["parking"] = maximoDataSet.getString("parking");
+row["description"] = maximoDataSet.getString("description");
+row["fmile"] = maximoDataSet.getString("fmile");
+row["fdate"] = maximoDataSet.getTimestamp("fdate");
+row["qdate"] = maximoDataSet.getTimestamp("qdate");
+row["qtfreq"] = maximoDataSet.getString("qtfreq");
+row["nextdue"] = maximoDataSet.getTimestamp("nextdue");
+
+return (true);
+]]></method>
+        </script-data-set>
+        <script-data-set name="ForkLiftDtataSet" id="806">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">assetnum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">description</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">fmile</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">fdate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">qdate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">qtfreq</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">nextdue</property>
+                    <property name="dataType">date</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">assetnum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">fmile</property>
+                </structure>
+                <structure>
+                    <property name="columnName">fdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">qdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">qtfreq</property>
+                </structure>
+                <structure>
+                    <property name="columnName">nextdue</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">assetnum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">fmile</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">fdate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">qdate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">qtfreq</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">nextdue</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+var sqlText = new String();
+
+// Add query to sqlText variable.
+
+
+sqlText = "select a.assetnum, a.description, "
++ "f.lastreading fmile, f.lastreadingdate fdate, " 
++ "q.lastreadingdate qdate, "
++ "qt.frequency qtfreq,  "
++ "(q.lastreadingdate + qt.frequency) nextdue " 
++ "from asset a, pm qt,  assetmeter f, assetmeter q "
++ "where  a.assetnum like '0MH%' "
++ "and a.isrunning = 1 "
++ "and a.assetnum = f.assetnum and f.metername = 'FLEET' "
++ "and a.assetnum = qt.assetnum and qt.pmnum like 'FLM%' "
++ "and a.assetnum = q.assetnum and q.metername = 'FLEET-MAINT' "
++ "order by a.assetnum "
+
+;
+maximoDataSet.setQuery(sqlText);
+
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["assetnum"] = maximoDataSet.getString("assetnum");
+row["description"] = maximoDataSet.getString("description");
+row["fmile"] = maximoDataSet.getString("fmile");
+row["fdate"] = maximoDataSet.getTimestamp("fdate");
+row["qdate"] = maximoDataSet.getTimestamp("qdate");
+row["qtfreq"] = maximoDataSet.getString("qtfreq");
+row["nextdue"] = maximoDataSet.getTimestamp("nextdue");
+
+return (true);
+]]></method>
+        </script-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab-cell" id="343">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="344">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="LandscapeWithoutLogo" id="871" extends="lbnlreportlibrary.LandscapeWithoutLogo">
+            <overridden-values>
+                <ref-entry baseId="32" name="NewGrid21" id="32"/>
+                <ref-entry baseId="33" id="33"/>
+                <ref-entry baseId="34" id="34"/>
+                <ref-entry baseId="35" id="35"/>
+                <ref-entry baseId="36" id="36"/>
+                <ref-entry baseId="37" id="37"/>
+                <ref-entry baseId="38" name="NewImage2" id="38"/>
+                <ref-entry baseId="39" name="NewGrid3" id="39"/>
+                <ref-entry baseId="40" id="40"/>
+                <ref-entry baseId="41" id="41"/>
+                <ref-entry baseId="42" id="42"/>
+                <ref-entry baseId="43" id="43"/>
+                <ref-entry baseId="44" name="NewText2" id="44"/>
+                <ref-entry baseId="45" id="45"/>
+                <ref-entry baseId="46" name="NewGrid11" id="46"/>
+                <ref-entry baseId="47" id="872"/>
+                <ref-entry baseId="48" id="48"/>
+                <ref-entry baseId="49" id="49"/>
+                <ref-entry baseId="50" id="50"/>
+                <ref-entry baseId="51" id="51"/>
+                <ref-entry baseId="52" name="NewAutoText2" id="52"/>
+                <ref-entry baseId="53" id="53"/>
+                <ref-entry baseId="54" name="NewText11" id="54"/>
+                <ref-entry baseId="55" id="55"/>
+                <ref-entry baseId="56" name="NewAutoText11" id="56"/>
+            </overridden-values>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="565">
+            <property name="pageBreakAfter">always</property>
+            <property name="dataSet">GEMData Set</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">assetnum</property>
+                    <text-property name="displayName">assetnum</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["assetnum"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">description</property>
+                    <text-property name="displayName">description</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["description"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">fmile</property>
+                    <text-property name="displayName">fmile</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["fmile"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">fdate</property>
+                    <text-property name="displayName">fdate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["fdate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">qdate</property>
+                    <text-property name="displayName">qdate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["qdate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">qtfreq</property>
+                    <text-property name="displayName">qtfreq</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["qtfreq"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">nextdue</property>
+                    <text-property name="displayName">nextdue</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["nextdue"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">parking</property>
+                    <text-property name="displayName">parking</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["parking"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="578"/>
+            <column id="883"/>
+            <column id="579"/>
+            <column id="580"/>
+            <column id="639"/>
+            <header>
+                <row id="858">
+                    <property name="backgroundColor">#ADC1D6</property>
+                    <property name="textAlign">left</property>
+                    <property name="pageBreakBefore">always</property>
+                    <cell id="859">
+                        <property name="colSpan">5</property>
+                        <property name="rowSpan">1</property>
+                        <label id="863">
+                            <property name="fontFamily">"Arial"</property>
+                            <property name="fontSize">large</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <property name="pageBreakBefore">always</property>
+                            <property name="refTemplateParameter">NewTemplateParameterDefinition</property>
+                            <text-property name="text">Lawrence Berkeley National Lab&#13;
+Fleet Red Sheet Report (GEM/CLUB CAR)</text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="566">
+                    <property name="textAlign">left</property>
+                    <cell id="567">
+                        <label id="581">
+                            <property name="fontSize">8pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Asset#</text-property>
+                        </label>
+                    </cell>
+                    <cell id="880">
+                        <label id="884">
+                            <property name="fontSize">8pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Parking Stall</text-property>
+                        </label>
+                    </cell>
+                    <cell id="568">
+                        <label id="583">
+                            <property name="fontSize">8pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Description</text-property>
+                        </label>
+                    </cell>
+                    <cell id="569">
+                        <label id="640">
+                            <property name="fontSize">8pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Last Maintenance</text-property>
+                        </label>
+                    </cell>
+                    <cell id="636">
+                        <label id="644">
+                            <property name="fontSize">8pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Maintenance Due</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="570">
+                    <property name="textAlign">left</property>
+                    <cell id="571">
+                        <data id="582">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">assetnum</property>
+                        </data>
+                    </cell>
+                    <cell id="881">
+                        <data id="885">
+                            <property name="resultSetColumn">parking</property>
+                        </data>
+                    </cell>
+                    <cell id="572">
+                        <data id="584">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">description</property>
+                        </data>
+                    </cell>
+                    <cell id="573">
+                        <data id="641">
+                            <property name="fontSize">8pt</property>
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="resultSetColumn">qdate</property>
+                        </data>
+                    </cell>
+                    <cell id="637">
+                        <data id="835">
+                            <property name="fontSize">8pt</property>
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">lt</property>
+                                    <property name="backgroundColor">#FFFF00</property>
+                                    <property name="fontSize">8pt</property>
+                                    <property name="fontWeight">bold</property>
+                                    <expression name="testExpr" type="javascript">BirtDateTime.diffDay(BirtDateTime.today(),row["nextdue"])</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">30</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">nextdue</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="574">
+                    <cell id="575"/>
+                    <cell id="882"/>
+                    <cell id="576"/>
+                    <cell id="577"/>
+                    <cell id="638"/>
+                </row>
+            </footer>
+        </table>
+        <table id="786">
+            <property name="pageBreakAfter">always</property>
+            <property name="dataSet">ForkLiftDtataSet</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">assetnum</property>
+                    <text-property name="displayName">assetnum</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["assetnum"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">description</property>
+                    <text-property name="displayName">description</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["description"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">fmile</property>
+                    <text-property name="displayName">fmile</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["fmile"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">fdate</property>
+                    <text-property name="displayName">fdate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["fdate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">qdate</property>
+                    <text-property name="displayName">qdate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["qdate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">qtfreq</property>
+                    <text-property name="displayName">qtfreq</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["qtfreq"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">nextdue</property>
+                    <text-property name="displayName">nextdue</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["nextdue"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+            </list-property>
+            <column id="802"/>
+            <column id="803"/>
+            <column id="804"/>
+            <column id="805"/>
+            <header>
+                <row id="864">
+                    <property name="backgroundColor">#ADC1D6</property>
+                    <property name="textAlign">left</property>
+                    <property name="pageBreakBefore">always</property>
+                    <cell id="865">
+                        <property name="colSpan">4</property>
+                        <property name="rowSpan">1</property>
+                        <label id="869">
+                            <property name="fontFamily">"Arial"</property>
+                            <property name="fontSize">large</property>
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">center</property>
+                            <property name="pageBreakBefore">always</property>
+                            <property name="refTemplateParameter">NewTemplateParameterDefinition</property>
+                            <text-property name="text">Lawrence Berkeley National Lab&#13;
+Fleet Red Sheet Report (ForkLift)</text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="787">
+                    <property name="textAlign">left</property>
+                    <cell id="788">
+                        <label id="817">
+                            <property name="fontSize">8pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Asset#</text-property>
+                        </label>
+                    </cell>
+                    <cell id="789">
+                        <label id="816">
+                            <property name="fontSize">8pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Description</text-property>
+                        </label>
+                    </cell>
+                    <cell id="790">
+                        <label id="815">
+                            <property name="fontSize">8pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Last Maintenance</text-property>
+                        </label>
+                    </cell>
+                    <cell id="791">
+                        <label id="814">
+                            <property name="fontSize">8pt</property>
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Maintenance Due</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="792">
+                    <property name="textAlign">left</property>
+                    <cell id="793">
+                        <data id="808">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">assetnum</property>
+                        </data>
+                    </cell>
+                    <cell id="794">
+                        <data id="810">
+                            <property name="fontSize">8pt</property>
+                            <property name="resultSetColumn">description</property>
+                        </data>
+                    </cell>
+                    <cell id="795">
+                        <data id="812">
+                            <property name="fontSize">8pt</property>
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="resultSetColumn">qdate</property>
+                        </data>
+                    </cell>
+                    <cell id="796">
+                        <data id="870">
+                            <property name="fontSize">8pt</property>
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <list-property name="highlightRules">
+                                <structure>
+                                    <property name="operator">gt</property>
+                                    <property name="backgroundColor">#FF0000</property>
+                                    <property name="fontWeight">bold</property>
+                                    <expression name="testExpr" type="javascript">BirtDateTime.diffDay(row["nextdue"], BirtDateTime.today())</expression>
+                                    <simple-property-list name="value1">
+                                        <value type="javascript">0</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <property name="resultSetColumn">nextdue</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="797">
+                    <cell id="798"/>
+                    <cell id="799"/>
+                    <cell id="800"/>
+                    <cell id="801"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

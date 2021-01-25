@@ -1,0 +1,1072 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation apphelp="com.ibm.mbs.doc,pm/c_pm_app.html" beanclass="psdi.webclient.beans.pm.PMAppBean" id="pm" ismobile="false" mboname="PM" orderby="pmnum" resultstableid="results_showlist" version="6.2.8">
+	<page id="mainrec" scroll="false">
+		<include controltoclone="pageHeader" id="INCLUDE-pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" label="PMs" mboname="PM" selectmode="multiple">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="pmnum" filterable="false" id="results_showlist_tablebody_1" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+							<tablecol dataattribute="pmnum" id="1513634741153" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="lbl_structure.lo1" filterable="false" id="results_showlist_tablebody_20" sortable="false"/>
+							<tablecol applink="asset,ipc" dataattribute="assetnum" id="results_showlist_tablebody_5" lookup="asset" menutype="assetmain"/>
+							<tablecol dataattribute="asset.location" filterable="true" id="results_showlist_tablebody_5_1" label="Asset Location" sortable="true"/>
+							<tablecol dataattribute="description" id="results_showlist_tablebody_3" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="route" id="results_showlist_tablebody_3_1" lookup="routes" mxevent="selectrecord" mxevent_desc="Go To %1"/>
+							<tablecol applink="location,ipc" dataattribute="location" id="results_showlist_tablebody_4" lookup="locations" menutype="locations"/>
+							<tablecol dataattribute="LBL_ISPMCRITICAL" id="1549901753261"/>
+							<tablecol dataattribute="STATUS" id="copy_new_tablecol" lookup="VALUELIST"/>
+							<tablecol dataattribute="priority" id="results_showlist_tablebody_6"/>
+							<tablecol dataattribute="forecastexists" id="results_showlist_tablebody_9"/>
+							<tablecol dataattribute="NEXTDATE" id="results_showlist_tablebody_8"/>
+							<tablecol dataattribute="lbl_classid" id="1513634719355" lookup="lbl_pm_classification" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol filterable="false" id="results_bookmark" mxevent="BOOKMARK" mxevent_desc="Add to Bookmarks" mxevent_icon="btn_addtobookmarks.gif" sortable="false" type="event"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="PM" type="insert">
+					<section border="true" id="main_grid2">
+						<sectionrow id="main_grid2_r1">
+							<sectioncol id="main_grid2_c1">
+								<section id="main_grid2_s1">
+									<multiparttextbox dataattribute="pmnum" descdataattribute="description" desclookup="longdesc" id="main_grid2_1"/>
+									<multiparttextbox applink="masterpm" dataattribute="masterpm" descdataattribute="masterpm.description" descinputmode="readonly" desclookup="longdesc" id="main_grid3_1" lookup="masterpm" menutype="normal"/>
+									<checkbox dataattribute="LBL_ISPMCRITICAL" id="1549901697792"/>
+									<checkbox dataattribute="LBL_CODECOMPLIANCE" id="1545069675541" label="Code Compliance"/>
+									<textbox dataattribute="lbl_alertnote" id="main_grid2_s1_text1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid2_c2">
+								<section id="main_grid2_s2">
+									<textbox dataattribute="siteid" id="main_grid2_3_3"/>
+									<checkbox dataattribute="overridemasterupd" id="main_grid3_3"/>
+									<checkbox dataattribute="lockforecast" id="main_grid2_3_4" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid2_c5">
+								<section border="false" id="main_attachments">
+									<textbox dataattribute="status" id="main_grid2_5" inputmode="readonly"/>
+									<attachments id="doclinks"/>
+									<checkbox dataattribute="forecastexists" id="main_grid4_1_1_grid5_1_1_grid5A_2b"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="main_grid4" label="Details">
+						<sectionrow id="main_grid4_1">
+							<sectioncol id="main_grid4_1_1">
+								<section id="main_grid4_1_1_grid4A">
+									<multiparttextbox applink="location,ipc" dataattribute="location" descdataattribute="locations.description" descinputmode="readonly" desclookup="longdesc" id="main_grid4_1_1_grid4A_1" lookup="locations" menutype="locations" ondatachange="resetchildren"/>
+									<multiparttextbox applink="asset,ipc" dataattribute="assetnum" descdataattribute="asset.description" descinputmode="readonly" desclookup="longdesc" id="main_grid4_1_1_grid4A_3" lookup="asset" menutype="assetmain" ondatachange="resetchildren"/>
+									<textbox dataattribute="FEATURE" id="main_grid4_1_1_grid4A_7_5" lookup="assetfeature" menutype="normal" sigoption="WMLINEAR"/>
+									<textbox dataattribute="FEATURELABEL" id="main_grid4_1_1_grid4A_7_6" lookup="assetfeature" menutype="normal" sigoption="WMLINEAR"/>
+									<textbox dataattribute="asset.location" id="main_grid4_1_1_grid4A_3_1" inputmode="READONLY" label="Asset Location"/>
+									<multiparttextbox applink="routes" dataattribute="route" descdataattribute="routes.description" descinputmode="readonly" desclookup="longdesc" id="main_grid4_1_1_grid4A_5" lookup="routes" menutype="normal"/>
+									<textbox dataattribute="LBL_PM2JOBPLANSEQ.lbl_leadcraft" id="main_grid4_1_1_grid4A_3_2" inputmode="READONLY" label="Job plan lead craft"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid4_1_1_grid5_1_1">
+								<section id="main_grid4_1_1_grid5_1_1S">
+									<multiparttextbox dataattribute="lbl_classid" descdataattribute="lbl_classification.description" descinputmode="readonly" id="main_lbl_classid" lookup="lbl_pmclass"/>
+									<textbox dataattribute="leadtime" id="main_grid4_1_1_grid5_1_1_grid5B_5"/>
+									<checkbox dataattribute="leadtimeactive" id="main_grid4_1_1_grid5_1_1_grid5A_1"/>
+									<checkbox dataattribute="inclforecast" id="main_grid4_1_1_grid5_1_1_grid5A_2"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid4_1_1_grid5_1_1a">
+								<section id="main_grid4_1_1_grid5_1_1Sa">
+									<textbox dataattribute="pmcounter" id="main_grid4_1_1_grid5_1_1_grid5A_12" inputmode="readonly"/>
+									<checkbox dataattribute="jpseqinuse" id="main_grid4_1_1_grid5_1_1_grid5A_9"/>
+									<checkbox dataattribute="haschildren" id="main_grid4_1_1_grid5_1_1_grid5A_8"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="main_locinfo" label="Location Information">
+						<sectionrow id="main_locinfo_r1">
+							<sectioncol id="main_locinfo_r1_c1">
+								<section id="main_locinfo_r1_c1_s1">
+									<multiparttextbox dataattribute="lbl_structure.lo1" descdataattribute="lbl_structure.lbl_building.description" descinputmode="readonly" id="main_structure_bldg" inputmode="readonly"/>
+									<textbox dataattribute="lbl_structure.lo2" id="main_structure_floor" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_locinfo_r1_c2">
+								<section id="main_locinfo_r1_c2_s1">
+									<multiparttextbox dataattribute="lbl_structure.lo3" descdataattribute="lbl_structure.lbl_loc2loc_room.description" descinputmode="readonly" id="main_structure_room" inputmode="readonly"/>
+									<textbox dataattribute="lbl_structure.lbl_roof_level" id="main_structure_roof_level" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<include controltoclone="lineardetails" id="pm_lineardetails"/>
+					<section id="main_grid5">
+						<sectionrow id="main_grid5_1">
+							<sectioncol id="main_grid5_1_1">
+								<section id="main_grid5_1_1_section1" label="Work Order Information">
+									<sectionrow id="main_grid5_1_1_section1_row1">
+										<sectioncol id="main_grid5_1_1_section1_row1_col1">
+											<section id="main_grid5_1_1_grid5_1_1_grid5A">
+												<textbox applink="jobplan" dataattribute="jpnum" id="main_grid4_1_1_grid4A_7" lookup="pm_jobplan" menutype="normal"/>
+												<textbox dataattribute="worktype" id="main_grid5_1_1_grid5_1_1_grid5A_5" lookup="worktype"/>
+												<textbox dataattribute="wostatus" id="main_grid5_1_1_grid5_1_1_grid5A_2" lookup="valuelist"/>
+												<textbox dataattribute="priority" id="main_grid5_1_1_grid5_1_1_grid5A_3"/>
+												<checkbox dataattribute="interruptible" id="main_grid5_1_1_grid5_1_1_grid5A_1"/>
+												<checkbox dataattribute="reqasstdwntime" id="main_dwntime_1" licensekey="SCHEDULER_FW"/>
+												<checkbox dataattribute="repairlocflag" id="main_grid66" licensekey="SCHEDULER_760" sigoption="REPFACILITY"/>
+												<checkbox dataattribute="LBL_APPTREQUIRED" id="1593446164689"/>
+											</section>
+										</sectioncol>
+										<sectioncol id="main_grid5_1_1_section1_row1_col2">
+											<section id="main_grid5_1_1_grid5_1_1_grid5B">
+												<textbox dataattribute="MAINPMSEQUENCE.TOTALWORKUNITS" id="djp_twu" sigoption="DYNAMIC"/>
+												<textbox dataattribute="pluscjobplan.description" id="main_grid4_1_1_grid4A_8" inputmode="readonly" lookup="longdesc"/>
+												<textbox dataattribute="laststartdate" id="main_grid5_1_1_grid5_1_1_grid5B_1" lookup="datelookup"/>
+												<textbox dataattribute="lastcompdate" id="main_grid5_1_1_grid5_1_1_grid5B_2" lookup="datelookup"/>
+												<textbox dataattribute="erlstwogendate" id="main_grid5_1_1_grid5_1_1_grid5B_3" inputmode="readonly" lookup="datelookup"/>
+												<textbox dataattribute="stconoffset" id="main_grid5_1_1_grid5_1_1_grid5B_34"/>
+												<textbox dataattribute="fnconoffset" id="main_grid5_1_1_grid5_1_1_grid5B_35"/>
+											</section>
+										</sectioncol>
+									</sectionrow>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid6_1_1">
+								<section id="main_grid6" label="Responsibility" titlealign="left">
+									<sectionrow id="main_grid6_r1">
+										<sectioncol id="main_grid6_c1">
+											<section id="main_grid6_s1">
+												<textbox applink="person" dataattribute="supervisor" id="main_grid6_2" lookup="person" menutype="normal"/>
+												<textbox dataattribute="crewid" id="main_grid6_3" lookup="valuelist" sigoption="CREWIDFIELD"/>
+												<textbox applink="person" dataattribute="lead" id="main_grid6_6" lookup="person" menutype="normal"/>
+												<textbox applink="persongr" dataattribute="persongroup" id="main_grid6_7" lookup="persongroup" menutype="normal"/>
+												<textbox applink="person" dataattribute="owner" id="main_grid6_8" lookup="person" menutype="normal"/>
+												<textbox applink="persongr" dataattribute="ownergroup" id="main_grid6_9" lookup="persongroup" menutype="normal"/>
+												<textbox applink="persongr" dataattribute="crewworkgroup" id="main_grid6_crew_2" licensekey="CREW" lookup="persongroup" menutype="normal"/>
+											</section>
+										</sectioncol>
+									</sectionrow>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="main_grid3" label="Resource Information" titlealign="left">
+						<sectionrow id="main_grid3_r1">
+							<sectioncol id="main_grid3_c1">
+								<section id="main_grid3_s1">
+									<textbox dataattribute="glaccount" id="main_grid6_4" lookup="LBLPROJACTGLNAVIGATOR"/>
+									<textbox dataattribute="LBL_OLDGLACCOUNT" id="new_textbox_2" inputmode="READONLY"/>
+									<textbox applink="storeroom,ipc" dataattribute="storeloc" id="main_grid6_5" lookup="storeroom" menutype="normal"/>
+									<textbox dataattribute="storelocsite" id="main_grid6_22" lookup="storeroom"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid3_c2">
+								<section id="main_grid3_s2">
+									<checkbox dataattribute="usefrequency" id="main_grid6_10"/>
+									<checkbox dataattribute="parentchgsstatus" id="main_grid6_11"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid3_c3">
+								<section id="main_grid3_s3">
+									<blankline id="main_grid3_blkline"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</tab>
+				<tab id="frequency" label="Frequency">
+					<section border="true" height="100" id="frequency_grid1">
+						<sectionrow id="frequency_grid1_r1">
+							<sectioncol id="frequency_grid1_c1">
+								<section id="frequency_grid1_s1">
+									<multiparttextbox dataattribute="pmnum" descdataattribute="description" desclookup="longdesc" id="frequency_grid1_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="frequency_grid1_c2">
+								<section id="frequency_grid1_s2">
+									<textbox dataattribute="siteid" id="frequency_grid1_3" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="frequency_grid1_c3">
+								<section id="frequency_grid1_s3">
+									<textbox dataattribute="status" id="frequency_grid1_6" inputmode="readonly"/>
+									<checkbox dataattribute="forecastexists" id="frequency_grid1_6_a"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section height="110" id="frequency_grid1A" label="Work Order Generation Information">
+						<sectionrow id="frequency_grid1A_r1">
+							<sectioncol id="frequency_grid1A_c1">
+								<section id="frequency_grid1A_s1">
+									<checkbox dataattribute="usetargetdate" id="frequency_grid1A_usetarget"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="frequency_grid1A_c2">
+								<section id="frequency_grid3">
+									<checkbox dataattribute="pmactmeter" id="frequency_grid3_10"/>
+									<checkbox dataattribute="pmassetwogen" id="frequency_grid3_11"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<tabgroup id="frequency_freq">
+						<tab default="true" id="frequency_freq_timebased" label="Time Based Frequency">
+							<section height="100" id="frequency_freq_timebased_grid1">
+								<sectionrow id="frequency_freq_timebased_grid1_r1">
+									<sectioncol id="frequency_freq_timebased_grid1_c1">
+										<section id="frequency_freq_timebased_grid1_s1">
+											<textbox dataattribute="frequency" id="frequency_freq_timebased_grid1_1"/>
+											<textbox dataattribute="frequnit" id="frequency_freq_timebased_grid1_4" lookup="valuelist"/>
+											<textbox dataattribute="FIRSTDATE" id="copy_frequency_freq_timebased_grid1_5" lookup="datelookup"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="frequency_freq_timebased_grid1_c2">
+										<section id="frequency_freq_timebased_grid1_s2">
+											<textbox dataattribute="alertlead" id="frequency_freq_timebased_grid1_2"/>
+											<textbox dataattribute="nextdate" id="frequency_freq_timebased_grid1_5" lookup="datelookup"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="frequency_freq_timebased_grid1_c3">
+										<section id="frequency_freq_timebased_grid1_s3">
+											<textbox dataattribute="extdate" id="frequency_freq_timebased_grid1_3" lookup="datelookup" synchronous="true"/>
+											<checkbox dataattribute="AdjNextDue" id="frequency_freq_timebased_grid1_6"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="frequency_freq_timebased_grid1_c4">
+										<section id="frequency_freq_timebased_grid1_s4">
+											<textbox dataattribute="TARGSTARTTIME" id="frequency_freq_timebased_grid1_7"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tab>
+						<tab id="frequency_freq_meterbased" label="Meter Based Frequency">
+							<table id="frequency_freq_meterbased_meter_table" label="Meter Based Frequency" relationship="PMMETER">
+								<tablebody displayrowsperpage="6" filterable="true" id="frequency_freq_meterbased_meter_table_tablebody">
+									<tablecol filterable="false" id="frequency_freq_meterbased_meter_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+									<tablecol applink="meter" dataattribute="metername" id="frequency_frequency_meterbased_meter_table_tablebody_2" lookup="meter" menutype="normal"/>
+									<tablecol dataattribute="meter.description" id="frequency_frequency_meterbased_meter_table_tablebody_3" showfilterfield="true" sortable="false">
+										<textbox dataattribute="meter.description" id="frequency_frequency_meterbased_meter_table_tablebody_3a" inputmode="readonly" lookup="longdesc"/>
+									</tablecol>
+									<tablecol dataattribute="frequency" id="frequency_freq_meterbased_meter_table_tablebody_4" linkedcontrolid="frequency_freq_meterbased_meter_table_1_grid6_1"/>
+									<tablecol dataattribute="unitstogo" id="frequency_freq_meterbased_meter_table_tablebody_5" linkedcontrolid="frequency_freq_meterbased_meter_table_1_grid7B_2" sortable="true"/>
+									<tablecol dataattribute="Tolerance" id="frequency_freq_meterbased_meter_table_tablebody_6" linkedcontrolid="frequency_freq_meterbased_meter_table_1_grid6_5"/>
+									<tablecol dataattribute="alertlead" id="frequency_freq_meterbased_meter_table_tablebody_7" linkedcontrolid="frequency_freq_meterbased_meter_table_1_grid6_2"/>
+									<tablecol filterable="false" id="frequency_freq_meterbased_meter_table_tablebody_8" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+								</tablebody>
+								<tabledetails id="frequency_freq_meterbased_meter_table_1">
+									<section id="frequency_freq_meterbased_meter_table_1_grid6" label="Details">
+										<sectionrow id="frequency_freq_meterbased_grid1_r1">
+											<sectioncol id="frequency_freq_meterbased_grid1_c1">
+												<section id="frequency_freq_meterbased_grid1_s1">
+													<multiparttextbox applink="meter" dataattribute="metername" defaultfocus="true" descdataattribute="meter.description" descinputmode="readonly" desclookup="longdesc" id="frequency_frequ_meterbased_meter_table_1_grid6_8" lookup="meter" menutype="normal"/>
+													<textbox dataattribute="frequency" id="frequency_freq_meterbased_meter_table_1_grid6_1"/>
+													<textbox dataattribute="alertlead" id="frequency_freq_meterbased_meter_table_1_grid6_2"/>
+													<textbox dataattribute="tolerance" id="frequency_freq_meterbased_meter_table_1_grid6_5"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="frequency_freq_meterbased_grid1_c4">
+												<section id="frequency_freq_meterbased_grid1_s4">
+													<textbox dataattribute="average" id="frequency_freq_meterbased_meter_table_1_grid6_3" inputmode="readonly"/>
+													<textbox dataattribute="rollover" id="frequency_freq_meterbased_meter_table_1_grid6_4" inputmode="readonly"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+									<section id="frequency_freq_meterbased_meter_table_1_grid21">
+										<sectionrow id="frequency_freq_meterbased_gri21_r1">
+											<sectioncol id="frequency_freq_meterbased_grid21_c1">
+												<section height="110" id="frequency_freq_meterbased_meter_table_1_grid7A" label="Last Work Order Information" titlealign="center">
+													<textbox dataattribute="lastpmwogenread" id="frequency_freq_meterbased_meter_table_1_grid7A_1" readonly="true"/>
+													<textbox dataattribute="lastpmwogenreaddt" id="frequency_freq_meterbased_meter_table_1_grid7A_2" lookup="datelookup"/>
+												</section>
+											</sectioncol>
+											<sectioncol id="frequency_freq_meterbased_grid2_c1">
+												<section height="110" id="frequency_freq_meterbased_meter_table_1_grid7B" label="Next Work Order Projections" titlealign="center">
+													<textbox dataattribute="readingatnextwo" id="frequency_freq_meterbased_meter_table_1_grid7B_1"/>
+													<textbox dataattribute="unitstogo" id="frequency_freq_meterbased_meter_table_1_grid7B_2"/>
+													<textbox dataattribute="dateofnextwo" id="frequency_freq_meterbased_meter_table_1_grid7B_3" lookup="datelookup"/>
+												</section>
+											</sectioncol>
+										</sectionrow>
+									</section>
+								</tabledetails>
+								<buttongroup id="frequency_freq_meterbased_meter_table_2">
+									<pushbutton default="true" id="frequency_freq_meterbased_meter_table_2_1" label="New Row" mxevent="addrow"/>
+								</buttongroup>
+							</table>
+						</tab>
+					</tabgroup>
+				</tab>
+				<tab id="pmseasons" label="Seasonal Dates">
+					<section border="true" id="pmseasons_grid2">
+						<sectionrow id="pmseasons_grid2_r1">
+							<sectioncol id="pmseasons_grid2_c1">
+								<section id="pmseasons_grid2_s1">
+									<multiparttextbox dataattribute="pmnum" descdataattribute="description" desclookup="longdesc" id="pmseasons_grid2_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pmseasons_grid2_c2">
+								<section id="pmseasons_grid2_s2">
+									<textbox dataattribute="siteid" id="pmseasons_grid2_3" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pmseasons_grid2_c3">
+								<section id="pmseasons_grid2_s3">
+									<textbox dataattribute="status" id="pmseasons_grid2_4" inputmode="readonly"/>
+									<checkbox dataattribute="forecastexists" id="pmseasons_grid2_4_a"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section height="30" id="pmseasons_grid3A" label="Active Days" titlealign="left">
+						<sectionrow id="pmseasons_grid3A_r1">
+							<sectioncol id="pmseasons_grid3A_c1">
+								<section id="pmseasons_grid3A_s1">
+									<checkbox dataattribute="sunday" id="pmseasons_grid3B_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pmseasons_grid3A_c2">
+								<section id="pmseasons_grid3A_s2">
+									<checkbox dataattribute="monday" id="pmseasons_grid3B_2"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pmseasons_grid3A_c3">
+								<section id="pmseasons_grid3A_s3">
+									<checkbox dataattribute="tuesday" id="pmseasons_grid3B_3"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pmseasons_grid3A_c4">
+								<section id="pmseasons_grid3A_s">
+									<checkbox dataattribute="wednesday" id="pmseasons_grid3B_4"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pmseasons_grid3A_c5">
+								<section id="pmseasons_grid3A_s5">
+									<checkbox dataattribute="thursday" id="pmseasons_grid3B_5"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pmseasons_grid3A_c6">
+								<section id="pmseasons_grid3A_s6">
+									<checkbox dataattribute="friday" id="pmseasons_grid3B_6"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pmseasons_grid3A_c7">
+								<section id="pmseasons_grid3A_s7">
+									<checkbox dataattribute="saturday" id="pmseasons_grid3B_7"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section height="30" id="pmseasons_grid_Active_Days_Section_2">
+						<sectionrow id="pmseasons_grid_4a">
+							<sectioncol id="pmseasons_grid_section_grid4a">
+								<section id="pmseasons_grid_section_grid4b">
+									<checkbox dataattribute="SCHEDEARLY" id="pmseasons_grid_section_active_grid4c"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section height="30" id="pmseasons_grid_Active_Time" label="Active Time" titlealign="left">
+						<sectionrow id="pmseasons_grid_section_active">
+							<sectioncol id="pmseasons_grid_section_active_grida">
+								<section id="pmseasons_grid_section_active_gridb">
+									<textbox dataattribute="TARGSTARTTIME" id="pmseasons_grid_section_active_gridc"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="pmseasons_pmseasons_table1" label="Active Dates" relationship="PMSEASONS">
+						<tablebody displayrowsperpage="7" filterable="true" id="pmseasons_pmseasons_table1_tablebody">
+							<tablecol filterable="false" id="pmseasons_pmseasons_table1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="startmonth" id="pmseasons_pmseasons_table1_tablebody_2" linkedcontrolid="pmseasons_pmseasons_table1_1_grid7_1"/>
+							<tablecol dataattribute="startday" id="pmseasons_pmseasons_table1_tablebody_3" linkedcontrolid="pmseasons_pmseasons_table1_1_grid7_2"/>
+							<tablecol dataattribute="endmonth" id="pmseasons_pmseasons_table1_tablebody_4" linkedcontrolid="pmseasons_pmseasons_table1_1_grid7_3"/>
+							<tablecol dataattribute="endday" id="pmseasons_pmseasons_table1_tablebody_5" linkedcontrolid="pmseasons_pmseasons_table1_1_grid7_4"/>
+							<tablecol filterable="false" id="pmseasons_pmseasons_table1_tablebody_6" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="pmseasons_pmseasons_table1_1">
+							<section id="pmseasons_pmseasons_table1_1_grid7" label="Details">
+								<sectionrow id="pmseasons_pmseasons_table1_1_grid7_r1">
+									<sectioncol id="pmseasons_pmseasons_table1_1_grid7_c1">
+										<section id="pmseasons_pmseasons_table1_1_grid7_s1">
+											<textbox dataattribute="startmonth" id="pmseasons_pmseasons_table1_1_grid7_1" lookup="valuelist2"/>
+											<textbox dataattribute="startday" id="pmseasons_pmseasons_table1_1_grid7_2"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="pmseasons_pmseasons_table1_1_grid7_c2">
+										<section id="pmseasons_pmseasons_table1_1_grid7_s2">
+											<textbox dataattribute="endmonth" id="pmseasons_pmseasons_table1_1_grid7_3" lookup="valuelist2"/>
+											<textbox dataattribute="endday" id="pmseasons_pmseasons_table1_1_grid7_4"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="pmseasons_pmseasons_table1_2">
+							<pushbutton default="true" id="pmseasons_pmseasons_table1_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="jobplanseq" label="Job Plan Sequence">
+					<section border="true" id="jobplanseq_grid2">
+						<sectionrow id="jobplanseq_grid2_r1">
+							<sectioncol id="jobplanseq_grid2_c1">
+								<section id="jobplanseq_grid2_s1">
+									<multiparttextbox dataattribute="pmnum" descdataattribute="description" desclookup="longdesc" id="jobplanseq_grid2_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="jobplanseq_grid2_c2">
+								<section id="jobplanseq_grid2_s2">
+									<textbox dataattribute="siteid" id="jobplanseq_grid2_3" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="jobplanseq_grid2_c3">
+								<section id="jobplanseq_grid2_s3">
+									<textbox dataattribute="status" id="jobplanseq_grid2_4" inputmode="readonly"/>
+									<checkbox dataattribute="forecastexists" id="jobplanseq_grid2_4_a"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section height="115" id="jobplanseq_grid3">
+						<sectionrow id="jobplanseq_grid3_r1">
+							<sectioncol id="jobplanseq_grid3_c1">
+								<section id="jobplanseq_grid3_s1">
+									<multiparttextbox applink="location,ipc" dataattribute="location" descdataattribute="locations.description" descinputmode="readonly" desclookup="longdesc" id="jobplanseq_grid3_1" lookup="locations" menutype="locations"/>
+									<multiparttextbox applink="asset,ipc" dataattribute="assetnum" descdataattribute="asset.description" descinputmode="readonly" desclookup="longdesc" id="jobplanseq_grid3_3" lookup="asset" menutype="assetmain"/>
+									<multiparttextbox applink="jobplan" dataattribute="jpnum" descdataattribute="pluscjobplan.description" descinputmode="readonly" desclookup="longdesc" id="jobplanseq_grid3_5" lookup="pm_jobplan" menutype="normal"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="jobplanseq_grid3_c2">
+								<section id="jobplanseq_grid3_s2">
+									<textbox applink="storeroom,ipc" dataattribute="storeloc" id="jobplanseq_grid3_7" lookup="storelocsite" menutype="normal"/>
+									<textbox dataattribute="storelocsite" id="jobplanseq_grid3_12" lookup="storelocsite"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="jobplanseq_sequence_table1" label="Job Plan Sequence" relationship="PMSEQUENCE">
+						<tablebody displayrowsperpage="7" filterable="true" id="jobplanseq_sequence_table1_tablebody">
+							<tablecol filterable="false" id="jobplanseq_sequence_table1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol applink="jobplan" dataattribute="jpnum" id="jobplanseq_sequence_table1_tablebody_2" lookup="pm_jobplan" menutype="normal"/>
+							<tablecol dataattribute="pluscjobplan.description" id="jobplanseq_sequence_table1_tablebody_3" inputmode="readonly" lookup="longdesc" sortable="false"/>
+							<tablecol dataattribute="TOTALWORKUNITS" id="jobplanseq_sequence_table1_tablebody_9" linkedcontrolid="jobplanseq_sequence_table1_1_grid7_twu"/>
+							<tablecol dataattribute="interval" id="jobplanseq_sequence_table1_tablebody_4" linkedcontrolid="jobplanseq_sequence_table1_1_grid7_3"/>
+							<tablecol filterable="false" id="jobplanseq_sequence_table1_tablebody_5" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="jobplanseq_sequence_table1_1">
+							<section id="jobplanseq_sequence_table1_1_grid7" label="Details">
+								<sectionrow id="jobplanseq_sequence_table1_1_grid7_r1">
+									<sectioncol id="jobplanseq_sequence_table1_1_grid7_c1">
+										<section id="jobplanseq_sequence_table1_1_grid7_s1">
+											<multiparttextbox applink="jobplan" dataattribute="jpnum" defaultfocus="true" descdataattribute="pluscjobplan.description" descinputmode="readonly" desclookup="longdesc" id="jobplanseq_sequence_table1_1_grid7_1" lookup="pm_jobplan" menutype="normal"/>
+											<textbox dataattribute="TOTALWORKUNITS" id="jobplanseq_sequence_table1_1_grid7_twu"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="jobplanseq_sequence_table1_1_grid7_c2">
+										<section id="jobplanseq_sequence_table1_1_grid7_s2">
+											<textbox dataattribute="interval" id="jobplanseq_sequence_table1_1_grid7_3"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="jobplanseq_sequence_table1_2">
+							<pushbutton default="true" id="jobplanseq_sequence_table1_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="pmhier" label="PM Hierarchy">
+					<section border="true" id="pmhier_grid3">
+						<sectionrow id="pmhier_grid3_r1">
+							<sectioncol id="pmhier_grid3_c1">
+								<section id="pmhier_grid3_s1">
+									<multiparttextbox dataattribute="pmnum" descdataattribute="description" desclookup="longdesc" id="pmhier_grid3_1"/>
+									<multiparttextbox dataattribute="parent" descdataattribute="parent.description" desclookup="longdesc" id="pmhier_grid3_5" lookup="pm" menutype="hier" movetoattribute="pmnum" movetoresultset="rec"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pmhier_grid3_c2">
+								<section id="pmhier_grid3_s2">
+									<textbox dataattribute="siteid" id="pmhier_grid3_3" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="pmhier_grid3_c3">
+								<section id="pmhier_grid3_s3">
+									<textbox dataattribute="status" id="pmhier_grid3_4" inputmode="readonly"/>
+									<checkbox dataattribute="forecastexists" id="pmhier_grid3_4_a"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="pmhier_children_table1" label="Children" relationship="CHILDREN">
+						<tablebody displayrowsperpage="12" filterable="true" id="pmhier_children_table1_tablebody">
+							<tablecol filterable="false" id="pmhier_children_table1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="wosequence" id="pmhier_children_table1_tablebody_2" linkedcontrolid="pmhier_children_table1_1_grid5_1"/>
+							<tablecol dataattribute="pmnum" id="pmhier_children_table1_tablebody_3" lookup="pm" menutype="hier" movetoattribute="pmnum" movetoresultset="rec"/>
+							<tablecol dataattribute="description" id="pmhier_children_table1_tablebody_4">
+								<textbox id="pmhier_children_table1_tablebody_4_1" inputmode="readonly" lookup="longdesc"/>
+							</tablecol>
+							<tablecol dataattribute="assetnum" id="pmhier_children_table1_tablebody_5">
+								<textbox applink="asset,ipc" id="pmhier_children_table1_tablebody_5_1" inputmode="readonly" lookup="asset" menutype="assetmain"/>
+							</tablecol>
+							<tablecol dataattribute="ASSET.DESCRIPTION" id="copy_pmhier_children_table1_tablebody_5" label="Asset Description">
+								<textbox applink="asset,ipc" id="copy_pmhier_children_table1_tablebody_5_pmhier_children_table1_tablebody_5_1" inputmode="readonly" lookup="asset" menutype="assetmain"/>
+							</tablecol>
+							<tablecol dataattribute="location" id="pmhier_children_table1_tablebody_6">
+								<textbox applink="location,ipc" id="pmhier_children_table1_tablebody_6_1" inputmode="readonly" lookup="location" menutype="location"/>
+							</tablecol>
+							<tablecol dataattribute="LOCATIONS.DESCRIPTION" filterable="true" id="copy_pmhier_children_table1_tablebody_6" label="Location Description">
+								<textbox applink="location,ipc" id="copy_pmhier_children_table1_tablebody_6_pmhier_children_table1_tablebody_6_1" inputmode="readonly" lookup="location" menutype="location"/>
+							</tablecol>
+							<tablecol dataattribute="status" id="pmhier_children_table1_tablebody_7" linkedcontrolid="pmhier_children_table1_1_grid5_4"/>
+							<tablecol filterable="false" id="pmhier_children_table1_tablebody_8" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="pmhier_children_table1_1">
+							<section id="pmhier_children_table1_1_grid5" label="Details">
+								<sectionrow id="pmhier_children_table1_1_r1">
+									<sectioncol id="pmhier_children_table1_1_c1">
+										<section id="pmhier_children_table1_1_s1">
+											<textbox dataattribute="wosequence" defaultfocus="true" id="pmhier_children_table1_1_grid5_1"/>
+											<multiparttextbox dataattribute="pmnum" descdataattribute="description" descinputmode="readonly" desclookup="longdesc" id="pmhier_children_table1_1_grid5_2" lookup="pm" menutype="hier" movetoattribute="pmnum" movetoresultset="rec"/>
+											<multiparttextbox applink="asset,ipc" dataattribute="assetnum" descdataattribute="asset.description" descinputmode="readonly" desclookup="longdesc" id="pmhier_children_table1_1_grid5_6" inputmode="readonly" lookup="asset" menutype="assetmain"/>
+											<multiparttextbox applink="location,ipc" dataattribute="location" descdataattribute="locations.description" descinputmode="readonly" desclookup="longdesc" id="pmhier_children_table1_1_grid5_8" inputmode="readonly" lookup="locations" menutype="locations"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="pmhier_children_table1_1_c2">
+										<section id="pmhier_children_table1_1_s2">
+											<textbox dataattribute="status" id="pmhier_children_table1_1_grid5_4" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="pmhier_children_table1_2">
+							<pushbutton default="true" id="pmhier_children_table1_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="forecast" label="Forecast" tabchangeevent="forecastTabChanged">
+					<section border="true" height="100" id="forecast_grid1">
+						<sectionrow id="forecast_grid1_r1">
+							<sectioncol id="forecast_grid1_c1">
+								<section id="forecast_grid1_s1">
+									<multiparttextbox dataattribute="pmnum" descdataattribute="description" desclookup="longdesc" id="forecast_grid1_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="forecast_grid1_c2">
+								<section id="forecast_grid1_s2">
+									<textbox dataattribute="siteid" id="forecast_grid1_3" inputmode="readonly"/>
+									<checkbox dataattribute="lockforecast" id="forecast_grid1_4" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="forecast_grid1_c3">
+								<section id="forecast_grid1_s3">
+									<textbox dataattribute="status" id="forecast_grid1_6" inputmode="readonly"/>
+									<checkbox dataattribute="reforecast" id="forecast_grid1_7"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table beanclass="psdi.webclient.beans.pm.PMForecastDisplayBean" id="pmforecast_table1" label="Forecast Details" orderby="forecastdate asc" relationship="TOPLEVELPMFORECAST">
+						<tablebody displayrowsperpage="20" filterable="true" id="pmforecast_table1_tablebody">
+							<tablecol filterable="true" id="pmforecast_table1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="forecastdate" id="pmforecast_table1_tablebody_2" inputmode="readonly" lookup="datelookup" sortable="true"/>
+							<tablecol applink="jobplan" dataattribute="jpnum" id="pmforecast_table1_tablebody_4" inputmode="readonly" menutype="normal"/>
+							<tablecol dataattribute="newdate" id="pmforecast_table1_tablebody_5" linkedcontrolid="pmforecast_table1_1_grid5_2" lookup="datelookup"/>
+							<tablecol applink="person" dataattribute="changeby" id="pmforecast_table1_tablebody_6" inputmode="readonly" lookup="person" menutype="normal"/>
+							<tablecol dataattribute="changedate" id="pmforecast_table1_tablebody_7" inputmode="readonly" lookup="datelookup"/>
+							<tablecol dataattribute="remarks" id="pmforecast_table1_tablebody_9" linkedcontrolid="pmforecast_table1_1_grid5_6"/>
+							<tablecol dataattribute="regenerate" id="pmforecast_table1_tablebody_10" inputmode="readonly"/>
+							<tablecol filterable="false" id="pmforecast_table1_tablebody_8" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="pmforecast_table1_1">
+							<section id="pmforecast_table1_1_grid5" label="Details">
+								<sectionrow id="pmforecast_table1_1_r1">
+									<sectioncol id="pmforecast_table1_1_c1">
+										<section id="pmforecast_table1_1_s1">
+											<textbox dataattribute="forecastdate" id="pmforecast_table1_1_grid5_1" inputmode="readonly"/>
+											<textbox dataattribute="newdate" defaultfocus="true" id="pmforecast_table1_1_grid5_2" lookup="datelookup"/>
+											<textbox applink="jobplan" dataattribute="jpnum" id="pmforecast_table1_1_grid5_5" inputmode="readonly" menutype="normal"/>
+											<textbox dataattribute="remarks" id="pmforecast_table1_1_grid5_6"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="pmforecast_table1_1_c2">
+										<section id="pmforecast_table1_1_s2">
+											<textbox dataattribute="changeby" id="pmforecast_table1_1_grid5_3" inputmode="readonly"/>
+											<textbox dataattribute="changedate" id="pmforecast_table1_1_grid5_4" inputmode="readonly"/>
+											<checkbox dataattribute="regenerate" id="pmforecast_table1_1_grid5_7" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="pmforecast_table1_btn">
+							<pushbutton id="pmforecast_table1_btn_1" label="Process Pending Reforecast" mxevent="reforecast"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="resources" label="Forecast Cost">
+					<section id="resources_grid1">
+						<sectionrow id="sresources_grid1_11">
+							<sectioncol id="resources_grid1_11_1">
+								<multiparttextbox dataattribute="pmnum" descdataattribute="description" descinputmode="readonly" id="resources_grid1_1"/>
+							</sectioncol>
+							<sectioncol id="resources_grid1_11_2">
+								<textbox dataattribute="siteid" id="resources_grid1_2"/>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="sresources_grid1_12">
+							<sectioncol id="resources_grid1_11_4">
+								<textbox dataattribute="pmfpcostcaldate" id="sresources_grid1_4" inputmode="readonly"/>
+							</sectioncol>
+							<sectioncol id="resources_grid1_11_5">
+								<textbox dataattribute="grandtotalcost" id="sresources_grid1_5" inputmode="readonly"/>
+							</sectioncol>
+							<sectioncol id="resources_grid1_11_3">
+								<pushbutton id="sresources_grid1_3" label="Calculate Cost" mxevent="calculatepmfocost"/>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table beanclass="psdi.webclient.beans.pm.PMForecastDisplayBean" id="pmforecast_table2" inputmode="readonly" label="Forecast Details" orderby="forecastseqno asc" relationship="PMFORECASTJP">
+						<tablebody displayrowsperpage="10" filterable="true" id="pmforecast_table2_tablebody">
+							<tablecol filterable="true" id="pmforecast_table2_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+							<tablecol dataattribute="PMFORECAST.forecastdate" id="pmforecast_table2_tablebody_2" inputmode="readonly" lookup="datelookup" sortable="true"/>
+							<tablecol applink="jobplan" dataattribute="jpnum" id="pmforecast_table2_tablebody_4" inputmode="readonly" menutype="normal"/>
+							<tablecol dataattribute="nestedjp" id="pmforecast_table2_tablebody_5" inputmode="readonly"/>
+							<tablecol dataattribute="route" id="pmforecast_table2_tablebody_51" inputmode="readonly"/>
+							<tablecol dataattribute="routestopid" id="pmforecast_table2_tablebody_52" inputmode="readonly"/>
+							<tablecol dataattribute="totalLabHrs" id="pmforecast_table2_tablebody_6" inputmode="readonly"/>
+							<tablecol dataattribute="totalLabCost" id="pmforecast_table2_tablebody_7" inputmode="readonly"/>
+							<tablecol dataattribute="totalMatCost" id="pmforecast_table2_tablebody_8" inputmode="readonly"/>
+							<tablecol dataattribute="totalToolCost" id="pmforecast_table2_tablebody_9" inputmode="readonly"/>
+							<tablecol dataattribute="totalServCost" id="pmforecast_table2_tablebody_10" inputmode="readonly"/>
+							<tablecol dataattribute="totalCost" id="pmforecast_table2_tablebody_11" inputmode="readonly"/>
+						</tablebody>
+					</table>
+					<tabgroup id="resources_group">
+						<tab default="true" id="resourcegrp" label="Labor">
+							<table id="resourcegrp_labor_table" inputmode="readonly" label="Labor" parentdatasrc="pmforecast_table2" relationship="PMFORECASTLABOR">
+								<tablebody displayrowsperpage="6" filterable="true" id="resourcegrp_labor_tablebody">
+									<tablecol filterable="false" id="resourcegrp_labor_table_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+									<tablecol dataattribute="JOBLABOR.amcrewtype" id="resourcegrp_labor_table_tablebody_2"/>
+									<tablecol dataattribute="JOBLABOR.craft" id="resourcegrp_labor_table_tablebody_3"/>
+									<tablecol dataattribute="JOBLABOR.SKILLLEVEL" id="resourcegrp_labor_table_tablebody_4"/>
+									<tablecol dataattribute="JOBLABOR.laborcode" id="resourcegrp_labor_table_tablebody_5"/>
+									<tablecol dataattribute="JOBLABOR.PAYRATE" id="resourcegrp_labor_table_tablebody_6"/>
+									<tablecol dataattribute="thislaborhrs" id="resourcegrp_labor_table_tablebody_7"/>
+									<tablecol dataattribute="thislaborcost" id="resourcegrp_labor_table_tablebody_8"/>
+								</tablebody>
+							</table>
+						</tab>
+						<tab default="true" id="resourcegrpmat" label="Material">
+							<table id="resourcegrpmat_table" inputmode="readonly" label="Material" parentdatasrc="pmforecast_table2" relationship="PMFORECASTMATERIAL">
+								<tablebody displayrowsperpage="6" filterable="true" id="resourcegrpmat_tablebody">
+									<tablecol filterable="false" id="resourcegrpmat_table_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+									<tablecol dataattribute="JOBMATERIAL.itemnum" id="resourcegrpmat_table_tablebody_2"/>
+									<tablecol dataattribute="JOBMATERIAL.itemqty" id="resourcegrpmat_table_tablebody_3"/>
+									<tablecol dataattribute="thismatcost" id="resourcegrpmat_table_tablebody_4"/>
+								</tablebody>
+							</table>
+						</tab>
+						<tab default="true" id="resourcegrptool" label="Tool">
+							<table id="resourcegrptool_table" inputmode="readonly" label="Tool" parentdatasrc="pmforecast_table2" relationship="PMFORECASTTOOL">
+								<tablebody displayrowsperpage="6" filterable="true" id="resourcegrptool_tablebody">
+									<tablecol filterable="false" id="resourcegrptool_table_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+									<tablecol dataattribute="JOBTOOL.itemnum" id="resourcegrptool_table_tablebody_2"/>
+									<tablecol dataattribute="JOBTOOL.itemqty" id="resourcegrptool_table_tablebody_3"/>
+									<tablecol dataattribute="JOBTOOL.hours" id="resourcegrptool_table_tablebody_4"/>
+									<tablecol dataattribute="JOBTOOL.RATE" id="resourcegrptool_table_tablebody_5"/>
+									<tablecol dataattribute="thistoolcost" id="resourcegrptool_table_tablebody_6"/>
+								</tablebody>
+							</table>
+						</tab>
+						<tab default="true" id="resourcegrpserv" label="Service">
+							<table id="resourcegrpserv_table" inputmode="readonly" label="Service" parentdatasrc="pmforecast_table2" relationship="PMFORECASTSERVICE">
+								<tablebody displayrowsperpage="6" filterable="true" id="resourcegrpserv_tablebody">
+									<tablecol filterable="false" id="resourcegrpserv_table_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+									<tablecol dataattribute="JOBSERVICE.itemnum" id="resourcegrpserv_table_tablebody_2"/>
+									<tablecol dataattribute="JOBSERVICE.itemqty" id="resourcegrpserv_table_tablebody_3"/>
+									<tablecol dataattribute="thisServCost" id="resourcegrpserv_table_tablebody_4"/>
+								</tablebody>
+							</table>
+						</tab>
+					</tabgroup>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include controltoclone="pageFooter" id="INCLUDE-pageFooter"/>
+	</page>
+
+	<dialog beanclass="psdi.webclient.beans.pm.PMSetLastMeterReadingBean" id="setlastmr" label="Set Reading At Last WO" relationship="PMMETER" width="500">
+		<helpgrid id="setlastmr_help" innerhtml="Enter a new value for Reading at last Work Order either to establish a starting point for a new PM on an existing asset or to reset the schedule on a PM."/>
+		<table id="setlastmr_table" label="Readings">
+			<tablebody displayrowsperpage="20" id="setlastmr_table_tablebody">
+				<tablecol dataattribute="metername" id="setlastmr_table_tablebody_1" sortable="false"/>
+				<tablecol dataattribute="lastpmwogenread" id="setlastmr_table_tablebody_2" sortable="false"/>
+				<tablecol dataattribute="newreadingatnxtwo" id="setlastmr_table_tablebody_3" sortable="false"/>
+			</tablebody>
+		</table>
+		<buttongroup id="setlastmr_2">
+			<pushbutton default="true" id="setlastmr_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="setlastmr_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.pm.PMWOGenBean" id="generatewo" label="Generate Work Orders" relationship="pmworkgeneration" savemode="ONLOAD">
+		<datasrc beanclass="psdi.webclient.beans.repfacility.GenerateWOConditionalUIBean" id="generatewo_repfacilitysrc"/>
+		<section height="50" id="generatewo_grid1">
+			<textbox dataattribute="leadtime" id="generatewo_grid1_1_1_grid3_1"/>
+			<checkbox dataattribute="usefrequency" id="generatewo_grid1_1_1_grid3_3"/>
+			<checkbox dataattribute="async" id="generatewo_grid1_1_1_grid4_1"/>
+			<textbox dataattribute="toemailaddr" id="generatewo_grid1_1_1_grid4_2"/>
+			<multiparttextbox applink="location,ipc" dataattribute="REPAIRFACILITY" descdataattribute="REPAIRFACILITY.description" descinputmode="readonly" id="generatewo_grid1_1_1_grid4_3" longdescreadonly="true" lookup="repfacility" menutype="repfacility" sigoption="REPFACILITY" sigoptiondatasrc="generatewo_repfacilitysrc"/>
+			<textbox dataattribute="REPFACSITEID" id="generatewo_grid1_1_1_grid4_4" inputmode="readonly" sigoption="REPFACILITY" sigoptiondatasrc="generatewo_repfacilitysrc"/>
+			<checkbox dataattribute="USEASSETDEFREPFAC" id="generatewo_grid1_1_1_grid4_5" sigoption="REPFACILITY" sigoptiondatasrc="generatewo_repfacilitysrc"/>
+		</section>
+		<buttongroup id="generatewo_3">
+			<pushbutton default="true" id="generatewo_3_1" label="OK" mxevent="dogenerate"/>
+			<pushbutton id="generatewo_3_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="displaywo" label="Display Work Orders Generated">
+		<section border="true" height="50" id="displaywo_grid1">
+			<sectionrow id="displaywo_grid1_1">
+				<sectioncol id="displaywo_grid1_1_1">
+					<section id="displaywo_grid1_1_1_grid22"/>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="displaywo_2">
+			<pushbutton default="true" id="displaywo_2_1" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.pm.PMCounterBean" id="setpmcount" label="Set PM Counter">
+		<section datasrc="MAINRECORD" id="setcount_grid1">
+			<sectionrow id="setcount_grid1_1">
+				<sectioncol id="setcount_grid1_1_1">
+					<section id="setcount_grid1_1_1_grid2">
+						<textbox dataattribute="pmcounter" id="setcount_grid1_1_1_grid2_1" inputmode="readonly"/>
+						<textbox dataattribute="pmcount" id="setcount_grid1_1_1_grid2_2"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="setcount_2">
+			<pushbutton default="true" id="setcount_2_1" label="OK" mxevent="updatecounter"/>
+			<pushbutton id="setcount_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.pm.PMViewSequenceBean" id="viewseq" label="View Sequence" relationship="PMSEQUENCE" width="500">
+		<helpgrid id="viewseq_help1" innerhtml="This action shows the projected order of job plan use on work orders generated from the current PM."/>
+		<table id="viewseq_seq_table1" inputmode="readonly" label="Sequences">
+			<tablebody displayrowsperpage="20" id="viewseq_seq_table_tablebody1">
+				<tablecol dataattribute="jpnum" id="viewseq_seq_table_tablebody_11" sortable="false"/>
+				<tablecol dataattribute="pluscjobplan.description" id="viewseq_seq_table_tablebody_31" sortable="false"/>
+				<tablecol dataattribute="interval" id="viewseq_seq_table_tablebody_21" sortable="false"/>
+			</tablebody>
+		</table>
+		<buttongroup id="viewseq_21">
+			<pushbutton default="true" id="viewseq_2_11" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.pm.PMChangeStatusBean" id="list_status" label="Change Status" listaction="false" relationship="PMCHANGESTATUS" savemode="ONUNLOAD">
+		<section id="list_changestatus_grid1">
+			<sectionrow id="list_changestatus_grid1_1">
+				<sectioncol id="list_changestatus_grid1_1_1">
+					<section id="list_changestatus_grid1_1_1_grid4">
+						<combobox dataattribute="status" id="list_changestatus_grid1_1_1_grid4_1"/>
+						<checkbox dataattribute="rolltoallchildren" id="list_changestatus_grid1_1_1_grid4_2"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="list_changestatus_2">
+			<pushbutton default="true" id="list_changestatus_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="list_changestatus_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="status" label="Change Status" relationship="PMCHANGESTATUS" savemode="ONLOAD">
+		<section id="changestatus_grid1">
+			<sectionrow id="changestatus_grid1_1">
+				<sectioncol id="changestatus_grid1_1_1">
+					<section border="true" datasrc="MAINRECORD" id="changestatus_grid1_1_1_grid3">
+						<multiparttextbox dataattribute="pmnum" descdataattribute="description" descinputmode="readonly" id="changestatus_grid1_1_1_grid3_1"/>
+						<multiparttextbox dataattribute="status" descdataattribute="statusdesc.description" descinputmode="readonly" id="changestatus_grid1_1_1_grid3_5" inputmode="readonly"/>
+					</section>
+					<section id="changestatus_grid1_1_1_grid4">
+						<combobox dataattribute="status" id="changestatus_grid1_1_1_grid4_1"/>
+						<checkbox dataattribute="rolltoallchildren" id="changestatus_grid1_1_1_grid4_2"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="changestatus_2">
+			<pushbutton default="true" id="changestatus_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="changestatus_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.pm.PMForecastBean" hidehelp="true" id="list_generatefo" label="Generate Forecast" relationship="pmforecastgen">
+		<helpgrid id="list_generatefo_help" innerhtml="Enter the period of time for which to forecast preventive maintenance records. The forecast can be run in the background. Forecasted dates will appear on the Forecast tab."/>
+		<section id="list_generatefo_grid1">
+			<textbox dataattribute="genuntildate" id="list_generatefo_grid1_1" lookup="datelookup" synchronous="true"/>
+			<textbox dataattribute="genduration" id="list_generatefo_grid1_2" synchronous="true"/>
+			<checkbox dataattribute="async" id="list_generatefo_grid1_3"/>
+			<textbox dataattribute="toemailaddr" id="list_generatefo_grid1_4"/>
+		</section>
+		<statictext id="list_generatefo_help2" label="NOTE: If reforecast is pending, forecast dates will be adjusted appropriately when this action is executed."/>
+		<buttongroup id="list_generatefo_3">
+			<pushbutton default="true" id="list_generatefo_3_1" label="OK" mxevent="doforecast"/>
+			<pushbutton id="list_generatefo_3_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.QbeBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<section id="qbe_grid3">
+			<sectionrow id="qbe_grid3_r1">
+				<sectioncol id="qbe_grid3_r1c1">
+					<section id="qbe_grid3_r1c11">
+						<multiparttextbox dataattribute="pmnum" descdataattribute="description" descinputmode="query" id="qbe_grid3_1" inputmode="query"/>
+						<multiparttextbox applink="masterpm" dataattribute="masterpm" descdataattribute="masterpm.description" descinputmode="query" id="qbe_grid3_17" inputmode="query" lookup="masterpm" menutype="normal"/>
+						<textbox applink="location,ipc" dataattribute="primarysyslocpm.ancestor" id="qbe_grid6_1_1_11" inputmode="query" lookup="locations" menutype="locations"/>
+						<multiparttextbox applink="routes" dataattribute="route" descdataattribute="routes.description" descinputmode="query" id="qbe_grid3_13" inputmode="query" lookup="routes" menutype="normal"/>
+						<multiparttextbox dataattribute="lbl_classid" descdataattribute="lbl_classification.description" descinputmode="query" id="qbe_lbl_classid" inputmode="query" lookup="lbl_pm_classification"/>
+						<textbox dataattribute="frequency" id="qbe_frequency" inputmode="query"/>
+						<textbox dataattribute="frequnit" id="qbe_frequnit" inputmode="query" lookup="valuelist"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_grid3_r1c2">
+					<section id="qbe_grid3_r1c21">
+						<textbox dataattribute="status" id="qbe_grid3_4" inputmode="query" lookup="valuelist"/>
+						<textbox dataattribute="siteid" id="qbe_grid3_3" inputmode="query" lookup="site"/>
+						<textbox dataattribute="leadtime" id="qbe_grid6_1_1_9" inputmode="query"/>
+						<textbox dataattribute="glaccount" id="qbe_grid6_1_1_7" inputmode="query" lookup="LBLPROJACTGLNAVIGATOR"/>
+						<textbox applink="storeroom,ipc" dataattribute="storeloc" id="qbe_grid6_1_1_3" inputmode="query" lookup="storelocsite" menutype="normal"/>
+						<textbox dataattribute="LBL_PM2JOBPLANSEQ.LBL_LEADCRAFT" id="1498661469163" inputmode="query" label="Job Plan Lead Craft"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<section id="qbe_grid3a">
+			<sectionrow id="qbe_grid3a_r1">
+				<sectioncol id="qbe_grid3a_r1_c1">
+					<section id="qbe_grid3a_r1_c1_s1" label="Work Order Information">
+						<multiparttextbox applink="jobplan" dataattribute="jpnum" descdataattribute="pluscjobplan.description" descinputmode="query" id="qbe_grid3_15" inputmode="query" lookup="jobplan" menutype="normal"/>
+						<textbox dataattribute="worktype" id="qbe_grid6_1_1_8" inputmode="query" lookup="pmworktype"/>
+						<textbox dataattribute="wostatus" id="qbe_grid6_1_1_2" inputmode="query" lookup="valuelist"/>
+						<textbox dataattribute="priority" id="qbe_grid6_1_1_5" inputmode="query"/>
+						<textbox dataattribute="extdate" id="new_textbox"/>
+						<textbox dataattribute="interruptible" id="qbe_grid6_1_1_10" inputmode="query"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_grid3a_r1_c2">
+					<section id="qbe_grid3a_r1_c2_s1" label="Responsibility">
+						<sectioncol id="qbe_grid3a_r1_c2_s1_c1">
+							<section id="qbe_grid3a_r1_c2_s1_c1_s1">
+								<textbox applink="person" dataattribute="supervisor" id="qbe_grid6_1_1_1" inputmode="query" lookup="person" menutype="normal"/>
+								<textbox dataattribute="crewid" id="qbe_grid6_1_1_4" inputmode="query" lookup="valuelist" sigoption="CREWIDFIELD"/>
+								<textbox applink="person" dataattribute="lead" id="qbe_grid6_1_1_12" inputmode="query" lookup="person" menutype="normal"/>
+								<textbox applink="persongr" dataattribute="persongroup" id="qbe_grid6_1_1_13" inputmode="query" lookup="persongroup" menutype="normal"/>
+								<textbox applink="person" dataattribute="owner" id="qbe_grid6_1_1_14" inputmode="query" lookup="person" menutype="normal"/>
+								<textbox applink="persongr" dataattribute="ownergroup" id="qbe_grid6_1_1_15" inputmode="query" lookup="persongroup" menutype="normal"/>
+							</section>
+						</sectioncol>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<section id="qbe_loc_asset">
+			<sectionrow id="qbe_loc_asset_r1">
+				<sectioncol id="qbe_loc_asset_c1">
+					<section id="qbe_location_s1" label="Search by PM Location">
+						<multiparttextbox applink="location,ipc" dataattribute="location" descdataattribute="locations.description" descinputmode="query" id="qbe_location" inputmode="query" lookup="locations" menutype="locations"/>
+						<textbox dataattribute="locations.CLASSSTRUCTURE.CLASSIFICATIONID" id="qbe_loc_class" inputmode="query" label="Location Class" lookup="lbl_loc_classification"/>
+						<textbox dataattribute="locations.lo1" id="qbe_loc_bldg" inputmode="query" lookup="lbl_building"/>
+						<textbox dataattribute="locations.lo2" id="qbe_loc_floor" inputmode="query"/>
+						<textbox dataattribute="locations.lo3" id="qbe_loc_room" inputmode="query"/>
+						<textbox dataattribute="locations.lbl_roof_level" id="qbe_loc_roof" inputmode="query"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_loc_asset_c2">
+					<section id="qbe_asset_s1" label="Search by PM Asset">
+						<sectioncol id="qbe_asset_s1_c1">
+							<section id="qbe_asset_s1_c1_s1">
+								<multiparttextbox applink="asset,ipc" dataattribute="assetnum" descdataattribute="asset.description" descinputmode="query" id="qbe_assetnum" inputmode="query" lookup="asset" menutype="assetmain"/>
+								<multiparttextbox applink="location,ipc" dataattribute="asset.location" descdataattribute="asset.location.description" descinputmode="query" id="qbe_asset_location" inputmode="query" label="Asset Location" lookup="locations" menutype="locations"/>
+								<textbox dataattribute="asset.CLASSSTRUCTURE.CLASSIFICATIONID" id="qbe_asset_class" inputmode="query" label="Asset Class" lookup="lbl_asset_classification"/>
+								<textbox dataattribute="asset.location.lo1" id="qbe_asset_loc_bldg" inputmode="query" label="Asset in Bldg" lookup="lbl_building"/>
+								<textbox dataattribute="asset.location.lo2" id="qbe_asset_loc_floor" inputmode="query" label="Asset on Floor"/>
+								<textbox dataattribute="asset.location.lo3" id="qbe_asset_loc_room" inputmode="query" label="Asset in Room"/>
+							</section>
+						</sectioncol>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<section id="qbe_date_s1" label="Dates">
+			<sectionrow id="qbe_date_r1">
+				<sectioncol id="qbe_date_r1_c1">
+					<section id="qbe_date_r1_c1_s1">
+						<sectionrow id="qbe_date_s1_r1">
+							<sectioncol id="qbe_date_s1_r1_c1">
+								<section id="qbe_date_s1_r1_c1_s1">
+									<statictext align="center" id="qbe_date_s1_r1_c1_s1_st1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r1_c2">
+								<section id="qbe_date_s1_r1_c2_s1">
+									<statictext align="center" id="qbe_date_s1_r1_c2_s1_st1" label="From"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r1_c3">
+								<section id="qbe_date_s1_r1_c3_s1">
+									<statictext align="center" id="qbe_date_s1_r1_c3_s1_st1" label="To"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="qbe_date_s1_r2">
+							<sectioncol id="qbe_date_s1_r2_c1">
+								<section id="qbe_date_s1_r2_c1_s1">
+									<statictext align="right" id="qbe_date_s1_r2_c1_s1_t1" label="Estimated Next Due Date"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r2_c2">
+								<section id="qbe_date_s1_r2_c2_s1">
+									<textbox dataattribute="nextdate" hidelabel="true" id="qbe_grid3_11" inputmode="query" lookup="datelookup" prepend="&gt;="/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r2_c3">
+								<section id="qbe_date_s1_r2_c3_s1">
+									<textbox dataattribute="nextdate" hidelabel="true" id="qbe_grid3_12" inputmode="query" lookup="datelookup" prepend="&lt;="/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_date_r1_c2">
+					<section id="qbe_date_r1_c2_s1">
+						<blankline id="qbe_blkline"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="qbe_grid5_1_1_grid6">
+			<pushbutton default="true" id="qbe_grid5_1_1_grid6_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="qbe_restoreappdefault_button" label="Restore Application Defaults" mxevent="qbeclear"/>
+			<pushbutton id="qbe_revisebutton" label="Revise" menutype="SEARCHMOREREVISE" targetid="searchmore"/>
+			<pushbutton id="qbe_grid5_1_1_grid6_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.pm.PMForecastBean" hidehelp="true" id="generatefo" label="Generate Forecast" relationship="pmforecastgen" savemode="ONLOADUNLOAD">
+		<helpgrid id="generatefo_help" innerhtml="Enter the period of time for which to forecast preventive maintenance records. The forecast can be run in the background. Forecasted dates will appear on the Forecast tab."/>
+		<section id="generatefo_grid1">
+			<textbox dataattribute="lastforecastdate" datasrc="MAINRECORD" id="generatefo_grid1_5"/>
+			<textbox dataattribute="genuntildate" id="generatefo_grid1_1" lookup="datelookup" synchronous="true"/>
+			<textbox dataattribute="genduration" id="generatefo_grid1_2" synchronous="true"/>
+			<checkbox dataattribute="async" id="generatefo_grid1_3"/>
+			<textbox dataattribute="toemailaddr" id="generatefo_grid1_4"/>
+		</section>
+		<statictext id="generatefo_help2" label="NOTE: If reforecast is pending, forecast dates will be adjusted appropriately when this action is executed."/>
+		<buttongroup id="generatefo_3">
+			<pushbutton default="true" id="generatefo_3_1" label="OK" mxevent="doforecast"/>
+			<pushbutton id="generatefo_3_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="createpm" label="Create Associated PMs" relationship="ASSOCASSET">
+		<helpgrid id="createpm_help" innerhtml="Select the checkbox for each row containing the asset or location that needs PMs created for them. To create associated PMs, click OK."/>
+		<tabgroup id="createpm_createpm">
+			<tab default="true" id="createpm_createpm_asset" label="Asset">
+				<table id="createpm_createpm_asset_assocasset_table" relationship="ASSOCASSET" selectmode="multiple">
+					<tablebody displayrowsperpage="15" filterable="true" filterexpanded="true" id="createpm_createpm_asset_assocasset_table_tablebody">
+						<tablecol filterable="false" id="createpm_createpm_asset_assocasset_table_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+						<tablecol dataattribute="assetnum" id="createpm_createpm_asset_assocasset_table_tablebody_2"/>
+						<tablecol dataattribute="description" id="createpm_createpm_asset_assocasset_table_tablebody_3"/>
+					</tablebody>
+				</table>
+			</tab>
+			<tab id="createpm_createpm_location" label="Location">
+				<table id="createpm_createpm_location_assocloc_table" relationship="ASSOCLOC" selectmode="multiple">
+					<tablebody displayrowsperpage="15" filterable="true" filterexpanded="true" id="createpm_createpm_location_assocloc_table_tablebody">
+						<tablecol filterable="false" id="createpm_createpm_location_assocloc_table_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+						<tablecol dataattribute="location" id="createpm_createpm_location_assocloc_table_tablebody_2"/>
+						<tablecol dataattribute="locations.description" id="createpm_createpm_location_assocloc_table_tablebody_3"/>
+					</tablebody>
+				</table>
+			</tab>
+		</tabgroup>
+		<buttongroup id="createpm_2">
+			<pushbutton default="true" id="createpm_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="createpm_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.pm.PMWOGenBean" id="list_generatewo" label="Generate Work Orders" relationship="pmworkgeneration">
+		<datasrc beanclass="psdi.webclient.beans.repfacility.GenerateWOConditionalUIBean" id="list_generatewo_repfacilitysrc"/>
+		<section height="50" id="list_generatewo_grid1">
+			<textbox dataattribute="leadtime" id="list_generatewo_grid1_1_1_grid3_1"/>
+			<checkbox dataattribute="usefrequency" id="list_generatewo_grid1_1_1_grid3_3"/>
+			<checkbox dataattribute="async" id="list_generatewo_grid1_1_1_grid4_1"/>
+			<textbox dataattribute="toemailaddr" id="list_generatewo_grid1_1_1_grid4_2"/>
+			<multiparttextbox applink="location,ipc" dataattribute="REPAIRFACILITY" descdataattribute="REPAIRFACILITY.description" descinputmode="readonly" id="list_generatewo_grid1_1_1_grid4_3" longdescreadonly="true" lookup="repfacility" menutype="repfacility" sigoption="REPFACILITY" sigoptiondatasrc="list_generatewo_repfacilitysrc"/>
+			<textbox dataattribute="REPFACSITEID" id="list_generatewo_grid1_1_1_grid4_4" inputmode="readonly" sigoption="REPFACILITY" sigoptiondatasrc="list_generatewo_repfacilitysrc"/>
+			<checkbox dataattribute="USEASSETDEFREPFAC" id="list_generatewo_grid1_1_1_grid4_5" sigoption="REPFACILITY" sigoptiondatasrc="list_generatewo_repfacilitysrc"/>
+		</section>
+		<buttongroup id="list_generatewo_3">
+			<pushbutton default="true" id="list_generatewo_3_1" label="OK" mxevent="beforedialogok"/>
+			<pushbutton id="list_generatewo_3_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.plusc.webclient.beans.pm.PlusCPMExtDateDataBean" id="pluscxtdtcmt" label="Extend Date Comment" parentdatasrc="MAINRECORD" relationship="PLUSCPMEXTDATE">
+		<helpgrid id="pluscxtdtcomt_help" innerhtml="Enter a comment for extending the date. Click OK when finished."/>
+		<section id="pluscxtdtcomt_s1">
+			<sectionrow id="pluscxtdtcomt_s1_r1">
+				<sectioncol id="pluscxtdtcomt_s1_c1">
+					<section id="pluscxtdtcomt_s1_c1_s1">
+						<textbox dataattribute="pmnum" id="pluscxtdtcomt_s1_c1_s1a1" inputmode="readonly" label="PM"/>
+						<textbox dataattribute="comments" id="pluscxtdtcomt_s1_c1_s1a2" label="Comment" lookup="longdesc"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="pluscxtdtcomt_2">
+			<pushbutton default="true" id="pluscxtdtcomt_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="pluscxtdtcomt_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog height="380" id="changestatusconfirm" label="Change Status Confirmation" width="510">
+		<section border="true" id="changestatusconfirm_grid1">
+			<sectionrow id="changestatusconfirm_grid1_1">
+				<sectioncol id="changestatusconfirm_grid1_1_1"/>
+			</sectionrow>
+		</section>
+		<buttongroup id="changestatusconfirm_2">
+			<pushbutton default="true" id="changestatusconfirm_2_1" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.ViewBookmarksBean" id="searchbook" label="My Bookmarks" mboname="PM">
+		<table id="bookmarks_table" inputmode="readonly" label="PMs" selectmode="single">
+			<tablebody displayrowsperpage="20" filterable="true" id="bookmarks_table_tablebody">
+				<tablecol dataattribute="pmnum" id="bookmarks_tablebody_1" mxevent="selectrecord" type="link"/>
+				<tablecol dataattribute="description" id="bookmarks_table_tablebody_2"/>
+				<tablecol filterable="false" id="bookmarks_table_tablebody_delete" mxevent="instantdelete" mxevent_desc="Delete" mxevent_icon="btn_delete.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="bookmarks_2">
+			<pushbutton default="true" id="bookmarks_2_1" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+	<configurationblock id="datastore_configurationblock"/>
+</presentation>

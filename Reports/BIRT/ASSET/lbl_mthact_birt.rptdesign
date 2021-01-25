@@ -1,0 +1,1157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">IBM Confidential
+
+OCO Source Materials
+
+5724-M19
+
+(C) COPYRIGHT IBM CORP. 2006
+
+The source code for this program is not published or otherwise
+divested of its trade secrets, irrespective of what has been
+deposited with the U.S. Copyright Office.
+
+09-19764@000</property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.3.1.v201309091055 Build &lt;4.3.1.v20130918-1142></property>
+    <html-property name="description">This template will create a report having a single header with multiple rows of data.</html-property>
+    <property name="units">in</property>
+    <method name="initialize"><![CDATA[importPackage(Packages.com.ibm.tivoli.maximo.report.script);
+
+mxReportScriptContext = MXReportScriptContext.initialize(reportContext);
+
+
+var gstrWhereClause = new String(); 
+var gstrReportType = new String();
+
+gstrReportType = params["paramAutoReport"].replace("=" , "")
+
+if(gstrReportType  == "N"){
+
+		gstrWhereClause+=" and  trunc(e.invoicedate) >= (select financialperiods.periodstart from financialperiods "
+ 						+" where financialperiods.financialperiod = '" + params["paramStartFiscalYrs"].replace("=" , "") +  params["paramStartAcctPeriod"].replace("=" , "") + "') "
+ 						+" and trunc(e.invoicedate) < (select trunc(financialperiods.periodend) "
+ 						+" from financialperiods where financialperiods.financialperiod = '" + params["paramEndFiscalYrs"].replace("=" , "") +  params["paramEndAcctPeriod"].replace("=" , "") + "') "
+} else
+{
+        gstrWhereClause+=" and  trunc(e.invoicedate) >= (select max(periodstart) from financialperiods where lbl_feederprocessed is not null) "
+                        +" and trunc(e.invoicedate) < (select max(periodend) from financialperiods where lbl_feederprocessed is not null) "
+}]]></method>
+    <method name="beforeFactory"><![CDATA[// Remove page break intervals from PDF output
+if ( (reportContext.getParameterValue("usepagebreaks") == "false")|| reportContext.getOutputFormat() == "pdf" ) {
+	// Give each table in the report a name, and add the names to the list below, e.g. ["mainTable", "childTable1"]
+	var tableListing = ["mainTable"];
+	for each(var tableName in tableListing) {
+		var table = reportContext.getReportRunnable().designHandle.getDesignHandle().findElement(tableName)
+		if (table != null)
+		{
+			table.setProperty("pageBreakInterval", 0);
+		}
+	}
+}]]></method>
+    <method name="afterFactory"><![CDATA[MXReportScriptContext.close();]]></method>
+    <property name="theme">MaximoSystemLibrary.maximoTheme</property>
+    <property name="layoutPreference">auto layout</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">96</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">MaximoSystemLibrary.rptlibrary</property>
+            <property name="namespace">MaximoSystemLibrary</property>
+        </structure>
+        <structure>
+            <property name="fileName">lbnlreportlibrary.rptlibrary</property>
+            <property name="namespace">lbnlreportlibrary</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="where" id="25">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1=1</value>
+            </simple-property-list>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="appname" id="200">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramdelimiter" id="202">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramstring" id="201">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="usepagebreaks" id="342">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">true</value>
+            </simple-property-list>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramOrgid" id="695">
+            <text-property name="promptText">Orgid</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">=LBNL</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramSiteid" id="696">
+            <text-property name="promptText">Siteid</text-property>
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">=FAC</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramStartFiscalYrs" id="1008">
+            <text-property name="promptText">Start Fiscal Year</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">2015</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramEndFiscalYrs" id="1009">
+            <text-property name="promptText">End Fiscal Year</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">2015</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramStartAcctPeriod" id="698">
+            <text-property name="promptText">Start Accounting Period</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">01</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramEndAcctPeriod" id="1010">
+            <text-property name="promptText">End Accounting Period</text-property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">01</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramAutoReport" id="1075">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">N</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <script-data-source name="maximoDataSource" id="64" extends="MaximoSystemLibrary.maximoDataSource"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="dataSet" id="5">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">location</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">gldebitacct</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">vehicle_class</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">assetnum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">operator</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">description</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">orgid</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">siteid</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">base_rate</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">invoicedate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">cost_per_mile</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">total_miles</property>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">milage_cost</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">pool_miles</property>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">pool_rate</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">pool_cost</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">total_cost</property>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">invoicenum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">ICT1</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">location</property>
+                </structure>
+                <structure>
+                    <property name="columnName">gldebitacct</property>
+                </structure>
+                <structure>
+                    <property name="columnName">vehicle_class</property>
+                </structure>
+                <structure>
+                    <property name="columnName">assetnum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">operator</property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">orgid</property>
+                </structure>
+                <structure>
+                    <property name="columnName">siteid</property>
+                </structure>
+                <structure>
+                    <property name="columnName">base_rate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">invoicedate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">cost_per_mile</property>
+                </structure>
+                <structure>
+                    <property name="columnName">total_miles</property>
+                </structure>
+                <structure>
+                    <property name="columnName">milage_cost</property>
+                </structure>
+                <structure>
+                    <property name="columnName">pool_miles</property>
+                </structure>
+                <structure>
+                    <property name="columnName">pool_rate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">pool_cost</property>
+                </structure>
+                <structure>
+                    <property name="columnName">total_cost</property>
+                </structure>
+                <structure>
+                    <property name="columnName">invoicenum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">ICT1</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">location</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">gldebitacct</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">vehicle_class</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">assetnum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">operator</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">orgid</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">siteid</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">base_rate</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">invoicedate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">cost_per_mile</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">total_miles</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">milage_cost</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">pool_miles</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">pool_rate</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">pool_cost</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">total_cost</property>
+                        <property name="dataType">decimal</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">invoicenum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">ICT1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+var sqlText = new String();
+
+
+// Add query to sqlText variable. (Changed by Pankaj JIRA EF-3222)
+sqlText = "select a.orgid, a.siteid, e.invoicenum, a.gldebitacct, a.location, a.assetnum, c.description, "
+ +"     d.vehicle_class, "
+ +" 	p.displayname operator, " 
+ +" 	e.invoicedate, a.ICT1, " 
+ +" 	sum(decode(b.invoiceunit,'BASERATE',a.linecost,0)) base_rate, " 
+ +" 	sum(decode(b.invoiceunit,'MILES',a.unitcost,0)) cost_per_mile, " 
+ +"		sum(decode(b.invoiceunit,'MILES',b.invoiceqty,0)) total_miles, " 
+ +"		sum(decode(b.invoiceunit,'MILES',a.linecost,0)) milage_cost, " 
+ +"		sum(decode(b.invoiceunit,'USAGES',b.invoiceqty,0)) pool_miles, " 
+ +"		sum(decode(b.invoiceunit,'USAGES',b.unitcost,0)) pool_rate, " 
+ +"		sum(decode(b.invoiceunit,'USAGES',a.linecost,0)) pool_cost, "  		
+ +"		sum(decode(b.invoiceunit,'BASERATE',a.linecost,0)) +  " 
+ +"		sum(decode(b.invoiceunit,'MILES',a.linecost,0))    + " 
+ +"		sum(decode(b.invoiceunit,'USAGES',a.linecost,0)) total_cost " 
+ +" 	from LBL_INVOICECOST_EST a, LBL_INVOICELINE_EST b, asset c, lbl_vehiclespec d, person p, " 
+ +"	    lbl_invoice_est e " 
+ +"		where a.orgid=e.orgid "
+ +"		and   a.siteid=e.siteid " 
+ +"		and   a.invoicenum=e.invoicenum " 
+ +"		and   b.orgid=e.orgid " 
+ +"		and   b.siteid=e.siteid " 
+ +"		and   b.invoicenum=e.invoicenum " 
+ +"		and   a.orgid =b.orgid " 
+ +"		and   a.siteid=b.siteid " 
+ +"		and   a.invoicenum=b.invoicenum " 
+ +"		and   a.invoicelinenum=b.invoicelinenum " 
+ +"		and   a.assetnum=c.assetnum " 
+ +"		and   a.assetnum=d.assetnum " 
+ +"		and   c.assetnum=d.assetnum " 
+ +"		and   d.operator = p.PERSONID(+)  " 
+ +"	    and   a.orgid = '" + params["paramOrgid"].replace("=" , "") + "' "
+ +"     and   a.siteid = '" + params["paramSiteid"].replace("=" , "") + "' "
+ +"     and   e.invoicenum LIKE 'FLEET%' "
+ +"	    and  e.INVOICETYPE = 'ACT' "
+// +"     and  trunc(e.invoicedate) >= (select financialperiods.periodstart from financialperiods "
+ //+                                   " where financialperiods.financialperiod = '" + params["paramStartFiscalYrs"].replace("=" , "") +  params["paramStartAcctPeriod"].replace("=" , "") + "') "
+ //+"     and trunc(e.invoicedate) < (select trunc(financialperiods.periodend) "
+// +                                  " from financialperiods where financialperiods.financialperiod = '" + params["paramEndFiscalYrs"].replace("=" , "") +  params["paramEndAcctPeriod"].replace("=" , "") + "') "
++ gstrWhereClause
+ +"		group by a.orgid, a.siteid, e.invoicenum, a.location, a.gldebitacct, a.assetnum, c.description,  d.vehicle_class, "
+ +"		p.displayname, e.invoicedate, a.ICT1 "
+ +"		order by a.orgid, a.siteid, e.invoicenum, a.location, a.gldebitacct, a.assetnum  ";
+
+maximoDataSet.setQuery(sqlText);
+
+ 
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["orgid"] = maximoDataSet.getString("orgid");	
+row["siteid"] = maximoDataSet.getString("siteid");	
+row["location"] = maximoDataSet.getString("location");	
+row["gldebitacct"] = maximoDataSet.getString("gldebitacct");	
+row["vehicle_class"] = maximoDataSet.getString("vehicle_class");	
+	
+row["assetnum"] = maximoDataSet.getString("assetnum");	
+row["description"] = maximoDataSet.getString("description");	
+row["operator"] = maximoDataSet.getString("operator");	
+row["description"] = maximoDataSet.getString("description");	
+
+
+row["invoicenum"] = maximoDataSet.getString("invoicenum");
+row["invoicedate"] = maximoDataSet.getTimestamp("invoicedate");
+row["ICT1"] = maximoDataSet.getString("ICT1");
+
+row["base_rate"] = maximoDataSet.getDouble("base_rate");	
+row["cost_per_mile"] = maximoDataSet.getDouble("cost_per_mile");	
+row["total_miles"] = maximoDataSet.getInteger("total_miles");	
+row["milage_cost"] = maximoDataSet.getDouble("milage_cost");	
+row["pool_miles"] = maximoDataSet.getInteger("pool_miles");	
+row["pool_rate"] = maximoDataSet.getDouble("pool_rate");		
+row["pool_cost"] = maximoDataSet.getDouble("pool_cost");	
+
+row["total_cost"] = maximoDataSet.getDouble("total_cost");	
+
+
+return (true);
+
+]]></method>
+        </script-data-set>
+    </data-sets>
+    <styles>
+        <style name="crosstab-cell" id="693">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+        <style name="crosstab" id="694">
+            <property name="borderBottomColor">#CCCCCC</property>
+            <property name="borderBottomStyle">solid</property>
+            <property name="borderBottomWidth">1pt</property>
+            <property name="borderLeftColor">#CCCCCC</property>
+            <property name="borderLeftStyle">solid</property>
+            <property name="borderLeftWidth">1pt</property>
+            <property name="borderRightColor">#CCCCCC</property>
+            <property name="borderRightStyle">solid</property>
+            <property name="borderRightWidth">1pt</property>
+            <property name="borderTopColor">#CCCCCC</property>
+            <property name="borderTopStyle">solid</property>
+            <property name="borderTopWidth">1pt</property>
+        </style>
+    </styles>
+    <page-setup>
+        <simple-master-page name="LandscapeWithoutLogo" id="983" extends="lbnlreportlibrary.LandscapeWithoutLogo"/>
+    </page-setup>
+    <body>
+        <table name="mainTable" id="7">
+            <property name="comments">09-19764@000</property>
+            <property name="width">100%</property>
+            <property name="dataSet">dataSet</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">location</property>
+                    <text-property name="displayName">location</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["location"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">gldebitacct</property>
+                    <text-property name="displayName">gldebitacct</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["gldebitacct"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">vehicle_class</property>
+                    <text-property name="displayName">vehicle_class</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["vehicle_class"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">assetnum</property>
+                    <text-property name="displayName">assetnum</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["assetnum"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">operator</property>
+                    <text-property name="displayName">operator</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["operator"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">description</property>
+                    <text-property name="displayName">description</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["description"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">orgid</property>
+                    <text-property name="displayName">orgid</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["orgid"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">siteid</property>
+                    <text-property name="displayName">siteid</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["siteid"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">base_rate</property>
+                    <text-property name="displayName">base_rate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["base_rate"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">invoicedate</property>
+                    <text-property name="displayName">invoicedate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["invoicedate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">cost_per_mile</property>
+                    <text-property name="displayName">cost_per_mile</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["cost_per_mile"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">total_miles</property>
+                    <text-property name="displayName">total_miles</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["total_miles"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">milage_cost</property>
+                    <text-property name="displayName">milage_cost</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["milage_cost"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">pool_miles</property>
+                    <text-property name="displayName">pool_miles</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["pool_miles"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">pool_rate</property>
+                    <text-property name="displayName">pool_rate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["pool_rate"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">pool_cost</property>
+                    <text-property name="displayName">pool_cost</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["pool_cost"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">total_cost</property>
+                    <text-property name="displayName">total_cost</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["total_cost"]</expression>
+                    <property name="dataType">decimal</property>
+                </structure>
+                <structure>
+                    <property name="name">invoicenum</property>
+                    <text-property name="displayName">invoicenum</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["invoicenum"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">ICT1</property>
+                    <text-property name="displayName">ICT1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["ICT1"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">50</property>
+            <column id="83"/>
+            <column id="79"/>
+            <column id="1071"/>
+            <column id="91"/>
+            <column id="87"/>
+            <column id="17"/>
+            <column id="728"/>
+            <column id="755"/>
+            <column id="746"/>
+            <column id="737">
+                <property name="width">0.8in</property>
+            </column>
+            <column id="783">
+                <property name="width">0.7583333333333333in</property>
+            </column>
+            <column id="774">
+                <property name="width">0.675in</property>
+            </column>
+            <column id="765">
+                <property name="width">0.6166666666666667in</property>
+            </column>
+            <column id="981">
+                <property name="width">0.7416666666666667in</property>
+            </column>
+            <column id="1017">
+                <property name="width">0.7916666666666666in</property>
+            </column>
+            <header>
+                <row id="180">
+                    <property name="style">title</property>
+                    <cell id="181">
+                        <property name="colSpan">15</property>
+                        <property name="rowSpan">1</property>
+                        <label id="700">
+                            <property name="fontSize">larger</property>
+                            <property name="textAlign">center</property>
+                            <text-property name="text">Lawrence Berkeley Laboratory </text-property>
+                        </label>
+                    </cell>
+                </row>
+                <row id="173">
+                    <property name="height">0.08in</property>
+                    <cell id="174">
+                        <property name="colSpan">15</property>
+                        <property name="rowSpan">1</property>
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <text-data id="925">
+                            <property name="fontSize">10pt</property>
+                            <expression name="valueExpr">if (params["paramAutoReport"].value == 'N') &#13;
+{&#13;
+BirtStr.concat('Fleet Vehicle Monthly Activity From Fiscal Year: ', params["paramStartFiscalYrs"].value, '     Accounting Period: ', params["paramStartAcctPeriod"].value, ' - To Fiscal Year: ', params["paramEndFiscalYrs"].value, '     Accounting Period: ', params["paramEndAcctPeriod"].value)&#13;
+}&#13;
+else&#13;
+{&#13;
+BirtStr.concat('Fleet Vehicle Monthly Activity of Last Financial Period ')&#13;
+}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                </row>
+                <row id="144">
+                    <property name="height">0.06in</property>
+                    <cell id="145">
+                        <property name="colSpan">14</property>
+                        <property name="rowSpan">1</property>
+                    </cell>
+                    <cell id="1013"/>
+                </row>
+                <row id="8">
+                    <property name="style">tabledetailslabel</property>
+                    <property name="height">0.4895833333333333in</property>
+                    <cell id="80">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="96">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Location</text-property>
+                        </label>
+                    </cell>
+                    <cell id="76">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="702">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Project ID</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1068">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="1072">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Project ID Status</text-property>
+                        </label>
+                    </cell>
+                    <cell id="88">
+                        <property name="style">tabledetailslabelcell</property>
+                        <property name="textAlign">left</property>
+                        <label id="704">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Vehicle Class</text-property>
+                        </label>
+                    </cell>
+                    <cell id="84">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="706">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Vehicle License</text-property>
+                        </label>
+                    </cell>
+                    <cell id="9">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="708">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Description</text-property>
+                        </label>
+                    </cell>
+                    <cell id="724">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="710">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Operator</text-property>
+                        </label>
+                    </cell>
+                    <cell id="751">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="756">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">Base Rate</text-property>
+                        </label>
+                    </cell>
+                    <cell id="742">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="784">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">MTH Miles</text-property>
+                        </label>
+                    </cell>
+                    <cell id="733">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="785">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">Rate&#13;
+/Mile</text-property>
+                        </label>
+                    </cell>
+                    <cell id="779">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="787">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">Mileage Cost</text-property>
+                        </label>
+                    </cell>
+                    <cell id="770">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="786">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">Usages</text-property>
+                        </label>
+                    </cell>
+                    <cell id="761">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="788">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">Usages Rate</text-property>
+                        </label>
+                    </cell>
+                    <cell id="976">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="789">
+                            <property name="fontSize">10pt</property>
+                            <property name="textAlign">right</property>
+                            <text-property name="text">Total Cost</text-property>
+                        </label>
+                    </cell>
+                    <cell id="1014">
+                        <property name="style">tabledetailslabelcell</property>
+                        <label id="1018">
+                            <property name="fontSize">10pt</property>
+                            <property name="paddingLeft">2pt</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Invoice Date</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="11">
+                    <property name="style">tabledetailsdatarow</property>
+                    <list-property name="visibility">
+                        <structure>
+                            <property name="format">all</property>
+                            <expression name="valueExpr" type="javascript">if (BirtStr.left(row["description"], 9)  == 'BASE RATE') &#13;
+{true}&#13;
+else if (BirtStr.left(row["description"], 10)  == 'POOL USAGE')&#13;
+{true}&#13;
+else if (BirtStr.left(row["description"], 12)  == 'POOL MILEAGE')&#13;
+{true}</expression>
+                        </structure>
+                    </list-property>
+                    <cell id="81">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1026">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">location</property>
+                        </data>
+                    </cell>
+                    <cell id="77">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1027">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">gldebitacct</property>
+                        </data>
+                    </cell>
+                    <cell id="1069">
+                        <property name="style">tabledetailsdatacell</property>
+                        <text-data id="1074">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <expression name="valueExpr">if (row["ICT1"] != null)&#13;
+{"INACTIVE"}</expression>
+                            <property name="contentType">html</property>
+                        </text-data>
+                    </cell>
+                    <cell id="89">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1028">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">vehicle_class</property>
+                        </data>
+                    </cell>
+                    <cell id="85">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1029">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">assetnum</property>
+                        </data>
+                    </cell>
+                    <cell id="12">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1030">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">description</property>
+                        </data>
+                    </cell>
+                    <cell id="725">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1031">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">operator</property>
+                        </data>
+                    </cell>
+                    <cell id="752">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1032">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">base_rate</property>
+                        </data>
+                    </cell>
+                    <cell id="743">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1033">
+                            <property name="resultSetColumn">total_miles</property>
+                        </data>
+                    </cell>
+                    <cell id="734">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1034">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">cost_per_mile</property>
+                        </data>
+                    </cell>
+                    <cell id="780">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1035">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">milage_cost</property>
+                        </data>
+                    </cell>
+                    <cell id="771">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1036">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">pool_cost</property>
+                        </data>
+                    </cell>
+                    <cell id="762">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1037">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">pool_rate</property>
+                        </data>
+                    </cell>
+                    <cell id="977">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1038">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">total_cost</property>
+                        </data>
+                    </cell>
+                    <cell id="1015">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="1039">
+                            <property name="paddingLeft">2pt</property>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">invoicedate</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="14">
+                    <property name="height">0.12in</property>
+                    <cell id="82">
+                        <property name="colSpan">1</property>
+                        <property name="rowSpan">1</property>
+                    </cell>
+                    <cell id="985"/>
+                    <cell id="1070"/>
+                    <cell id="986"/>
+                    <cell id="987"/>
+                    <cell id="988"/>
+                    <cell id="989">
+                        <label id="1007">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Grand Total: </text-property>
+                        </label>
+                    </cell>
+                    <cell id="990">
+                        <property name="fontWeight">bold</property>
+                        <property name="textAlign">right</property>
+                        <data id="1045">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">sum_base_rate</property>
+                        </data>
+                    </cell>
+                    <cell id="991">
+                        <data id="1048">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">sum_tot_miles</property>
+                        </data>
+                    </cell>
+                    <cell id="992"/>
+                    <cell id="993">
+                        <data id="1042">
+                            <property name="fontWeight">bold</property>
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">sum_milage_cost</property>
+                        </data>
+                    </cell>
+                    <cell id="994">
+                        <property name="fontWeight">bold</property>
+                        <property name="textAlign">right</property>
+                        <data id="1043">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">sum_pool_cost</property>
+                        </data>
+                    </cell>
+                    <cell id="995"/>
+                    <cell id="996">
+                        <property name="fontWeight">bold</property>
+                        <property name="textAlign">right</property>
+                        <data id="1044">
+                            <structure name="numberFormat">
+                                <property name="category">Currency</property>
+                                <property name="pattern">###0.00{RoundingMode=HALF_UP}</property>
+                            </structure>
+                            <property name="resultSetColumn">sum_tot_cost</property>
+                        </data>
+                    </cell>
+                    <cell id="1016"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation id="lblwcdcond" ismobile="false" mboname="LBL_WCDCONDITION" resultstableid="results_showlist" version="6.2.6">
+	<page id="mainrec" scroll="false">
+		<include controltoclone="pageHeader" id="INCLUDE-pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" orderby="conditionnum" type="list">
+					<menubar event="search" id="actiontoolbar1" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" mboname="LBL_WCDCONDITION" orderby="conditionnum" selectmode="multiple">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="conditionnum" id="col1" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="description" id="col2"/>
+							<tablecol dataattribute="yespoint" id="col3"/>
+							<tablecol dataattribute="nopoint" id="col4"/>
+							<tablecol dataattribute="unknownpoint" id="col5"/>
+							<tablecol dataattribute="wcd_level" id="col7"/>
+							<tablecol dataattribute="active" id="col6"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="WCD Conditions" type="insert">
+					<section border="true" id="main_section_1">
+						<sectionrow id="main_section_1_row_1">
+							<sectioncol id="main_section_1_row_1_column_1">
+								<section id="main_section_1_row_1_column_1_section_1">
+									<textbox dataattribute="conditionnum" id="main_grid2_1"/>
+									<multilinetextbox columns="60" dataattribute="description" id="main_grid2_11" rows="3"/>
+									<textbox dataattribute="yespoint" id="main_grid2_2"/>
+									<textbox dataattribute="nopoint" id="main_grid2_3"/>
+									<textbox dataattribute="unknownpoint" id="main_grid2_4"/>
+									<textbox dataattribute="wcd_level" id="main_grid2_12"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_section_1_row_1_column_2">
+								<section id="main_section_1_row_1_column_2_section_1">
+									<textbox dataattribute="orgid" id="main_grid2_7" inputmode="readonly"/>
+									<textbox dataattribute="siteid" id="main_grid2_8" inputmode="readonly"/>
+									<textbox dataattribute="changeby" id="main_grid2_9" inputmode="readonly"/>
+									<textbox dataattribute="changedate" displaytype="DATETIME" id="main_grid2_10" inputmode="readonly"/>
+									<checkbox dataattribute="active" id="main_grid2_5"/>
+									<checkbox dataattribute="hassubcondition" id="main_grid2_6"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="main_subcond_table" label="Sub-Conditions" relationship="LBL_WCDSUBCOND">
+						<tablebody displayrowsperpage="10" filterable="true" id="main_subcond_table_tablebody">
+							<tablecol dataattribute="subconditionnum" id="main_subcond_table_tablebody_1" sortable="true"/>
+							<tablecol dataattribute="description" id="main_subcond_table_tablebody_2" sortable="true"/>
+							<tablecol dataattribute="yespoint" id="main_subcond_table_tablebody_3" sortable="true"/>
+							<tablecol dataattribute="nopoint" id="main_subcond_table_tablebody_4" sortable="true"/>
+							<tablecol dataattribute="active" id="main_subcond_table_tablebody_6" sortable="true"/>
+							<tablecol dataattribute="changeby" id="main_subcond_table_tablebody_7" inputmode="readonly" sortable="true"/>
+							<tablecol dataattribute="changedate" id="main_subcond_table_tablebody_8" inputmode="readonly" sortable="true"/>
+							<tablecol filterable="false" id="main_subcond_table_tablebody_9" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<buttongroup id="main_subcond_table_2">
+							<pushbutton default="true" id="main_subcond_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+			</tabgroup>
+		</clientarea>
+	</page>
+
+	<dialog beanclass="psdi.webclient.system.beans.QbeBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<section id="searchmore_1">
+			<textbox id="searchmore_queryfield_1" inputmode="query"/>
+		</section>
+		<buttongroup id="searchmore_buttongroup">
+			<pushbutton default="true" id="searchmore_buttongroup_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="qbe_restoreappdefault_button" label="Restore Application Defaults" mxevent="qbeclear"/>
+			<pushbutton id="qbe_revisebutton" label="Revise" menutype="SEARCHMOREREVISE" targetid="searchmore"/>
+			<pushbutton id="searchmore_buttongroup_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.ViewBookmarksBean" id="searchbook" label="My Bookmarks" mboname="LBL_WCDCONDITION">
+		<table id="bookmarks_table" inputmode="readonly" selectmode="single">
+			<tablebody displayrowsperpage="20" filterable="true" id="bookmarks_table_tablebody">
+				<tablecol id="bookmarks_tablecolumn_1" mxevent="selectrecord" type="link"/>
+				<tablecol dataattribute="description" id="bookmarks_tablecolumn_2"/>
+				<tablecol filterable="false" id="bookmarks_tablecolumn_3" mxevent="instantdelete" mxevent_desc="Delete" mxevent_icon="btn_delete.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="bookmarks_2">
+			<pushbutton default="true" id="bookmarks_2_1" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+	<configurationblock id="datastore_configurationblock">
+	</configurationblock>
+</presentation>

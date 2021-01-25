@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation apphelp="com.ibm.mbs.doc,company/c_companies_application.html" id="company" ismobile="false" mboname="COMPANIES" resultstableid="results_showlist" version="6.2.8">
+	<page id="mainrec" scroll="false">
+		<include controltoclone="pageHeader" id="INCLUDE-pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" label="Companies" mboname="COMPANIES" selectmode="multiple">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="company" filterable="false" id="results_showlist_tablebody_1" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+							<tablecol dataattribute="company" id="results_showlist_tablebody_2" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="name" id="results_showlist_tablebody_3"/>
+							<tablecol dataattribute="parentcompany" id="results_showlist_tablebody_4"/>
+							<tablecol dataattribute="type" id="results_showlist_tablebody_5" linkedcontrolid="qbe_grid2_1_1_grid3_5"/>
+							<tablecol dataattribute="currencycode" id="results_showlist_tablebody_6"/>
+							<tablecol dataattribute="orgid" id="results_showlist_tablebody_7" linkedcontrolid="qbe_grid2_1_1_grid3_3"/>
+							<tablecol filterable="false" id="results_bookmark" mxevent="BOOKMARK" mxevent_desc="Add to Bookmarks" mxevent_icon="btn_addtobookmarks.gif" sortable="false" type="event"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="Company" type="insert">
+					<section border="true" id="main_grid1">
+						<sectionrow id="main_grid1_11">
+							<sectioncol id="main_grid1_11_1">
+								<section id="main_grid1_11_1_1">
+									<multiparttextbox dataattribute="company" descdataattribute="name" id="main_grid1_1"/>
+									<multiparttextbox dataattribute="parentcompany" descdataattribute="companychildren.name" descinputmode="readonly" id="main_grid1_4" lookup="companies" menutype="hier" movetoattribute="company" movetoresultset="rec"/>
+									<checkbox dataattribute="DISABLED" id="1528404796769"/>
+									<textbox dataattribute="customernum" id="main_grid1_7"/>
+									<textbox dataattribute="homepage" id="main_grid1_9"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid1_11_2">
+								<section id="main_grid1_11_2_1">
+									<attachments id="doclinks"/>
+									<textbox dataattribute="type" id="main_grid1_8" lookup="valuelist"/>
+									<textbox dataattribute="orgid" id="main_grid1_3" readonly="true"/>
+									<checkbox dataattribute="useparentremitto" id="main_grid1_6"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="main_grid2">
+						<sectionrow id="main_grid2_11">
+							<sectioncol id="main_grid2_11_1">
+								<section id="main_grid2_11_1_1" label="Purchasing Details">
+									<sectionrow id="main_grid2_11_r1">
+										<sectioncol id="main_grid2_11_r1_c1">
+											<section id="main_grid2_11_r1_c1_s1">
+												<textbox dataattribute="currencycode" id="main_grid2_1" lookup="currency"/>
+												<textbox dataattribute="tax1code" id="main_grid2_2" lookup="taxcode"/>
+												<textbox dataattribute="taxexemptcode" id="main_grid2_4" lookup="valuelist"/>
+												<textbox dataattribute="taxexemptnum" id="main_grid2_5"/>
+												<checkbox dataattribute="inclusive1" id="main_grid3_3"/>
+												<checkbox dataattribute="disabled" id="main_grid2_8"/>
+											</section>
+										</sectioncol>
+										<sectioncol id="main_grid2_11_2">
+											<section id="main_grid2_11_2_1">
+												<textbox dataattribute="freightterms" id="main_grid2_9" lookup="longdesc"/>
+												<textbox dataattribute="fob" id="main_grid2_7"/>
+												<textbox dataattribute="shipvia" id="main_grid2_6" lookup="valuelist"/>
+												<textbox dataattribute="registration1" id="main_grid2_3"/>
+												<checkbox dataattribute="inspectionrequired" id="main_grid2_14"/>
+												<checkbox dataattribute="payonreceipt" id="main_grid3_6"/>
+												<textbox dataattribute="insurexpdate" id="main_grid1_12" lookup="datelookup"/>
+											</section>
+										</sectioncol>
+									</sectionrow>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid3">
+								<section id="main_grid3a" label="Payment Details">
+									<sectionrow id="main_grid3_11">
+										<sectioncol id="main_grid3_11_1">
+											<section id="main_grid3_11_1_1">
+												<textbox dataattribute="bankaccount" id="main_grid3_1"/>
+												<textbox dataattribute="banknum" id="main_grid3_2"/>
+												<textbox dataattribute="dunsnum" id="main_grid1_10"/>
+												<textbox dataattribute="payvendor" id="main_grid3_4"/>
+												<textbox dataattribute="paymentterms" id="main_grid3_5"/>
+												<textbox dataattribute="apcontrolacc" id="main_grid3_9" lookup="glnavigator"/>
+												<textbox dataattribute="rbniacc" id="main_grid3_7" lookup="glnavigator"/>
+												<textbox dataattribute="apsuspenseacc" id="main_grid3_8" lookup="glnavigator"/>
+												<textbox dataattribute="toolcontrolaccount" id="main_grid1_91" lookup="glnavigator"/>
+												<textbox dataattribute="consacct" id="main_grid3_12" lookup="glnavigator"/>
+											</section>
+										</sectioncol>
+									</sectionrow>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</tab>
+				<tab id="contacts" label="Contacts">
+					<section border="true" id="contacts_grid1">
+						<sectionrow id="contacts_grid1_11">
+							<sectioncol id="contacts_grid1_11_1">
+								<section id="contacts_grid1_11_1_1">
+									<multiparttextbox dataattribute="company" descdataattribute="name" id="contacts_grid1_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="contacts_grid1_11_2">
+								<section id="contacts_grid1_11_2_1">
+									<textbox dataattribute="orgid" id="contacts_grid1_3"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="contacts_contacts_table" label="Contacts" relationship="CONTACT">
+						<tablebody displayrowsperpage="13" filterable="true" id="contacts_contacts_table_tablebody">
+							<tablecol filterable="false" id="contacts_contacts_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="contact" id="contacts_contacts_table_tablebody_2" linkedcontrolid="contacts_contacts_table_1_grid3_1"/>
+							<tablecol dataattribute="position" id="contacts_contacts_table_tablebody_3" linkedcontrolid="contacts_contacts_table_1_grid3_2"/>
+							<tablecol dataattribute="voicephone" id="contacts_contacts_table_tablebody_4" linkedcontrolid="contacts_contacts_table_1_grid3_3"/>
+							<tablecol dataattribute="faxphone" id="contacts_contacts_table_tablebody_5" linkedcontrolid="contacts_contacts_table_1_grid3_4"/>
+							<tablecol dataattribute="email" id="contacts_contacts_table_tablebody_6" linkedcontrolid="contacts_contacts_table_1_grid3_5"/>
+							<tablecol filterable="false" id="contacts_contacts_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="contacts_contacts_table_1">
+							<section id="contacts_contacts_table_1_grid3" label="Details">
+								<sectionrow id="contacts_contacts_table_1_grid3_11">
+									<sectioncol id="contacts_contacts_table_1_grid3_11_1">
+										<section id="contacts_contacts_table_1_grid3_11_1_1">
+											<textbox dataattribute="contact" defaultfocus="true" id="contacts_contacts_table_1_grid3_1"/>
+											<textbox dataattribute="position" id="contacts_contacts_table_1_grid3_2"/>
+											<textbox dataattribute="email" id="contacts_contacts_table_1_grid3_5"/>
+											<textbox dataattribute="procurementcardnum" id="contacts_contacts_table_1_grid3_8"/>
+											<textbox dataattribute="proccardexpiredate" id="contacts_contacts_table_1_grid3_9" lookup="datelookup"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="contacts_contacts_table_1_grid3_11_2">
+										<section id="contacts_contacts_table_1_grid3_11_2_1">
+											<textbox dataattribute="voicephone" id="contacts_contacts_table_1_grid3_3"/>
+											<textbox dataattribute="faxphone" id="contacts_contacts_table_1_grid3_4"/>
+											<textbox dataattribute="pagerphone" id="contacts_contacts_table_1_grid3_6"/>
+											<textbox dataattribute="homephone" id="contacts_contacts_table_1_grid3_7"/>
+											<textbox dataattribute="CLASSSTRUCTURE.HIERARCHYPATH" id="contacts_contacts_table_hierachypath" menutype="classification" ondatachange="resetchildren"/>
+											<textbox dataattribute="CLASSSTRUCTURE.description_class" id="contacts_contacts_table_class_desc" lookup="classification" ondatachange="resetchildren"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="contacts_contacts_table_2">
+							<pushbutton default="true" id="contacts_contacts_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="addresses" label="Addresses">
+					<section border="true" id="addresses_grid1">
+						<sectionrow id="addresses_grid1_11">
+							<sectioncol id="addresses_grid1_11_1">
+								<section id="addresses_grid1_11_1_1">
+									<multiparttextbox dataattribute="company" descdataattribute="name" id="addresses_grid1_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="addresses_grid1_11_2">
+								<section id="addresses_grid1_11_2_1">
+									<textbox dataattribute="orgid" id="addresses_grid1_3"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="addresses_grid2">
+						<sectionrow id="addresses_grid2_11">
+							<sectioncol id="addresses_grid2_11_2">
+								<section id="addresses_grid2_11_2_1" label="General Information">
+									<textbox dataattribute="contact" id="addresses_grid2_1" lookup="compcontact" smartfilloff="true"/>
+									<textbox dataattribute="address1" id="addresses_grid2_2"/>
+									<textbox dataattribute="address2" id="addresses_grid2_3"/>
+									<textbox dataattribute="address3" id="addresses_grid2_4"/>
+									<textbox dataattribute="address4" id="addresses_grid2_5"/>
+									<textbox dataattribute="phone" id="addresses_grid2_6"/>
+									<textbox dataattribute="fax" id="addresses_grid2_7"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="addresses_grid2_22_1">
+								<section id="addresses_grid2_22_1_1" label="Remit To Information">
+									<textbox dataattribute="remitcontact" id="addresses_grid3_1" lookup="compcontact" smartfilloff="true"/>
+									<textbox dataattribute="remitaddress1" id="addresses_grid3_2"/>
+									<textbox dataattribute="remitaddress2" id="addresses_grid3_3"/>
+									<textbox dataattribute="remitaddress3" id="addresses_grid3_4"/>
+									<textbox dataattribute="remitaddress4" id="addresses_grid3_5"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</tab>
+				<tab id="branches" label="Branches">
+					<section border="true" id="branches_grid1">
+						<sectionrow id="branches_grid1_11">
+							<sectioncol id="branches_grid1_11_1">
+								<section id="branches_grid1_11_1_1">
+									<multiparttextbox dataattribute="company" descdataattribute="name" id="branches_grid1_1"/>
+									<textbox dataattribute="PARENTCOMPANY" id="new_textbox_3" label="Parent:" lookup="COMPANIES"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="branches_grid1_11_2">
+								<section id="branches_grid1_11_2_1">
+									<textbox dataattribute="orgid" id="branches_grid1_3"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="branches_branches_table" label="Branches" relationship="COMPANYPARENT">
+						<tablebody displayrowsperpage="13" filterable="true" id="branches_branches_table_tablebody">
+							<tablecol filterable="false" id="branches_branches_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="company" id="branches_branches_table_tablebody_2" lookup="companies" menutype="hier" movetoresultset="rec"/>
+							<tablecol dataattribute="name" id="branches_branches_table_tablebody_3" lookup="longdesc"/>
+							<tablecol dataattribute="useparentremitto" id="branches_branches_table_tablebody_4" linkedcontrolid="branches_branches_table_1_grid3_3"/>
+							<tablecol filterable="false" id="branches_branches_table_tablebody_5" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="branches_branches_table_1">
+							<section id="branches_branches_table_1_grid3" label="Details">
+								<sectionrow id="branches_branches_table_1_grid3_row_1">
+									<sectioncol id="branches_branches_table_1_grid3_row_1_col_1">
+										<section id="branches_branches_table_1_grid3_row_1_col_1_section_1">
+											<multiparttextbox dataattribute="company" defaultfocus="true" descdataattribute="name" id="branches_branches_table_1_grid3_1" lookup="companies" menutype="hier" movetoattribute="company" movetoresultset="rec"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="branches_branches_table_1_grid3_row_1_col_2">
+										<section id="branches_branches_table_1_grid3_row_1_col_1_section_2">
+											<checkbox dataattribute="useparentremitto" id="branches_branches_table_1_grid3_3"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="branches_branches_table_2">
+							<pushbutton default="true" id="branches_branches_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include controltoclone="pageFooter" id="INCLUDE-pageFooter"/>
+	</page>
+
+	<dialog id="ccode" label="Associate Commodities">
+		<table id="commoditygroup" label="Commodity Groups" relationship="COMM_COMPGRP">
+			<tablebody displayrowsperpage="5" filterable="true" id="commcode_grid1_1_1_CommodityGroupsTable_tablebody">
+				<tablecol filterable="false" id="commcode_grid1_1_1_CommodityGroupsTable_tablebody_1a" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="commodity" id="commcode_grid1_1_1_CommodityGroupsTable_tablebody_1" label="Commodity Group" lookup="commoditygroup" sortable="true"/>
+				<tablecol dataattribute="COMM_COMPCOMGRP.description" id="commcode_grid1_1_1_CommodityGroupsTable_tablebody_2" longdescreadonly="true" lookup="longdesc" sortable="true"/>
+				<tablecol dataattribute="COMM_COMPCOMGRP.isservice" id="commcode_grid1_1_1_CommodityGroupsTable_tablebody_3">
+					<checkbox id="commcode_grid1_1_1_CommodityGroupsTable_tablebody_3_1"/>
+				</tablecol>
+				<tablecol filterable="false" id="commcode_grid1_1_1_CommodityGroupsTable_tablebody_4" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="commoditygroup_details">
+				<section id="commoditygroup_details_sec1" label="Details">
+					<multiparttextbox dataattribute="commodity" descdataattribute="COMM_COMPCOMGRP.description" id="commoditygroup_details_sec1_1" label="Commodity Group" longdescreadonly="true" lookup="commoditygroup"/>
+					<checkbox dataattribute="COMM_COMPCOMGRP.isservice" id="commoditygroup_details_sec1_2"/>
+				</section>
+			</tabledetails>
+			<buttongroup id="commcode_grid1_1_1_CommodityGroupsTable_1">
+				<pushbutton id="commcode_grid1_1_1_CommodityGroupsTable_1_1" label="Select Commodity Groups" mxevent="selectcommodgrp"/>
+				<pushbutton default="true" id="commcode_grid1_1_1_CommodityGroupsTable_1_2" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<table id="commodity" label="Commodity Codes for Commodity Group {0}" parentdatasrc="commoditygroup" parentemptylabel="Commodity Codes for Commodity Group" relationship="COMM_COMPARENT">
+			<sectionheader id="commodity_sectionheader">
+				<paramvalues id="commodity_table_sec_params" property="label">
+					<paramvalue dataattribute="commodity" datasrc="commoditygroup" id="mcommodity_table_sec_param_1" position="0"/>
+				</paramvalues>
+			</sectionheader>
+			<tablebody displayrowsperpage="5" filterable="true" filterexpanded="false" id="commcode_grid1_1_1_CommodityCodesTable_tablebody">
+				<tablecol filterable="false" id="commcode_grid1_1_1_CommodityCodesTable_tablebody_1a" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="commodity" id="commcode_grid1_1_1_CommodityCodesTable_tablebody_1" lookup="commoditycode" sortable="true"/>
+				<tablecol dataattribute="COMM_COMPCOMCOM.description" id="commcode_grid1_1_1_CommodityCodesTable_tablebody_2" longdescreadonly="true" lookup="longdesc"/>
+				<tablecol dataattribute="COMM_COMPCOMCOM.isservice" id="commcode_grid1_1_1_CommodityCodesTable_tablebody_3">
+					<checkbox id="commcode_grid1_1_1_CommodityCodesTable_tablebody_3_1"/>
+				</tablecol>
+				<tablecol filterable="false" id="commcode_grid1_1_1_CommodityCodesTable_tablebody_4" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="commcode_details">
+				<section id="commcode_details_sec1" label="Details">
+					<multiparttextbox dataattribute="commodity" descdataattribute="COMM_COMPCOMGRP.description" id="commcode_details_sec1_1" longdescreadonly="true" lookup="commoditycode"/>
+					<checkbox dataattribute="COMM_COMPCOMGRP.isservice" id="ccommcode_details_sec1_2"/>
+				</section>
+			</tabledetails>
+			<buttongroup id="commcode_grid1_1_1_CommodityCodesTable_1">
+				<pushbutton id="commcode_grid1_1_1_CommodityCodesTable_1_1" label="Select Commodity Codes" mxevent="selectcommodities"/>
+				<pushbutton default="true" id="commcode_grid1_1_1_CommodityCodesTable_1_2" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="commcode_2">
+			<pushbutton default="true" id="commcode_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="commcode_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.company.CommodityGrpSelectBean" id="selectcommodgrp" label="Select Commodity Groups" mboname="COMMODITIES">
+		<table id="selectcommodgrp_select_table" label="Commodity Groups" selectmode="multiple">
+			<tablebody displayrowsperpage="15" filterable="true" id="selectcommodgrp_select_table_tablebody">
+				<tablecol filterable="false" id="selectcommodgrp_select_table_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+				<tablecol dataattribute="commodity" id="selectcommodgrp_select_table_tablebody_2"/>
+				<tablecol dataattribute="description" id="selectcommodgrp_select_table_tablebody_3"/>
+			</tablebody>
+		</table>
+		<buttongroup id="selectcommodgrp_2">
+			<pushbutton default="true" id="selectcommodgrp_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="selectcommodgrp_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="viewcont" label="View Contracts" relationship="VENDOR">
+		<table id="viewcont_contracts_table" label="Contracts">
+			<tablebody displayrowsperpage="15" filterable="true" id="viewcont_contracts_table_tablebody">
+				<tablecol dataattribute="contractnum" id="viewcont_contracts_tablebody_1" inputmode="readonly" menutype="normal"/>
+				<tablecol dataattribute="revisionnum" id="viewcont_contracts_tablebody_2" inputmode="readonly"/>
+				<tablecol dataattribute="description" id="viewcont_contracts_tablebody_3" inputmode="readonly"/>
+				<tablecol dataattribute="contracttype" id="viewcont_contracts_table_tablebody_4" inputmode="readonly"/>
+				<tablecol dataattribute="status" id="viewcont_contracts_table_tablebody_5" inputmode="readonly"/>
+				<tablecol dataattribute="startdate" id="viewcont_contracts_table_tablebody_6" inputmode="readonly"/>
+				<tablecol dataattribute="enddate" id="viewcont_contracts_table_tablebody_7" inputmode="readonly"/>
+			</tablebody>
+		</table>
+		<buttongroup id="viewcont_contracts_2">
+			<pushbutton default="true" id="viewcont_contracts_2_1" label="OK" mxevent="dialogclose"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.QbeBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<section id="qbe_grid2_1_1_grid3">
+			<multiparttextbox dataattribute="company" descdataattribute="name" descinputmode="query" id="qbe_grid2_1_1_grid3_1" inputmode="query"/>
+			<textbox dataattribute="customernum" id="qbe_grid2_1_1_grid3_4" inputmode="query"/>
+			<textbox dataattribute="type" id="qbe_grid2_1_1_grid3_5" inputmode="query" lookup="valuelist"/>
+			<textbox applink="multisite" dataattribute="orgid" id="qbe_grid2_1_1_grid3_3" inputmode="query" lookup="org" menutype="normal"/>
+			<textbox dataattribute="HOMEPAGE" id="new_textbox_2" label="Home Page:"/>
+			<textbox dataattribute="DUNSNUM" id="new_textbox" label="DUNS #"/>
+		</section>
+		<buttongroup id="qbe_grid5_1_1_grid6">
+			<pushbutton default="true" id="qbe_grid5_1_1_grid6_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="qbe_restoreappdefault_button" label="Restore Application Defaults" mxevent="qbeclear"/>
+			<pushbutton id="qbe_revisebutton" label="Revise" menutype="SEARCHMOREREVISE" targetid="searchmore"/>
+			<pushbutton id="qbe_grid5_1_1_grid6_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.company.CommoditySelectBean" id="selectcommodities" label="Select Commodities" mboname="COMMODITIES">
+		<table id="selectcommodities_select_table" label="Commodities" selectmode="multiple">
+			<tablebody displayrowsperpage="15" filterable="true" id="selectcommodities_select_table_tablebody">
+				<tablecol filterable="false" id="selectcommodities_select_table_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+				<tablecol dataattribute="commodity" id="selectcommodities_select_table_tablebody_2"/>
+				<tablecol dataattribute="description" id="selectcommodities_select_table_tablebody_3"/>
+			</tablebody>
+		</table>
+		<buttongroup id="selectcommodities_2">
+			<pushbutton default="true" id="selectcommodities_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="selectcommodities_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.ViewBookmarksBean" id="searchbook" label="My Bookmarks" mboname="COMPANIES">
+		<table id="bookmarks_table" inputmode="readonly" label="Companies" selectmode="single">
+			<tablebody displayrowsperpage="20" filterable="true" id="bookmarks_table_tablebody">
+				<tablecol dataattribute="company" id="bookmarks_tablebody_1" mxevent="selectrecord" type="link"/>
+				<tablecol dataattribute="name" id="bookmarks_table_tablebody_2"/>
+				<tablecol filterable="false" id="bookmarks_table_tablebody_delete" mxevent="instantdelete" mxevent_desc="Delete" mxevent_icon="btn_delete.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="bookmarks_2">
+			<pushbutton default="true" id="bookmarks_2_1" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+	<configurationblock id="datastore_configurationblock"/>
+</presentation>

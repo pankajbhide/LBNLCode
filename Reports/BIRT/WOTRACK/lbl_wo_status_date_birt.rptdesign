@@ -1,0 +1,1017 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="comments">Copyright (c) 2006 &lt;&lt;Your Company Name here>></property>
+    <property name="createdBy">Eclipse BIRT Designer Version 4.3.1.v201309091055 Build &lt;4.3.1.v20130918-1142></property>
+    <html-property name="description">This template will create a report with one or more groups, each having identical data fields.</html-property>
+    <simple-property-list name="includeResource">
+        <value>asset</value>
+    </simple-property-list>
+    <property name="units">in</property>
+    <method name="initialize"><![CDATA[importPackage(Packages.com.ibm.tivoli.maximo.report.script);
+
+mxReportScriptContext = MXReportScriptContext.initialize(reportContext);
+
+mxReportScriptContext.setDefaultLogLevel("DEBUG");
+mxReportScriptContext.setDefaultLogFile("C:/temp/asset_glaccount.txt");
+
+scriptLogger = mxReportScriptContext.getReportScriptLogger();]]></method>
+    <method name="afterFactory"><![CDATA[MXReportScriptContext.close();]]></method>
+    <property name="theme">MaximoSystemLibrary.maximoTheme</property>
+    <property name="layoutPreference">auto layout</property>
+    <list-property name="libraries">
+        <structure>
+            <property name="fileName">MaximoSystemLibrary.rptlibrary</property>
+            <property name="namespace">MaximoSystemLibrary</property>
+        </structure>
+    </list-property>
+    <parameters>
+        <scalar-parameter name="where" id="25">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <simple-property-list name="defaultValue">
+                <value type="constant">1=1</value>
+            </simple-property-list>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="appname" id="240">
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramdelimiter" id="241">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="paramstring" id="242">
+            <property name="hidden">true</property>
+            <property name="valueType">static</property>
+            <property name="isRequired">false</property>
+            <property name="dataType">string</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+        <scalar-parameter name="wonum" id="404">
+            <property name="valueType">static</property>
+            <property name="dataType">string</property>
+            <property name="distinct">true</property>
+            <list-property name="selectionList"/>
+            <property name="paramType">simple</property>
+            <property name="controlType">text-box</property>
+            <structure name="format">
+                <property name="category">Unformatted</property>
+            </structure>
+        </scalar-parameter>
+    </parameters>
+    <data-sources>
+        <script-data-source name="maximoDataSource" id="64" extends="MaximoSystemLibrary.maximoDataSource"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="dataSet" id="5">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">wonum</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">description</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">status</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">targstartdate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">targcompdate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">schedstart</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">7</property>
+                    <property name="name">schedfinish</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">8</property>
+                    <property name="name">actstart</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">9</property>
+                    <property name="name">actfinish</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">10</property>
+                    <property name="name">supervisor</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">11</property>
+                    <property name="name">reportdate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">reportedby</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">13</property>
+                    <property name="name">wo1</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">14</property>
+                    <property name="name">lbl_punchlist</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">15</property>
+                    <property name="name">reportedname</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">16</property>
+                    <property name="name">clientname</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">17</property>
+                    <property name="name">approveddate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">18</property>
+                    <property name="name">assigneddate</property>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="position">19</property>
+                    <property name="name">closedate</property>
+                    <property name="dataType">date</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">wonum</property>
+                </structure>
+                <structure>
+                    <property name="columnName">description</property>
+                </structure>
+                <structure>
+                    <property name="columnName">status</property>
+                </structure>
+                <structure>
+                    <property name="columnName">targstartdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">targcompdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">schedstart</property>
+                </structure>
+                <structure>
+                    <property name="columnName">schedfinish</property>
+                </structure>
+                <structure>
+                    <property name="columnName">actstart</property>
+                </structure>
+                <structure>
+                    <property name="columnName">actfinish</property>
+                </structure>
+                <structure>
+                    <property name="columnName">supervisor</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportdate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportedby</property>
+                </structure>
+                <structure>
+                    <property name="columnName">wo1</property>
+                </structure>
+                <structure>
+                    <property name="columnName">lbl_punchlist</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reportedname</property>
+                </structure>
+                <structure>
+                    <property name="columnName">clientname</property>
+                </structure>
+                <structure>
+                    <property name="columnName">approveddate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">assigneddate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">closedate</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">wonum</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">description</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">status</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">targstartdate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">targcompdate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">schedstart</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">7</property>
+                        <property name="name">schedfinish</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">8</property>
+                        <property name="name">actstart</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">9</property>
+                        <property name="name">actfinish</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">10</property>
+                        <property name="name">supervisor</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">11</property>
+                        <property name="name">reportdate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">reportedby</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">13</property>
+                        <property name="name">wo1</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">14</property>
+                        <property name="name">lbl_punchlist</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">15</property>
+                        <property name="name">reportedname</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">16</property>
+                        <property name="name">clientname</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">17</property>
+                        <property name="name">approveddate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">18</property>
+                        <property name="name">assigneddate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">19</property>
+                        <property name="name">closedate</property>
+                        <property name="dataType">date</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">maximoDataSource</property>
+            <method name="open"><![CDATA[maximoDataSet = MXReportDataSetProvider.create(this.getDataSource().getName(), this.getName());
+maximoDataSet.open();
+
+if(params["wonum"].value){
+	
+	scriptLogger.debug("<<where>> " + params["where"]);
+
+	params["where"]  += " and "
+					 +  MXReportSqlFormat.createParamWhereClause("workorder.wonum", params["wonum"]);
+}
+
+var sqlText = new String();
+
+// Add query to sqlText variable.
+sqlText =  " select workorder.wonum, workorder.description, workorder.status, workorder.targstartdate, workorder.targcompdate, workorder.schedstart, workorder.schedfinish, "
++ " workorder.actstart, workorder.actfinish, workorder.supervisor, workorder.reportdate, workorder.reportedby, workorder.wo1,  workorder.lbl_punchlist, "
++ " (select displayname from person where personid = workorder.reportedby) reportedname, "
++ " (select displayname from person where personid = workorder.wo1) clientname, "
++ " (select min(wostatus.changedate) from wostatus where workorder.wonum = wostatus.wonum and wostatus.status = 'APPR') approveddate, "
++ " (select min(wostatus.changedate) from wostatus where workorder.wonum = wostatus.wonum and wostatus.status = 'ASSIGNED') assigneddate, "
++ " (select min(wostatus.changedate) from wostatus where workorder.wonum = wostatus.wonum and wostatus.status in ('COMP', 'WCLOSE','CLOSE')) closedate "
++ " from workorder "
++ " where " + params["where"]
+;
+
+maximoDataSet.setQuery(sqlText);
+
+
+
+
+]]></method>
+            <method name="fetch"><![CDATA[if (!maximoDataSet.fetch())
+	return (false);
+
+// Add a line for each output column
+// The specific get method should match the data type of the output column.
+row["wonum"] = maximoDataSet.getString("wonum");	
+row["description"] = maximoDataSet.getString("description");	
+row["status"] = maximoDataSet.getString("status");	
+row["targstartdate"] = maximoDataSet.getTimestamp("targstartdate");	
+row["targcompdate"] = maximoDataSet.getTimestamp("targcompdate");	
+row["schedstart"] = maximoDataSet.getTimestamp("schedstart");	
+row["schedfinish"] = maximoDataSet.getTimestamp("schedfinish");	
+row["actstart"] = maximoDataSet.getTimestamp("actstart");	
+row["actfinish"] = maximoDataSet.getTimestamp("actfinish");	
+row["supervisor"] = maximoDataSet.getString("supervisor");	
+row["reportdate"] = maximoDataSet.getTimestamp("reportdate");	
+row["reportedby"] = maximoDataSet.getString("reportedby");	
+row["wo1"] = maximoDataSet.getString("wo1");
+row["lbl_punchlist"] = maximoDataSet.getString("lbl_punchlist");
+row["reportedname"] = maximoDataSet.getString("reportedname");
+row["clientname"] = maximoDataSet.getString("clientname");
+row["approveddate"] = maximoDataSet.getTimestamp("approveddate");	
+row["assigneddate"] = maximoDataSet.getTimestamp("assigneddate");	
+row["closedate"] = maximoDataSet.getTimestamp("closedate");	
+
+return (true);
+
+]]></method>
+        </script-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="maximoLandscape" id="47" extends="MaximoSystemLibrary.maximoLandscape">
+            <overridden-values>
+                <ref-entry baseId="304" name="NewGrid2" id="304"/>
+                <ref-entry baseId="305" id="305"/>
+                <ref-entry baseId="306" id="306"/>
+                <ref-entry baseId="307" id="307"/>
+                <ref-entry baseId="308" id="308"/>
+                <ref-entry baseId="309" id="309"/>
+                <ref-entry baseId="310" name="NewImage" id="310">
+                    <property name="source">file</property>
+                    <expression name="uri" type="constant">IBM_logo_Black.gif</expression>
+                    <property name="height">27px</property>
+                    <property name="width">76px</property>
+                </ref-entry>
+                <ref-entry baseId="322" name="NewGrid" id="322"/>
+                <ref-entry baseId="323" id="323"/>
+                <ref-entry baseId="324" id="324"/>
+                <ref-entry baseId="325" id="325"/>
+                <ref-entry baseId="326" id="326"/>
+                <ref-entry baseId="328" name="NewText" id="328"/>
+                <ref-entry baseId="327" id="327"/>
+                <ref-entry baseId="329" name="NewGrid1" id="329"/>
+                <ref-entry baseId="330" id="330"/>
+                <ref-entry baseId="331" id="331"/>
+                <ref-entry baseId="332" id="332"/>
+                <ref-entry baseId="333" id="333"/>
+                <ref-entry baseId="334" id="334"/>
+                <ref-entry baseId="335" name="NewAutoText" id="335"/>
+                <ref-entry baseId="336" id="336"/>
+                <ref-entry baseId="337" name="NewText1" id="337"/>
+                <ref-entry baseId="338" id="338"/>
+                <ref-entry baseId="339" name="NewAutoText1" id="339"/>
+            </overridden-values>
+            <property name="showHeaderOnFirst">false</property>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="7">
+            <property name="width">13.072916666666666in</property>
+            <property name="dataSet">dataSet</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">wonum</property>
+                    <text-property name="displayName">wonum</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["wonum"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">description</property>
+                    <text-property name="displayName">description</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["description"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">status</property>
+                    <text-property name="displayName">status</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["status"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">targstartdate</property>
+                    <text-property name="displayName">targstartdate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["targstartdate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">targcompdate</property>
+                    <text-property name="displayName">targcompdate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["targcompdate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">schedstart</property>
+                    <text-property name="displayName">schedstart</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["schedstart"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">schedfinish</property>
+                    <text-property name="displayName">schedfinish</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["schedfinish"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">actstart</property>
+                    <text-property name="displayName">actstart</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["actstart"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">actfinish</property>
+                    <text-property name="displayName">actfinish</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["actfinish"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">supervisor</property>
+                    <text-property name="displayName">supervisor</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["supervisor"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportdate</property>
+                    <text-property name="displayName">reportdate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportdate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">reportedby</property>
+                    <text-property name="displayName">reportedby</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportedby"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">wo1</property>
+                    <text-property name="displayName">wo1</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["wo1"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">lbl_punchlist</property>
+                    <text-property name="displayName">lbl_punchlist</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["lbl_punchlist"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">reportedname</property>
+                    <text-property name="displayName">reportedname</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reportedname"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">clientname</property>
+                    <text-property name="displayName">clientname</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["clientname"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">approveddate</property>
+                    <text-property name="displayName">approveddate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["approveddate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">assigneddate</property>
+                    <text-property name="displayName">assigneddate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["assigneddate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+                <structure>
+                    <property name="name">closedate</property>
+                    <text-property name="displayName">closedate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["closedate"]</expression>
+                    <property name="dataType">date</property>
+                </structure>
+            </list-property>
+            <property name="pageBreakInterval">50</property>
+            <column id="83">
+                <property name="width">0.5in</property>
+            </column>
+            <column id="587">
+                <property name="width">0.7395833333333334in</property>
+            </column>
+            <column id="598">
+                <property name="width">0.5104166666666666in</property>
+            </column>
+            <column id="609">
+                <property name="width">0.7708333333333334in</property>
+            </column>
+            <column id="613">
+                <property name="width">0.8229166666666666in</property>
+            </column>
+            <column id="617">
+                <property name="width">0.8229166666666666in</property>
+            </column>
+            <column id="79">
+                <property name="width">0.8229166666666666in</property>
+            </column>
+            <column id="621">
+                <property name="width">0.8229166666666666in</property>
+            </column>
+            <column id="625">
+                <property name="width">0.8229166666666666in</property>
+            </column>
+            <column id="91">
+                <property name="width">0.71875in</property>
+            </column>
+            <column id="87">
+                <property name="width">0.8125in</property>
+            </column>
+            <column id="629">
+                <property name="width">0.8125in</property>
+            </column>
+            <column id="352">
+                <property name="width">0.8020833333333334in</property>
+            </column>
+            <column id="633">
+                <property name="width">0.8020833333333334in</property>
+            </column>
+            <column id="398">
+                <property name="width">0.9270833333333334in</property>
+            </column>
+            <column id="368">
+                <property name="width">0.8333333333333334in</property>
+            </column>
+            <column id="17">
+                <property name="width">0.6354166666666666in</property>
+            </column>
+            <column id="424">
+                <property name="width">0.7291666666666666in</property>
+            </column>
+            <column id="455">
+                <property name="width">0.5520833333333334in</property>
+            </column>
+            <header>
+                <row id="523">
+                    <property name="height">0.08in</property>
+                    <cell id="524">
+                        <property name="colSpan">19</property>
+                        <property name="rowSpan">1</property>
+                    </cell>
+                </row>
+                <row id="541">
+                    <property name="height">0.08in</property>
+                    <cell id="542">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="470">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">WO#</text-property>
+                        </label>
+                    </cell>
+                    <cell id="585">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="599">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Actual&#13;
+Finish Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="596">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="590">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Actual&#13;
+Start Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="607">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="484">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Approved&#13;
+Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="611">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="485">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Assigned&#13;
+Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="615">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="482">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Client&#13;
+Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="543">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="486">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Closed&#13;
+Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="619">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="471">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Description</text-property>
+                        </label>
+                    </cell>
+                    <cell id="623">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="483">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Punch&#13;
+List</text-property>
+                        </label>
+                    </cell>
+                    <cell id="544">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="478">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Reported &#13;
+Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="545">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="479">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Reported &#13;
+By</text-property>
+                        </label>
+                    </cell>
+                    <cell id="627">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="480">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Reported &#13;
+Name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="546">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="476">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Scheduled&#13;
+Finish Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="631">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="475">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Scheduled&#13;
+Start Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="547">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="472">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Status</text-property>
+                        </label>
+                    </cell>
+                    <cell id="549">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="477">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Supervisor</text-property>
+                        </label>
+                    </cell>
+                    <cell id="550">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="474">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Target &#13;
+Comp Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="551">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="473">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Target &#13;
+Start Date</text-property>
+                        </label>
+                    </cell>
+                    <cell id="552">
+                        <property name="borderBottomColor">#000000</property>
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <label id="481">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Client</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="11">
+                    <property name="style">tabledetailsdatarow</property>
+                    <property name="height">0.2604166666666667in</property>
+                    <cell id="81">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="405">
+                            <property name="resultSetColumn">wonum</property>
+                        </data>
+                    </cell>
+                    <cell id="586">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="601">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">actfinish</property>
+                        </data>
+                    </cell>
+                    <cell id="597">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="589">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">actstart</property>
+                        </data>
+                    </cell>
+                    <cell id="608">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="439">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">approveddate</property>
+                        </data>
+                    </cell>
+                    <cell id="612">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="449">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">assigneddate</property>
+                        </data>
+                    </cell>
+                    <cell id="616">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="438">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">clientname</property>
+                        </data>
+                    </cell>
+                    <cell id="77">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="451">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">closedate</property>
+                        </data>
+                    </cell>
+                    <cell id="620">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="406">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">description</property>
+                        </data>
+                    </cell>
+                    <cell id="624">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="436">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">lbl_punchlist</property>
+                        </data>
+                    </cell>
+                    <cell id="89">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="425">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">reportdate</property>
+                        </data>
+                    </cell>
+                    <cell id="85">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="430">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">reportedby</property>
+                        </data>
+                    </cell>
+                    <cell id="628">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="437">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">reportedname</property>
+                        </data>
+                    </cell>
+                    <cell id="350">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="411">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">schedfinish</property>
+                        </data>
+                    </cell>
+                    <cell id="632">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="410">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">schedstart</property>
+                        </data>
+                    </cell>
+                    <cell id="396">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="407">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">status</property>
+                        </data>
+                    </cell>
+                    <cell id="366">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="412">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">supervisor</property>
+                        </data>
+                    </cell>
+                    <cell id="12">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="409">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">targcompdate</property>
+                        </data>
+                    </cell>
+                    <cell id="423">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="408">
+                            <structure name="dateTimeFormat">
+                                <property name="category">Short Date</property>
+                                <property name="pattern">Short Date</property>
+                            </structure>
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">targstartdate</property>
+                        </data>
+                    </cell>
+                    <cell id="454">
+                        <property name="style">tabledetailsdatacell</property>
+                        <data id="435">
+                            <property name="textAlign">left</property>
+                            <property name="resultSetColumn">wo1</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+        </table>
+    </body>
+</report>

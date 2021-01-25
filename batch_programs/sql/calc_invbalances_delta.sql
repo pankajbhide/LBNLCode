@@ -1,0 +1,362 @@
+/***********************************************************************************
+* PROGRAM NAME: CAL_INVBALCNES_DELTA.SQL 
+*
+* PROGRAMMER:   PANKAJ BHIDE
+*
+* LAST UPDATE:  03/30/2009
+*
+* DESCRIPTION:  THIS PROCEDURE IS USED TO VALIDATE THE CHANGES IN THE INVENTORY
+*               ITEM BALANCES DAILY. IT DOES SO BY:
+*               I. FOR EACH ITEM
+*                   1. GET THE OPENNING BALANCE FROM THE LBL_INVBALANCESHIST
+*                   2. CALCULATE ANY TRANSACTIONS THAT MIGHT HAVE CHANGE THE BALANCE 
+*                      OF THIS ITEM
+*                       A. RECEIPTS + TRANSFER
+*                       B. ISSUES + RETURN
+*                       C. OVERAGE
+*                       D. SHORTAGE
+*                   3. CALCULATE THE CURRENT BALANCE OF THE ITEM BASE ON THE NUMBERS 
+*                       ABOVE
+*                   4. COMPARE WITH THE CURBAL LISTED IN INVBALANCES TABLE
+*                   5. IF THE CALCULATED BALANCES DO NOT MATCH THE CURBAL FROM 
+*                      INVBALANCES TABLE
+*                      THEN INSERT THE ITEM ALONG WITH ITS DESCRIPTION INTO
+*                      BATCH_MAXIMO.LBL_DELTABALANCES TABLE
+*
+*                JIRA EF-3866 REVISED BY PANKAJ ON 6/20/16 TO ACCOMODATE CUR BAL ADJ
+                       ENTRIES
+**************************************************************************************/
+
+DECLARE
+
+    ORGID_T      INVENTORY.orgid%TYPE;
+    SITEID_T     INVENTORY.siteid%TYPE;
+    
+    -- THIS IS THE OUTER LOOP, GET THE OPENING BALANCE
+    CURSOR OUTER_CUR IS
+    
+        SELECT ITEMNUM ITEMNUM_OUTER, LOCATION LOCATION_OUTER,
+                MTHENDDATE MTHENDDATE_OUTER,
+                SUM(CURBAL) OPENING_BALANCE
+        FROM  BATCH_MAXIMO.LBL_INVBALANCES_HIST
+        WHERE LOCATION NOT IN ('LLNL','FLEET','NA','ITEMMASTER')
+        AND   ORGID=ORGID_T
+        AND   SITEID=SITEID_T
+        AND   NVL(BINNUM,' ') NOT LIKE 'SEE%'
+        AND   TRUNC(MTHENDDATE)=(SELECT MAX(TRUNC(MTHENDDATE)) FROM 
+                                 BATCH_MAXIMO.LBL_INVBALANCES_HIST
+                                 WHERE ORGID=ORGID_T  AND   SITEID=SITEID_T)      
+        GROUP BY ITEMNUM, LOCATION, MTHENDDATE;
+        
+        OUTER_REC OUTER_CUR%ROWTYPE;
+    
+    ITEMNUM_OUTER_V       VARCHAR2(18);
+    LOCATION_OUTER_V      VARCHAR(10);
+    MTHENDDATE_OUTER_V    DATE;
+    OPENBAL_V             NUMBER(15,2);
+    CALBAL_V              NUMBER(15,2);
+    RECEIPT_QTY_V         NUMBER(15,2);
+    RETURNTOVENDER_QTY_V  NUMBER(15,2);
+    ISSUE_QTY_V           NUMBER(15,2);
+    RETURN_QTY_V          NUMBER(15,2);
+    OVERAGE_QTY_V         NUMBER(15,2);
+    SHORTAGE_QTY_V        NUMBER(15,2);
+    TRANSFER_QTY_FROM_V   NUMBER(15,2);
+    TRANSFER_QTY_TO_V     NUMBER(15,2);
+    CURBALADJ_QTY_V       NUMBER(15,2);
+    CURBAL_V              NUMBER(15,2);  
+             
+    CURSOR RECEIPT_CUR IS
+             SELECT SUM(QUANTITY) RECEIPT_QTY
+             FROM MAXIMO.MATRECTRANS
+             WHERE ORGID=ORGID_T
+             AND   SITEID=SITEID_T
+             AND   TRANSDATE >= MTHENDDATE_OUTER_V
+             AND   TOSTORELOC NOT IN ('LLNL','FLEET','NA','ITEMMASTER')
+             AND   ISSUETYPE = 'RECEIPT'
+             AND   TOSTORELOC=LOCATION_OUTER_V
+             AND   ITEMNUM=ITEMNUM_OUTER_V;   
+             
+                                  
+     RECEIPT_REC RECEIPT_CUR%ROWTYPE;
+     
+     CURSOR TRANSFER_CUR_TO IS
+             SELECT SUM(QUANTITY) TRANSFER_QTY_TO
+             FROM MAXIMO.MATRECTRANS
+             WHERE ORGID=ORGID_T
+             AND   SITEID=SITEID_T
+             AND   TRANSDATE >= MTHENDDATE_OUTER_V
+             AND   TOSTORELOC NOT IN ('LLNL','FLEET','NA','ITEMMASTER')
+             AND   ISSUETYPE ='TRANSFER'
+             AND   TOSTORELOC=LOCATION_OUTER_V
+             AND   ITEMNUM=ITEMNUM_OUTER_V;
+             
+                 
+                 
+     CURSOR TRANSFER_CUR_FROM IS
+             SELECT SUM(QUANTITY) TRANSFER_QTY_FROM
+             FROM MAXIMO.MATRECTRANS
+             WHERE ORGID=ORGID_T
+             AND   SITEID=SITEID_T             
+             AND   TRANSDATE >= MTHENDDATE_OUTER_V
+             AND   FROMSTORELOC NOT IN ('LLNL','FLEET','NA','ITEMMASTER')
+             AND   ISSUETYPE ='TRANSFER'
+             AND   FROMSTORELOC=LOCATION_OUTER_V
+             AND   ITEMNUM=ITEMNUM_OUTER_V;
+             
+                 
+                 
+     TRANSFER_REC_FROM TRANSFER_CUR_FROM%ROWTYPE;
+     TRANSFER_REC_TO TRANSFER_CUR_TO%ROWTYPE;
+     
+     --DBMS_OUTPUT.PUT_LINE('TRANSFER :' || ITEMNUM_OUTER_V);
+     
+     CURSOR RETURNTOVENDER_CUR IS
+            SELECT SUM(QUANTITY) RETURNTOVENDER_QTY
+            FROM MAXIMO.MATRECTRANS
+            WHERE ORGID=ORGID_T
+            AND   SITEID=SITEID_T             
+            AND   TRANSDATE >= MTHENDDATE_OUTER_V
+            AND   TOSTORELOC NOT IN ('LLNL','FLEET','NA','ITEMMASTER')
+            AND   ISSUETYPE ='RETURN'
+            AND   TOSTORELOC=LOCATION_OUTER_V
+            AND   ITEMNUM=ITEMNUM_OUTER_V;                    
+     RETURNTOVENDER_REC RETURNTOVENDER_CUR%ROWTYPE;
+     
+     CURSOR ISSUE_CUR IS
+            SELECT SUM(QUANTITY) ISSUE_QTY
+            FROM MAXIMO.MATUSETRANS
+            WHERE ORGID=ORGID_T
+            AND   SITEID=SITEID_T             
+            AND   TRANSDATE >= MTHENDDATE_OUTER_V
+            AND   STORELOC NOT IN ('LLNL','FLEET','NA','ITEMMASTER')
+            AND   STORELOC=LOCATION_OUTER_V
+            AND   ITEMNUM=ITEMNUM_OUTER_V
+            AND   ISSUETYPE = 'ISSUE';
+     ISSUE_REC ISSUE_CUR%ROWTYPE;   
+     
+     CURSOR RETURN_CUR IS
+                 SELECT SUM(QUANTITY) RETURN_QTY
+                 FROM MAXIMO.MATUSETRANS
+                 WHERE ORGID=ORGID_T
+                 AND   SITEID=SITEID_T             
+                 AND   TRANSDATE >= MTHENDDATE_OUTER_V
+                 AND   STORELOC NOT IN ('LLNL','FLEET','NA','ITEMMASTER')
+                 AND   STORELOC=LOCATION_OUTER_V
+                 AND   ITEMNUM=ITEMNUM_OUTER_V
+                 AND   ISSUETYPE = 'RETURN';
+     RETURN_REC RETURN_CUR%ROWTYPE;   
+     
+     CURSOR OVER_CUR IS        
+            SELECT SUM(QUANTITY) OVER_QTY
+            FROM MAXIMO.INVTRANS
+            WHERE ORGID=ORGID_T
+            AND   SITEID=SITEID_T 
+            AND  TRANSDATE >= MTHENDDATE_OUTER_V
+            AND ( SUBSTR(GLDEBITACCT, 1,4)='1624' OR GLDEBITACCT='151924')
+            AND STORELOC = LOCATION_OUTER_V
+            AND ITEMNUM = ITEMNUM_OUTER_V;                    
+            
+     OVER_REC OVER_CUR%ROWTYPE;            
+     
+     CURSOR SHORT_CUR IS
+            SELECT SUM(QUANTITY) SHORT_QTY
+            FROM  MAXIMO.INVTRANS
+            WHERE ORGID=ORGID_T
+            AND   SITEID=SITEID_T 
+            AND   TRANSDATE >= MTHENDDATE_OUTER_V
+            AND   (SUBSTR(GLCREDITACCT, 1,4)='1625' OR GLCREDITACCT='151925')
+            AND   STORELOC = LOCATION_OUTER_V
+            AND   ITEMNUM = ITEMNUM_OUTER_V;
+            
+      SHORT_REC SHORT_CUR%ROWTYPE;   
+      
+      
+       -- ADDED BY PANKAJ JIRA EF-3866 
+       CURSOR CURBALADJ_CUR  IS
+            SELECT SUM(QUANTITY) CURBALADJ_QTY
+            FROM  MAXIMO.INVTRANS
+            WHERE ORGID=ORGID_T
+            AND   SITEID=SITEID_T 
+            AND   TRANSTYPE='CURBALADJ'
+            AND   TRANSDATE >= MTHENDDATE_OUTER_V
+            AND   STORELOC = LOCATION_OUTER_V
+            AND   ITEMNUM = ITEMNUM_OUTER_V;
+            
+      CURBALADJ_REC CURBALADJ_CUR%ROWTYPE;   
+ 
+      CURSOR CURBAL_CUR IS
+            SELECT ITEMNUM, LOCATION, SUM(CURBAL) CLOSING_BALANCE
+            FROM  MAXIMO.INVBALANCES
+            WHERE ORGID=ORGID_T
+            AND   SITEID=SITEID_T 
+            AND   LOCATION NOT IN ('LLNL','FLEET','NA','ITEMMASTER')
+            AND   NVL(BINNUM,' ') NOT LIKE 'SEE%'            
+            AND   ITEMNUM=ITEMNUM_OUTER_V
+            AND   LOCATION=LOCATION_OUTER_V
+            GROUP BY ITEMNUM, LOCATION;
+       CURBAL_REC CURBAL_CUR%ROWTYPE;        
+       
+                
+BEGIN
+    
+    -- MXES 
+    ORGID_T   :=UPPER('&1');
+    SITEID_T  :=UPPER('&2');
+   
+    IF (ORGID_T IS NULL OR LENGTH(ORGID_T)=0) THEN
+       ORGID_T :='LBNL';
+    END IF;
+     
+    IF (SITEID_T IS NULL OR LENGTH(SITEID_T)=0) THEN
+       SITEID_T :='FAC';
+    END IF;
+
+    DELETE FROM BATCH_MAXIMO.LBL_DELTABALANCES 
+    WHERE ORGID=ORGID_T 
+    AND   SITEID=SITEID_T;    
+    
+    FOR OUTER_REC IN OUTER_CUR
+    -- FOR EACH ITEM
+        LOOP          
+        -- ASSIGN ITEM VARIABLES TO OUTER LOOP VARIABLES
+        ITEMNUM_OUTER_V       := OUTER_REC.ITEMNUM_OUTER;
+        LOCATION_OUTER_V      := OUTER_REC.LOCATION_OUTER;
+    
+       --MTHENDDATE IS THE DATE OF CLOSING, NOT THE BEGIN OF THE NEXT ACCT PERIOD
+         
+        MTHENDDATE_OUTER_V    := TRUNC(OUTER_REC.MTHENDDATE_OUTER) + 1; 
+        OPENBAL_V             := OUTER_REC.OPENING_BALANCE;
+                                    
+        -- GET THE RECEIPTS 
+        RECEIPT_QTY_V := 0;
+        
+        OPEN RECEIPT_CUR;
+        FETCH RECEIPT_CUR INTO RECEIPT_REC;
+        IF RECEIPT_CUR%FOUND THEN
+           RECEIPT_QTY_V := NVL(RECEIPT_REC.RECEIPT_QTY, 0);
+        END IF;
+       
+        CLOSE RECEIPT_CUR;        
+        
+        -- GET THE TRANSFER QUANTITY TO
+        TRANSFER_QTY_TO_V  :=0;
+        OPEN TRANSFER_CUR_TO;
+        FETCH TRANSFER_CUR_TO INTO TRANSFER_REC_TO;
+        IF TRANSFER_CUR_TO%FOUND THEN
+          TRANSFER_QTY_TO_V := NVL(TRANSFER_REC_TO.TRANSFER_QTY_TO, 0);              
+        END IF;     
+        
+        CLOSE TRANSFER_CUR_TO;      
+        
+        
+        -- GET THE TRANSFER QUANTITY FROM
+            TRANSFER_QTY_FROM_V  :=0;
+            OPEN TRANSFER_CUR_FROM;
+            FETCH TRANSFER_CUR_FROM INTO TRANSFER_REC_FROM;
+            IF TRANSFER_CUR_FROM%FOUND THEN
+               TRANSFER_QTY_FROM_V := NVL(TRANSFER_REC_FROM.TRANSFER_QTY_FROM, 0);              
+            END IF;     
+                
+        CLOSE TRANSFER_CUR_FROM;      
+        
+            -- GET THE RETURN TO VENDOR QTY 
+            RETURNTOVENDER_QTY_V := 0;
+        OPEN RETURNTOVENDER_CUR;
+        FETCH RETURNTOVENDER_CUR INTO RETURNTOVENDER_REC;
+        IF RETURNTOVENDER_CUR%FOUND THEN
+            RETURNTOVENDER_QTY_V := NVL(RETURNTOVENDER_REC.RETURNTOVENDER_QTY, 0);                
+        END IF;        
+        CLOSE RETURNTOVENDER_CUR;
+                 
+        -- GET THE ISSUE SUM 
+        ISSUE_QTY_V := 0;
+        OPEN ISSUE_CUR;
+        FETCH ISSUE_CUR INTO ISSUE_REC;
+        IF ISSUE_CUR%FOUND THEN
+            ISSUE_QTY_V := ISSUE_REC.ISSUE_QTY;
+        END IF;
+        CLOSE ISSUE_CUR;
+        
+        -- GET THE RETURN FROM CUSTOMER SUM
+        RETURN_QTY_V := 0;
+        OPEN RETURN_CUR;
+        FETCH RETURN_CUR INTO RETURN_REC;
+        IF RETURN_CUR%FOUND THEN
+           RETURN_QTY_V := NVL(RETURN_REC.RETURN_QTY,0);    
+        END IF;       
+        CLOSE RETURN_CUR;
+              
+        --GET THE OVERAGE SUM
+        
+        OVERAGE_QTY_V := 0;
+        OPEN OVER_CUR;
+        FETCH OVER_CUR INTO OVER_REC;
+        --IF OVER_CUR%NOTFOUND THEN
+        IF OVER_CUR%FOUND THEN
+            OVERAGE_QTY_V := NVL(OVER_REC.OVER_QTY,0);
+        END IF;            
+        
+        CLOSE OVER_CUR;                           
+        
+        -- GET THE SHORTAGE SUM      
+        SHORTAGE_QTY_V := 0;
+        OPEN SHORT_CUR;
+        FETCH SHORT_CUR INTO SHORT_REC;
+        IF SHORT_CUR%FOUND THEN
+            SHORTAGE_QTY_V := NVL(SHORT_REC.SHORT_QTY, 0);
+        END IF;            
+        
+        CLOSE SHORT_CUR;           
+        
+        
+        
+         -- GET THE CURRENT BAL ADJUSTMENT SUM      
+        CURBALADJ_QTY_V := 0;
+        OPEN CURBALADJ_CUR;
+        FETCH CURBALADJ_CUR INTO CURBALADJ_REC;
+        IF CURBALADJ_CUR%FOUND THEN
+            CURBALADJ_QTY_V := NVL(CURBALADJ_REC.CURBALADJ_QTY, 0);
+        END IF;            
+        
+        CLOSE CURBALADJ_CUR;          
+               
+        --CALCULATE THE CURRENT BALANCE (CALBAL) OF THE ITEM         
+        --FORMULA: OPENING BALANCE + (ABS(RECEIPT) + ABS(OVERAGE) + (RETURN)) - 
+        -- ((RETURNTOVENDOR) + (ISSUE) + ABS(SHORTAGE)) 
+        CALBAL_V := NVL(OPENBAL_V, 0) + ABS(NVL(RECEIPT_QTY_V, 0))  + 
+                    ABS(NVL(OVERAGE_QTY_V, 0)) + ABS(NVL(RETURN_QTY_V, 0)) + 
+                    ABS(NVL(TRANSFER_QTY_TO_V, 0)) - ABS(NVL(RETURNTOVENDER_QTY_V, 0)) + 
+                    CURBALADJ_QTY_V -- JIRA EF  3866 
+                    - ABS(NVL(ISSUE_QTY_V, 0)) - ABS(NVL(SHORTAGE_QTY_V, 0)) 
+                    - ABS(NVL(TRANSFER_QTY_FROM_V, 0));
+    
+        -- GET THE CLOSING BALANCE (CURBAL)                        
+        CURBAL_V := 0;
+        OPEN CURBAL_CUR;
+        FETCH CURBAL_CUR INTO CURBAL_REC;        
+        IF CURBAL_CUR%FOUND THEN
+           CURBAL_V := NVL(CURBAL_REC.CLOSING_BALANCE, 0);    
+        END IF;            
+        
+        CLOSE CURBAL_CUR;
+
+        -- IF CALBAL != CURBAL THEN INSERT INTO LBL_ARCHIVE.DELTABALANCES         
+        IF CALBAL_V <> CURBAL_V THEN
+            INSERT INTO BATCH_MAXIMO.LBL_DELTABALANCES
+                (ITEMNUM, LOCATION, OPENING_BALANCE, CALC_UNITS, CLOSING_BALANCE, 
+                 RECEIPT_QTY, ISSUE_QTY, 
+                 OVERAGE, SHORTAGE, COPIED_DATE, ORGID, SITEID)
+                VALUES (ITEMNUM_OUTER_V, LOCATION_OUTER_V, OPENBAL_V, CALBAL_V, CURBAL_V, 
+                NVL(RECEIPT_QTY_V,0) + NVL(RETURNTOVENDER_QTY_V, 0), NVL(ISSUE_QTY_V,0) + NVL(RETURN_QTY_V,0), 
+                OVERAGE_QTY_V, SHORTAGE_QTY_V, TRUNC(SYSDATE), ORGID_T, SITEID_T);
+        END IF;
+        
+        END LOOP;
+        
+END;
+
+/
+
+COMMIT; --COMMIT ALL THE INSERT        
+

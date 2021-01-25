@@ -1,0 +1,997 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation apphelp="com.ibm.mbs.doc,pr/c_pr_pr_application.html" beanclass="psdi.webclient.beans.pr.PRAppBean" id="pr" ismobile="false" mboname="PR" resultstableid="results_showlist" version="6.2.8">
+	<page id="mainrec" scroll="false">
+		<include controltoclone="pageHeader" id="INCLUDE-pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" label="PRs" mboname="PR" selectmode="multiple">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="prnum" filterable="false" id="results_showlist_tablebody_1" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+							<tablecol dataattribute="prnum" id="results_showlist_tablebody_2" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="description" id="results_showlist_tablebody_3"/>
+							<tablecol dataattribute="status" id="results_showlist_tablebody_4" linkedcontrolid="qbe_grid2_1_1_grid3_3"/>
+							<tablecol applink="company" dataattribute="vendor" id="results_showlist_tablebody_5" menutype="normal"/>
+							<tablecol dataattribute="priority" id="results_showlist_tablebody_6"/>
+							<tablecol dataattribute="requireddate" id="results_showlist_tablebody_7" lookup="datelookup"/>
+							<tablecol dataattribute="totalcost" id="results_showlist_tablebody_8"/>
+							<tablecol dataattribute="siteid" id="results_showlist_tablebody_9" linkedcontrolid="qbe_grid2_1_1_grid3_4"/>
+							<tablecol filterable="false" id="results_bookmark" mxevent="BOOKMARK" mxevent_desc="Add to Bookmarks" mxevent_icon="btn_addtobookmarks.gif" sortable="false" type="event"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="PR" type="insert">
+					<section border="true" id="main_grid1">
+						<sectionrow id="main_grid1_row1">
+							<sectioncol id="main_grid1_row1_col1">
+								<section id="main_grid1a">
+									<multiparttextbox dataattribute="prnum" descdataattribute="description" id="main_grid1_1" longdescription="true"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid1_row1_col2">
+								<section id="main_grid1b">
+									<textbox dataattribute="siteid" id="main_grid1_4"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid1_row1_col3">
+								<section id="main_grid1c">
+									<textbox dataattribute="status" id="main_grid1_3" label="Status"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid1_row1_col4">
+								<section border="false" id="main_attachments">
+									<attachments id="doclinks"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="main_grid2">
+						<sectionrow id="main_grid2_row1">
+							<sectioncol id="main_grid2_row1_col1">
+								<section id="main_grid2a" label="Details">
+									<textbox dataattribute="priority" id="main_grid2a_1"/>
+									<textbox applink="person" dataattribute="supervisor" id="main_grid2a_3" lookup="person" menutype="normal" rechover="person_recordhover"/>
+									<textbox dataattribute="contractrefnum" id="main_grid2c_6" lookup="contractauth" menutype="normal" movetoattribute="contractrefnum" movetoresultset="pr"/>
+									<textbox dataattribute="contractref.contracttype" id="main_grid2c_7" inputmode="readonly"/>
+									<textbox dataattribute="contractrefrev" id="main_grid2c_8"/>
+									<textbox dataattribute="LBL_requestedby" id="1439242070620" label="Requested by (buyer)" lookup="VALUELIST" menutype="NORMAL"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid2_row1_col2">
+								<section id="main_grid2b" label="Dates">
+									<textbox dataattribute="statusdate" id="main_grid2b_1" lookup="datelookup"/>
+									<textbox dataattribute="issuedate" id="main_grid2b_2" lookup="datelookup"/>
+									<textbox dataattribute="requireddate" id="main_grid2b_3" lookup="datelookup"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid2_row1_col3">
+								<section id="main_grid2c" label="Costs">
+									<textbox dataattribute="pretaxtotal" id="main_grid2c_1"/>
+									<textbox dataattribute="totaltax1" id="main_grid2c_2"/>
+									<textbox dataattribute="totalcost" id="main_grid2c_3"/>
+									<textbox dataattribute="currencycode" id="main_grid2c_4" lookup="currency"/>
+									<textbox dataattribute="totalbasecost" id="main_grid2c_5"/>
+									<textbox dataattribute="PR1" id="new_textbox_3" label="Business Unit"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="main_grid3" label="Vendor">
+						<sectionrow id="main_grid3_row1">
+							<sectioncol id="main_grid3_row1_col1">
+								<section id="main_grid3a">
+									<checkbox dataattribute="novendor" id="main_grid3b_5" synchronous="true"/>
+									<multiparttextbox applink="company" applinkkey="company" dataattribute="vendor" descdataattribute="COMPANIES.name" descinputmode="readonly" id="mainsection_3_col1_1" longdescreadonly="true" lookup="companies" menutype="normal"/>
+									<textbox dataattribute="companies.address1" id="main_grid3a_1" inputmode="readonly"/>
+									<textbox dataattribute="companies.address2" id="main_grid3a_2" inputmode="readonly" title="City:"/>
+									<textbox dataattribute="companies.address3" id="main_grid3a_3" inputmode="readonly" title="State:"/>
+									<textbox dataattribute="companies.address4" id="main_grid3a_4" inputmode="readonly" title="ZIP/Postal Code:"/>
+									<textbox dataattribute="contact" id="main_grid3a_7" lookup="compcontact"/>
+									<textbox dataattribute="customernum" id="main_grid3a_8"/>
+									<textbox dataattribute="companies.phone" id="main_grid3a_6" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid3_row1_col2">
+								<section id="main_grid3b">
+									<checkbox dataattribute="internal" id="main_grid3b_1" synchronous="true"/>
+									<textbox dataattribute="storeloc" id="main_grid3b_8" lookup="storeroom"/>
+									<textbox dataattribute="storelocsiteid" id="main_grid3b_9" lookup="site"/>
+									<textbox dataattribute="freightterms" id="main_grid3a_5" lookup="longdesc"/>
+									<textbox dataattribute="paymentterms" id="main_grid3b_4"/>
+									<textbox dataattribute="shipvia" id="main_grid3b_6" lookup="valuelist"/>
+									<textbox dataattribute="fob" id="main_grid3b_7"/>
+									<checkbox dataattribute="inclusive1" id="main_grid3b_2"/>
+									<checkbox dataattribute="payonreceipt" id="main_grid3b_3"/>
+									<checkbox dataattribute="inspectionrequired" id="main_grid3b_3a"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</tab>
+				<tab id="prlines" label="PR Lines">
+					<section border="true" id="prlines_grid1">
+						<sectionrow id="prlines_grid1_row1">
+							<sectioncol id="prlines_grid1_row1_col1">
+								<section id="prlines_grid1a">
+									<multiparttextbox dataattribute="prnum" descdataattribute="description" id="prlines_grid1a_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="prlines_grid1_row1_col4">
+								<section id="prlines_grid1d">
+									<textbox dataattribute="siteid" id="prlines_grid1c_2"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="prlines_grid1_row1_col2">
+								<section id="prlines_grid1b">
+									<textbox dataattribute="status" id="prlines_grid1b_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="prlines_grid1_row1_col3">
+								<section id="prlines_grid1c">
+									<textbox dataattribute="totalcost" id="prlines_grid1a_2" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table beanclass="psdi.webclient.beans.pr.PRLinesTableBean" id="prlines_prlines_table" label="PR Lines" listeners="specification_pdspectable" orderby="prlinenum" relationship="PRLINE">
+						<tablebody displayrowsperpage="6" filterable="true" id="prlines_prlines_table_tablebody">
+							<tablecol id="new_tablecol" mxevent="toggledetailstate" mxevent_desc="Show Detail" type="EVENT"/>
+							<tablecol dataattribute="prlinenum" id="prlines_prlines_table_tablebody_2" linkedcontrolid="prlines_grid2a_1" sortable="true"/>
+							<tablecol dataattribute="itemnum" id="prlines_prlines_table_tablebody_3" lookup="item" menutype="item" ondatachange="resetchildren" rechover="item_recordhover"/>
+							<tablecol dataattribute="description" id="prlines_prlines_table_tablebody_4" lookup="longdesc"/>
+							<tablecol dataattribute="orderqty" id="prlines_prlines_table_tablebody_5" linkedcontrolid="prlines_grid3a_2" sortable="true"/>
+							<tablecol dataattribute="orderunit" id="prlines_prlines_table_tablebody_6" linkedcontrolid="prlines_grid3a_3" sortable="true"/>
+							<tablecol dataattribute="RL5" filterable="true" id="prlines_prlines_table_tablebody_1" label="Buyer ID" lookup="VALUELIST" sortable="true"/>
+							<tablecol dataattribute="unitcost" id="prlines_prlines_table_tablebody_8" linkedcontrolid="prlines_grid3a_5" sortable="true"/>
+							<tablecol dataattribute="linecost" id="prlines_prlines_table_tablebody_9" linkedcontrolid="prlines_grid3a_6"/>
+							<tablecol dataattribute="tax1" id="prlines_prlines_table_tablebody_11" linkedcontrolid="prlines_grid3a_8"/>
+							<tablecol dataattribute="isdistributed" id="prlines_prlines_table_tablebody_12" linkedcontrolid="prlines_grid4b_3"/>
+							<tablecol filterable="false" id="prlines_prlines_table_tablebody_121" mxevent="viewrelrec" mxevent_desc="View Related Records" mxevent_icon="ac22_relatedRecords.png" sortable="false" type="event"/>
+							<tablecol filterable="false" id="prlines_prlines_table_tablebody_13" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="prlines_table_1">
+							<section id="prlines_grid2" label="Line Item">
+								<sectionrow id="prlines_grid2_r1">
+									<sectioncol id="prlines_grid2_c1">
+										<section id="prlines_grid2a">
+											<textbox dataattribute="prlinenum" id="prlines_grid2a_1" sizeintable="5"/>
+											<combobox dataattribute="linetype" id="prlines_grid2a_2"/>
+											<multiparttextbox dataattribute="itemnum" defaultfocus="true" descdataattribute="description" id="prlines_grid2a_3" lookup="item" menutype="item" rechover="item_recordhover"/>
+											<textbox dataattribute="conditioncode" id="prlines_grid2a_6" lookup="conditioncode"/>
+											<textbox dataattribute="remark" id="prlines_grid5b_8" lookup="longdesc"/>
+											<textbox applink="assetcat" dataattribute="CLASSSTRUCTURE.HIERARCHYPATH" id="prlines_grid5c_9" inputmode="readonly" menutype="normal" ondatachange="refreshtable"/>
+											<textbox dataattribute="CLASSSTRUCTURE.description_class" id="prlines_grid5c_10" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="prlines_grid2_c2">
+										<section id="prlines_grid2b">
+											<textbox dataattribute="RLIN2" id="new_textbox_2" label="PS Ship To" lookup="VALUELIST"/>
+											<textbox dataattribute="ITEM.IN21" id="new_textbox" inputmode="READONLY" label="PS Category code"/>
+											<textbox applink="company" dataattribute="manufacturer" id="prlines_grid2a_7" lookup="companies" menutype="normal" smartfilloff="true"/>
+											<textbox dataattribute="modelnum" id="prlines_grid2a_10"/>
+											<textbox dataattribute="category" id="prlines_grid2a_8"/>
+											<textbox dataattribute="catalogcode" id="prlines_grid2a_9"/>
+											<textbox dataattribute="commoditygroup" defaultfocus="true" id="prlines_grid2a_4" lookup="commoditygroup"/>
+											<textbox dataattribute="commodity" defaultfocus="true" id="prlines_grid2a_5" lookup="COMMODITIES"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="prlines_grid2_c3">
+										<section id="prlines_grid2c">
+											<checkbox dataattribute="receiptreqd" id="prlines_grid4b_1"/>
+											<checkbox dataattribute="inspectionrequired" id="prlines_grid4b_2"/>
+											<checkbox dataattribute="issue" id="prlines_grid4b_4"/>
+											<checkbox dataattribute="chargestore" id="prlines_grid4b_5"/>
+											<checkbox dataattribute="isdistributed" id="prlines_grid4b_3"/>
+											<checkbox dataattribute="converttorfq" id="prlines_grid4b_6"/>
+											<checkbox dataattribute="converttocontract" id="prlines_grid4b_7"/>
+											<checkbox dataattribute="taxexempt" id="prlines_grid2a_8a"/>
+											<checkbox dataattribute="consignment" id="prlines_grid4b_11"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+							<section id="prlines_grid3">
+								<sectionrow id="prlines_grid3_r1">
+									<sectioncol id="prlines_grid3_c1">
+										<section id="prlines_grid3a" label="Quantity and Costs">
+											<sectionrow id="prlines_grid3b">
+												<sectioncol id="prlines_grid3c">
+													<section id="prlines_grid3d">
+														<textbox dataattribute="orderqty" id="prlines_grid3a_2" sizeintable="8" synchronous="true"/>
+														<textbox dataattribute="orderunit" id="prlines_grid3a_3" lookup="measureunit" sizeintable="7"/>
+														<textbox dataattribute="inventory.issueunit" id="prlines_grid3a_13" inputmode="readonly" sizeintable="7"/>
+														<textbox dataattribute="conversion" id="prlines_grid3a_4"/>
+														<textbox dataattribute="unitcost" id="prlines_grid3a_5" synchronous="true"/>
+														<textbox dataattribute="linecost" id="prlines_grid3a_6"/>
+													</section>
+												</sectioncol>
+												<sectioncol id="prlines_grid3e">
+													<section id="prlines_grid3f">
+														<textbox dataattribute="tax1code" id="prlines_grid3a_7" lookup="taxcode" sizeintable="6"/>
+														<textbox dataattribute="tax1" id="prlines_grid3a_8" sizeintable="4"/>
+														<textbox dataattribute="loadedcost" id="prlines_grid3a_9"/>
+														<textbox dataattribute="contractrefnum" id="prlines_grid5b_1"/>
+														<textbox dataattribute="contractref.contracttype" id="prlines_grid5b_2" inputmode="readonly"/>
+														<textbox dataattribute="contractrefrev" id="prlines_grid5b_9"/>
+													</section>
+												</sectioncol>
+											</sectionrow>
+										</section>
+									</sectioncol>
+									<sectioncol id="prlines_grid4_c1">
+										<section id="prlines_grid4a" label="Charge To">
+											<textbox applink="storeroom,ipc" dataattribute="storeloc" id="prlines_grid3a_1" lookup="storeroom" menutype="normal"/>
+											<combobox dataattribute="restype" id="prlines_grid4a_1a" sigoption="INTERNALPR" sigoptiondatasrc="MAINRECORD"/>
+											<textbox applink="wotrack" dataattribute="wonum" id="prlines_grid4a_1" lookup="workorder" menutype="workorder" rechover="wo_recordhover"/>
+											<textbox dataattribute="taskid" id="prlines_grid4a_2" lookup="wptask"/>
+											<textbox applink="location,ipc" dataattribute="location" id="prlines_grid4a_3" lookup="locations" menutype="locations"/>
+											<textbox applink="asset,ipc" dataattribute="assetnum" id="prlines_grid4a_4" lookup="asset" menutype="assetmain" rechover="asset_recordhover"/>
+											<textbox dataattribute="gldebitacct" id="prlines_grid4a_5" lookup="LBLGLACCOUNTGLNAVIGATOR"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+								<sectionrow id="prlines_grid5_r1">
+									<sectioncol id="prlines_grid5_c1">
+										<section id="prlines_grid5_c1a" label="Related Records">
+											<sectionrow id="prlines_grid5_cla1">
+												<sectioncol id="prlines_grid5_cla2">
+													<section id="prlines_grid5a">
+														<textbox dataattribute="mrnum" id="prlines_grid5a_1"/>
+														<textbox dataattribute="mrlinenum" id="prlines_grid5a_2"/>
+														<textbox applink="rfq" dataattribute="rfqnum" id="prlines_grid5a_5" menutype="normal"/>
+														<textbox dataattribute="rfqlinenum" id="prlines_grid5a_6"/>
+													</section>
+												</sectioncol>
+												<sectioncol id="prlines_grid5_cla3">
+													<section id="prlines_grid5_cla4">
+														<textbox applink="po" dataattribute="ponum" id="prlines_grid5a_3" menutype="normal"/>
+														<textbox dataattribute="polinenum" id="prlines_grid5a_4"/>
+														<textbox dataattribute="contractnum" id="prlines_grid3a_10" menutype="normal"/>
+														<textbox dataattribute="contractlinenum" id="prlines_grid3a_11"/>
+														<textbox dataattribute="contract.contracttype" id="prlines_grid3a_12" inputmode="readonly"/>
+													</section>
+												</sectioncol>
+											</sectionrow>
+										</section>
+									</sectioncol>
+									<sectioncol id="prlines_grid5b_c2">
+										<section id="prlines_grid5b" label="Details">
+											<textbox dataattribute="enterby" id="prlines_grid5b_3" lookup="person" rechover="person_recordhover"/>
+											<textbox dataattribute="enterdate" id="prlines_grid5b_4" lookup="datelookup"/>
+											<textbox dataattribute="requestedby" id="prlines_grid5b_5" lookup="person" rechover="person_recordhover"/>
+											<textbox dataattribute="reqdeliverydate" id="prlines_grid5b_6" lookup="datelookup"/>
+											<textbox dataattribute="vendeliverydate" id="prlines_grid5b_7" lookup="datelookup"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="prlines_prlines_table_2">
+							<pushbutton id="prlines_prlines_table_2_2" label="Vendor Items" mxevent="vendorlist"/>
+							<pushbutton id="prlines_prlines_table_2_1" label="Select Spare Parts" mxevent="selasparts"/>
+							<pushbutton id="prlines_prlines_table_2_2a" label="Contract Items" mxevent="contractitems"/>
+							<pushbutton id="prlines_prlines_table_2_4" label="View Contracts" mxevent="viewagreements"/>
+							<pushbutton id="prlines_prlines_table_2_5" label="Distribute Costs" mxevent="distcosts"/>
+							<pushbutton default="true" id="prlines_prlines_table_2_3" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+					<section datasrc="prlines_prlines_table" id="prlines_grid10" inputmode="default" label="Default Table Data">
+						<sectionrow id="prlines_grid10a">
+							<sectioncol id="prlines_grid10b">
+								<section id="prlines_grid10c">
+									<textbox applink="wotrack" dataattribute="wonum" id="prlines_grid10_1" lookup="workorder" menutype="workorder"/>
+									<textbox applink="location,ipc" dataattribute="location" id="prlines_grid10_2" lookup="locations" menutype="locations"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="prlines_grid10d">
+								<section id="prline_grid10e">
+									<textbox applink="asset,ipc" dataattribute="assetnum" id="prlines_grid10_3" lookup="asset" menutype="assetmain"/>
+									<textbox applink="storeroom,ipc" dataattribute="storeloc" id="prlines_grid10_4" lookup="storeroom" menutype="normal"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="prlines_grid10f">
+								<section id="prlines_grid10g">
+									<textbox dataattribute="requestedby" id="prlines_grid10_5" lookup="person"/>
+									<textbox dataattribute="gldebitacct" id="prlines_grid10_6" lookup="LBLGLACCOUNTGLNAVIGATOR"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</tab>
+				<tab id="shipto" label="Ship To / Bill To">
+					<section border="true" id="shipto_grid1">
+						<sectionrow id="shipto_grid1_row1">
+							<sectioncol id="shipto_grid1_row1_col1">
+								<section id="shipto_grid1a">
+									<multiparttextbox dataattribute="prnum" descdataattribute="description" id="shipto_grid1a_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="shipto_grid1_row1_col4">
+								<section id="shipto_grid1d">
+									<textbox dataattribute="siteid" id="shipto_grid1b_2"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="shipto_grid1_row1_col2">
+								<section id="shipto_grid1b">
+									<textbox dataattribute="status" id="shipto_grid1b_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="shipto_grid1_row1_col3">
+								<section id="shipto_grid1c">
+									<textbox dataattribute="totalcost" id="shipto_grid1a_2" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<section id="main_grid4">
+						<sectionrow id="main_grid4_row1">
+							<sectioncol id="main_grid4_row1_col1">
+								<section id="main_grid4a" label="Ship To">
+									<multiparttextbox dataattribute="shipto" descdataattribute="prshipto.description" descinputmode="readonly" displaytype="DESCRIPTION" id="main_grid4a_1" longdescreadonly="true" lookup="billtoshiptoaddress"/>
+									<textbox dataattribute="prshipto.address1" id="main_grid4a_2" inputmode="readonly"/>
+									<textbox dataattribute="prshipto.address2" id="main_grid4a_3" inputmode="readonly" title="City:"/>
+									<textbox dataattribute="prshipto.address3" id="main_grid4a_4" inputmode="readonly" title="State:"/>
+									<textbox dataattribute="prshipto.address4" id="main_grid4a_5" inputmode="readonly" title="ZIP/Postal Code:"/>
+									<multiparttextbox dataattribute="shiptoattn" descdataattribute="SHIPTOPERSON.displayname" descinputmode="readonly" displaytype="DESCRIPTION" id="main_grid4a_6" longdescreadonly="true" lookup="person" rechover="person_recordhover"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_grid4_row1_col2">
+								<section id="main_grid4b" label="Bill To">
+									<multiparttextbox dataattribute="billto" descdataattribute="prbillto.description" descinputmode="readonly" displaytype="DESCRIPTION" id="main_grid4b_1" longdescreadonly="true" lookup="billtoshiptoaddress"/>
+									<textbox dataattribute="prbillto.address1" id="main_grid4b_2" inputmode="readonly"/>
+									<textbox dataattribute="prbillto.address2" id="main_grid4b_3" inputmode="readonly" title="City:"/>
+									<textbox dataattribute="prbillto.address3" id="main_grid4b_4" inputmode="readonly" title="State:"/>
+									<textbox dataattribute="prbillto.address4" id="main_grid4b_5" inputmode="readonly" title="ZIP/Postal Code:"/>
+									<multiparttextbox dataattribute="billtoattn" descdataattribute="BILLTOPERSON.displayname" descinputmode="readonly" displaytype="DESCRIPTION" id="main_grid4b_6" longdescreadonly="true" lookup="person" rechover="person_recordhover"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</tab>
+				<tab id="termcond" label="Terms and Conditions">
+					<section border="true" id="terms_grid1">
+						<sectionrow id="terms_grid1_row1">
+							<sectioncol id="terms_grid1_row1_col1">
+								<section id="terms_grid1a">
+									<multiparttextbox dataattribute="prnum" descdataattribute="description" id="terms_grid1a_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="terms_grid1_row1_col4">
+								<section id="terms_grid1d">
+									<textbox dataattribute="siteid" id="terms_grid1b_2"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="terms_grid1_row1_col2">
+								<section id="terms_grid1b">
+									<textbox dataattribute="status" id="terms_grid1b_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="terms_grid1_row1_col3">
+								<section id="terms_grid1c">
+									<textbox dataattribute="totalcost" id="terms_grid1a_2" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="termcond_TermsTable" label="Terms and Conditions" orderby="seqnum" parentdatasrc="MAINRECORD" relationship="PRTERM">
+						<tablebody displayrowsperpage="16" filterable="true" id="termcond_TermsTable_tablebody">
+							<tablecol filterable="false" id="termcond_TermsTable_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="seqnum" id="termcond_TermsTable_tablebody_4" linkedcontrolid="termcond_TermsTable_1_grid3_3"/>
+							<tablecol dataattribute="termid" id="termcond_TermsTable_tablebody_2" lookup="term">
+								<textbox defaultfocus="true" id="termcond_TermsTable_tablebody_2a" lookup="term"/>
+							</tablecol>
+							<tablecol dataattribute="description" id="termcond_TermsTable_tablebody_3">
+								<textbox id="termcond_TermsTable_tablebody_3a" lookup="longdesc"/>
+							</tablecol>
+							<tablecol dataattribute="sendtovendor" id="termcond_TermsTable_tablebody_5">
+								<checkbox id="termcond_TermsTable_tablebody_5_1"/>
+							</tablecol>
+							<tablecol filterable="false" id="termcond_TermsTable_tablebody_6" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="termcond_TermsTable_1">
+							<section id="termcond_TermsTable_1_grid3" label="Details">
+								<sectionrow id="termcond_TermsTable_1_grid3_row1">
+									<sectioncol id="termcond_TermsTable_1_grid3_row1_col1">
+										<section id="termcond_TermsTable_1_grid3_row1_col1_sec1">
+											<textbox dataattribute="seqnum" id="termcond_TermsTable_1_grid3_3"/>
+											<multiparttextbox dataattribute="termid" defaultfocus="true" descdataattribute="description" desclookup="longdesc" id="termcond_TermsTable_1_grid3_1" longdescription="true" lookup="term"/>
+											<checkbox dataattribute="sendtovendor" id="termcond_TermsTable_1_grid3_4"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="termcond_TermsTable_2">
+							<pushbutton id="termcond_TermsTable_2_1" label="Select Terms" mxevent="selectterms"/>
+							<pushbutton default="true" id="termcond_TermsTable_2_2" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="log" label="Log">
+					<section border="true" id="log_grid1">
+						<sectionrow id="log_grid1_row1">
+							<sectioncol id="log_grid1_row1_col1">
+								<section id="log_grid1a">
+									<multiparttextbox dataattribute="prnum" descdataattribute="description" id="log_grid1_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="log_grid1_row1_col4">
+								<section id="log_grid1d">
+									<textbox dataattribute="siteid" id="log_grid1_5"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="log_grid1_row1_col2">
+								<section id="log_grid1b">
+									<textbox dataattribute="status" id="log_grid1_3"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="log_grid1_row1_col3">
+								<section id="log_grid1c">
+									<textbox dataattribute="totalcost" id="log_grid1_4" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<tabgroup id="log_tabs">
+						<tab default="true" id="worklog_tab" label="Work Log">
+							<include controltoclone="worklog" id="INCLUDE-worklog"/>
+						</tab>
+						<tab id="commlog_tab" label="Communication Log">
+							<include controltoclone="commlog" id="INCLUDE-commlog"/>
+						</tab>
+					</tabgroup>
+				</tab>
+				<tab id="specification" label="Specifications">
+					<section border="true" id="specification_grid1">
+						<sectionrow id="specification_grid1_row1">
+							<sectioncol id="specification_grid1_row1_col1">
+								<section id="specification_grid1a">
+									<multiparttextbox dataattribute="prnum" descdataattribute="description" id="specification_grid1_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="specification_grid1_row1_col4">
+								<section id="specification_grid1d">
+									<textbox dataattribute="siteid" id="specification_grid1_5"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="specification_grid1_row1_col2">
+								<section id="specification_grid1b">
+									<textbox dataattribute="status" id="specification_grid1_3"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="specification_grid1_row1_col3">
+								<section id="specification_grid1c">
+									<textbox dataattribute="totalcost" id="specification_grid1_4" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="specification_pdspectable" label="Attributes" ondatachange="refreshtable" orderby="displaysequence" relationship="PRLINESPECCLASS">
+						<tablebody displayrowsperpage="10" filterable="true" id="specification_pdspectable_tablebody">
+							<tablecol filterable="false" id="specification_pdspectable_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="refobjectlinenum" id="specification_pdspectable_tablebody_2" inputmode="readonly"/>
+							<tablecol dataattribute="itemnum" id="specification_pdspectable_tablebody_2a" inputmode="readonly" rechover="item_recordhover"/>
+							<tablecol dataattribute="assetattrid" id="specification_pdspectable_tablebody_4" inputmode="readonly"/>
+							<tablecol dataattribute="assetattribute.description" id="specification_pdspectable_tablebody_5" inputmode="readonly" showfilterfield="true" sortable="false"/>
+							<tablecol dataattribute="assetattribute.datatype" id="specification_pdspectable_tablebody_6" linkedcontrolid="specification_pdspectable_2_griddetails_1" showfilterfield="true" sortable="false"/>
+							<tablecol dataattribute="alnvalue" id="specification_pdspectable_tablebody_7" linkedcontrolid="specification_pdspectable_2_griddetails_8"/>
+							<tablecol dataattribute="numvalue" id="specification_pdspectable_tablebody_8" linkedcontrolid="specification_pdspectable_2_griddetails_9"/>
+							<tablecol dataattribute="measureunitid" id="specification_pdspectable_tablebody_9" linkedcontrolid="specification_pdspectable_2_griddetails_2"/>
+							<tablecol dataattribute="tablevalue" id="specification_pdspectable_tablebody_10" linkedcontrolid="specification_pdspectable_2_griddetails_10"/>
+						</tablebody>
+						<tabledetails id="specification_pdspectable_1">
+							<section id="specification_pdspectable_1_griddetails" label="Details">
+								<sectionrow id="specifications_specifications_table_2_griddetails1_row">
+									<sectioncol id="specifications_specifications_table_2_griddetails1_row_col1">
+										<section id="specifications_specifications_table_2_griddetails1_row_col1_sec">
+											<textbox dataattribute="refobjectlinenum" id="specification_pdspectable_2_griddetails_6" inputmode="readonly"/>
+											<textbox dataattribute="itemnum" id="specification_pdspectable_2_griddetails_7" inputmode="readonly" rechover="item_recordhover"/>
+											<textbox applink="assetcat" dataattribute="CLASSSTRUCTURE.HIERARCHYPATH" id="specification_pdspectable_2_griddetails_4" inputmode="readonly" menutype="normal" ondatachange="resetchildren"/>
+											<textbox dataattribute="CLASSSTRUCTURE.description_class" id="specification_pdspectable_2_griddetails_5" inputmode="readonly"/>
+											<multiparttextbox dataattribute="assetattrid" descdataattribute="assetattribute.description" descinputmode="readonly" id="specification_pdspectable_2_griddetails_5a" inputmode="readonly" longdescreadonly="true"/>
+											<textbox dataattribute="assetattribute.datatype" id="specification_pdspectable_2_griddetails_1" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="specifications_specifications_table_2_griddetails1_row_col2">
+										<section id="specifications_specifications_table_2_griddetails1_row_col2_sec">
+											<textbox dataattribute="alnvalue" id="specification_pdspectable_2_griddetails_8" lookup="alndomain" smartfilloff="true"/>
+											<textbox dataattribute="numvalue" id="specification_pdspectable_2_griddetails_9" lookup="numericdomain" smartfilloff="true"/>
+											<textbox dataattribute="measureunitid" id="specification_pdspectable_2_griddetails_2" lookup="measureunit"/>
+											<textbox dataattribute="tablevalue" id="specification_pdspectable_2_griddetails_10" menutype="normal"/>
+											<textbox dataattribute="section" id="specification_pdspectable_2_griddetails_3"/>
+											<textbox dataattribute="classspec.inheritedfrom" id="specification_pdspectable_2_griddetails_11" inputmode="readonly"/>
+											<textbox dataattribute="classspec.applydownhier" id="specification_pdspectable_2_griddetails_12" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+					</table>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include controltoclone="pageFooter" id="INCLUDE-pageFooter"/>
+	</page>
+
+	<dialog id="viewrelrec" label="View Related Records">
+		<tabgroup id="viewrelrec_tabs">
+			<tab default="true" id="view_related_po_tab" label="POs">
+				<table id="view_related_po_tab_table" label="POs" relationship="POLINE">
+					<tablebody displayrowsperpage="10" filterable="true" id="view_related_po_tab_table_main">
+						<tablecol dataattribute="prline.prlinenum" id="view_related_po_tab_table_tablebody_30" inputmode="readonly"/>
+						<tablecol dataattribute="ponum" id="view_related_po_tab_table_tablebody_3" sortable="true">
+							<textbox applink="po" id="view_related_po_tab_table_tablebody_31" inputmode="readonly" menutype="normal"/>
+						</tablecol>
+						<tablecol dataattribute="revisionnum" id="view_related_po_tab_table_tablebody_91" inputmode="readonly"/>
+						<tablecol dataattribute="polinenum" id="view_related_po_tab_table_tablebody_9" inputmode="readonly"/>
+						<tablecol dataattribute="itemnum" id="view_related_po_tab_table_tablebody_11b" inputmode="readonly"/>
+						<tablecol dataattribute="description" id="view_related_po_tab_table_tablebody_11a" inputmode="readonly"/>
+						<tablecol dataattribute="orderqty" id="view_related_po_tab_table_tablebody_11c" inputmode="readonly"/>
+						<tablecol dataattribute="orderunit" id="view_related_po_tab_table_tablebody_11d" inputmode="readonly"/>
+						<tablecol dataattribute="linecost" id="view_related_po_tab_table_tablebody_11e" inputmode="readonly"/>
+						<tablecol dataattribute="porev.status" id="view_related_po_tab_table_tablebody_11" inputmode="readonly"/>
+						<tablecol dataattribute="siteid" id="view_related_po_tab_table_tablebody_5" inputmode="readonly"/>
+						<tablecol dataattribute="REQUESTEDBY" id="view_related_po_tab_table_tablebody_10" inputmode="readonly"/>
+					</tablebody>
+				</table>
+			</tab>
+			<tab id="view_related_rfq_tab" label="RFQs">
+				<table id="view_related_rfq_tab_table" label="RFQs" relationship="RFQLINE">
+					<tablebody displayrowsperpage="10" filterable="true" id="view_related_rfq_tab_table_main">
+						<tablecol dataattribute="prline.prlinenum" id="view_related_rfq_tab_table_tablebody_30" inputmode="readonly"/>
+						<tablecol dataattribute="rfqnum" id="view_related_rfq_tab_table_tablebody_3" sortable="true">
+							<textbox applink="rfq" id="view_related_rfq_tab_table_tablebody_31" inputmode="readonly" menutype="normal"/>
+						</tablecol>
+						<tablecol dataattribute="rfqlinenum" id="view_related_rfq_tab_table_tablebody_9"/>
+						<tablecol dataattribute="rfq.description" id="view_related_rfq_tab_table_tablebody_11a" inputmode="readonly"/>
+						<tablecol dataattribute="rfq.status" id="view_related_rfq_tab_table_tablebody_11" inputmode="readonly"/>
+						<tablecol dataattribute="siteid" id="view_related_rfq_tab_table_tablebody_5" inputmode="readonly"/>
+						<tablecol dataattribute="vendor" id="view_related_rfq_tab_table_tablebody_5a" inputmode="readonly"/>
+						<tablecol dataattribute="requestedby" id="view_related_rfq_tab_table_tablebody_10" inputmode="readonly"/>
+					</tablebody>
+				</table>
+			</tab>
+			<tab id="view_related_receipts_tab" label="Material Receipts">
+				<table id="view_related_receipts_tab_table" label="Material Receipts" relationship="MATRECTRANS">
+					<tablebody displayrowsperpage="10" filterable="true" id="view_related_receipts__tab_table_main">
+						<tablecol dataattribute="prlineview.prlinenum" id="view_related_receipts__tab_table_tablebody_30" inputmode="readonly"/>
+						<tablecol dataattribute="itemnum" id="view_related_receipts__tab_table_tablebody_30a" inputmode="readonly"/>
+						<tablecol dataattribute="poline.description" id="view_related_receipts__tab_table_tablebody_30b" inputmode="readonly"/>
+						<tablecol dataattribute="RECEIPTQUANTITY" id="view_related_receipts__tab_table_tablebody_3" inputmode="readonly"/>
+						<tablecol dataattribute="RECEIVEDUNIT" id="view_related_receipts__tab_table_tablebody_9" inputmode="readonly"/>
+						<tablecol dataattribute="ISSUETYPE" id="view_related_receipts__tab_table_tablebody_11a" inputmode="readonly" label="Type"/>
+						<tablecol dataattribute="POREV.RECEIPTS" id="view_related_receipts__tab_table_tablebody_11b" inputmode="readonly" label="Receipt Status"/>
+						<tablecol dataattribute="status" id="view_related_receipts__tab_table_tablebody_11" inputmode="readonly"/>
+						<tablecol dataattribute="siteid" id="view_related_receipts__tab_table_tablebody_5" inputmode="readonly"/>
+						<tablecol dataattribute="transdate" id="view_related_receipts__tab_table_tablebody_10" inputmode="readonly"/>
+						<tablecol dataattribute="linecost" id="view_related_receipts__tab_table_tablebody_101" inputmode="readonly"/>
+						<tablecol dataattribute="GLDEBITACCT" id="view_related_receipts__tab_table_tablebody_10a" inputmode="readonly"/>
+						<tablecol dataattribute="GLCREDITACCT" id="view_related_receipts__tab_table_tablebody_10b" inputmode="readonly"/>
+						<tablecol dataattribute="enterby" id="view_related_receipts__tab_table_tablebody_10c" inputmode="readonly"/>
+					</tablebody>
+				</table>
+			</tab>
+			<tab id="view_related_receipts1_tab" label="Service Receipts">
+				<table id="view_related_receipts1_tab_table" label="Service Receipts" relationship="SERVRECTRANS">
+					<tablebody displayrowsperpage="10" filterable="true" id="view_related_receipts1__tab_table_main">
+						<tablecol dataattribute="prlineview.prlinenum" id="view_related_receipts1__tab_table_tablebody_30" inputmode="readonly"/>
+						<tablecol dataattribute="itemnum" id="view_related_receipts1__tab_table_tablebody_30a" inputmode="readonly"/>
+						<tablecol dataattribute="poline.description" id="view_related_receipts1__tab_table_tablebody_30b" inputmode="readonly"/>
+						<tablecol dataattribute="QTYTORECEIVE" id="view_related_receipts1__tab_table_tablebody_3" inputmode="readonly"/>
+						<tablecol dataattribute="ISSUETYPE" id="view_related_receipts1__tab_table_tablebody_11a" inputmode="readonly" label="Type"/>
+						<tablecol dataattribute="POREV.RECEIPTS" id="view_related_receipts1__tab_table_tablebody_11b" inputmode="readonly" label="Receipt Status"/>
+						<tablecol dataattribute="status" id="view_related_receipts1__tab_table_tablebody_11" inputmode="readonly"/>
+						<tablecol dataattribute="siteid" id="view_related_receipts1__tab_table_tablebody_5" inputmode="readonly"/>
+						<tablecol dataattribute="transdate" id="view_related_receipts1__tab_table_tablebody_10" inputmode="readonly"/>
+						<tablecol dataattribute="linecost" id="view_related_receipts1__tab_table_tablebody_101" inputmode="readonly"/>
+						<tablecol dataattribute="GLDEBITACCT" id="view_related_receipts1__tab_table_tablebody_10a" inputmode="readonly"/>
+						<tablecol dataattribute="GLCREDITACCT" id="view_related_receipts1__tab_table_tablebody_10b" inputmode="readonly"/>
+						<tablecol dataattribute="enterby" id="view_related_receipts1__tab_table_tablebody_10c" inputmode="readonly" label="Entered By"/>
+					</tablebody>
+				</table>
+			</tab>
+			<tab id="view_related_inv_tab" label="Invoices">
+				<table id="view_related_inv_tab_table" label="Invoices" relationship="INVOICELINE">
+					<tablebody displayrowsperpage="10" filterable="true" id="view_related_inv_tab_table_main">
+						<tablecol dataattribute="poline.prline.prlinenum" id="view_related_inv_tab_table_tablebody_300" inputmode="readonly"/>
+						<tablecol dataattribute="polinenum" id="view_related_inv_tab_table_tablebody_30" inputmode="readonly"/>
+						<tablecol dataattribute="invoicenum" id="view_related_inv_tab_table_tablebody_3" sortable="true">
+							<textbox applink="invoice" id="view_related_inv_tab_table_tablebody_31" inputmode="readonly" menutype="normal"/>
+						</tablecol>
+						<tablecol dataattribute="invoicelinenum" id="view_related_inv_tab_table_tablebody_9" inputmode="readonly"/>
+						<tablecol dataattribute="invoice.documenttype" id="view_related_inv_tab_table_tablebody_11a" inputmode="readonly"/>
+						<tablecol dataattribute="invoice.glpostdate" id="view_related_inv_tab_table_tablebody_11b" inputmode="readonly"/>
+						<tablecol dataattribute="invoice.status" id="view_related_inv_tab_table_tablebody_11b1" inputmode="readonly"/>
+						<tablecol dataattribute="siteid" id="view_related_inv_tab_table_tablebody_102" inputmode="readonly"/>
+						<tablecol dataattribute="vendor" id="view_related_inv_tab_table_tablebody_11c" inputmode="readonly"/>
+						<tablecol dataattribute="invoiceqty" id="view_related_inv_tab_table_tablebody_11" inputmode="readonly"/>
+						<tablecol dataattribute="unitcost" id="view_related_inv_tab_table_tablebody_102b" inputmode="readonly"/>
+						<tablecol dataattribute="tax1" id="view_related_inv_tab_table_tablebody_5" inputmode="readonly"/>
+						<tablecol dataattribute="linecost" id="view_related_inv_tab_table_tablebody_101" inputmode="readonly"/>
+					</tablebody>
+				</table>
+			</tab>
+			<tab id="view_related_invoicetrans_tab" label="Invoice Transactions">
+				<table id="view_related_invoicetr_tab_table" label="Invoice Transactions" relationship="INVOICETRANS">
+					<tablebody displayrowsperpage="10" filterable="true" id="view_related_invoicetr__tab_table_main">
+						<tablecol dataattribute="invoicenum" id="view_related_invoicetr__tab_table_tablebody_3" inputmode="readonly"/>
+						<tablecol dataattribute="invoicelinenum" id="view_related_invoicetr__tab_table_tablebody_9" inputmode="readonly"/>
+						<tablecol dataattribute="invoice.documenttype" id="view_related_invoicetr__tab_table_tablebody_11a" inputmode="readonly"/>
+						<tablecol dataattribute="actualdate" id="view_related_invoicetr__tab_table_tablebody_11b" inputmode="readonly"/>
+						<tablecol dataattribute="siteid" id="view_related_invoicetr__tab_table_tablebody_5" inputmode="readonly"/>
+						<tablecol dataattribute="INVOICELINE.ponum" id="view_related_invoicetr__tab_table_tablebody_30" inputmode="readonly"/>
+						<tablecol dataattribute="vendor" id="view_related_invoicetr__tab_table_tablebody_11" inputmode="readonly"/>
+						<tablecol dataattribute="transtype" id="view_related_invoicetr__tab_table_tablebody_10" inputmode="readonly"/>
+						<tablecol dataattribute="linecost" id="view_related_invoicetr__tab_table_tablebody_10b" inputmode="readonly"/>
+						<tablecol dataattribute="gldebitacct" id="view_related_invoicetr__tab_table_tablebody_10c" inputmode="readonly"/>
+						<tablecol dataattribute="glcreditacct" id="view_related_invoicetr__tab_table_tablebody_10d" inputmode="readonly"/>
+					</tablebody>
+				</table>
+			</tab>
+			<tab id="view_related_cnt_tab" label="Contract References">
+				<table id="view_related_cnt_tab_table" label="Contracts" relationship="CONTRACTREFLINE">
+					<tablebody displayrowsperpage="10" filterable="true" id="view_related_cnt_tab_table_main">
+						<tablecol dataattribute="contractnum" id="view_related_cnt_tab_table_tablebody_3" sortable="true">
+							<textbox applink="contpurch" id="view_related_cnt_tab_table_tablebody_31" inputmode="readonly" menutype="normal"/>
+						</tablecol>
+						<tablecol dataattribute="contractlinenum" id="view_related_cnt_tab_table_tablebody_9" inputmode="readonly"/>
+						<tablecol dataattribute="contract.revisionnum" id="view_related_icnt_tab_table_tablebody_11a" inputmode="readonly"/>
+						<tablecol dataattribute="contract.contracttype" id="view_related_cnt_tab_table_tablebody_11" inputmode="readonly"/>
+						<tablecol dataattribute="orderqty" id="view_related_cnt_tab_table_tablebody_5" inputmode="readonly"/>
+						<tablecol dataattribute="orderunit" id="view_related_cntv_tab_table_tablebody_10" inputmode="readonly"/>
+						<tablecol dataattribute="unitcost" id="view_related_cnt_tab_table_tablebody_51" inputmode="readonly"/>
+						<tablecol dataattribute="linecost" id="view_related_cnt_tab_table_tablebody_101" inputmode="readonly"/>
+					</tablebody>
+				</table>
+			</tab>
+		</tabgroup>
+		<buttongroup id="viewRelRec_btn">
+			<pushbutton default="true" id="viewRelRec_btnOK" label="OK" mxevent="dialogclose"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.MultiselectDataBean" id="vendorlist" label="Vendor Items" parentdatasrc="MAINRECORD" relationship="INVVENDOR">
+		<table id="vendorlist_virtualset1" label="Vendor Items" selectmode="multiple">
+			<tablebody displayrowsperpage="15" filterable="true" id="vendorlist_virtualset1_tablebody">
+				<tablecol filterable="false" id="vendorlist_virtualset1_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+				<tablecol dataattribute="itemnum" id="vendorlist_virtualset1_tablebody_2"/>
+				<tablecol dataattribute="item.itemtype" id="vendorlist_virtualset1_tablebody_10" sortable="false"/>
+				<tablecol dataattribute="item.description" id="vendorlist_virtualset1_tablebody_3" sortable="false"/>
+				<tablecol dataattribute="manufacturer" id="vendorlist_virtualset1_tablebody_4"/>
+				<tablecol dataattribute="orderQty" id="vendorlist_virtualset1_tablebody_5" sortable="false"/>
+				<tablecol dataattribute="modelnum" id="vendorlist_virtualset1_tablebody_6"/>
+				<tablecol dataattribute="catalogcode" id="vendorlist_virtualset1_tablebody_7"/>
+				<tablecol dataattribute="orderunit" id="vendorlist_virtualset1_tablebody_8"/>
+				<tablecol dataattribute="lastcost" id="vendorlist_virtualset1_tablebody_9"/>
+			</tablebody>
+		</table>
+		<buttongroup id="vendorlist_2">
+			<pushbutton default="true" id="vendorlist_2_1" label="OK" mxevent="dialogok" value="addInvVendorItemsToPRLine"/>
+			<pushbutton id="vendorlist_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.pr.ContractItemBean" id="contractitems" label="Contract Items" mboname="CONTRACTLINE">
+		<table id="contractitems_contractitems_table" label="Contract Items" selectmode="multiple" startrow="0" width="800">
+			<tablebody displayrowsperpage="15" filterable="true" id="contract_items_table_tablebody">
+				<tablecol filterable="false" id="contract_items_table_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+				<tablecol dataattribute="contractnum" id="contract_items_table_tablebody_2" sortable="true"/>
+				<tablecol dataattribute="itemnum" id="contract_items_table_tablebody_3" sortable="true"/>
+				<tablecol dataattribute="description" id="contract_items_table_tablebody_4" sortable="true"/>
+				<tablecol dataattribute="commoditygroup" id="contract_items_table_tablebody_5" sortable="true"/>
+				<tablecol dataattribute="commodity" id="contract_items_table_tablebody_6" sortable="true"/>
+				<tablecol dataattribute="manufacturer" id="contract_items_table_tablebody_7" sortable="true"/>
+				<tablecol dataattribute="orderqty" id="contract_items_table_tablebody_8" sortable="true"/>
+				<tablecol dataattribute="modelnum" id="contract_items_table_tablebody_9" sortable="true"/>
+			</tablebody>
+		</table>
+		<buttongroup id="contract_items_2">
+			<pushbutton default="true" id="contract_items_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="contract_items_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="createcont" label="Create Contract" relationship="CREATECONTRACT">
+		<helpgrid id="createcont_help" innerhtml="Enter a contract number or generate one by clicking Autonumber. Click OK to create the contract."/>
+		<section id="createcont_grid1a_1_1_grid1">
+			<multiparttextbox dataattribute="contractnum" descdataattribute="description" id="createcont_grid1a_1_1_grid1_1"/>
+			<combobox dataattribute="contracttype" id="createcont_grid1a_1_1_grid1_3"/>
+		</section>
+		<buttongroup id="createcont_2">
+			<pushbutton id="createcont_createcont_table_1_1" label="Autonumber" mxevent="setContractAutoKey"/>
+			<pushbutton default="true" id="createcont_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="createcont_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="viewhist" label="View History">
+		<table id="viewhist_prstatus" label="Status History" orderby="changedate desc" relationship="PRSTATUS">
+			<tablebody displayrowsperpage="20" filterable="true" id="viewhist_prstatus_tablebody">
+				<tablecol dataattribute="status" id="viewhist_prstatus_tablebody_1"/>
+				<tablecol dataattribute="changedate" id="viewhist_prstatus_tablebody_2"/>
+				<tablecol dataattribute="changeby" id="viewhist_prstatus_tablebody_3"/>
+				<tablecol dataattribute="memo" id="viewhist_prstatus_tablebody_4"/>
+			</tablebody>
+		</table>
+		<buttongroup id="viewhist_2">
+			<pushbutton default="true" id="viewhist_2_1" label="OK" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="createpo" label="Create PO" relationship="POFROMPRINPUT">
+		<helpgrid id="createpo_help" innerhtml="Enter a purchase order number or generate one by clicking Autonumber. Click OK to create the purchase order."/>
+		<section id="createpo_grid1a_1_1_grid1">
+			<multiparttextbox dataattribute="ponum" descdataattribute="description" id="createpo_grid1a_1_1_grid1_1"/>
+		</section>
+		<buttongroup id="createpo_2">
+			<pushbutton id="createpo_2_1" label="Autonumber" mxevent="setPOAutoKey"/>
+			<pushbutton default="true" id="createpo_2_2" label="OK" mxevent="dialogok"/>
+			<pushbutton id="createpo_2_3" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.common.ChangeStatusBean" id="list_status" label="Change Status" relationship="PRCHANGESTATUS" savemode="ONUNLOAD">
+		<section id="list_changestatus_grid1">
+			<sectionrow id="list_changestatus_grid1_1">
+				<sectioncol id="list_changestatus_grid1_1_1">
+					<section id="list_changestatus_grid1_1_1_grid4">
+						<textbox dataattribute="Memo" id="list_changestatus_grid1_1_1_grid4_4" sigoption="MEMOABOVESTATUS"/>
+						<combobox dataattribute="status" id="list_changestatus_grid1_1_1_grid4_1"/>
+						<textbox dataattribute="statdate" id="list_changestatus_grid1_1_1_grid4_2" lookup="datelookup"/>
+						<textbox dataattribute="Memo" id="list_changestatus_grid1_1_1_grid4_3" sigoption="MEMOBELOWSTATUS"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="list_changestatus_2">
+			<pushbutton default="true" id="list_changestatus_2_1" label="OK" mxevent="dolongop"/>
+			<pushbutton id="list_changestatus_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.pr.ViewContractBean" id="viewagreements" label="View Contracts" parentdatasrc="prlines_prlines_table" relationship="AGREEMENTINPUT">
+		<table id="viewagreements_agreements_table" inputmode="readonly" label="Contracts" rowsperpage="15" width="800">
+			<tablebody displayrowsperpage="20" filterexpanded="true" id="viewagreements_agreements_table_tablebody">
+				<tablecol dataattribute="contractrefnum" id="viewagreements_agreements_table_tablebody_2" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="false" type="link"/>
+				<tablecol dataattribute="contracttype" id="viewagreements_agreements_table_tablebody_3" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="false" type="link"/>
+				<tablecol dataattribute="vendor" id="viewagreements_agreements_table_tablebody_4" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="false" type="link"/>
+				<tablecol dataattribute="manufacturer" id="viewagreements_agreements_table_tablebody_5" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="false" type="link"/>
+				<tablecol dataattribute="modelnum" id="viewagreements_agreements_table_tablebody_6" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="false" type="link"/>
+				<tablecol dataattribute="catalogcode" id="viewagreements_agreements_table_tablebody_7" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="false" type="link"/>
+				<tablecol dataattribute="orderqty" id="viewagreements_agreements_table_tablebody_8" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="false" type="link"/>
+				<tablecol dataattribute="orderunit" id="viewagreements_agreements_table_tablebody_9" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="false" type="link"/>
+				<tablecol dataattribute="unitcost" id="viewagreements_agreements_table_tablebody_10" mxevent="selectrecord" mxevent_desc="Go To %1" sortable="false" type="link"/>
+			</tablebody>
+		</table>
+		<buttongroup id="viewagreements_2">
+			<pushbutton id="viewagreements_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.common.ChangeStatusBean" id="status" label="Change Status" relationship="PRCHANGESTATUS" savemode="ONLOADUNLOAD">
+		<section border="true" datasrc="MAINRECORD" id="changestatus_grid1_1_1_grid3">
+			<multiparttextbox dataattribute="prnum" descdataattribute="description" descinputmode="readonly" id="changestatus_grid1_1_1_grid3_1" inputmode="readonly"/>
+			<multiparttextbox dataattribute="status" descdataattribute="statusdesc.description" descinputmode="readonly" id="changestatus_grid1_1_1_grid3_5"/>
+		</section>
+		<section id="changestatus_grid1_1_1_grid4">
+			<textbox dataattribute="memo" id="changestatus_grid1_1_1_grid4_4" sigoption="MEMOABOVESTATUS"/>
+			<combobox dataattribute="status" id="changestatus_grid1_1_1_grid4_1"/>
+			<textbox dataattribute="statdate" id="changestatus_grid1_1_1_grid4_2" lookup="datelookup"/>
+			<textbox dataattribute="memo" id="changestatus_grid1_1_1_grid4_3" sigoption="MEMOBELOWSTATUS"/>
+		</section>
+		<buttongroup id="changestatus_2">
+			<pushbutton default="true" id="changestatus_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="changestatus_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.ViewBookmarksBean" id="searchbook" label="My Bookmarks" mboname="PR">
+		<table id="bookmarks_table" inputmode="readonly" label="PRs" selectmode="single">
+			<tablebody displayrowsperpage="20" filterable="true" id="bookmarks_table_tablebody">
+				<tablecol dataattribute="prnum" id="bookmarks_tablebody_1" mxevent="selectrecord" type="link"/>
+				<tablecol dataattribute="description" id="bookmarks_table_tablebody_2"/>
+				<tablecol filterable="false" id="bookmarks_table_tablebody_delete" mxevent="instantdelete" mxevent_desc="Delete" mxevent_icon="btn_delete.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="bookmarks_2">
+			<pushbutton default="true" id="bookmarks_2_1" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.QbeBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<section id="qbe_grid2">
+			<sectionrow id="qbe_grid2_1">
+				<sectioncol id="qbe_grid2_1_1_col1">
+					<section id="qbe_grid2_1_1_grid3">
+						<multiparttextbox dataattribute="prnum" descdataattribute="description" descinputmode="query" id="qbe_grid2_1_1_grid3_1" inputmode="query"/>
+						<textbox applink="person" dataattribute="requestedby" id="qbe_grid2_1_1_grid3_5" inputmode="query" lookup="person" menutype="normal"/>
+						<textbox applink="person" dataattribute="supervisor" id="qbe_grid2_1_1_grid3_16" inputmode="query" lookup="person" menutype="normal"/>
+						<textbox dataattribute="contact" id="qbe_grid2_1_1_grid3_8" inputmode="query" lookup="compcontact"/>
+						<multiparttextbox applink="company" dataattribute="vendor" descdataattribute="companies.name" descinputmode="query" id="qbe_grid2_1_1_grid3_6" inputmode="query" lookup="companies" menutype="normal"/>
+						<multiparttextbox dataattribute="shipto" descdataattribute="prshipto.description" descinputmode="query" id="qbe_grid2_1_1_grid3_10" inputmode="query" lookup="billtoshiptoaddress"/>
+						<multiparttextbox dataattribute="billto" descdataattribute="prbillto.description" descinputmode="query" id="qbe_grid2_1_1_grid3_14" inputmode="query" lookup="billtoshiptoaddress"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_grid2_1_2_col2">
+					<section id="qbe_grid2_1_1_grid5">
+						<textbox dataattribute="status" id="qbe_grid2_1_1_grid3_3" inputmode="query" lookup="valuelist"/>
+						<textbox dataattribute="siteid" id="qbe_grid2_1_1_grid3_4" inputmode="query" lookup="site"/>
+						<textbox dataattribute="historyflag" id="qbe_grid2_1_1_grid4_11" inputmode="query"/>
+						<textbox dataattribute="internal" id="qbe_grid2_1_1_grid4_11a" inputmode="query"/>
+						<textbox dataattribute="priority" id="qbe_grid2_1_1_grid3_17" inputmode="query"/>
+						<textbox dataattribute="customernum" id="qbe_grid2_1_1_grid3_12" inputmode="query"/>
+						<textbox dataattribute="storeloc" id="qbe_grid2_1_1_grid3_18" inputmode="query" lookup="storeroom"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<section id="qbe_grid888" label="Line Details">
+			<sectionrow id="qbe_grid2_2">
+				<sectioncol id="qbe_grid2_2_col1">
+					<section id="qbe_grid2_2_col1_sec1">
+						<textbox dataattribute="PRLINE.itemnum" id="qbe_grid2_1_1_grid5_1" inputmode="query" lookup="item" menutype="item"/>
+						<textbox dataattribute="PRLINE.description" id="qbe_grid2_1_1_grid5_1a" inputmode="query"/>
+						<textbox applink="company" dataattribute="PRLINE.manufacturer" id="qbe_grid2_1_1_grid5_3" inputmode="query" lookup="companies" menutype="normal"/>
+						<textbox dataattribute="PRLINE.modelnum" id="qbe_grid2_1_1_grid5_4" inputmode="query"/>
+						<textbox dataattribute="PRLINE.category" id="qbe_grid2_1_1_grid5_6" inputmode="query"/>
+						<textbox dataattribute="PRLINE.catalogcode" id="qbe_grid2_1_1_grid5_7" inputmode="query"/>
+						<textbox dataattribute="PRLINE.conditioncode" id="qbe_grid2_1_1_grid5_15" inputmode="query" lookup="conditioncode"/>
+						<textbox dataattribute="PRLINE.commoditygroup" defaultfocus="true" id="qbe_grid2_1_1_grid5_17" inputmode="query" lookup="commoditygroup"/>
+						<textbox dataattribute="PRLINE.commodity" defaultfocus="true" id="qbe_grid2_1_1_grid5_18" inputmode="query" lookup="COMMODITIES"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_grid2_2_col2">
+					<section id="qbe_grid2_1_2_grid6_row2_col2_sec1">
+						<textbox applink="storeroom,ipc" dataattribute="PRLINE.storeloc" id="qbe_grid2_1_1_grid5_9" inputmode="query" lookup="storeroom" menutype="normal"/>
+						<textbox applink="wotrack" dataattribute="PRLINE.refwo" id="qbe_grid2_1_1_grid5_12" inputmode="query" lookup="workorder" menutype="normal"/>
+						<textbox applink="location,ipc" dataattribute="PRLINE.location" id="qbe_grid2_1_1_grid5_16" inputmode="query" lookup="locations" menutype="locations"/>
+						<textbox applink="asset,ipc" dataattribute="PRLINE.assetnum" id="qbe_grid2_1_1_grid5_13" inputmode="query" lookup="asset" menutype="assetmain"/>
+						<textbox dataattribute="PRLINE.contractrefnum" id="qbe_grid2_1_1_grid5_19" inputmode="query" lookup="contract" menutype="normal"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_grid2_2_col3">
+					<section id="qbe_grid2_1_2_grid6_row2_col3_sec1">
+						<textbox dataattribute="PRLINE.linecost" id="qbe_grid2_1_1_grid3_13" inputmode="query"/>
+						<textbox dataattribute="PRLINE.mrnum" id="qbe_grid2_1_1_grid5_11" inputmode="query"/>
+						<textbox applink="rfq" dataattribute="PRLINE.rfqnum" id="qbe_grid2_1_1_grid5_10" inputmode="query" menutype="normal"/>
+						<textbox applink="po" dataattribute="PRLINE.ponum" id="qbe_grid2_1_1_grid5_14" inputmode="query" menutype="normal"/>
+						<textbox dataattribute="PRLINE.gldebitacct" id="qbe_grid2_1_1_grid5_5" inputmode="query" lookup="LBLGLACCOUNTGLNAVIGATOR"/>
+						<textbox dataattribute="PRLINE.glcreditacct" id="qbe_grid2_1_1_grid5_8" inputmode="query" lookup="glnavigator"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<section id="qbe_date_s1" label="Dates">
+			<sectionrow id="qbe_date_r1">
+				<sectioncol id="qbe_date_r1_c1">
+					<section id="qbe_date_r1_c1_s1">
+						<sectionrow id="qbe_date_s1_r1">
+							<sectioncol id="qbe_date_s1_r1_c1">
+								<section id="qbe_date_s1_r1_c1_s1">
+									<statictext align="center" id="qbe_date_s1_r1_c1_s1_st1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r1_c2">
+								<section id="qbe_date_s1_r1_c2_s1">
+									<statictext align="center" id="qbe_date_s1_r1_c2_s1_st1" label="From"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r1_c3">
+								<section id="qbe_date_s1_r1_c3_s1">
+									<statictext align="center" id="qbe_date_s1_r1_c3_s1_st1" label="To"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="qbe_date_s1_r2">
+							<sectioncol id="qbe_date_s1_r2_c1">
+								<section id="qbe_date_s1_r2_c1_s1">
+									<statictext align="right" id="qbe_date_s1_r2_c1_s1_t1" label="Status Date"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r2_c2">
+								<section id="qbe_date_s1_r2_c2_s1">
+									<textbox dataattribute="statusdate" hidelabel="true" id="qbe_grid2_1_1_grid7_4" inputmode="query" lookup="datelookup" prepend="&gt;="/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r2_c3">
+								<section id="qbe_date_s1_r2_c3_s1">
+									<textbox dataattribute="statusdate" hidelabel="true" id="qbe_grid2_1_1_grid7_3" inputmode="query" lookup="datelookup" prepend="&lt;="/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="qbe_date_s1_r3">
+							<sectioncol id="qbe_date_s1_r3_c1">
+								<section id="qbe_date_s1_r3_c1_s1">
+									<statictext align="right" id="qbe_date_s1_r3_c1_s1_t1" label="Requested Date"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r3_c2">
+								<section id="qbe_date_s1_r3_c2_s1">
+									<textbox dataattribute="issuedate" hidelabel="true" id="qbe_grid2_1_1_grid7_8" inputmode="query" lookup="datelookup" prepend="&gt;="/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r3_c3">
+								<section id="qbe_date_s1_r3_c3_s1">
+									<textbox dataattribute="issuedate" hidelabel="true" id="qbe_grid2_1_1_grid7_7" inputmode="query" lookup="datelookup" prepend="&lt;="/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="qbe_date_s1_r4">
+							<sectioncol id="qbe_date_s1_r4_c1">
+								<section id="qbe_date_s1_r4_c1_s1">
+									<statictext align="right" id="qbe_date_s1_r4_c1_s1_t1" label="Required Date"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r4_c2">
+								<section id="qbe_date_s1_r4_c2_s1">
+									<textbox dataattribute="requireddate" hidelabel="true" id="qbe_grid2_1_1_grid7_9" inputmode="query" lookup="datelookup" prepend="&gt;="/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r4_c3">
+								<section id="qbe_date_s1_r4_c3_s1">
+									<textbox dataattribute="requireddate" hidelabel="true" id="qbe_grid2_1_1_grid7_10" inputmode="query" lookup="datelookup" prepend="&lt;="/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_date_r1_c2">
+					<section id="qbe_date_r1_c2_s1">
+						<blankline id="qbe_blkline"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="qbe_grid5_1_1_grid6">
+			<pushbutton default="true" id="qbe_grid5_1_1_grid6_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="qbe_restoreappdefault_button" label="Restore Application Defaults" mxevent="qbeclear"/>
+			<pushbutton id="qbe_revisebutton" label="Revise" menutype="SEARCHMOREREVISE" targetid="searchmore"/>
+			<pushbutton id="qbe_grid5_1_1_grid6_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.pr.DistCostsBean" datasrc="prlines_prlines_table" id="distcosts" label="Distribute Costs" savemode="ONUNLOAD">
+		<helpgrid id="distcosts_help" innerhtml="To distribute the cost of the current purchase requisition line to additional accounts, click New Row. Click OK to save and return."/>
+		<section border="true" height="160" id="distcosts_grid1">
+			<sectionrow id="distcosts_grid1_1">
+				<sectioncol id="distcosts_grid1_1_1">
+					<section border="true" id="distcosts_grid1_1_1_grid2">
+						<textbox dataattribute="itemnum" id="distcosts_grid1_1_1_grid2_1" inputmode="readonly"/>
+						<textbox dataattribute="description" id="distcosts_grid1_1_1_grid2_2" inputmode="readonly" title="Item Description"/>
+						<textbox dataattribute="orderqty" id="distcosts_grid1_1_1_grid2_3" inputmode="readonly"/>
+						<textbox dataattribute="orderunit" id="distcosts_grid1_1_1_grid2_4" inputmode="readonly"/>
+						<textbox dataattribute="conversion" id="distcosts_grid1_1_1_grid2_5" inputmode="readonly"/>
+						<textbox dataattribute="unitcost" id="distcosts_grid1_1_1_grid2_6" inputmode="readonly"/>
+						<textbox dataattribute="linecost" id="distcosts_grid1_1_1_grid2_7" inputmode="readonly"/>
+					</section>
+					<table id="distcosts_grid1_1_1_pocost_table" label="Costs" relationship="PRCOST">
+						<tablebody displayrowsperpage="20" id="distcosts_grid1_1_1_pocost_table_tablebody">
+							<tablecol filterable="false" id="distcosts_grid1_1_1_pocost_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="percentage" id="distcosts_grid1_1_1_pocost_table_tablebody_2" linkedcontrolid="distcosts_grid1_1_1_pocost_table_1_grid4_1"/>
+							<tablecol dataattribute="linecost" id="distcosts_grid1_1_1_pocost_table_tablebody_3" linkedcontrolid="distcosts_grid1_1_1_pocost_table_1_grid4_2"/>
+							<tablecol dataattribute="loadedcost" id="distcosts_grid1_1_1_pocost_table_tablebody_4"/>
+							<tablecol dataattribute="gldebitacct" id="distcosts_grid1_1_1_pocost_table_tablebody_5" linkedcontrolid="distcosts_grid1_1_1_pocost_table_1_grid4_3"/>
+							<tablecol filterable="false" id="distcosts_grid1_1_1_pocost_table_tablebody_6" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="distcosts_grid1_1_1_pocost_table_1">
+							<section border="false" id="distcosts_grid1_1_1_pocost_table_1_grid4">
+								<textbox dataattribute="percentage" defaultfocus="true" id="distcosts_grid1_1_1_pocost_table_1_grid4_1"/>
+								<textbox dataattribute="linecost" id="distcosts_grid1_1_1_pocost_table_1_grid4_2"/>
+								<textbox dataattribute="gldebitacct" id="distcosts_grid1_1_1_pocost_table_1_grid4_3" lookup="glnavigator"/>
+							</section>
+						</tabledetails>
+						<buttongroup id="distcosts_grid1_1_1_pocost_table_2">
+							<pushbutton default="true" id="distcosts_grid1_1_1_pocost_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="distcosts_2">
+			<pushbutton default="true" id="distcosts_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="distcosts_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+	<configurationblock id="datastore_configurationblock"/>
+</presentation>

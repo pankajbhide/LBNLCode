@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation beanclass="psdi.webclient.beans.location.LocationAppBean" id="lbl_spchrg" ismobile="false" mboname="LOCATIONS" orderby="LO1, LO2, LO3" resultstableid="results_showlist" version="6.2.6" whereclause="gisparam1='R'">
+	<page id="mainrec" scroll="false">
+		<include controltoclone="pageHeader" id="INCLUDE-pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" label="Space Charge Distributions" mboname="LOCATIONS" selectmode="multiple">
+						<defaultvalue dataattribute="location" defaulttype="query" id="results_showlist_default"/>
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="location" filterable="false" id="results_showlist_tablebody_1" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+							<tablecol dataattribute="location" id="results_showlist_tablebody_2" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="LO1" id="results_showlist_tablebody_3" label="Building Number"/>
+							<tablecol dataattribute="LO2" id="results_showlist_tablebody_4" label="Floor Number"/>
+							<tablecol dataattribute="LO3" id="results_showlist_tablebody_5" label="Room Number"/>
+							<tablecol dataattribute="LO7" id="1484064472943" label="Division"/>
+							<tablecol dataattribute="LBL_ROOM2PROJECTS.PROJ_ACT_ID" id="results_showlist_tablebody_9" label="Project/Activity ID"/>
+							<tablecol dataattribute="DISABLED" id="1505146641037" label="Disabled"/>
+							<tablecol dataattribute="GISPARAM2" id="1505146739778" label="Chargeable"/>
+							<tablecol filterable="false" id="results_bookmark" mxevent="BOOKMARK" mxevent_desc="Add to Bookmarks" mxevent_icon="btn_addtobookmarks.gif" sortable="false" type="event"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="Space Charge Distribution" type="insert">
+					<section border="false" height="240" id="main_section_1">
+						<sectionrow id="main_section_1_row_1">
+							<sectioncol id="main_section_1_row_1_column_1">
+								<section border="false" id="main_section_1_row_1_column_1_section_1" label="Building/Room Details">
+									<multiparttextbox dataattribute="LO1" descdataattribute="LBL_LOC2LOC_BUILDING.description" descinputmode="READONLY" id="main_grid1_2" inputmode="READONLY" label="Building Number"/>
+									<textbox dataattribute="LO2" id="main_grid1_4" inputmode="READONLY" label="Floor Number"/>
+									<multiparttextbox dataattribute="LO3" descdataattribute="LBL_LOC2LOC_ROOM.DESCRIPTION" descinputmode="READONLY" id="main_grid1_6" inputmode="READONLY" label="Room Number"/>
+									<textbox dataattribute="location" id="main_grid1_9" inputmode="READONLY"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_section_1_row_1_column_2">
+								<section border="false" id="main_section_1_row_1_column_2_section_1" label="Room Usage Details">
+									<textbox dataattribute="LBL_OCCUPIED_AREA" id="main_grid2_4" inputmode="READONLY" label="Area Occupied(Sq/ft)"/>
+									<textbox dataattribute="LBL_PERSON.DISPLAYNAME" id="new_textbox" inputmode="READONLY" label="Occupant information"/>
+									<textbox dataattribute="LBL_RMCAT" id="new_textbox_3" inputmode="READONLY" label="Room Category"/>
+									<textbox dataattribute="LBL_RMTYPE" id="new_textbox_4" inputmode="READONLY" label="Room type"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="main_section_1_row_2">
+							<sectioncol id="main_section_1_row_2_column_1">
+								<section border="false" id="main_section_1_row_2_column_1_section_1" label="Room Organization Details">
+									<multiparttextbox dataattribute="LO7" descdataattribute="LBL_LOC2CRAFT_ORG1.DESCRIPTION" descinputmode="READONLY" id="main_grid3_2" inputmode="READONLY" label="Org Level-1"/>
+									<multiparttextbox dataattribute="LO8" descdataattribute="LBL_LOC2CRAFT_ORG2.DESCRIPTION" descinputmode="READONLY" id="main_grid3_4" label="Org Level-2" lookup="LBL_ORG_2"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_section_1_row_2_column_2">
+								<section id="main_section_1_row_2_column_2_section_1" label="Room Organization Details">
+									<multiparttextbox dataattribute="LO9" descdataattribute="LBL_LOC2CRAFT_ORG3.DESCRIPTION" descinputmode="READONLY" id="main_grid3_6" label="Org Level-3" lookup="LBL_ORG_3"/>
+									<multiparttextbox dataattribute="LO10" descdataattribute="LBL_LOC2CRAFT_ORG4.DESCRIPTION" descinputmode="READONLY" id="main_grid3_8" label="Org Level-4" lookup="LBL_ORG_4"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="main_section_1_row_3">
+							<sectioncol id="main_section_1_row_3_column_1">
+								<section border="false" id="main_section_1_row_3_column_1_section_1" label="Room Status">
+									<textbox dataattribute="DISABLED" id="new_textbox_2" inputmode="READONLY" label="Disabled"/>
+									<textbox dataattribute="GISPARAM2" id="main_grid4_2" inputmode="READONLY" label="Chargeable?"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_section_1_row_3_column_2">
+								<section border="false" id="main_section_1_row_3_column_2_section_1" label="For division purpose">
+									<textbox dataattribute="LO15" id="1505251211160" label="Division Comments"/>
+									<textbox dataattribute="CHANGEBY" id="1505251060787" inputmode="READONLY" label="Changed By"/>
+									<textbox dataattribute="CHANGEDATE" id="main_grid4_7" inputmode="readonly" label="Change Date"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="main_tasks_table" label="Projects Distribution" relationship="LBL_ROOM2PROJECTS">
+						<tablebody displayrowsperpage="10" filterable="true" id="main_tasks_table_tablebody">
+							<tablecol filterable="false" id="main_tasks_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="PROJ_ACT_ID" id="main_tasks_table_tablebody_2" lookup="LBLPROJACTGLNAVIGATOR" sortable="true"/>
+							<tablecol dataattribute="LBL_SPCHRG2COA.ACCOUNTNAME" id="main_tasks_table_tablebody_4" inputmode="READONLY" label="Project Description" sortable="true"/>
+							<tablecol dataattribute="CHARGED_TO_PERCENT" id="new_tablecol" sortable="true"/>
+							<tablecol dataattribute="PROJECT_ID" filterable="true" id="main_tasks_table_tablebody_8" inputmode="READONLY" sortable="true"/>
+							<tablecol filterable="false" id="main_tasks_table_tablebody_9" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="main_tasks_table_details">
+							<section id="main_tasks_table_details_s1" label="Details">
+								<sectionrow id="main_tasks_table_details_s1_r1">
+									<sectioncol id="main_tasks_table_details_s1_r1_sc1">
+										<section id="main_tasks_table_details_s1_r1_sc1_s1">
+											<multiparttextbox dataattribute="PROJ_ACT_ID" descdataattribute="LBL_SPCHRG2COA.ACCOUNTNAME" descinputmode="READONLY" id="main_tasks_table_details_s1_r1_sc1_s1_r1" lookup="LBLPROJACTGLNAVIGATOR"/>
+											<textbox dataattribute="CHARGED_TO_PERCENT" id="main_tasks_table_details_s1_r1_sc1_s1_r2" label="Percent"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="main_tasks_table_2">
+							<pushbutton default="true" id="main_tasks_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include controltoclone="pageFooter" id="INCLUDE-pageFooter"/>
+	</page>
+
+	<dialog beanclass="lblwebui.webclient.beans.location.LblSpChargeDistBean" id="SPBULKUPD" label="Bulk Update Proj/Act Id" mboname="LBL_SP_CHARGE_DIST">
+		<helpgrid id="spbulkupd_help" innerhtml="Bulk update rows from old project/activity to new project/activity."/>
+		<datasrc id="spbulkupd_ds" mboname="LBL_SP_CHARGE_DIST"/>
+		<section id="list_spchargebulkupd_grid1_1_1_grid4">
+			<textbox dataattribute="FROM_PROJACT_ID" datasrc="spbulkupd_ds" id="list_fromprojactid" label="From Proj/Act id" lookup="LBLPROJACTGLNAVIGATOR"/>
+			<textbox dataattribute="TO_PROJACT_ID" datasrc="spbulkupd_ds" id="list_toprojactid" inputmode="required" label="To Proj/Act Id" lookup="LBLPROJACTGLNAVIGATOR"/>
+		</section>
+		<buttongroup id="list_changestatus_2">
+			<pushbutton default="true" id="list_spchargebulkupd_2_1" label="OK" mxevent="SPBULKUPD"/>
+			<pushbutton id="list_spchargebulkupd_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.QbeBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<section id="qbe_s1">
+			<sectionrow id="qbe_s1_sr1">
+				<sectioncol id="qbe_s1_sr1_sc1">
+					<section id="qbe_s1_sr1_sc1_s1">
+						<textbox dataattribute="location" id="1503958286975" inputmode="query"/>
+						<textbox dataattribute="lo1" id="1503958456414" inputmode="query" label="Building Number"/>
+						<textbox dataattribute="LO2" id="1503958452140" inputmode="query" label="Floor Number"/>
+						<textbox dataattribute="LO3" id="qbe_s1_sr1_sc1_s1_tb1" inputmode="query" label="Room Number"/>
+						<textbox dataattribute="lbl_rmtype" id="qbe_s1_sr1_sc1_s1_tb9" inputmode="query"/>
+						<textbox dataattribute="lbl_rmcat" id="qbe_s1_sr1_sc1_s1_tb1a" inputmode="query"/>
+						<textbox dataattribute="lo7" id="1503958744621" inputmode="query" label="Division"/>
+						<textbox dataattribute="GISPARAM2" id="1503958641039" inputmode="query" label="Chargeable?"/>
+						<textbox dataattribute="LBL_ROOM2PROJECTS.PROJ_ACT_ID" id="qbe_s1_sr2_sc1_s1_tb1" inputmode="query" label="Project/Activity ID"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+			<sectionrow id="qbe_s1_sr2">
+				<sectioncol id="qbe_s1_sr2_sc1">
+					<section id="qbe_s1_sr2_sc1_s1"/>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="qbe_buttongrid">
+			<pushbutton default="true" id="qbe_buttongrid_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="qbe_restoreappdefault_button" label="Restore Application Defaults" mxevent="qbeclear"/>
+			<pushbutton id="qbe_revisebutton" label="Revise" menutype="SEARCHMOREREVISE" targetid="searchmore"/>
+			<pushbutton id="qbe_buttongrid_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+	<configurationblock id="datastore_configurationblock">
+	</configurationblock>
+</presentation>

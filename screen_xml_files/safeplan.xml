@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation apphelp="com.ibm.mbs.doc,safeplan/c_safety_plans_app.html" id="safeplan" mboname="SAFETYPLAN" resultstableid="results_showlist" version="6.2.8">
+	<page id="mainrec">
+		<include id="pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" label="Safety Plans" mboname="SAFETYPLAN" selectmode="multiple">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="safetyplanid" filterable="false" hidden="false" id="results_showlist_tablebody_1" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+							<tablecol dataattribute="safetyplanid" id="results_showlist_tablebody_2" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="description" id="results_showlist_tablebody_3"/>
+							<tablecol dataattribute="siteid" id="results_showlist_tablebody_4" lookup="site"/>
+							<tablecol filterable="false" hidden="false" id="results_bookmark" mxevent="BOOKMARK" mxevent_desc="Add to Bookmarks" mxevent_icon="btn_addtobookmarks.gif" sortable="false" type="event"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="Safety Plan" type="insert">
+					<section border="true" height="240" id="main_section_1">
+						<sectionrow id="main_section_1_row_1">
+							<sectioncol id="main_section_1_row_1_column_1">
+								<section id="main_section_1_row_1_column_1_section_1">
+									<multiparttextbox dataattribute="safetyplanid" descdataattribute="description" id="main_grid2_1"/>
+									<textbox dataattribute="CHANGEBY" id="new_textbox_5" label="Changed By"/>
+									<textbox dataattribute="CHANGEDATE" id="new_textbox_4" label="Changed Date"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_section_1_row_1_column_2">
+								<section id="main_section_1_row_1_column_2_section_1">
+									<textbox dataattribute="siteid" id="main_grid2_2" inputmode="readonly"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="main_section_1_col4">
+								<section border="false" id="main_attachments">
+									<attachments id="doclinks"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="main_assets_table" label="Work Assets" relationship="CHILDSPWORKASSET">
+						<tablebody displayrowsperpage="13" filterable="true" id="main_assets_table_tablebody">
+							<tablecol filterable="false" hidden="false" id="main_assets_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol applink="location,ipc" dataattribute="worklocation" defaultfocus="true" id="main_assets_table_tablebody_2" inputmode="readonly" lookup="locations" menutype="locations"/>
+							<tablecol dataattribute="workasset" id="main_assets_table_tablebody_3" inputmode="readonly" linkedcontrolid="main_assets_table_1_grid3_3"/>
+							<tablecol dataattribute="assetdescription" id="main_assets_table_tablebody_4" inputmode="readonly" lookup="longdesc" sortable="false"/>
+							<tablecol filterable="false" hidden="false" id="main_assets_table_tablebody_5" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="main_assets_table_1">
+							<section id="main_assets_table_1_grid3" label="Details">
+								<multiparttextbox applink="location,ipc" dataattribute="worklocation" defaultfocus="true" descdataattribute="assetdescription" descinputmode="readonly" id="main_assets_table_1_grid3_1" lookup="locations" menutype="locations"/>
+								<textbox applink="asset,ipc" applinkkey="assetnum" dataattribute="workasset" id="main_assets_table_1_grid3_3" lookup="asset" menutype="assetmain"/>
+							</section>
+						</tabledetails>
+						<buttongroup id="main_assets_table_2">
+							<pushbutton default="true" id="main_assets_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="hazprec" label="Hazards and Precautions" tabchangeevent="save">
+					<section border="true" height="240" id="hazprec_1">
+						<sectionrow id="hazprec_1_row_1">
+							<sectioncol id="hazprec_1_row_1_column_1">
+								<section id="hazprec_1_row_1_column_1_section_1">
+									<multiparttextbox dataattribute="safetyplanid" descdataattribute="description" id="hazprec_grid2_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="hazprec_grid1_1_row_1_column_2">
+								<section id="hazprec_grid1_1_row_1_column_2_section_1">
+									<textbox dataattribute="siteid" id="hazprec_grid2_2"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="hazprec_hazardsprec_table" label="Hazards" relationship="ASSOCHAZPREC">
+						<tablebody displayrowsperpage="6" filterable="true" id="hazprec_hazardsprec_table_tablebody">
+							<tablecol filterable="false" hidden="false" id="hazprec_hazardsprec_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol applink="hazards" dataattribute="hazardid" defaultfocus="true" id="hazprec_hazardsprec_table_tablebody_2" inputmode="readonly" lookup="hazards" menutype="normal" ondatachange="resetchildren" sortable="false"/>
+							<tablecol dataattribute="hazarddescription" id="hazprec_hazardsprec_table_tablebody_3" inputmode="readonly" lookup="longdesc" sortable="false"/>
+							<tablecol applink="location,ipc" dataattribute="location" id="hazprec_hazardsprec_table_tablebody_4" inputmode="readonly" lookup="locations" menutype="locations" sortable="false"/>
+							<tablecol dataattribute="assetnum" id="hazprec_hazardsprec_table_tablebody_5" inputmode="readonly" linkedcontrolid="hazprec_hazardsprec_table_1_grid3_5" sortable="false"/>
+							<tablecol dataattribute="assetdescription" id="hazprec_hazardsprec_table_tablebody_6" inputmode="readonly" lookup="longdesc" sortable="false"/>
+							<tablecol filterable="false" hidden="false" id="hazprec_hazardsprec_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="hazprec_hazardsprec_table_1">
+							<section id="hazprec_hazardsprec_table_1_grid3" label="Details">
+								<multiparttextbox applink="hazards" dataattribute="hazardid" defaultfocus="true" descdataattribute="hazarddescription" descinputmode="readonly" id="hazprec_hazardsprec_table_1_grid3_1" lookup="hazards" menutype="normal" ondatachange="resetchildren"/>
+								<multiparttextbox applink="location,ipc" dataattribute="location" descdataattribute="assetdescription" descinputmode="readonly" id="hazprec_hazardsprec_table_1_grid3_3" lookup="locations" menutype="locations"/>
+								<textbox applink="asset,ipc" dataattribute="assetnum" id="hazprec_hazardsprec_table_1_grid3_5" lookup="asset" menutype="assetmain"/>
+							</section>
+						</tabledetails>
+						<buttongroup id="hazprec_hazardsprec_table_2">
+							<pushbutton default="true" id="hazprec_hazardsprec_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+					<table datasrc="Precautions" id="hazprec_precautions_table" label="Precautions for {0}" parentdatasrc="hazprec_hazardsprec_table" parentemptylabel="Precautions" relationship="HAZARDPREC" titleattributes="hazardid">
+						<sectionheader id="hazprec_precautions_table_sectionheader">
+							<paramvalues id="hazprec_precautions_table__1_sec_params" property="label">
+								<paramvalue dataattribute="hazardid" id="hazprec_precautions_table__1_sec_param_0" position="0"/>
+							</paramvalues>
+						</sectionheader>
+						<tablebody displayrowsperpage="6" filterable="true" id="hazprec_precautions_table_tablebody">
+							<tablecol filterable="false" hidden="false" id="hazprec_precautions_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol applink="precautn" dataattribute="precautionid" defaultfocus="true" id="hazprec_precautions_table_tablebody_2" inputmode="readonly" lookup="precaution" menutype="NORMAL"/>
+							<tablecol dataattribute="precaution.description" id="hazprec_precautions_table_tablebody_3" inputmode="readonly" lookup="longdesc" sortable="false"/>
+						</tablebody>
+						<tabledetails id="hazprec_precautions_table_1">
+							<section id="hazprec_precautions_table_1_grid4" label="Details">
+								<multiparttextbox applink="precautn" dataattribute="precautionid" defaultfocus="true" descdataattribute="precaution.description" descinputmode="readonly" id="hazprec_precautions_table_1_grid4_1" lookup="precaution" menutype="NORMAL"/>
+							</section>
+						</tabledetails>
+					</table>
+				</tab>
+				<tab id="hazmaterial" label="Hazardous Materials" tabchangeevent="save">
+					<section border="true" height="240" id="hazmaterial_1">
+						<sectionrow id="hazmaterial_1_row_1">
+							<sectioncol id="hazmaterial_1_row_1_column_1">
+								<section id="hazmaterial_1_row_1_column_1_section_1">
+									<multiparttextbox dataattribute="safetyplanid" descdataattribute="description" id="hazmaterial_grid2_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="hazmaterial_grid1_1_row_1_column_2">
+								<section id="hazmaterial_grid1_1_row_1_column_2_section_1">
+									<textbox dataattribute="siteid" id="hazmaterial_grid2_2"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="hazmaterial_hazardous_table" label="Hazardous Materials" relationship="ASSOCHAZMAT">
+						<tablebody displayrowsperpage="13" filterable="true" id="hazmaterial_hazardous_table_tablebody">
+							<tablecol filterable="false" hidden="false" id="hazmaterial_hazardous_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol applink="hazards" dataattribute="hazardid" defaultfocus="true" id="hazmaterial_hazardous_table_tablebody_2" inputmode="readonly" lookup="hazards" menutype="NORMAL"/>
+							<tablecol dataattribute="hazarddescription" id="hazmaterial_hazardous_table_tablebody_3" inputmode="readonly" lookup="longdesc" sortable="false"/>
+							<tablecol applink="location,ipc" dataattribute="location" id="hazmaterial_hazardous_table_tablebody_4" inputmode="readonly" lookup="locations" menutype="locations" sortable="false"/>
+							<tablecol applink="asset,ipc" dataattribute="assetnum" id="hazmaterial_hazardous_table_tablebody_5" inputmode="readonly" lookup="asset" menutype="assetmain" sortable="false"/>
+							<tablecol dataattribute="assetdescription" id="hazmaterial_hazardous_table_tablebody_6" inputmode="readonly" lookup="longdesc" sortable="false"/>
+							<tablecol filterable="false" hidden="false" id="hazmaterial_hazardous_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="hazmaterial_hazardous_table_1">
+							<section id="hazmaterial_hazardous_table_1_grid3" label="Details">
+								<sectionrow id="hazmaterial_hazardous_table_1_grid3_row_1">
+									<sectioncol id="hazmaterial_hazardous_table_1_grid3_row_1_col_1">
+										<section id="hazmaterial_hazardous_table_1_grid3_row_1_col_1_section_1">
+											<multiparttextbox applink="hazards" dataattribute="hazardid" defaultfocus="true" descdataattribute="hazarddescription" descinputmode="readonly" id="hazmaterial_hazardous_table_1_grid3_1_1_1" lookup="hazards" menutype="NORMAL"/>
+											<multiparttextbox applink="location,ipc" dataattribute="location" descdataattribute="assetdescription" descinputmode="readonly" id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_5" lookup="locations" menutype="locations"/>
+											<textbox applink="asset,ipc" dataattribute="assetnum" id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_7" lookup="asset" menutype="assetmain"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="hazmaterial_hazardous_table_1_grid3_row_1_col_2">
+										<section id="hazmaterial_hazardous_table_1_grid3_row_1_col_2_section_1">
+											<textbox dataattribute="msdsnum" id="hazmaterial_hazardous_table_1_grid3_1_1_3" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+							<section id="hazmaterial_hazardous_table_1_grid3_1_1_grid31" label="NFPA Ratings" titlealign="top">
+								<sectionrow id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_row_1">
+									<sectioncol id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_row_1_col_1">
+										<section id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_row_1_col_1_section_1">
+											<textbox dataattribute="healthrating" id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_1" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_row_1_col_2">
+										<section id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_row_1_col_2_section_1">
+											<textbox dataattribute="flammabilityrating" id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_2" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_row_1_col_3">
+										<section id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_row_1_col_3_section_1">
+											<textbox dataattribute="reactivityrating" id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_3" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_row_1_col_4">
+										<section id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_row_1_col_4_section_1">
+											<textbox dataattribute="contactrating" id="hazmaterial_hazardous_table_1_grid3_1_1_grid31_4" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="hazmaterial_hazardous_table_2">
+							<pushbutton default="true" id="hazmaterial_hazardous_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="tagouts" label="Tag Outs" tabchangeevent="save">
+					<section border="true" height="240" id="tagouts_1">
+						<sectionrow id="tagouts_1_row_1">
+							<sectioncol id="tagouts_1_row_1_column_1">
+								<section id="tagouts_1_row_1_column_1_section_1">
+									<multiparttextbox dataattribute="safetyplanid" descdataattribute="description" id="tagouts_grid2_1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="tagouts_grid1_1_row_1_column_2">
+								<section id="tagouts_grid1_1_row_1_column_2_section_1">
+									<textbox dataattribute="siteid" id="tagouts_grid2_2"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+					<table id="tagouts_hazardstag_table" label="Hazards" relationship="ASSOCHAZTAG">
+						<tablebody displayrowsperpage="3" filterable="true" id="tagouts_hazardstag_table_tablebody">
+							<tablecol filterable="false" hidden="false" id="tagouts_hazardstag_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol applink="hazards" dataattribute="hazardid" id="tagouts_hazardstag_table_tablebody_2" inputmode="readonly" lookup="hazards" menutype="normal" ondatachange="resetchildren" sortable="false"/>
+							<tablecol dataattribute="hazarddescription" id="tagouts_hazardstag_table_tablebody_3" inputmode="readonly" lookup="longdesc" sortable="false"/>
+							<tablecol applink="location,ipc" dataattribute="worklocation" id="tagouts_hazardstag_table_tablebody_4" inputmode="readonly" lookup="locations" menutype="locations"/>
+							<tablecol applink="asset,ipc" dataattribute="workasset" id="tagouts_hazardstag_table_tablebody_5" inputmode="readonly" lookup="asset" menutype="assetmain"/>
+							<tablecol dataattribute="ASSETDESCRIPTION" id="new_tablecol_2" label="Description"/>
+							<tablecol applink="location,ipc" dataattribute="location" id="tagouts_hazardstag_table_tablebody_6" inputmode="readonly" lookup="locations" menutype="locations" ondatachange="resetchildren"/>
+							<tablecol applink="asset,ipc" dataattribute="assetnum" id="tagouts_hazardstag_table_tablebody_7" inputmode="readonly" lookup="asset" menutype="assetmain" ondatachange="resetchildren"/>
+							<tablecol filterable="false" hidden="false" id="tagouts_hazardstag_table_tablebody_8" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="tagouts_hazardstag_table_1">
+							<section id="tagouts_hazardstag_table_1_grid31" label="Details">
+								<sectionrow id="tagouts_hazardstag_table_1_grid32_1">
+									<sectioncol id="tagouts_hazardstag_table_1_grid32_1_1">
+										<section id="tagouts_hazardstag_table_1_grid31_1_1_1">
+											<multiparttextbox applink="hazards" dataattribute="hazardid" descdataattribute="hazarddescription" descinputmode="readonly" id="tagouts_hazardstag_table_1_grid3_1" lookup="hazards" menutype="normal" ondatachange="resetchildren"/>
+											<multiparttextbox applink="location,ipc" dataattribute="worklocation" descdataattribute="workassetdescription" descinputmode="readonly" id="tagouts_hazardstag_table_1_grid3_3" lookup="locations" menutype="locations"/>
+											<textbox applink="asset,ipc" dataattribute="workasset" id="tagouts_hazardstag_table_1_grid3_7" lookup="asset" menutype="assetmain"/>
+											<multiparttextbox applink="location,ipc" dataattribute="location" descdataattribute="assetdescription" descinputmode="readonly" id="tagouts_hazardstag_table_1_grid3_5" lookup="locations" menutype="locations" ondatachange="resetchildren"/>
+											<textbox applink="asset,ipc" dataattribute="assetnum" id="tagouts_hazardstag_table_1_grid3_8" lookup="asset" menutype="assetmain" ondatachange="resetchildren"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="tagouts_hazardstag_table_2">
+							<pushbutton default="true" id="tagouts_hazardstag_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+					<table beanclass="psdi.webclient.beans.safeplan.HazardTagOutsBean" id="tagouts_tagout_table" label="Tag Outs for {0} on Related Asset/Location {1}{2}" parentdatasrc="tagouts_hazardstag_table" parentemptylabel="Tag Out Procedures" relationship="SPLLTAGOUTS" startrow="0">
+						<sectionheader id="tagouts_tagout_table_sectionheader">
+							<paramvalues id="tagouts_tagout_table_1_sec_params" property="label">
+								<paramvalue dataattribute="hazardid" id="tagouts_tagout_table_1_sec_param_0" position="0"/>
+								<paramvalue dataattribute="workasset" id="tagouts_tagout_table_1_sec_param_1" position="1"/>
+								<paramvalue dataattribute="worklocation" id="tagouts_tagout_table_1_sec_param_2" position="2"/>
+							</paramvalues>
+						</sectionheader>
+						<tablebody displayrowsperpage="3" filterable="true" id="tagouts_tagout_table_tablebody">
+							<tablecol filterable="false" hidden="false" id="tagouts_tagout_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol applink="taglocks" dataattribute="tagoutid" defaultfocus="true" id="tagouts_tagout_table_tablebody_2" inputmode="readonly" lookup="tagout" menutype="normal" ondatachange="resetchildren"/>
+							<tablecol applink="location,ipc" dataattribute="tagoutlocation" id="tagouts_tagout_table_tablebody_3" inputmode="readonly" lookup="locations" menutype="locations"/>
+							<tablecol applink="asset,ipc" dataattribute="tagoutassetnum" id="tagouts_tagout_table_tablebody_4" inputmode="readonly" lookup="asset" menutype="assetmain"/>
+							<tablecol dataattribute="assetdescription" id="tagouts_tagout_table_tablebody_5" inputmode="readonly" lookup="longdesc" sortable="false"/>
+							<tablecol dataattribute="singletagout.requiredstate" id="tagouts_tagout_table_tablebody_6" inputmode="readonly"/>
+							<tablecol filterable="false" hidden="false" id="tagouts_tagout_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="tagouts_tagout_table_1">
+							<section id="tagouts_tagout_table_1_grid6" label="Details">
+								<sectionrow id="tagouts_tagout_table_1_grid6_row1">
+									<sectioncol id="tagouts_tagout_table_1_grid6_row1_col1">
+										<section id="tagouts_tagout_table_1_grid6_row1_col1_1">
+											<textbox dataattribute="applyseq" id="tagouts_tagout_table_1_grid6_7" inputmode="readonly"/>
+											<multiparttextbox applink="taglocks" dataattribute="tagoutid" defaultfocus="true" descdataattribute="tagoutdescription" desclongdescreadonly="true" desinputmode="readonly" id="tagouts_tagout_table_1_grid6_1" lookup="tagout" menutype="normal" ondatachange="resetchildren"/>
+											<multiparttextbox applink="location,ipc" dataattribute="tagoutlocation" descdataattribute="assetdescription" descinputmode="readonly" desclongdescreadonly="true" desinputmode="readonly" id="tagouts_tagout_table_1_grid6_3" lookup="locations" menutype="locations"/>
+											<textbox applink="asset,ipc" dataattribute="tagoutassetnum" id="tagouts_tagout_table_1_grid6_5" lookup="asset" menutype="assetmain"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="tagouts_tagout_table_1_grid6_row2_col3">
+										<section id="tagouts_tagout_table_1_grid6_row2_col3_1">
+											<textbox dataattribute="removeseq" id="tagouts_tagout_table_1_grid6_8" inputmode="readonly"/>
+											<textbox dataattribute="singletagout.requiredstate" id="tagouts_tagout_table_1_grid6_9" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="tagouts_tagout_table_2">
+							<pushbutton default="true" id="tagouts_tagout_table_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+					<table id="tagouts_lockout_table" label="Lock Out Operations for {0}" parentdatasrc="tagouts_tagout_table" parentemptylabel="Lock Out Operations" relationship="TAGLOCK" startrow="0">
+						<sectionheader id="tagouts_lockout_table_sectionheader">
+							<paramvalues id="tagouts_lockout_table_1_sec_params" property="label">
+								<paramvalue dataattribute="tagoutid" id="tagouts_lockout_table_1_sec_param_0" position="0"/>
+							</paramvalues>
+						</sectionheader>
+						<tablebody displayrowsperpage="5" filterable="true" id="tagouts_lockout_table_tablebody">
+							<tablecol filterable="false" hidden="false" id="tagouts_lockout_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol applink="location,ipc" dataattribute="lockout.location" id="tagouts_lockout_table_tablebody_2" inputmode="readonly" lookup="locations" menutype="locations" sortable="false"/>
+							<tablecol applink="asset,ipc" dataattribute="lockout.assetnum" id="tagouts_lockout_table_tablebody_3" inputmode="readonly" lookup="asset" menutype="assetmain" sortable="false"/>
+							<tablecol dataattribute="lockout.devicedescription" id="tagouts_lockout_table_tablebody_4" inputmode="readonly" lookup="longdesc" sortable="false"/>
+							<tablecol dataattribute="lockout.requiredstate" id="tagouts_lockout_table_tablebody_5" linkedcontrolid="tagouts_lockout_table_1_grid9_4" sortable="false"/>
+							<tablecol dataattribute="applyseq" id="tagouts_lockout_table_tablebody_6" linkedcontrolid="tagouts_lockout_table_1_grid9_5"/>
+							<tablecol dataattribute="removeseq" id="tagouts_lockout_table_tablebody_7" linkedcontrolid="tagouts_lockout_table_1_grid9_6"/>
+							<tablecol filterable="false" hidden="false" id="tagouts_lockout_table_tablebody_8" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="tagouts_lockout_table_1">
+							<section id="tagouts_lockout_table_1_grid9" label="Details">
+								<sectionrow id="tagouts_lockout_table_1_grid9_1">
+									<sectioncol id="tagouts_lockout_table_1_grid9_1_1">
+										<section id="tagouts_lockout_table_1_grid9_1_1_1">
+											<textbox dataattribute="lockout.requiredstate" id="tagouts_lockout_table_1_grid9_4" inputmode="readonly"/>
+											<multiparttextbox applink="location,ipc" dataattribute="lockout.location" descdataattribute="lockout.devicedescription" desinputmode="readonly" id="tagouts_lockout_table_1_grid9_11" inputmode="readonly" lookup="locations" menutype="locations"/>
+											<textbox applink="asset,ipc" dataattribute="lockout.assetnum" id="tagouts_lockout_table_1_grid9_3" inputmode="readonly" lookup="asset" menutype="assetmain"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="tagouts_lockout_table_1_grid9_2_2">
+										<section id="tagouts_lockout_table_1_grid9_2_2_1">
+											<textbox dataattribute="applyseq" id="tagouts_lockout_table_1_grid9_5" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="tagouts_lockout_table_1_grid9_2_3">
+										<section id="tagouts_lockout_table_1_grid9_2_3_1">
+											<textbox dataattribute="removeseq" id="tagouts_lockout_table_1_grid9_6" inputmode="readonly"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+					</table>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include id="pageFooter"/>
+	</page>
+
+	<dialog beanclass="psdi.webclient.system.beans.QbeBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<section id="qbe_grid1">
+			<sectionrow id="qbe_grid1_r1">
+				<sectioncol id="qbe_grid1_r1_c1">
+					<section id="qbe_grid1_r1_c1_s1">
+						<textbox dataattribute="CHANGEBY" id="new_textbox_3" label="Changed By"/>
+						<textbox dataattribute="ChangeDate" id="new_textbox" label="Changed Date" lookup="DATELOOKUP"/>
+						<textbox dataattribute="DESCRIPTION" id="new_textbox_2" label="Description"/>
+						<textbox dataattribute="safetyplanid" id="qbe_grid2_1_1_grid3_1" inputmode="query"/>
+						<textbox dataattribute="siteid" id="qbe_grid2_1_1_grid3_9" inputmode="query" lookup="site"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_grid1_r1_c2">
+					<section id="qbe_grid1_r1_c2_s1">
+						<textbox applink="location,ipc" dataattribute="spworkasset.worklocation" id="qbe_grid2_1_1_grid3_7" inputmode="query" lookup="locations" menutype="locations"/>
+						<textbox applink="asset,ipc" dataattribute="spworkasset.workasset" id="qbe_grid2_1_1_grid3_4" inputmode="query" lookup="asset" menutype="assetmain"/>
+						<textbox applink="hazards" dataattribute="HAZARD.hazardid" id="qbe_grid2_1_1_grid3_8" inputmode="query" lookup="hazards" menutype="normal"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="qbe_grid5_1_1_grid6">
+			<pushbutton default="true" id="qbe_grid5_1_1_grid6_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="qbe_grid5_1_1_grid6_2" label="Clear" mxevent="qbeclear"/>
+			<pushbutton id="qbe_grid5_1_1_grid6_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.safeplan.SelectHazardBean" id="selecthaz" label="Select Hazards" parentdatasrc="main_assets_table" relationship="SELECTHAZARD" savemode="ONLOADUNLOAD" width="900">
+		<helpgrid id="selecthaz_help" innerhtml="The following assets and locations have been defined as safety related assets for the current safety plan. Each asset can have safety hazards that affect the work environment of the current safety plan. Select hazards to apply to a safety plan and click Apply. To finish and return, click OK."/>
+		<table datasrc="main_assets_table" id="selecthaz_assets_table" inputmode="readonly" label="Work Assets">
+			<tablebody displayrowsperpage="3" filterable="true" id="selecthaz_assets_table_tablebody">
+				<tablecol dataattribute="workasset" id="selecthaz_assets_table_tablebody_1"/>
+				<tablecol dataattribute="worklocation" id="selecthaz_assets_table_tablebody_2"/>
+				<tablecol dataattribute="assetdescription" id="selecthaz_assets_table_tablebody_3" sortable="false"/>
+			</tablebody>
+		</table>
+		<table id="selecthaz_hazards_table" label="Hazards" selectmode="multiple">
+			<tablebody displayrowsperpage="5" filterable="true" id="selecthaz_hazards_table_tablebody">
+				<tablecol filterable="false" hidden="false" id="selecthaz_hazards_table_tablebody_1" mxevent="toggleselectrow" sortable="false" type="event"/>
+				<tablecol dataattribute="assetnum" id="selecthaz_hazards_table_tablebody_2"/>
+				<tablecol dataattribute="location" id="selecthaz_hazards_table_tablebody_3"/>
+				<tablecol dataattribute="assetdescription" id="selecthaz_hazards_table_tablebody_4" sortable="false"/>
+				<tablecol dataattribute="hazardid" id="selecthaz_hazards_table_tablebody_5"/>
+				<tablecol dataattribute="hazard.description" id="selecthaz_hazards_table_tablebody_6" sortable="false"/>
+				<tablecol dataattribute="hazard.precautionenabled" id="selecthaz_hazards_table_tablebody_7" sortable="false">
+					<checkbox dataattribute="hazard.precautionenabled" id="selecthaz_hazards_table_tablebody_7cb"/>
+				</tablecol>
+				<tablecol dataattribute="hazard.hazmatenabled" id="selecthaz_hazards_table_tablebody_8" sortable="false">
+					<checkbox dataattribute="hazard.hazmatenabled" id="selecthaz_hazards_table_tablebody_8cb"/>
+				</tablecol>
+				<tablecol dataattribute="hazard.tagoutenabled" id="selecthaz_hazards_table_tablebody_9" sortable="false">
+					<checkbox dataattribute="hazard.tagoutenabled" id="selecthaz_hazards_table_tablebody_9cb"/>
+				</tablecol>
+			</tablebody>
+		</table>
+		<buttongroup id="selecthaz_2">
+			<pushbutton default="true" id="selecthaz_2_0" label="Apply" mxevent="apply"/>
+			<pushbutton default="true" id="selecthaz_2_1" label="OK" mxevent="dialogok" value="associateHazardToSafetyPlan"/>
+			<pushbutton id="selecthaz_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.ViewBookmarksBean" id="searchbook" label="My Bookmarks" mboname="SAFETYPLAN">
+		<table id="bookmarks_table" inputmode="readonly" label="Safety Plans" selectmode="single">
+			<tablebody displayrowsperpage="20" filterable="true" id="bookmarks_table_tablebody">
+				<tablecol dataattribute="safetyplanid" id="bookmarks_tablebody_1" mxevent="selectrecord" type="link"/>
+				<tablecol dataattribute="description" id="bookmarks_table_tablebody_2"/>
+				<tablecol filterable="false" hidden="false" id="bookmarks_table_tablebody_delete" mxevent="instantdelete" mxevent_desc="Delete" mxevent_icon="btn_delete.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="bookmarks_2">
+			<pushbutton default="true" id="bookmarks_2_1" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+</presentation>

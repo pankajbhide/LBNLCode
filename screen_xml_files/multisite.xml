@@ -1,0 +1,1355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation apphelp="com.ibm.mbs.doc,multisite/c_organizations_application.html" beanclass="psdi.webclient.beans.multisite.MultiSiteAppBean" id="multisite" ismobile="false" mboname="ORGANIZATION" resultstableid="results_showlist" version="6.2.6">
+	<page id="mainrec" scroll="false">
+		<include controltoclone="pageHeader" id="INCLUDE-pageHeader"/>
+		<clientarea id="clientarea">
+			<tabgroup id="maintabs" style="form">
+				<tab default="true" id="results" label="List" type="list">
+					<menubar event="search" id="actiontoolbar" sourcemethod="getAppSearchOptions"/>
+					<table datasrc="results_showlist" id="results_showlist" inputmode="readonly" label="Organizations" mboname="ORGANIZATION" selectmode="multiple">
+						<tablebody displayrowsperpage="20" filterable="true" filterexpanded="true" id="results_showlist_tablebody">
+							<tablecol dataattribute="orgid" filterable="false" id="results_showlist_tablebody_1" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+							<tablecol dataattribute="orgid" id="results_showlist_tablebody_2" mxevent="selectrecord" mxevent_desc="Go To %1" type="link"/>
+							<tablecol dataattribute="description" id="results_showlist_tablebody_3"/>
+							<tablecol filterable="false" id="results_bookmark" mxevent="BOOKMARK" mxevent_desc="Add to Bookmarks" mxevent_icon="btn_addtobookmarks.gif" sortable="false" type="event"/>
+						</tablebody>
+					</table>
+				</tab>
+				<tab id="main" label="Organization" type="insert">
+					<section border="true" id="main_grid3">
+						<multiparttextbox dataattribute="orgid" descdataattribute="description" desclookup="longdesc" id="main_grid3_1"/>
+						<multiparttextbox applink="currency" dataattribute="basecurrency1" descdataattribute="basecurrency1.description" descinputmode="readonly" desclookup="longdesc" id="main_grid3_3" longdescreadonly="true" lookup="currency" menutype="normal"/>
+						<multiparttextbox applink="currency" dataattribute="basecurrency2" descdataattribute="basecurrency2.description" descinputmode="readonly" desclookup="longdesc" id="main_grid3_5" longdescreadonly="true" lookup="currency" menutype="normal"/>
+						<multiparttextbox applink="sets" dataattribute="itemsetid" descdataattribute="orgitemset.description" descinputmode="readonly" desclookup="longdesc" id="main_grid3_7" longdescreadonly="true" lookup="sets" menutype="normal"/>
+						<multiparttextbox applink="sets" dataattribute="companysetid" descdataattribute="orgcompanyset.description" descinputmode="readonly" desclookup="longdesc" id="main_grid3_9" longdescreadonly="true" lookup="sets" menutype="normal"/>
+						<textbox dataattribute="dfltitemstatus" id="main_grid3_9a" lookup="valuelist"/>
+						<textbox dataattribute="category" id="main_grid3_9b" lookup="valuelist"/>
+						<textbox dataattribute="clearingacct" id="main_grid3_10" lookup="glnavigator"/>
+						<checkbox dataattribute="active" id="main_grid3_11"/>
+					</section>
+				</tab>
+				<tab id="address" label="Addresses">
+					<section border="true" id="address_grid2">
+						<multiparttextbox dataattribute="orgid" descdataattribute="description" desclookup="longdesc" id="address_grid2_1"/>
+					</section>
+					<table id="address_add1" label="Addresses" relationship="ADDRESS">
+						<tablebody displayrowsperpage="15" filterable="true" id="address_add1_tablebody">
+							<tablecol filterable="false" id="address_add1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="addresscode" id="address_add1_tablebody_2"/>
+							<tablecol dataattribute="address1" id="address_add1_tablebody_3" linkedcontrolid="address_add1_1_grid3_3"/>
+							<tablecol dataattribute="address2" id="address_add1_tablebody_4" linkedcontrolid="address_add1_1_grid3_4"/>
+							<tablecol dataattribute="address3" id="address_add1_tablebody_5" linkedcontrolid="address_add1_1_grid3_5"/>
+							<tablecol filterable="false" id="address_add1_tablebody_8" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="address_add1_1">
+							<section id="address_add1_1_grid3" label="Details">
+								<multiparttextbox dataattribute="addresscode" defaultfocus="true" descdataattribute="description" desclookup="longdesc" id="address_add1_1_grid3_1"/>
+								<textbox dataattribute="address1" id="address_add1_1_grid3_3"/>
+								<textbox dataattribute="address2" id="address_add1_1_grid3_4"/>
+								<textbox dataattribute="address3" id="address_add1_1_grid3_5"/>
+								<textbox dataattribute="address4" id="address_add1_1_grid3_6"/>
+								<textbox dataattribute="address5" id="address_add1_1_grid3_7"/>
+								<textbox dataattribute="tax1code" id="address_add1_1_grid3_8" lookup="taxcode"/>
+							</section>
+						</tabledetails>
+						<buttongroup id="address_add1_2">
+							<pushbutton default="true" id="address_add1_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+				<tab id="site" label="Sites">
+					<section border="true" id="site_grid2">
+						<multiparttextbox dataattribute="orgid" descdataattribute="description" desclookup="longdesc" id="site_grid2_1"/>
+					</section>
+					<table id="site_site1" label="Sites" relationship="SITE">
+						<tablebody displayrowsperpage="5" filterable="true" id="site_site1_tablebody">
+							<tablecol filterable="false" id="site_site1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="siteid" id="site_site1_tablebody_2"/>
+							<tablecol dataattribute="description" id="site_site1_tablebody_3"/>
+							<tablecol dataattribute="contact" id="site_site1_tablebody_5" lookup="person"/>
+							<tablecol dataattribute="contactgroup" id="site_site1_tablebody_6" lookup="persongroup"/>
+							<tablecol dataattribute="active" id="site_site1_tablebody_4" linkedcontrolid="site_site1_1_grid3_3"/>
+							<tablecol filterable="false" id="site_site1_tablebody_8" mxevent="ADDTZSITE" mxevent_desc="Associate Time Zone" mxevent_icon="ac22_timeZone.png" sigoption="ADDTZ" sigoptiondatasrc="mainrecord" sortable="false" type="event"/>
+							<tablecol filterable="false" id="site_site1_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="site_site1_1">
+							<section id="site_site1_1_grid3" label="Details">
+								<multiparttextbox dataattribute="siteid" defaultfocus="true" descdataattribute="description" desclookup="longdesc" id="site_site1_1_grid3_1"/>
+								<multiparttextbox applink="person" dataattribute="contact" descdataattribute="person.displayname" descinputmode="readonly" id="site_site1_1_grid3_11" lookup="person" menutype="normal"/>
+								<multiparttextbox applink="persongr" dataattribute="contactgroup" descdataattribute="persongroups.description" descinputmode="readonly" id="site_site1_1_grid3_12" lookup="persongroup" menutype="normal"/>
+								<checkbox dataattribute="active" id="site_site1_1_grid3_3"/>
+							</section>
+						</tabledetails>
+						<buttongroup id="site_site1_2">
+							<pushbutton default="true" id="site_site1_2_1" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+					<table beanclass="psdi.webclient.beans.multisite.BilltoShiptoBean" id="billtoshipto_table" label="Addresses for Site: {0}" parentdatasrc="site_site1" relationship="billtoshipto" titleattributes="siteid">
+						<sectionheader id="billtoshipto_section_header">
+							<paramvalues id="billtoshipto_param" property="label">
+								<paramvalue dataattribute="siteid" datasrc="site_site1" id="billtoshipto_param_1" position="0"/>
+							</paramvalues>
+						</sectionheader>
+						<tablebody displayrowsperpage="6" filterable="true" id="billtoshipto_table_tablebody">
+							<tablecol filterable="false" id="billtoshipto_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol dataattribute="addresscode" id="billtoshipto_table_tablebody_2" lookup="address"/>
+							<tablecol dataattribute="address.description" id="billtoshipto_table_tablebody_3" inputmode="readonly" longdescreadonly="true" lookup="longdesc" showfilterfield="true"/>
+							<tablecol dataattribute="billto" id="billtoshipto_table_tablebody_4" ondatachange="refreshtable"/>
+							<tablecol dataattribute="billtodefault" id="billtoshipto_table_tablebody_7" ondatachange="refreshtable"/>
+							<tablecol dataattribute="billtocontact" id="billtoshipto_table_tablebody_5" lookup="person"/>
+							<tablecol dataattribute="shipto" id="billtoshipto_table_tablebody_8" ondatachange="refreshtable"/>
+							<tablecol dataattribute="shiptodefault" id="billtoshipto_table_tablebody_11" ondatachange="refreshtable" synchronous="true"/>
+							<tablecol dataattribute="shiptocontact" id="billtoshipto_table_tablebody_9" lookup="person"/>
+							<tablecol filterable="false" id="billtoshipto_table_tablebody_12" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+						</tablebody>
+						<tabledetails id="billtoshipto_tabledetails">
+							<section id="billtoshipto_tabledetails_section" label="Details">
+								<sectionrow id="billtoshipto_tabledetails_sectionrow">
+									<sectioncol id="billtoshipto_tabledetails_sectioncol1">
+										<section id="billtoshipto_tabledetails_sectioncol1_section1">
+											<multiparttextbox dataattribute="addresscode" defaultfocus="true" descdataattribute="address.description" descinputmode="readonly" id="billtoshipto_tabledetails_section_text1" longdescreadonly="true" lookup="address"/>
+											<checkbox dataattribute="billto" id="billtoshipto_tabledetails_section_text2"/>
+											<checkbox dataattribute="billtodefault" id="billtoshipto_tabledetails_section_text5"/>
+											<multiparttextbox dataattribute="billtocontact" descdataattribute="billtoperson.displayname" descinputmode="readonly" id="billtoshipto_tabledetails_section_text3" longdescreadonly="true" lookup="person"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="billtoshipto_tabledetails_sectioncol2">
+										<section id="billtoshipto_tabledetails_sectioncol2_section2">
+											<checkbox dataattribute="shipto" id="billtoshipto_tabledetails_section_text6"/>
+											<checkbox dataattribute="shiptodefault" id="billtoshipto_tabledetails_section_text9" synchronous="true"/>
+											<multiparttextbox dataattribute="shiptocontact" descdataattribute="shiptoperson.displayname" descinputmode="readonly" id="billtoshipto_tabledetails_section_text7" longdescreadonly="true" lookup="person"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="billtoshipto_tabledetails_buttongroup">
+							<pushbutton default="true" id="billtoshipto_tabledetails_button" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include controltoclone="pageFooter" id="INCLUDE-pageFooter"/>
+	</page>
+
+	<dialog id="worktype" label="Work Type" relationship="WORKTYPE">
+		<table id="workorder_workorder_worktype_grid1_1_1_worktype1" label="Work Type">
+			<tablebody displayrowsperpage="5" filterable="true" id="workorder_workorder_worktype_grid1_1_1_worktype1_tablebody">
+				<tablecol filterable="false" id="workorder_workorder_worktype_grid1_1_1_worktype1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="woclass" id="workorder_workorder_worktype_grid1_1_1_worktype1_tablebody_2" linkedcontrolid="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_1"/>
+				<tablecol dataattribute="worktype" id="workorder_workorder_worktype_grid1_1_1_worktype1_tablebody_3"/>
+				<tablecol dataattribute="wtypedesc" id="workorder_workorder_worktype_grid1_1_1_worktype1_tablebody_4"/>
+				<tablecol dataattribute="type" id="workorder_workorder_worktype_grid1_1_1_worktype1_tablebody_8" lookup="valuelist"/>
+				<tablecol dataattribute="promptdown" id="workorder_workorder_worktype_grid1_1_1_worktype1_tablebody_5" linkedcontrolid="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_4"/>
+				<tablecol dataattribute="promptfail" id="workorder_workorder_worktype_grid1_1_1_worktype1_tablebody_6" linkedcontrolid="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_5"/>
+				<tablecol dataattribute="keeptaskstatushist" id="workorder_workorder_worktype_grid1_1_1_worktype1_tablebody_6a" linkedcontrolid="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_5a"/>
+				<tablecol filterable="false" id="workorder_workorder_worktype_grid1_1_1_worktype1_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="workorder_workorder_worktype_grid1_1_1_worktype1_1">
+				<section id="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3" label="Details">
+					<sectionrow id="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_row1">
+						<sectioncol id="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_row1_col1">
+							<section id="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_row1_col1_sec1">
+								<textbox dataattribute="woclass" defaultfocus="true" id="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_1" lookup="valuelist"/>
+								<multiparttextbox dataattribute="worktype" descdataattribute="wtypedesc" id="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_2"/>
+								<textbox dataattribute="type" id="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_3" lookup="valuelist"/>
+								<textbox dataattribute="LBL_REL_REQD" id="new_textbox" label="Release Required ?"/>
+								<textbox dataattribute="lbl_wcd_reqd" id="new_textbox_2"/>
+								<checkbox dataattribute="lbl_famreqd" id="fam_checkbox"/>
+								<checkbox dataattribute="LBL_ELIGMROWKFLOW" id="1482168851187" label="Eligible for MRO Work flow"/>
+								<checkbox dataattribute="lbl_inactive" id="new_checkbox"/>
+							</section>
+						</sectioncol>
+						<sectioncol id="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_row1_col2">
+							<section id="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_row1_col2_sec1">
+								<checkbox dataattribute="promptdown" id="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_4"/>
+								<checkbox dataattribute="promptfail" id="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_5"/>
+								<checkbox dataattribute="keeptaskstatushist" id="workorder_workorder_worktype_grid1_1_1_worktype1_1_grid3_5a"/>
+							</section>
+						</sectioncol>
+					</sectionrow>
+				</section>
+				<section id="workorder_workorder_worktype_grid1_1_1_worktype1_2_grid3" label="Process Flow">
+					<sectionrow id="workorder_workorder_worktype_grid1_1_1_worktype1_2_grid3_row1">
+						<sectioncol id="workorder_workorder_worktype_grid1_1_1_worktype1_2_grid3_row1_col1">
+							<section id="workorder_workorder_worktype_grid1_1_1_worktype1_2_grid3_row1_col1_sec1">
+								<textbox dataattribute="startstatus" defaultfocus="true" id="workorder_workorder_worktype_grid1_1_1_worktype1_2_grid3_1" lookup="valuelist"/>
+								<textbox dataattribute="completestatus" id="workorder_workorder_worktype_grid1_1_1_worktype1_2_grid3_2" lookup="valuelist"/>
+							</section>
+						</sectioncol>
+					</sectionrow>
+				</section>
+			</tabledetails>
+			<buttongroup id="workorder_workorder_worktype_grid1_1_1_worktype1_2">
+				<pushbutton default="true" id="workorder_workorder_worktype_grid1_1_1_worktype1_2_1" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="workorder_worktype_buttons">
+			<pushbutton clickmessage="Work Order Options have been saved." default="true" id="workorder_worktype_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="workorder_worktype_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="term" label="Terms and Conditions" relationship="TERM">
+		<table id="term_grid1_1_1_TermsCondTable" label="Terms and Conditions">
+			<tablebody displayrowsperpage="20" filterable="true" id="term_grid1_1_1_TermsCondTable_tablebody">
+				<tablecol filterable="false" id="term_grid1_1_1_TermsCondTable_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="termid" id="term_grid1_1_1_TermsCondTable_tablebody_2"/>
+				<tablecol dataattribute="description" id="term_grid1_1_1_TermsCondTable_tablebody_3"/>
+				<tablecol dataattribute="type" id="term_grid1_1_1_TermsCondTable_tablebody_4" linkedcontrolid="term_grid1_1_1_TermsCondTable_1_2_4"/>
+				<tablecol dataattribute="canedit" id="term_grid1_1_1_TermsCondTable_tablebody_5" linkedcontrolid="term_grid1_1_1_TermsCondTable_1_2_5"/>
+				<tablecol dataattribute="defaultpo" id="term_grid1_1_1_TermsCondTable_tablebody_6" linkedcontrolid="term_grid1_1_1_TermsCondTable_1_2_3"/>
+				<tablecol filterable="false" id="term_grid1_1_1_TermsCondTable_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="term_grid1_1_1_TermsCondTable_1">
+				<section id="term_grid1_1_1_TermsCondTable_1_2" label="Details">
+					<multiparttextbox dataattribute="termid" defaultfocus="true" descdataattribute="description" desclookup="longdesc" id="term_grid1_1_1_TermsCondTable_1_2_1"/>
+					<checkbox dataattribute="defaultpo" id="term_grid1_1_1_TermsCondTable_1_2_3"/>
+					<textbox dataattribute="type" id="term_grid1_1_1_TermsCondTable_1_2_4"/>
+					<checkbox dataattribute="canedit" id="term_grid1_1_1_TermsCondTable_1_2_5"/>
+				</section>
+			</tabledetails>
+			<buttongroup id="term_grid1_1_1_TermsCondTable_2">
+				<pushbutton default="true" id="term_grid1_1_1_TermsCondTable_2_1" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="term_2">
+			<pushbutton default="true" id="term_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="term_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.multisite.MaxVarBean" id="safety" label="Safety Plan Options" relationship="MAXVARINPUT">
+		<table id="safety_grid1_1_1_virtualset1" label="Sites">
+			<tablebody displayrowsperpage="5" id="safety_grid1_1_1_virtualset1_tablebody">
+				<tablecol dataattribute="siteid" id="safety_grid1_1_1_virtualset1_tablebody_2" inputmode="readonly"/>
+				<tablecol dataattribute="site.description" filterable="false" id="safety_grid1_1_1_virtualset1_tablebody_3" inputmode="readonly"/>
+			</tablebody>
+		</table>
+		<section border="true" id="safety_grid1_1_1_grid4">
+			<checkbox dataattribute="SHOWWORKASSETHAZ" id="safety_grid1_1_1_grid4_2"/>
+		</section>
+		<buttongroup id="safety_2">
+			<pushbutton clickmessage="Safety Plan Option has been saved." default="true" id="safety_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="safety_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="assocterm" label="Associate Terms and Conditions" relationship="CONTRACTTYPETERM">
+		<section border="false" id="assocterm_grid1">
+			<sectionrow id="assocterm_grid1_row1">
+				<multiparttextbox dataattribute="contracttypeid" datasrc="contract" descdataattribute="description" descinputmode="readonly" id="assocterm_grid1_row1_1" inputmode="readonly" longdescreadonly="true"/>
+			</sectionrow>
+		</section>
+		<table id="assocterm_termtable" label="Terms">
+			<tablebody displayrowsperpage="20" id="assocterm_termtable_tablebody" label="Terms">
+				<tablecol filterable="false" id="assocterm_termtable_tablebody_detail" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="termid" id="assocterm_termtable_tablebody_1" lookup="term"/>
+				<tablecol dataattribute="description" id="assocterm_termtable_tablebody_2" lookup="longdesc"/>
+				<tablecol dataattribute="canedit" id="assocterm_termtable_tablebody_3">
+					<checkbox id="assocterm_termtable_tablebody_3_1"/>
+				</tablecol>
+				<tablecol filterable="false" id="assocterm_termtable_tablebody_4" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="assocterm_termtable_tabledetails">
+				<section id="assocterm_termtable_tabledetails_sec1" label="Details">
+					<sectionrow id="assocterm_termtable_tabledetails_sec1_row1">
+						<sectioncol id="assocterm_termtable_tabledetails_sec1_row1_col1">
+							<section id="assocterm_termtable_tabledetails_sec1_row1_col1_sec1">
+								<multiparttextbox dataattribute="termid" descdataattribute="description" desclookup="longdesc" id="assocterm_termtable_tabledetails_1" lookup="term"/>
+							</section>
+						</sectioncol>
+						<sectioncol id="assocterm_termtable_tabledetails_sec1_row1_col2">
+							<section id="assocterm_termtable_tabledetails_sec1_row1_col2_sec1">
+								<checkbox dataattribute="canedit" id="assocterm_termtable_tabledetails_3"/>
+							</section>
+						</sectioncol>
+					</sectionrow>
+				</section>
+			</tabledetails>
+			<buttongroup id="assocterm_termtable_1">
+				<pushbutton id="assocterm_termtable_1_1" label="Select Terms" mxevent="selectterms"/>
+				<pushbutton default="true" id="assocterm_termtable_1_2" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="assocterm_2">
+			<pushbutton clickmessage="Associate Terms and Conditions have been saved." default="true" id="assocterm_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="assocterm_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="asset" label="Asset Options">
+		<section id="asset_s1" relationship="MAXVARINPUTASSET">
+			<sectionrow id="asset_s1_r1">
+				<sectioncol id="asset_s1_r1_c1">
+					<section id="asset_s1_r1_c1_s1">
+						<radiobuttongroup border="true" dataattribute="ASHIST_ON_WOSTATUS" id="asset_grid1_1_1_recordassethistory" label="Record Asset History">
+							<radiobutton id="asset_grid1_1_1_recordassethistory1" label="On Change of Status to Complete" value="COMPLETE"/>
+							<radiobutton id="asset_grid1_1_1_recordassethistory2" label="On Change of Status to Close" value="CLOSE"/>
+						</radiobuttongroup>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<section id="asset_s2" label="Linear Options" licensekey="LINEAR" relationship="MAXVARINPUTASSET">
+			<sectionrow id="asset_s2_r1">
+				<sectioncol id="asset_s2_r1_c2">
+					<section id="asset_s2_r1_c2_s1">
+						<checkbox dataattribute="LNRASTIGNOREHISTWO" id="asset_ignorehistwo_s1_cb1"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+			<sectionrow id="asset_s2_r2">
+				<sectioncol id="asset_s2_r2_c2">
+					<section id="asset_s2_r2_c2_s1">
+						<checkbox dataattribute="DOLINEARRECALIB" id="asset_ignorehistwo_s2_cb2"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<section border="false" id="lvcSymbology_grid1" label="Linear Visual Control Symbology" licensekey="LINEAR">
+			<sectionrow id="lvcSymbology_grid1_row1">
+				<buttongroup align="left" id="lvcSymbology_btn" label="Configure the appearance of Linear object symbols in the Linear Visual Control display." labelalign="left" licensekey="LINEAR" show="true">
+					<pushbutton default="false" id="lvcSymbology_1" label="Configure" mxevent="lvcSymbology"/>
+				</buttongroup>
+			</sectionrow>
+		</section>
+		<section border="true" id="LinearLayer_grid1" licensekey="LINEAR">
+			<sectionrow id="LinearLayer_grid1_row1">
+				<table beanclass="psdi.webclient.beans.linear.LinearVCLayerBean" id="linearvclayers_table" label="Linear Visual Control Message Configuration" orderby="LAYERNAME" relationship="LVCMSGINFO">
+					<sectionheader id="linearvclayers_table_sectionheader"/>
+					<tablebody displayrowsperpage="25" id="linearvclayers_table_tablebody">
+						<tablecol filterable="false" hidden="false" id="linearvclayers_table_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+						<tablecol dataattribute="LAYERNAME" id="linearvclayers_table_tablebody_2" inputmode="readonly"/>
+						<tablecol dataattribute="DESCRIPTION" id="linearvclayers_table_tablebody_3" inputmode="readonly"/>
+					</tablebody>
+					<tabledetails id="linearvclayers_1">
+						<section id="linearvclayers_details_section1" label="Details">
+							<textbox dataattribute="LAYERNAME" id="linearvclayers_1_grid2_section1_att1"/>
+						</section>
+						<section id="linearvclayers_details_section2">
+							<sectionrow id="linearvclayers_details_section1_row1">
+								<sectioncol id="linearvclayers_details_section1_col1">
+									<section id="linearvclayers_1_grid2">
+										<textbox dataattribute="OBJECTNAME" id="linearvclayers_1_grid2_section1_att2" inputmode="readonly" size="30"/>
+									</section>
+								</sectioncol>
+								<sectioncol id="linearvclayers_details_col2">
+									<textbox dataattribute="RELATIONSHIP" id="linearvclayers_1_grid2_section1_att6" inputmode="readonly"/>
+								</sectioncol>
+							</sectionrow>
+						</section>
+						<section id="linearvclayers_details_section3">
+							<multilinetextbox columns="66" dataattribute="LABEL" id="linearvclayers_1_grid2_section1_att8" menutype="LVC_LABEL_SELECT" rows="5"/>
+							<blankline id="tabledetails_blankline1"/>
+							<richtexteditor dataattribute="INFOATTRIBUTESTEMPLATE" hidelabel="false" id="info_attributes_grid1_row1_col1_sec1_row2_3" label="Balloon Tip Message template" menutype="LVC_ATTRIBUTES_SELECT" width="660"/>
+						</section>
+					</tabledetails>
+				</table>
+			</sectionrow>
+		</section>
+		<buttongroup id="asset_2" show="false">
+			<pushbutton clickmessage="Asset Options have been saved." default="true" id="asset_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="asset_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.multisite.MaxVarBean" id="ownerasgn" label="Ownership Assignment Options" relationship="MAXVARINPUTOWNERASGN">
+		<table id="ownerasgn_grid1_1_1_virtualset1" label="Sites">
+			<tablebody displayrowsperpage="5" id="ownerasgn_grid1_1_1_virtualset1_tablebody">
+				<tablecol dataattribute="siteid" id="ownerasgn_grid1_1_1_virtualset1_tablebody_2" inputmode="readonly"/>
+				<tablecol dataattribute="site.description" id="ownerasgn_grid1_1_1_virtualset1_tablebody_3" inputmode="readonly"/>
+			</tablebody>
+		</table>
+		<section id="ownerasgn_maxvars">
+			<radiobuttongroup border="true" dataattribute="OWNERCHECKAVAIL" id="ownerasgn_grid1_1_1_checkavail" label="Check Person Availability">
+				<radiobutton id="ownerasgn_grid1_1_1_checkavail1" label="Do not check Person Availability" value="0"/>
+				<radiobutton id="ownerasgn_grid1_1_1_checkavail2" label="Check Person Availability" value="1"/>
+			</radiobuttongroup>
+		</section>
+		<buttongroup id="ownerasgn_2" show="false">
+			<pushbutton clickmessage="Ownership Assignment Options have been saved." default="true" id="ownerasgn_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="ownerasgn_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.multisite.MaxVarBean" id="taskids" label="Site Options" relationship="MAXVARINPUT">
+		<table id="workorder_workorder_taskid_grid1_1_1_workorderoptionsforsite" label="Sites">
+			<tablebody displayrowsperpage="5" id="workorder_workorder_taskid_grid1_1_1_workorderoptionsforsite_tablebody">
+				<tablecol dataattribute="siteid" id="workorder_workorder_taskid_grid1_1_1_workorderoptionsforsite_tablebody_2" inputmode="readonly"/>
+				<tablecol dataattribute="site.description" filterable="false" id="workorder_workorder_taskid_grid1_1_1_workorderoptionsforsite_tablebody_3" inputmode="readonly"/>
+			</tablebody>
+		</table>
+		<section id="workorder_workorder_taskid_grid1_1_1_taskid" label="Task Numbering">
+			<sectionrow id="workorder_workorder_taskid_grid1_1_1_taskid_row1">
+				<sectioncol id="workorder_workorder_taskid_grid1_1_1_taskid_row1_col1">
+					<section id="workorder_workorder_taskid_grid1_1_1_taskid_row1_col1_sec1">
+						<textbox dataattribute="TASKSEED" defaultfocus="true" id="workorder_workorder_taskid_grid1_1_1_taskid_2"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="workorder_workorder_taskid_grid1_1_1_taskid_row1_col2">
+					<section id="workorder_workorder_taskid_grid1_1_1_taskid_row1_col2_sec1">
+						<textbox dataattribute="TASKINTERVAL" id="workorder_workorder_taskid_grid1_1_1_taskid_3"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<section id="workorder_workorder_taskid_grid2_1_1_taskid" label="Status Availability Behavior">
+			<sectionrow id="workorder_workorder_taskid_gird2_1_1_taskid_row2">
+				<sectioncol id="workorder_workorder_taskid_grid1_1_1__taskid_row2_col1">
+					<section border="true" id="workorder_workorder_taskid_grid2_1_1_taskid_col1_sec1">
+						<checkbox dataattribute="SITEIGNORESRMAVAIL" id="workorder_workorder_taskid_grid2_1_1_taskid4"/>
+						<checkbox dataattribute="SITEIGNOREDIAVAIL" id="workorder_workorder_taskid_grid2_1_1_taskid5"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="workorder_taskids_buttons">
+			<pushbutton clickmessage="Work Order Options have been saved." default="true" id="workorder_taskids_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="workorder_taskids_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="transfer" label="Transfer Options" relationship="MAXVARINPUTINVENTORYDEFAULTS">
+		<section id="transfer_options">
+			<radiobuttongroup border="true" dataattribute="TXFRREQSHIP" id="transfer_options_grid1_1_1_grid3_1_1_currentbalance" label="Require Shipment">
+				<radiobutton id="transfer_options_grid1_1_1_grid3_1_1_currentbalance_1" label="Across Organizations" value="ORG"/>
+				<radiobutton id="transfer_options_grid1_1_1_grid3_1_1_currentbalance_2" label="Across Sites" value="SITE"/>
+				<radiobutton id="transfer_options_grid1_1_1_grid3_1_1_currentbalance_3" label="All Transfers" value="ALL"/>
+			</radiobuttongroup>
+			<radiobuttongroup border="true" dataattribute="TXFRREQPO" id="transfer_options_grid1_1_1_grid3_1_1_availability" label="Require Purchase Order">
+				<radiobutton id="transfer_options_grid1_1_1_grid3_1_1_availability_1" label="Purchase Order Not Required" value="NEVER"/>
+				<radiobutton id="transfer_options_grid1_1_1_grid3_1_1_availability_2" label="Across Organizations" value="ORG"/>
+				<radiobutton id="transfer_options_grid1_1_1_grid3_1_1_availability_3" label="Across Sites" value="SITE"/>
+			</radiobuttongroup>
+		</section>
+		<buttongroup id="transfer_options_defaults_buttons">
+			<pushbutton clickmessage="Transfer Options have been saved." default="true" id="transfer_options_buttons_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="transfer_options_buttons_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.QbeBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<section id="qbe_grid2">
+			<sectionrow id="qbe_grid2_r1">
+				<sectioncol id="qbe_grid2_r1_c1">
+					<section id="qbe_grid2_r1_c1_s1">
+						<multiparttextbox dataattribute="orgid" descdataattribute="description" descinputmode="query" id="qbe_grid2_1_1_grid21_1" inputmode="query"/>
+						<multiparttextbox dataattribute="site.siteid" descdataattribute="site.description" descinputmode="query" id="qbe_grid2_1_1_grid21_7" inputmode="query" lookup="site"/>
+						<multiparttextbox dataattribute="itemsetid" descdataattribute="orgitemset.description" descinputmode="query" id="qbe_grid2_1_1_grid21_3" inputmode="query" lookup="sets"/>
+						<multiparttextbox dataattribute="companysetid" descdataattribute="orgcompanyset.description" descinputmode="query" id="qbe_grid2_1_1_grid21_5" inputmode="query" lookup="sets"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_grid2_r1_c2">
+					<section id="qbe_grid2_r1_c2_s1">
+						<textbox dataattribute="active" id="qbe_grid2_1_1_grid21_8" inputmode="query"/>
+						<textbox dataattribute="site.active" id="qbe_grid2_1_1_grid21_9" inputmode="query"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="qbe_grid5_1_1_grid6">
+			<pushbutton default="true" id="qbe_grid5_1_1_grid6_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="qbe_restoreappdefault_button" label="Restore Application Defaults" mxevent="qbeclear"/>
+			<pushbutton id="qbe_revisebutton" label="Revise" menutype="SEARCHMOREREVISE" targetid="searchmore"/>
+			<pushbutton id="qbe_grid5_1_1_grid6_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.multisite.MaxVarBean" id="sla" label="SLA Options" relationship="MAXVARINPUTSLA">
+		<table id="sla_grid1_1_1_virtualset1" label="Sites">
+			<tablebody displayrowsperpage="5" id="sla_grid1_1_1_virtualset1_tablebody">
+				<tablecol dataattribute="siteid" id="sla_grid1_1_1_virtualset1_tablebody_2" inputmode="readonly"/>
+				<tablecol dataattribute="site.description" filterable="false" id="sla_grid1_1_1_virtualset1_tablebody_3" inputmode="readonly"/>
+			</tablebody>
+		</table>
+		<section id="sla_maxvars">
+			<radiobuttongroup border="true" dataattribute="APPLYSINGLESLA" id="sla_grid_1" synchronous="true">
+				<radiobutton id="sla_grid_1_APPLYSINGLESLA_1" label="Allow Application of One SLA?" value="1"/>
+				<radiobutton id="sla_grid_1_APPLYSINGLESLA_2" label="Allow Application of Multiple SLAs?" value="0"/>
+			</radiobuttongroup>
+		</section>
+		<section id="sla_maxvars2">
+			<radiobuttongroup border="true" dataattribute="USESLARANKING" id="sla_grid_2">
+				<radiobutton id="sla_grid_1_USESLARANKING_1" label="Apply Multiple SLAs Based on Ranking?" value="1"/>
+				<radiobutton id="sla_grid_1_USESLARANKING_2" label="Apply Multiple SLAs Based on Commitment Stringency?" value="0"/>
+			</radiobuttongroup>
+		</section>
+		<section id="sla_maxvars3">
+			<radiobuttongroup border="true" dataattribute="USECALFORSLAESCPT" id="sla_grid_3">
+				<radiobutton id="sla_grid_1_USINGCALENDAR_1" label="Use Calendar for Calculating Escalation Point Condition?" value="1"/>
+				<radiobutton id="sla_grid_1_USINGCALENDAR_2" label="Disable Calendar for Calculating Escalation Point Condition?" value="0"/>
+			</radiobuttongroup>
+		</section>
+		<buttongroup id="sla_2">
+			<pushbutton clickmessage="SLA Options have been saved." default="true" id="sla_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="sla_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="orglevel" label="Organization Level" parentdatasrc="MAINRECORD" relationship="AUTOKEY">
+		<helpgrid id="orglevel_help" innerhtml="To set the seeds and prefixes for existing autonumbers, enter the information in the appropriate fields below. To create a new autonumber or attach an autonumber to a field, use the Database Configuration application."/>
+		<table id="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1" label="Autonumber">
+			<tablebody displayrowsperpage="15" filterable="true" id="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_tablebody">
+				<tablecol filterable="false" id="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="autokeyname" id="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_tablebody_2" linkedcontrolid="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_1_grid3_1"/>
+				<tablecol dataattribute="seed" id="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_tablebody_3" linkedcontrolid="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_1_grid3_2"/>
+				<tablecol dataattribute="prefix" id="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_tablebody_4" linkedcontrolid="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_1_grid3_3"/>
+			</tablebody>
+			<tabledetails id="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_1">
+				<section id="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_1_grid3" label="Details">
+					<textbox dataattribute="autokeyname" id="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_1_grid3_1"/>
+					<textbox dataattribute="seed" defaultfocus="true" id="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_1_grid3_2"/>
+					<textbox dataattribute="prefix" id="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_1_grid3_3"/>
+				</section>
+			</tabledetails>
+		</table>
+		<buttongroup id="autonumber_1">
+			<pushbutton clickmessage="Autonumber Setup has been saved." default="true" id="autonumber_1_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="autonumber_1_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.multisite.SystemSettingsBean" hidehelp="true" id="adrmt" label="Service Address Options" licensekey="SERVICEADDRESS" relationship="MAXVARINPUT" width="400px">
+		<section id="adrmt_options_s1">
+			<radiobuttongroup border="true" dataattribute="ADDRMASTER" id="adrmt_options_s1_addrmaster" label="Address master">
+				<radiobutton id="adrmt_options_s1_addrmaster_maximo" label="Use the Service Address application" value="MAXIMO"/>
+				<radiobutton id="adrmt_options_s1_addrmaster_gis" label="Use an external or GIS address system" value="EXTGIS"/>
+			</radiobuttongroup>
+			<radiobuttongroup border="true" dataattribute="STRADDRDETAIL" id="adrmt_options_s1_addrdetail" label="Service address format">
+				<radiobutton id="adrmt_options_s1_addrdetail_required" label="Use the format that is defined in the Service Address application" value="REQUIRED"/>
+				<radiobutton id="adrmt_options_s1_addrdetail_nodetail" label="Do not use a defined service address format" value="NODETAIL"/>
+			</radiobuttongroup>
+			<radiobuttongroup border="true" dataattribute="COORDINATE" id="adrmt_options_s1_coordinate" label="Coordinates">
+				<radiobutton id="adrmt_options_s1_coordinate_latlon" label="Latitude and longitude" value="LATLONG"/>
+				<radiobutton id="adrmt_options_s1_coordinate_xy" label="X and Y" value="XY"/>
+			</radiobuttongroup>
+			<radiobuttongroup border="true" dataattribute="STREETORDERNUM" id="adrmt_options_s1_streetorder" label="Street address format">
+				<radiobutton id="adrmt_options_s1_streetorder_0" label="House number, prefix, street name, street type, suffix, apartment" value="0"/>
+				<radiobutton id="adrmt_options_s1_streetorder_1" label="Prefix, street type, street name, suffix, house number, apartment" value="1"/>
+				<radiobutton id="adrmt_options_s1_streetorder_2" label="Prefix, street name, street type, suffix, house number, apartment" value="2"/>
+			</radiobuttongroup>
+			<section id="adrmt_options_s1_s1">
+				<checkbox dataattribute="SAEDITABLE" id="adrmt_options_s1_s1_lochierarchy" label="Create service addresses for child records of assets and locations"/>
+				<checkbox dataattribute="SAMSGPROMPT" id="adrmt_options_s1_s2_lochierarchy" label="Always prompt when a service address changes on work orders and service requests"/>
+			</section>
+		</section>
+		<buttongroup id="adrmt_options_b1">
+			<pushbutton default="true" id="adrmt_options_b1_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="adrmt_options_b1_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="sitelevel" label="Site Level" relationship="SITE">
+		<helpgrid id="sitelevel_help" msggroup="organization" msgkey="sitelevel"/>
+		<table id="autonumber_autonumber_sitelevel_grid1_1_1_siteautonumber" inputmode="readonly" label="Sites" orderby="siteid">
+			<tablebody displayrowsperpage="5" id="autonumber_autonumber_sitelevel_grid1_1_1_siteautonumber_tablebody">
+				<tablecol dataattribute="siteid" id="autonumber_autonumber_sitelevel_grid1_1_1_siteautonumber_tablebody_2"/>
+				<tablecol dataattribute="description" id="autonumber_autonumber_sitelevel_grid1_1_1_siteautonumber_tablebody_3"/>
+			</tablebody>
+		</table>
+		<table id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1" label="Autonumber for Site: {0}" parentemptylabel="Autonumber for Site" relationship="AUTOKEY">
+			<sectionheader id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_sectionheader">
+				<paramvalues id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_sectionheader_params" property="label">
+					<paramvalue dataattribute="siteid" id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_sectionheader_param_0" position="0"/>
+				</paramvalues>
+			</sectionheader>
+			<tablebody displayrowsperpage="5" filterable="true" id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_tablebody">
+				<tablecol filterable="false" id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="autokeyname" id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_tablebody_2" linkedcontrolid="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_1_grid4_1"/>
+				<tablecol dataattribute="seed" id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_tablebody_3" linkedcontrolid="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_1_grid4_2"/>
+				<tablecol dataattribute="prefix" id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_tablebody_4" linkedcontrolid="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_1_grid4_3"/>
+				<tablecol filterable="false" id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_tablebody_5" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_1">
+				<section id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_1_grid4" label="Details">
+					<textbox dataattribute="autokeyname" defaultfocus="true" id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_1_grid4_1" lookup="table"/>
+					<textbox dataattribute="seed" id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_1_grid4_2"/>
+					<textbox dataattribute="prefix" id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_1_grid4_3"/>
+				</section>
+			</tabledetails>
+			<buttongroup id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_2">
+				<pushbutton default="true" id="autonumber_autonumber_sitelevel_grid1_1_1_autonumber1_2_1" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="autonumber_2">
+			<pushbutton clickmessage="Autonumber Setup has been saved." default="true" id="autonumber_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="autonumber_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="setlevel" label="Set Level" parentdatasrc="MAINRECORD" relationship="SETLEVEL">
+		<helpgrid id="setlevel_help" msggroup="organization" msgkey="setlevel"/>
+		<table id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1" label="Autonumber">
+			<tablebody displayrowsperpage="15" filterable="true" id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_tablebody">
+				<tablecol filterable="false" id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="autokeyname" id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_tablebody_2" linkedcontrolid="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_1_grid3_1"/>
+				<tablecol dataattribute="setid" id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_tablebody_2a" linkedcontrolid="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_1_grid3a_1"/>
+				<tablecol dataattribute="seed" id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_tablebody_3" linkedcontrolid="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_1_grid3_2"/>
+				<tablecol dataattribute="prefix" id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_tablebody_4" linkedcontrolid="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_1_grid3_3"/>
+			</tablebody>
+			<tabledetails id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_1">
+				<section id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_1_grid3" label="Details">
+					<textbox dataattribute="autokeyname" id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_1_grid3_1"/>
+					<textbox dataattribute="setid" id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_1_grid3a_1" inputmode="readonly"/>
+					<textbox dataattribute="seed" defaultfocus="true" id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_1_grid3_2"/>
+					<textbox dataattribute="prefix" id="autonumber_autonumber_setlevel_grid1_1_1_autonumber1_1_grid3_3"/>
+				</section>
+			</tabledetails>
+		</table>
+		<buttongroup id="autonumber_setlevel_1">
+			<pushbutton clickmessage="Autonumber Setup has been saved." default="true" id="autonumber_setlevel_1_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="autonumber_setlevel_1_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="taxdflt" label="Tax Options">
+		<tabgroup id="g_taxdflt">
+			<tab id="t_taxdflt" label="Tax Type">
+				<table id="taxdflt_tbl" label="Tax Type" orderby="typecode" relationship="TAXTYPE">
+					<tablebody displayrowsperpage="3" filterable="true" id="taxdflt_tbl_tablebody">
+						<tablecol filterable="false" id="taxdflt_tbl_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+						<tablecol dataattribute="typecode" id="taxdflt_tbl_tablebody_4"/>
+						<tablecol dataattribute="description" id="taxdflt_tbl_tablebody_2" label="Tax Type Description" lookup="longdesc"/>
+						<tablecol dataattribute="INCLUSIVEGL" id="taxdflt_tbl_tablebody_3" lookup="glnavigator"/>
+						<tablecol dataattribute="EXCLUSIVEGL" id="taxdflt_tbl_tablebody_5" lookup="glnavigator"/>
+					</tablebody>
+					<tabledetails id="taxdflt_tbl_1">
+						<section id="taxdflt_taxdflt_taxtype1_grid1_1_0_glaccountsgrid" label="Tax Type {0} GL Accounts">
+							<sectionheader id="taxdflt_taxdflt_tablebody_h">
+								<paramvalues id="taxdflt_taxdflt_grid1_1_params" property="label">
+									<paramvalue dataattribute="typecode" datasrc="taxdflt_tbl" id="taxdflt_taxdflt_grid1_1_1" position="0"/>
+								</paramvalues>
+							</sectionheader>
+							<sectionrow id="taxoption1_row1">
+								<sectioncol id="taxoption1_row1_col1">
+									<section id="taxoption1_row1_col1_sec_1">
+										<textbox dataattribute="description" id="taxdflt_taxdflt_taxtype1_grid1_1_1_grid99_1" label="Tax Type Description" lookup="longdesc"/>
+									</section>
+								</sectioncol>
+								<sectioncol id="taxoption1_row1_col2">
+									<section id="taxoption1_row1_co2_sec_1">
+										<textbox dataattribute="INCLUSIVEGL" id="taxdflt_taxdflt_taxtype_grid1_1_1_glaccountsgrid_1" lookup="glnavigator"/>
+									</section>
+								</sectioncol>
+								<sectioncol id="taxoption1_row1_col3">
+									<section id="taxoption1_row1_col3_sec_1">
+										<textbox dataattribute="EXCLUSIVEGL" id="taxdflt_taxdflt_taxtype_grid1_1_1_glaccountsgrid_2" lookup="glnavigator"/>
+									</section>
+								</sectioncol>
+							</sectionrow>
+						</section>
+						<section height="133" id="taxdflt_taxdflt_taxtype1_grid2_1_0_glaccountsgrid">
+							<sectionrow id="taxoption1_row2">
+								<sectioncol id="taxoption1_row2_col1">
+									<section id="taxdflt_taxdflt_taxtype1_grid0_1_0_glaccountsgrid" label="Add Tax {0} Amount to Vendor Price">
+										<sectionheader id="taxdflt_taxdflt_tablebody_h21">
+											<paramvalues id="taxdflt_taxdflt_grid2_11_params" property="label">
+												<paramvalue dataattribute="typecode" datasrc="taxdflt_tbl" id="taxdflt_taxdflt_grid2_1_11" position="0"/>
+											</paramvalues>
+										</sectionheader>
+										<radiobuttongroup border="true" dataattribute="ADDTAXINDCR" id="taxdflt_taxdflt_taxtype1_grid1_1_1_ADDTAXINDCR">
+											<radiobutton id="taxdflt_taxdflt_taxtype1_grid1_1_1_ADDTAXINDCR_1" label="For No Items" value="0"/>
+											<radiobutton id="taxdflt_taxdflt_taxtype1_grid1_1_1_ADDTAXINDCR_2" label="For Issue on Receipt Items Only" value="1"/>
+											<radiobutton id="taxdflt_taxdflt_taxtype1_grid1_1_1_ADDTAXINDCR_3" label="For All Items" value="2"/>
+										</radiobuttongroup>
+									</section>
+								</sectioncol>
+								<sectioncol id="taxoption1_row2_col2">
+									<section id="taxdflt_taxdflt_taxtype1_grid3_1_0_glaccountsgrid" label="Calculate Tax {0} Based on Price +">
+										<sectionheader id="taxdflt_taxdflt_tablebody_h2">
+											<paramvalues id="taxdflt_taxdflt_grid2_1_params" property="label">
+												<paramvalue dataattribute="typecode" datasrc="taxdflt_tbl" id="taxdflt_taxdflt_grid2_1_1" position="0"/>
+											</paramvalues>
+										</sectionheader>
+										<sectionrow id="taxoption1_row32">
+											<sectioncol id="taxoption1_row32_col1">
+												<checkbox dataattribute="includetax1" id="taxdflt_taxdflt_taxtype_grid3_1_calculatetax_1"/>
+											</sectioncol>
+											<sectioncol id="taxoption1_row32_col2">
+												<checkbox dataattribute="includetax2" id="taxdflt_taxdflt_taxtype_grid3_2_calculatetax_1"/>
+											</sectioncol>
+										</sectionrow>
+										<sectionrow id="taxoption1_row33">
+											<sectioncol id="taxoption1_row32_col3">
+												<checkbox dataattribute="includetax3" id="taxdflt_taxdflt_taxtype_grid3_3_calculatetax_1"/>
+											</sectioncol>
+											<sectioncol id="taxoption1_row32_col4">
+												<checkbox dataattribute="includetax4" id="taxdflt_taxdflt_taxtype_grid3_4_calculatetax_1"/>
+											</sectioncol>
+										</sectionrow>
+									</section>
+								</sectioncol>
+							</sectionrow>
+						</section>
+					</tabledetails>
+				</table>
+				<table id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1" label="Tax Options" parentdatasrc="taxdflt_tbl" relationship="TAX">
+					<tablebody displayrowsperpage="5" filterable="true" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_tablebody">
+						<tablecol filterable="false" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+						<tablecol dataattribute="taxcode" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_tablebody_2"/>
+						<tablecol dataattribute="description" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_tablebody_3"/>
+						<tablecol dataattribute="taxrate" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_tablebody_4" linkedcontrolid="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_3"/>
+						<tablecol dataattribute="effective" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_tablebody_5" linkedcontrolid="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_4"/>
+						<tablecol filterable="false" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_tablebody_6" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+					</tablebody>
+					<tabledetails id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1">
+						<section id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3" label="Details">
+							<sectionrow id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_row1">
+								<sectioncol id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_row1_col1">
+									<section id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_row1_col1_sec1">
+										<multiparttextbox dataattribute="taxcode" defaultfocus="true" descdataattribute="description" desclookup="longdesc" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_1"/>
+										<textbox dataattribute="taxrate" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_3"/>
+										<textbox dataattribute="effective" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_4" lookup="datelookup"/>
+									</section>
+								</sectioncol>
+								<sectioncol id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_row1_col2">
+									<section id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_row1_col2_sec1">
+										<textbox dataattribute="inclusivegl" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_5" lookup="glnavigator"/>
+										<textbox dataattribute="exclusivegl" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_6" lookup="glnavigator"/>
+										<textbox dataattribute="changedate" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_1_grid3_8" lookup="datelookup"/>
+									</section>
+								</sectioncol>
+							</sectionrow>
+						</section>
+					</tabledetails>
+					<buttongroup id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_2">
+						<pushbutton default="true" id="taxdflt_taxdflt_taxtype1_grid1_1_1_tax1_2_1" label="New Row" mxevent="addrow"/>
+					</buttongroup>
+				</table>
+			</tab>
+			<tab id="taxorder" label="Tax Code Hierarchy">
+				<table id="taxorder_tbl" label="Tax Code Hierarchy" orderby="tablename" relationship="TAXORDER">
+					<tablebody displayrowsperpage="4" filterable="true" id="taxorder_tbl_tablebody">
+						<tablecol filterable="false" id="taxorder_tbl_tablebody_1" mxevent="toggleselectrow" mxevent_desc="Show Detail" sortable="false" type="event"/>
+						<tablecol dataattribute="taxsource.description" id="taxorder_tbl_tablebody_4" inputmode="readonly" label="Source"/>
+						<tablecol dataattribute="taxorder" id="taxorder_tbl_tablebody_3"/>
+					</tablebody>
+				</table>
+			</tab>
+		</tabgroup>
+		<buttongroup id="tax1buttons">
+			<pushbutton clickmessage="Tax Options have been saved." default="true" id="tax1_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="tax1_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="drilldown" label="Drilldown Options" relationship="MAXVARINPUTDRILLDOWN">
+		<radiobuttongroup border="true" dataattribute="ASSETDRILLDOWNTOP" id="drilldown_grid1_1_1_assetdrilldown" label="Top Level Asset on Asset Tab">
+			<radiobutton id="drilldown_grid1_1_1_assetdrilldown_1" label="Top Level Starts at Top Level Location (Start at Top Location in Primary System)" value="LOCATION"/>
+			<radiobutton id="drilldown_grid1_1_1_assetdrilldown_2" label="Top Level Starts at Top Level Asset (Show All Assets without Parent)" value="ASSET"/>
+		</radiobuttongroup>
+		<buttongroup id="drilldown_buttons">
+			<pushbutton clickmessage="Drilldown Options have been saved." default="true" id="drilldown_buttons_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="drilldown_buttons_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="reorder" label="Inventory Reorder" relationship="MAXVARINPUTINVENTORYREORDER">
+		<section id="inventory_reorder_radio_1">
+			<radiobuttongroup border="true" dataattribute="AUTOPOEXT" id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_externalrequest" label="External Request Creation">
+				<radiobutton id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_externalrequest_1" label="Unapproved PRs" value="PRWAPPR"/>
+				<radiobutton id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_externalrequest_2" label="Approved PRs" value="PRAPPR"/>
+				<radiobutton id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_externalrequest_3" label="Unapproved POs" value="POWAPPR"/>
+				<radiobutton id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_externalrequest_4" label="Approved POs" value="POAPPR"/>
+			</radiobuttongroup>
+		</section>
+		<section id="inventory_reorder_radio_2">
+			<radiobuttongroup border="true" dataattribute="AUTOPOINT" id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_internalrequest" label="Internal Request Creation">
+				<radiobutton id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_internalrequest_1" label="Unapproved PRs" value="PRWAPPR"/>
+				<radiobutton id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_internalrequest_2" label="Approved PRs" value="PRAPPR"/>
+				<radiobutton id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_internalrequest_3" label="Unapproved POs" value="POWAPPR"/>
+				<radiobutton id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_internalrequest_4" label="Approved POs" value="POAPPR"/>
+			</radiobuttongroup>
+		</section>
+		<section border="true" id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_maxprlines">
+			<textbox dataattribute="MAXPRLINES" id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_maxprlines_1"/>
+			<textbox dataattribute="RESBUFFER" id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_leadtime_1"/>
+		</section>
+		<section border="true" id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_includeconsitems">
+			<checkbox dataattribute="INCLUDECONSITEMS" id="inventory_inventory_reorder_grid1_1_1_grid4_1_1_includeconsitems_1" label="Include Consignment Items on separate PO/PR"/>
+		</section>
+		<buttongroup id="inventory_reorder_buttons">
+			<pushbutton clickmessage="Inventory Options have been saved." default="true" id="inventory_reorder_buttons_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="inventory_reorder_buttons_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="invoice" label="Invoice Options" relationship="MAXVARINPUT">
+		<section border="true" id="invoice_grid1_1_1_grid3">
+			<checkbox dataattribute="UPDATEGLPSTDATE" id="invoice_grid1_1_1_grid3_1" label="Update G/L Post Date with Vendor Invoice Date"/>
+			<checkbox dataattribute="INVCEGLPSTDTVALSAV" id="invoice_grid1_1_1_grid3_2" label="Validate Financial Period at Invoice Save"/>
+			<textbox dataattribute="MAXCONSINVLINES" id="invoice_grid1_1_1_grid3_3" label="Maximum Number of Lines for a Consignment Invoice"/>
+		</section>
+		<buttongroup id="invoice_2">
+			<pushbutton clickmessage="Invoice Options have been saved." default="true" id="invoice_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="invoice_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="CREWASSIGN" label="Assignment Options" relationship="MAXVARINPUT" width="550">
+		<section id="1stsection" label="Availability Factor">
+			<helpgrid hidewhen="{mobile}==true" id="fwm_assigopt_help" innerhtml="These options affect the behavior of the the Assignment Manager application. Additional information is in the field level help."/>
+			<textbox dataattribute="AMCREWAVAILFACTOR" id="fwm_assigopt_bl1_05"/>
+		</section>
+		<buttongroup id="fwm_assigopt_2">
+			<pushbutton default="true" id="fwm_assigopt_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="fwm_assigopt_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="labor" label="PO Labor Options" relationship="MAXVARINPUT3">
+		<section border="true" id="labor_grid1_1_1_grid3">
+			<checkbox dataattribute="LR_PO_INLAB_RQRD" id="labor_grid1_1_1_grid3_3"/>
+		</section>
+		<buttongroup id="labor_2">
+			<pushbutton clickmessage="Labor Options have been saved." default="true" id="labor_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="labor_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.system.beans.ViewBookmarksBean" id="searchbook" label="My Bookmarks" mboname="ORGANIZATION">
+		<table id="bookmarks_table" inputmode="readonly" label="Organizations" selectmode="single">
+			<tablebody displayrowsperpage="20" filterable="true" id="bookmarks_table_tablebody">
+				<tablecol dataattribute="orgid" id="bookmarks_tablebody_1" mxevent="selectrecord" type="link"/>
+				<tablecol dataattribute="description" id="bookmarks_table_tablebody_2"/>
+				<tablecol filterable="false" id="bookmarks_table_tablebody_delete" mxevent="instantdelete" mxevent_desc="Delete" mxevent_icon="btn_delete.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="bookmarks_2">
+			<pushbutton default="true" id="bookmarks_2_1" label="OK" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog datasrc="mainrecord" height="300" hidelabel="true" id="lvcSymbology" label="Configure Linear Visual Control object display">
+		<section id="jsoneditor_sec1">
+			<miniapp appid="jsoneditor" beanclass="com.ibm.tivoli.maximo.miniapps.linear.LVCJsonEditorAppBean" fillheight="true" id="JSONEditor" mainclass="LVCJsonEditor" options="{}" progressindicator="false"/>
+		</section>
+		<buttongroup id="lvcSymbology_buttons">
+			<pushbutton id="lvcSymbology_buttons_2" label="Close" mxevent="dialogok"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="assocproperty" label="Associate Properties" relationship="PROPERTYINPUT" width="955">
+		<section border="false" id="assocproperty_grid1">
+			<sectionrow id="assocproperty_grid1_row1">
+				<multiparttextbox dataattribute="contracttypeid" datasrc="contract" descdataattribute="description" descinputmode="readonly" id="assocproperty_grid1_row1_1" inputmode="readonly" longdescreadonly="true"/>
+			</sectionrow>
+		</section>
+		<table id="assocproperty_propertytable" label="Properties">
+			<tablebody displayrowsperpage="15" id="assocproperty_propertytable_tablebody">
+				<tablecol dataattribute="propertyid" id="assocproperty_propertytable_tablebody_1" inputmode="readonly" sortable="false"/>
+				<tablecol dataattribute="description" id="assocproperty_propertytable_tablebody_2" inputmode="readonly" sortable="false"/>
+				<tablecol dataattribute="datatype" id="assocproperty_propertytable_tablebody_3" inputmode="readonly" sortable="false"/>
+				<tablecol dataattribute="defaultvalue" id="assocproperty_propertytable_tablebody_4" sortable="false"/>
+				<tablecol dataattribute="editable" id="assocproperty_propertytable_tablebody_5" sortable="false">
+					<checkbox id="assocproperty_propertytable_tablebody_5_1"/>
+				</tablecol>
+			</tablebody>
+		</table>
+		<buttongroup id="assocproperty_2">
+			<pushbutton clickmessage="Associate Properties have been saved." default="true" id="assocproperty_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="assocproperty_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="defaults" label="Inventory Defaults" relationship="MAXVARINPUTINVENTORYDEFAULTS">
+		<section height="125" id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1">
+			<sectioncol id="abc_breakpoints_row_1_col_1">
+				<section id="abc_breakpoints_row_1_col_1_section1">
+					<checkbox dataattribute="UPDATEINVENTORY" id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_grid5_1"/>
+					<checkbox dataattribute="AUTOINVUSE" id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_grid5_1a"/>
+					<blankline id="inventory_inventory_inventorydefaults_bl1"/>
+				</section>
+			</sectioncol>
+			<section id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_ABCBreakpoints" label="ABC Breakpoint Options">
+				<sectionrow id="abc_breakpoints_row_2">
+					<sectioncol id="abc_breakpoints_row_2_col_1">
+						<section id="abc_breakpoints_row_2_section_1">
+							<textbox dataattribute="A_BREAKPOINT" id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_ABCBreakpoints_1"/>
+							<textbox dataattribute="B_BREAKPOINT" id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_ABCBreakpoints_2"/>
+							<textbox dataattribute="C_BREAKPOINT" id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_ABCBreakpoints_3"/>
+						</section>
+					</sectioncol>
+					<sectioncol id="abc_breakpoints_row_2_col_2">
+						<section id="abc_breakpoints_row_2_section_2">
+							<textbox dataattribute="A_CCF" id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_ABCBreakpoints_4"/>
+							<textbox dataattribute="B_CCF" id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_ABCBreakpoints_5"/>
+							<textbox dataattribute="C_CCF" id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_ABCBreakpoints_6"/>
+							<blankline id="inventory_inventory_inventorydefaults_ABCBreakpoints"/>
+						</section>
+					</sectioncol>
+				</sectionrow>
+			</section>
+			<section id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_NegBalanceOptions" label="Negative Balance Options">
+				<sectionrow id="abc_breakpoints_row_3">
+					<sectioncol id="abc_breakpoints_row_3_col_1">
+						<section id="abc_breakpoints_row_3_col_1_section1">
+							<radiobuttongroup border="true" dataattribute="NEGATIVECURBAL" id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_currentbalance" label="Negative Current Balance">
+								<radiobutton id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_currentbalance_1" label="Allow Negative Balance" value="ALLOW"/>
+								<radiobutton id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_currentbalance_2" label="Disallow Negative Balance" value="DISALLOW"/>
+							</radiobuttongroup>
+							<radiobuttongroup border="true" dataattribute="NEGATIVEAVAIL" id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_availability" label="Negative Available Balance">
+								<radiobutton id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_availability_1" label="Allow Negative Available Balance" value="ALLOW"/>
+								<radiobutton id="inventory_inventory_inventorydefaults_grid1_1_1_grid3_1_1_availability_2" label="Disallow Negative Available Balance" value="DISALLOW"/>
+							</radiobuttongroup>
+						</section>
+					</sectioncol>
+				</sectionrow>
+			</section>
+		</section>
+		<buttongroup id="inventory_defaults_buttons">
+			<pushbutton clickmessage="Inventory Options have been saved." default="true" id="inventory_defaults_buttons_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="inventory_defaults_buttons_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.multisite.MaxVarBean" id="costs" label="Inventory Costs" relationship="MAXVARINPUTINVENTORYCOST">
+		<table id="inventory_inventory_inventorycosts_grid1_1_1_virtualset2" label="Sites">
+			<tablebody displayrowsperpage="5" id="inventory_inventory_inventorycosts_grid1_1_1_virtualset2_tablebody">
+				<tablecol dataattribute="siteid" id="inventory_inventory_inventorycosts_grid1_1_1_virtualset2_tablebody_2" inputmode="readonly"/>
+				<tablecol dataattribute="site.description" filterable="false" id="inventory_inventory_inventorycosts_grid1_1_1_virtualset2_tablebody_3" inputmode="readonly"/>
+			</tablebody>
+		</table>
+		<section id="inventory_costs_radio_1">
+			<radiobuttongroup border="true" dataattribute="DEFISSUECOST" id="inventory_inventory_inventorycosts_grid1_1_1_grid5_issuecost" label="Issue Cost">
+				<radiobutton id="inventory_inventory_inventorycosts_grid1_1_1_grid5_issuecost_1" label="Standard Cost" value="STDCOST"/>
+				<radiobutton id="inventory_inventory_inventorycosts_grid1_1_1_grid5_issuecost_2" label="Average Cost" value="AVGCOST"/>
+				<radiobutton id="inventory_inventory_inventorycosts_grid1_1_1_grid5_issuecost_3" label="LIFO Cost" value="LIFO"/>
+				<radiobutton id="inventory_inventory_inventorycosts_grid1_1_1_grid5_issuecost_4" label="FIFO Cost" value="FIFO"/>
+			</radiobuttongroup>
+		</section>
+		<section id="inventory_costs_radio_2">
+			<radiobuttongroup border="true" dataattribute="COSTFROMASSET" id="inventory_inventory_inventorycosts_grid1_1_1_grid5_noncapitalizedrotating" label="Non Capitalized Rotating">
+				<radiobutton id="inventory_inventory_inventorycosts_grid1_1_1_grid5_noncapitalizedrotating_1" label="Issue Cost" value="0"/>
+				<radiobutton id="inventory_inventory_inventorycosts_grid1_1_1_grid5_noncapitalizedrotating_2" label="Asset Cost" value="1"/>
+			</radiobuttongroup>
+		</section>
+		<buttongroup id="inventory_costs_buttons">
+			<pushbutton clickmessage="Inventory Options have been saved." default="true" id="inventory_costs_buttons_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="inventory_costs_buttons_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="CREWASSET" label="Asset Availability Options" relationship="MAXVARINPUT">
+		<section id="castsection">
+			<checkbox dataattribute="ASSETSTATUS" id="cafwm_assigopt_bl1_05"/>
+			<checkbox dataattribute="APPWORKORDER" id="cafwm_assigopt_bl1_06"/>
+			<checkbox dataattribute="ASSETLOCTYPE" id="cafwm_assigopt_bl1_07"/>
+			<checkbox dataattribute="ASSETMTNSCHED" id="cafwm_assigopt_bl1_08"/>
+			<checkbox dataattribute="ASSETOPSCHED" id="cafwm_assigopt_bl1_09"/>
+		</section>
+		<buttongroup id="cafwm_assigopt_2">
+			<pushbutton default="true" id="cafwm_assigopt_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="cafwm_assigopt_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.multisite.SystemSettingsBean" id="system" label="System Settings" relationship="MAXVARINPUTSYSTEM">
+		<section id="system_grid1_1_1_grid4" label="Calendar">
+			<textbox dataattribute="startdate" id="system_grid1_1_1_grid4_1"/>
+			<textbox dataattribute="enddate" id="system_grid1_1_1_grid4_2"/>
+		</section>
+		<section id="system_grid1_1_1_grid4a" label="GL Configuration">
+			<textbox dataattribute="GLQUESTION" id="system_grid1_1_1_grid4_3"/>
+		</section>
+		<section id="system_grid1_1_1_grid4b" label="Classification Catalog">
+			<textbox dataattribute="ASSETDESCDELIMITER" id="system_grid1_1_1_grid4b_3"/>
+		</section>
+		<section id="system_grid1_1_1_grid4c" label="Timer">
+			<checkbox dataattribute="STARTTIMERINPRG" id="system_grid1_1_1_grid4c_1"/>
+			<checkbox dataattribute="STOPTIMERCOMP" id="system_grid1_1_1_grid4c_2"/>
+			<checkbox dataattribute="CONFIRMLABTRANS" id="system_grid1_1_1_grid4c_3"/>
+		</section>
+		<section id="system_grid1_1_1_grid4d" label="People">
+			<radiobuttongroup border="true" dataattribute="NAMESEQ" id="system_grid1_1_1_grid4d_2a">
+				<radiobutton id="system_grid1_1_1_grid4d_1" label="Firstname Lastname" value="1"/>
+				<radiobutton id="system_grid1_1_1_grid4d_2" label="Lastname, Firstname" value="2"/>
+				<radiobutton id="system_grid1_1_1_grid4d_3" label="Lastname Firstname" value="3"/>
+				<radiobutton id="system_grid1_1_1_grid4d_4" label="LastnameFirstname" value="4"/>
+			</radiobuttongroup>
+		</section>
+		<section collapsed="true" id="system_grid1_1_1_grid4e" label="IT Options">
+			<textbox dataattribute="ITASSET.HIERARCHYPATH" id="system_grid1_1_1_grid4e_1" label="IT Asset Top-Level Class" menutype="classificationitasset"/>
+			<textbox applink="ASSETCAT" dataattribute="ITASSET" id="system_grid1_1_1_grid4e_3" label="IT Asset Class Structure Id" menutype="normal"/>
+			<blankline id="new_blankline"/>
+			<textbox dataattribute="ITSFW.HIERARCHYPATH" id="system_grid1_1_1_grid4e_5" label="IT Software Top-Level Class" menutype="classificationitsfwclass"/>
+			<textbox applink="ITSFW" dataattribute="ITSFW" id="system_grid1_1_1_grid4e_6" label="IT Software Class Structure ID" menutype="normal"/>
+			<blankline id="new_blankline1"/>
+			<textbox dataattribute="CICLASS.HIERARCHYPATH" id="system_grid1_1_1_grid4e_2" label="Actual CI Top-Level Class" menutype="classificationactciclass"/>
+			<textbox applink="ASSETCAT" dataattribute="CICLASS" id="system_grid1_1_1_grid4e_4" label="Actual CI Class Structure ID" menutype="normal"/>
+			<blankline id="new_blankline2"/>
+			<textbox dataattribute="AUTHCICLASS.HIERARCHYPATH" id="system_grid1_1_1_grid4e_7" label="Authorized CI Top-Level Class" menutype="classificationciclass"/>
+			<textbox applink="ASSETCAT" dataattribute="AUTHCICLASS" id="system_grid1_1_1_grid4e_8" label="Authorized CI Class Structure ID" menutype="normal"/>
+		</section>
+		<section id="system_grid1_1_1_grid4f" label="Work Order Tasks">
+			<checkbox dataattribute="KEEPTASKSTATUSHIST" id="system_grid1_1_1_grid4f_3"/>
+		</section>
+		<section id="system_grid1_1_1_grid4af" label="Work Order">
+			<checkbox dataattribute="COPYLINKTOWO" id="system_grid1_1_1_grid4af_3"/>
+		</section>
+		<section id="system_grid1_1_1_grid4g" label="Job Plans">
+			<checkbox dataattribute="JPREVCONTROL" id="system_grid1_1_1_grid4g_3"/>
+			<checkbox dataattribute="USECONDITIONALJP" id="system_grid1_1_1_grid4g_3_1"/>
+		</section>
+		<section id="system_grid1_1_1_grid4h" label="Item">
+			<checkbox dataattribute="ITEMTAXROLLDOWN" id="system_grid1_1_1_grid4h_3"/>
+		</section>
+		<section id="system_grid1_1_1_grid4i" label="Assets">
+			<checkbox dataattribute="SYSTEMLEVASSETDOCS" id="system_grid1_1_1_grid4i_1"/>
+			<checkbox dataattribute="ALLOWSAMEUPDOWNTM" id="asset_dtr1_cb1"/>
+		</section>
+		<buttongroup id="system_2">
+			<pushbutton default="true" id="system_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="system_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="labororg" label="Labor Options" relationship="MAXVARINPUT3">
+		<section border="true" id="labororg_grid1_1_1_grid3">
+			<checkbox dataattribute="LR_APPR_IN_LABOR" id="labororg_grid1_1_1_grid3_4"/>
+			<checkbox dataattribute="LR_APPR_OUT_LABOR" id="labororg_grid1_1_1_grid3_2"/>
+			<checkbox dataattribute="LABTRNALLOWANYCRFT" id="labororg_grid1_1_1_grid3_1"/>
+			<checkbox dataattribute="AUTOAPPRLABINVOICE" id="labororg_grid1_1_1_grid3_3"/>
+			<textbox dataattribute="LABTRANSTOLERANCE" id="labororg_grid1_1_1_grid3_5"/>
+		</section>
+		<buttongroup id="labororg_2">
+			<pushbutton clickmessage="Labor Options have been saved." default="true" id="labororg_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="labororg_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="ecommerce" label="E-Commerce Setup" relationship="SITEECOM">
+		<table id="ecommerce_grid1_1_1_virtualset1" label="Site E-Commerce" width="800">
+			<tablebody displayrowsperpage="5" filterable="true" id="ecommerce_grid1_1_1_virtualset1_tablebody">
+				<tablecol filterable="false" id="ecommerce_grid1_1_1_virtualset1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="siteid" id="ecommerce_grid1_1_1_virtualset1_tablebody_2" linkedcontrolid="ecommerce_grid1_1_1_virtualset1_1_grid3_1"/>
+				<tablecol dataattribute="vendor" id="ecommerce_grid1_1_1_virtualset1_tablebody_3" linkedcontrolid="ecommerce_grid1_1_1_virtualset1_1_grid3_2"/>
+				<tablecol dataattribute="mktplcid" id="ecommerce_grid1_1_1_virtualset1_tablebody_4" linkedcontrolid="ecommerce_grid1_1_1_virtualset1_1_grid3_3"/>
+				<tablecol dataattribute="mktplciddomain" id="ecommerce_grid1_1_1_virtualset1_tablebody_5" linkedcontrolid="ecommerce_grid1_1_1_virtualset1_1_grid3_4"/>
+				<tablecol dataattribute="custnum" id="ecommerce_grid1_1_1_virtualset1_tablebody_6" linkedcontrolid="ecommerce_grid1_1_1_virtualset1_1_grid3_5"/>
+				<tablecol dataattribute="dunsnum" id="ecommerce_grid1_1_1_virtualset1_tablebody_7" linkedcontrolid="ecommerce_grid1_1_1_virtualset1_1_grid3_6"/>
+				<tablecol filterable="false" id="ecommerce_grid1_1_1_virtualset1_tablebody_8" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="ecommerce_grid1_1_1_virtualset1_1">
+				<section id="ecommerce_grid1_1_1_virtualset1_1_grid3" label="Details">
+					<sectionrow id="ecommerce_grid1_1_1_virtualset1_1_grid3_row1">
+						<sectioncol id="ecommerce_grid1_1_1_virtualset1_1_grid3_row1_col1">
+							<section id="ecommerce_grid1_1_1_virtualset1_1_grid3_row1_col1_sec1">
+								<textbox dataattribute="siteid" defaultfocus="true" id="ecommerce_grid1_1_1_virtualset1_1_grid3_1"/>
+								<textbox dataattribute="vendor" id="ecommerce_grid1_1_1_virtualset1_1_grid3_2" lookup="companies"/>
+								<textbox dataattribute="mktplcid" id="ecommerce_grid1_1_1_virtualset1_1_grid3_3"/>
+							</section>
+						</sectioncol>
+						<sectioncol id="ecommerce_grid1_1_1_virtualset1_1_grid3_row1_col2">
+							<section id="ecommerce_grid1_1_1_virtualset1_1_grid3_row1_col2_sec1">
+								<textbox dataattribute="mktplciddomain" id="ecommerce_grid1_1_1_virtualset1_1_grid3_4"/>
+								<textbox dataattribute="custnum" id="ecommerce_grid1_1_1_virtualset1_1_grid3_5"/>
+								<textbox dataattribute="dunsnum" id="ecommerce_grid1_1_1_virtualset1_1_grid3_6"/>
+							</section>
+						</sectioncol>
+					</sectionrow>
+				</section>
+			</tabledetails>
+			<buttongroup id="ecommerce_grid1_1_1_virtualset1_2">
+				<pushbutton default="true" id="ecommerce_grid1_1_1_virtualset1_2_1" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="ecommerce_2">
+			<pushbutton clickmessage="E-Commerce Setup has been saved." default="true" id="ecommerce_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="ecommerce_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog height="200" id="epwrkquery" label="Everyplace Work Query Options" relationship="MAXVARINPUTEP" width="250">
+		<section id="workorder_epwrkquery_radio_1">
+			<radiobuttongroup border="true" dataattribute="EPWRKQUERY" id="workorder_epwrkquery_grid1_1" label="Everyplace Work Query Options">
+				<radiobutton id="workorder_epwrkquery_rb_1" label="Scheduled Start Date" value="0"/>
+				<radiobutton id="workorder_epwrkquery_rb_2" label="Assignment Date" value="1"/>
+				<radiobutton id="workorder_epwrkquery_rb_3" label="Work Order Priority" value="2"/>
+			</radiobuttongroup>
+		</section>
+		<buttongroup id="workorder_epwrkquery_buttons">
+			<pushbutton clickmessage="Work Order Options have been saved." default="true" id="workorder_epwrkquery_buttons_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="workorder_epwrkquery_buttons_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.multisite.MaxVarBean" id="pm" label="PM Options" relationship="MAXVARINPUT">
+		<table id="pm_grid1_1_1_virtualset1" label="Sites">
+			<tablebody displayrowsperpage="5" id="pm_grid1_1_1_virtualset1_tablebody">
+				<tablecol dataattribute="siteid" id="pm_grid1_1_1_virtualset1_tablebody_2" inputmode="readonly"/>
+				<tablecol dataattribute="site.description" filterable="false" id="pm_grid1_1_1_virtualset1_tablebody_3" inputmode="readonly"/>
+			</tablebody>
+		</table>
+		<section id="pm_grid1_1_1_grid4" label="PM Options">
+			<textbox dataattribute="WOGENERATIONDAYS" id="pm_grid1_1_1_grid4_2"/>
+			<checkbox dataattribute="PMUSEJPPRIORITY" id="pm_grid1_1_1_grid4_3"/>
+			<checkbox dataattribute="WOGENUSEFREQCRITRA" id="pm_grid1_1_1_grid4_4"/>
+			<checkbox dataattribute="PMACTUALMETER" id="pm_grid1_1_1_grid4_5"/>
+			<textbox dataattribute="PMALERT" id="pm_grid1_1_1_grid4_6" lookup="valuelist"/>
+		</section>
+		<section height="175" id="pm_grid1_1_1_grid5" label="Stand-alone PM Work Order Generation Process Settings">
+			<checkbox dataattribute="AUTOPMWOGEN" id="pm_grid1_1_1_grid5_1"/>
+			<multilinetextbox dataattribute="WOGENWHERECLAUSE" id="pm_grid1_1_1_grid5_2" numcols="50" numrows="5"/>
+			<textbox dataattribute="WOGENEMAIL" id="pm_grid1_1_1_grid5_3"/>
+		</section>
+		<section height="175" id="pm_xxxgrid1_1_1_grid5" label="Stand-alone Condition Monitoring Work Order Generation Process Settings">
+			<checkbox dataattribute="AUTOMPWOGEN" id="pm_xxxgrid1_1_1_grid5_1"/>
+			<checkbox dataattribute="MPWOGENUSECRITERIA" id="pm_xxxgrid1_1_1_grid5_2"/>
+			<textbox dataattribute="MPWOGENEMAIL" id="pm_xxxgrid1_1_1_grid5_3"/>
+		</section>
+		<buttongroup id="pm_2">
+			<pushbutton clickmessage="PM Options have been saved." default="true" id="pm_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="pm_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="contract" label="Contract Options" relationship="CONTRACTTYPE">
+		<table id="contract_grid1_1_1_typetable" label="Add/Modify Contract Types">
+			<tablebody displayrowsperpage="15" filterable="true" id="contract_grid1_1_1_typetable_tablebody">
+				<tablecol filterable="false" id="contract_grid1_1_1_typetable_tablebody_1_details" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="contracttypeid" id="contract_grid1_1_1_typetable_tablebody_1"/>
+				<tablecol dataattribute="description" id="contract_grid1_1_1_typetable_tablebody_2"/>
+				<tablecol dataattribute="maxcontracttype" id="contract_grid1_1_1_typetable_tablebody_3" lookup="valuelistmax"/>
+				<tablecol filterable="false" id="contract_grid1_1_1_typetable_tablebody_4" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="contract_grid1_1_1_typetable_tabledetails">
+				<section id="contract_grid1_1_1_typetable_tabledetails_sec1" label="Details">
+					<sectionrow id="contract_grid1_1_1_typetable_tabledetails_sec1_row1">
+						<sectioncol id="contract_grid1_1_1_typetable_tabledetails_sec1_row1_col1">
+							<section id="contract_grid1_1_1_typetable_tabledetails_sec1_row1_col1_sec1">
+								<multiparttextbox dataattribute="contracttypeid" descdataattribute="description" id="contract_grid1_1_1_typetable_tabledetails_1"/>
+							</section>
+						</sectioncol>
+						<sectioncol id="contract_grid1_1_1_typetable_tabledetails_sec1_row1_col2">
+							<section id="contract_grid1_1_1_typetable_tabledetails_sec1_row1_col2_sec1">
+								<textbox dataattribute="maxcontracttype" id="contract_grid1_1_1_typetable_tabledetails_3" lookup="valuelistmax"/>
+							</section>
+						</sectioncol>
+					</sectionrow>
+				</section>
+			</tabledetails>
+			<buttongroup id="contract_grid1_1_1_typetable_1">
+				<pushbutton id="contract_grid1_1_1_typetable_1_1" label="Associate Terms" mxevent="assocterm"/>
+				<pushbutton id="contract_grid1_1_1_typetable_1_2" label="Associate Properties" mxevent="assocproperty"/>
+				<pushbutton default="true" id="contract_grid1_1_1_typetable_1_3" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="contract_2">
+			<pushbutton clickmessage="Contract Types have been saved." default="true" id="contract_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="contract_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="ADDTZSITE" label="Associate Time Zone with Selected Site" relationship="RECORDTIMEZONEDIALOG">
+		<section id="ADDTZSITE_timezone1_help">
+			<helpgrid id="ADDTZSITE_timezone1_helpgrid" innerhtml="Time zones are specified in the Time Zones domain. You can add or modify these values in the Domains application."/>
+		</section>
+		<textbox dataattribute="TIMEZONE" id="ADDTZSITE_timezone1" lookup="valuelist"/>
+		<checkbox dataattribute="removetz" id="ADDTZSITE_timezone2"/>
+		<buttongroup id="ADDTZSITE_buttongrp">
+			<pushbutton default="true" id="ADDTZSITE_button_OK" label="OK" mxevent="dialogok"/>
+			<pushbutton id="ADDTZSITE_button_Cancel" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="globaltk" label="Global Ticket Solution Options" relationship="MAXVARINPUTGLOBALTK">
+		<section id="globaltk_1">
+			<checkbox dataattribute="SOLTORELGLOBAL" id="globaltk_1_1"/>
+		</section>
+		<buttongroup id="globaltk_2">
+			<pushbutton clickmessage="Global Ticket Solution Options have been saved." default="true" id="globaltk_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="globaltk_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="po" label="PO Options" relationship="MAXVARINPUT4">
+		<section id="po_grid1_1_1_grid3">
+			<checkbox dataattribute="PRAPPROVAL" id="po_grid1_1_1_grid3_1"/>
+			<checkbox dataattribute="PRCHANGE" id="po_grid1_1_1_grid3_2"/>
+			<checkbox dataattribute="PRSPECIALDIRECT" id="po_grid1_1_1_grid3_3"/>
+			<checkbox dataattribute="AUTOBLANKETPOREL" id="po_grid1_1_1_grid3_4"/>
+			<checkbox dataattribute="SERVRECEIPTDEFAULT" id="po_grid1_1_1_grid3_5"/>
+			<checkbox dataattribute="ALLOWSPORDER" id="po_grid1_1_1_grid3_6"/>
+			<checkbox dataattribute="AUTOCLOSEPO" id="po_grid1_1_1_grid3_7"/>
+			<checkbox dataattribute="POPNDREVEDIT" id="po_grid1_1_1_grid3_8"/>
+			<checkbox dataattribute="ALLOWRECEIPT" id="po_grid1_1_1_grid3_9"/>
+			<checkbox dataattribute="POASSETRETVAL" id="po_grid1_1_1_grid3_10"/>
+		</section>
+		<buttongroup id="po_2">
+			<pushbutton clickmessage="PO Options have been saved." default="true" id="po_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="po_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="editrules" label="Edit Rules" relationship="WPEDITSETTING">
+		<table id="workorder_workorder_editrules_grid1_1_1_editrules" label="Work Order Edit Settings" width="960">
+			<tablebody displayrowsperpage="6" filterable="true" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody">
+				<tablecol filterable="false" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="status" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody_2" linkedcontrolid="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_1"/>
+				<tablecol dataattribute="editglaccount" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody_3" linkedcontrolid="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_2"/>
+				<tablecol dataattribute="editasset" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody_4" linkedcontrolid="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_3"/>
+				<tablecol dataattribute="editloc" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody_5" linkedcontrolid="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_4"/>
+				<tablecol dataattribute="editwplab" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody_6" linkedcontrolid="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_5"/>
+				<tablecol dataattribute="editwpmat" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody_7" linkedcontrolid="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_6"/>
+				<tablecol dataattribute="editwpser" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody_12" linkedcontrolid="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_12"/>
+				<tablecol dataattribute="editwptool" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody_8" linkedcontrolid="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_7"/>
+				<tablecol dataattribute="editsafety" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody_9" linkedcontrolid="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_8"/>
+				<tablecol dataattribute="applydjp" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody_11" linkedcontrolid="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_9"/>
+				<tablecol filterable="false" id="workorder_workorder_editrules_grid1_1_1_editrules_tablebody_10" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="workorder_workorder_editrules_grid1_1_1_editrules_1">
+				<section id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3" label="Details">
+					<sectionrow id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_row1">
+						<sectioncol id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_row1_col1">
+							<section id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_row1_col1_sec1">
+								<textbox dataattribute="status" defaultfocus="true" id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_1"/>
+								<checkbox dataattribute="editglaccount" id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_2"/>
+								<checkbox dataattribute="editasset" id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_3"/>
+								<checkbox dataattribute="applydjp" id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_9"/>
+							</section>
+						</sectioncol>
+						<sectioncol id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_row1_col2">
+							<section id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_row1_col2_sec1">
+								<checkbox dataattribute="editloc" id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_4"/>
+								<checkbox dataattribute="editwplab" id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_5"/>
+								<checkbox dataattribute="editwpmat" id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_6"/>
+							</section>
+						</sectioncol>
+						<sectioncol id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_row1_col3">
+							<section id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_row1_col3_sec1">
+								<checkbox dataattribute="editwpser" id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_12"/>
+								<checkbox dataattribute="editwptool" id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_7"/>
+								<checkbox dataattribute="editsafety" id="workorder_workorder_editrules_grid1_1_1_editrules_1_grid3_8"/>
+							</section>
+						</sectioncol>
+					</sectionrow>
+				</section>
+			</tabledetails>
+		</table>
+		<buttongroup id="workorder_editrules_buttons">
+			<pushbutton clickmessage="Work Order Options have been saved." default="true" id="workorder_editrules_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="workorder_editrules_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.multisite.MaxVarBean" id="workflow" label="Workflow Options" relationship="MAXVARINPUT">
+		<table id="workflow_grid1_1_1_virtualset1" label="Sites">
+			<tablebody displayrowsperpage="5" id="workflow_grid1_1_1_virtualset1_tablebody">
+				<tablecol dataattribute="siteid" id="workflow_grid1_1_1_virtualset1_tablebody_2" inputmode="readonly"/>
+				<tablecol dataattribute="site.description" filterable="false" id="workflow_grid1_1_1_virtualset1_tablebody_3" inputmode="readonly"/>
+			</tablebody>
+		</table>
+		<section id="workflow_grid1_1_1_grid4" label="Workflow Processes to Initiate Automatically">
+			<textbox dataattribute="WFONPMGENERATION" id="workflow_grid1_1_1_grid4_2" lookup="wfprocess"/>
+			<textbox dataattribute="WFONPRREORDER" id="workflow_grid1_1_1_grid4_3" lookup="wfprocess"/>
+			<textbox dataattribute="WFONPOREORDER" id="workflow_grid1_1_1_grid4_4" lookup="wfprocess"/>
+			<textbox dataattribute="WFONPOAPPROVAL" id="workflow_grid1_1_1_grid4_6" lookup="wfprocess"/>
+		</section>
+		<buttongroup id="workflow_2">
+			<pushbutton clickmessage="Workflow Options have been saved." default="true" id="workflow_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="workflow_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="syslevel" label="System Level" parentdatasrc="MAINRECORD" relationship="SYSTEMLEVEL">
+		<helpgrid id="syslevel_help" msggroup="organization" msgkey="systemlevel"/>
+		<table id="autonumber_autonumber_syslevel_grid1_1_1_autonumber1" label="Autonumber">
+			<tablebody displayrowsperpage="15" filterable="true" id="autonumber_autonumber_syslevel_grid1_1_1_autonumber1_tablebody">
+				<tablecol filterable="false" id="autonumber_autonumber_syslevel_grid1_1_1_autonumber1_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="autokeyname" id="autonumber_autonumber_syslevel_grid1_1_1_autonumber1_tablebody_2" linkedcontrolid="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_1_grid3_1"/>
+				<tablecol dataattribute="seed" id="autonumber_autonumber_syslevel_grid1_1_1_autonumber1_tablebody_3" linkedcontrolid="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_1_grid3_2"/>
+				<tablecol dataattribute="prefix" id="autonumber_autonumber_syslevel_grid1_1_1_autonumber1_tablebody_4" linkedcontrolid="autonumber_autonumber_organizationlevel_grid1_1_1_autonumber1_1_grid3_3"/>
+			</tablebody>
+			<tabledetails id="autonumber_autonumber_syslevel_grid1_1_1_autonumber1_1">
+				<section id="autonumber_autonumber_syslevel_grid1_1_1_autonumber1_1_grid3" label="Details">
+					<textbox dataattribute="autokeyname" id="autonumber_autonumber_syslevel_grid1_1_1_autonumber1_1_grid3_1"/>
+					<textbox dataattribute="seed" defaultfocus="true" id="autonumber_autonumber_syslevel_grid1_1_1_autonumber1_1_grid3_2"/>
+					<textbox dataattribute="prefix" id="autonumber_autonumber_syslevel_grid1_1_1_autonumber1_1_grid3_3"/>
+				</section>
+			</tabledetails>
+		</table>
+		<buttongroup id="autonumber_syslevel_1">
+			<pushbutton clickmessage="Autonumber Setup has been saved." default="true" id="autonumber_syslevel_1_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="autonumber_syslevel_1_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="others" label="Other Organization Options" relationship="MAXVARINPUT2">
+		<section id="workorder_others_reportDate_radio_1">
+			<radiobuttongroup border="true" dataattribute="DOWNTIMEDFLTS" id="workorder_workorder_others_grid1_1_1_grid3_1_1_reportDate" label="Default Downtime Start">
+				<radiobutton id="reportDate_rb_1" label="On Reported Date" value="REPORTED"/>
+				<radiobutton id="reportDate_rb_2" label="On Actual Start Date" value="START"/>
+				<radiobutton id="reportDate_rb_3" label="None" value="NONE"/>
+			</radiobuttongroup>
+			<blankline id="workorder_workorder_others_bl1"/>
+			<radiobuttongroup border="true" dataattribute="SETACTSTARTONINIT" id="workorder_workorder_others_grid1_1_1_grid3_1_1_startdate" label="Set Actual Start Date">
+				<radiobutton id="workorder_workorder_others_grid1_1_1_grid3_1_1_startdate_1" label="On Change Status Initiate" value="1"/>
+				<radiobutton id="workorder_workorder_others_grid1_1_1_grid3_1_1_startdate_2" label="On Change Status Complete" value="0"/>
+			</radiobuttongroup>
+			<blankline id="workorder_workorder_others_bl2"/>
+			<checkbox dataattribute="WARREXPDATE" id="workorder_workorder_others_grid1_1_1_workorder_1"/>
+			<checkbox dataattribute="DOWNPROMPT" id="workorder_workorder_others_grid1_1_1_workorder_2"/>
+			<checkbox dataattribute="NESTEDJOBPLANS" id="workorder_workorder_others_grid1_1_1_workorder_3"/>
+			<checkbox dataattribute="ORGIGNORESRMAVAIL" id="workorder_workorder_others_grid1_1_1_workorder_4"/>
+			<checkbox dataattribute="ORGIGNOREDIAVAIL" id="workorder_workorder_others_grid1_1_1_workorder_5"/>
+			<checkbox dataattribute="WOENABLEREPFAC" id="workorder_workorder_others_grid1_1_1_workorder_6"/>
+			<checkbox dataattribute="WONOREPFACWARNING" id="workorder_workorder_others_grid1_1_1_workorder_7"/>
+			<checkbox dataattribute="WORKZONE" id="workorder_workorder_others_grid1_1_1_workorder_8" licensekey="SCHEDULER_OPT"/>
+			<blankline id="workorder_workorder_others_bl3"/>
+			<radiobuttongroup dataattribute="WOSTATUSCLEARRESV" id="workorder_workorder_others_grid1_1_1_workorder_startdate" label="Clear Material Reservation When WO Status Changes">
+				<radiobutton id="workorder_workorder_others_grid1_1_1_workorder_startdate_1" label="To Complete" value="COMPLETE"/>
+				<radiobutton id="workorder_workorder_others_grid1_1_1_workorder_startdate_2" label="To Closed" value="CLOSED"/>
+			</radiobuttongroup>
+		</section>
+		<section id="workorder_workorder_others_grid1_1_1_grid3_1_1_duplicate" label="Display Duplicate Problem Warning">
+			<sectionrow id="workorder_workorder_others_grid1_1_1_grid3_1_1_duplicate_row1">
+				<sectioncol id="workorder_workorder_others_grid1_1_1_grid3_1_1_duplicate_row1_col1">
+					<section id="workorder_workorder_others_grid1_1_1_grid3_1_1_duplicate_row1_col1_sec1">
+						<checkbox dataattribute="SHOWDUPWITHASSET" id="workorder_workorder_others_grid1_1_1_grid3_1_1_duplicate_1"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="workorder_workorder_others_grid1_1_1_grid3_1_1_duplicate_row1_col2">
+					<section id="workorder_workorder_others_grid1_1_1_grid3_1_1_duplicate_row1_col2_sec1">
+						<checkbox dataattribute="SHOWDUPATLOC" id="workorder_workorder_others_grid1_1_1_grid3_1_1_duplicate_2"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="workorder_others_buttons">
+			<pushbutton clickmessage="Work Order Options have been saved." default="true" id="workorder_others_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="workorder_others_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+	<configurationblock id="datastore_configurationblock"/>
+
+	<dialog id="lvc_attributes_expression" label="Select fields">
+		<section id="lvc_attributes_expression_sec">
+			<tree beanclass="psdi.webclient.beans.linear.LinearVCAttributeTreeBean" height="250" id="lvc_attributestree_tree_1" ignorestructurechange="false" maxchildren="5000" relationship="EXPBUILDTREE" usedatasrc="true" width="250">
+				<treenode displaykeyattribute="false" displayobjectname="false" id="lvc_attributestree_tree_node1" keyattribute="maxrelationshipid">
+					<treeattribute dataattribute="name" display="true" id="lvc_attributestree_tree_node1_attr1"/>
+					<treeattribute dataattribute="parent" display="false" id="lvc_attributestree_tree_node1_attr2"/>
+				</treenode>
+			</tree>
+		</section>
+		<buttongroup id="lvc_attributestree_tree_buttons">
+			<pushbutton id="lvc_attributestree_tree_buttons_1" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="lvc_label_attribute_definition" label="Select fields">
+		<section id="lvc_label_attribute_definition_sec">
+			<tree beanclass="psdi.webclient.beans.linear.LinearVCDefineLabel" height="250" id="lvc_label_attributestree_tree_1" ignorestructurechange="false" maxchildren="5000" relationship="EXPBUILDTREE" usedatasrc="true" width="250">
+				<treenode displaykeyattribute="false" displayobjectname="false" id="lvc_label_attributestree_tree_node1" keyattribute="maxrelationshipid">
+					<treeattribute dataattribute="name" display="true" id="lvc_label_attributestree_tree_node1_attr1"/>
+					<treeattribute dataattribute="parent" display="false" id="lvc_label_attributestree_tree_node1_attr2"/>
+				</treenode>
+			</tree>
+		</section>
+		<buttongroup id="lvc_label_attributestree_tree_buttons">
+			<pushbutton id="lvc_label_attributestree_tree_buttons_1" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+</presentation>

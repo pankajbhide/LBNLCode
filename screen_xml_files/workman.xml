@@ -1,0 +1,1062 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<presentation apphelp="com.ibm.mbs.doc,workman/c_assignment_mgr_application.html" beanclass="psdi.webclient.beans.workman.WorkmanAppBean" id="workman" mboname="wmassignment" orderby="wogroup, taskid" version="6.2.8">
+	<page id="mainrec">
+		<include id="pageHeader"/>
+		<clientarea id="clientarea">
+			<datasrc id="AMcalendarview" mboname="calendarview"/>
+			<tabgroup format="carddeck" id="maintabs" style="form">
+				<tab id="results" label="List">
+					<menubar event="search" id="actiontoolbar" sourcemethod="getAppSearchOptions"/>
+					<table id="assignments_table" label="Work List" selectmode="multiple">
+						<tablebody customizable="true" displayrowsperpage="8" filterable="true" filterexpanded="false" id="assign_tablebody">
+							<tablecol dataattribute="wogroup" filterable="false" hidden="false" id="assign_col_0" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+							<tablecol filterable="false" hidden="false" id="assign_col_119" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+							<tablecol applink="wotrack" dataattribute="wogroup" id="assign_col_1" inputmode="required" label="Work Order" menutype="hyperlink">
+								<textbox id="assign_col_1_1" inputmode="readonly" lookup="workorder"/>
+							</tablecol>
+							<tablecol dataattribute="taskid" id="assign_col_2" inputmode="readonly"/>
+							<tablecol dataattribute="description" id="assign_col_2_1" inputmode="readonly"/>
+							<tablecol dataattribute="laborcode" id="assign_col_3" inputmode="readonly"/>
+							<tablecol dataattribute="craft" id="assign_col_4" inputmode="readonly"/>
+							<tablecol dataattribute="amcrew" id="assign_col_5" inputmode="readonly" licensekey="CREW"/>
+							<tablecol dataattribute="amcrewtype" id="assign_col_6" inputmode="readonly" licensekey="CREW"/>
+							<tablecol dataattribute="crewworkgroup" id="assign_col_10" inputmode="readonly" licensekey="CREW"/>
+							<tablecol dataattribute="scheduledate" id="assign_col_8" inputmode="readonly"/>
+							<tablecol dataattribute="laborhrs" id="assign_col_9" inputmode="readonly" label="Lab Hrs"/>
+							<tablecol dataattribute="location" id="assign_col_11" inputmode="readonly"/>
+							<tablecol dataattribute="calcpriority" id="assign_col_12" inputmode="readonly" label="Calc Pri"/>
+							<tablecol dataattribute="assignstatus" id="assign_col_13" inputmode="readonly" label="Status"/>
+							<tablecol filterable="false" hidden="false" id="assign_col_14" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+							<displayrule dataattribute="calcpriority" id="displayrule1">
+								<range classname="rowcolor_calcpriority_2" id="range1" lower="0" upper="2"/>
+								<range classname="rowcolor_calcpriority_4" id="range2" lower="3" upper="4"/>
+								<range classname="rowcolor_calcpriority_6" id="range3" lower="5" upper="6"/>
+								<range classname="rowcolor_calcpriority_8" id="range4" lower="7" upper="8"/>
+								<range classname="rowcolor_calcpriority_9" id="range5" lower="9" upper="9"/>
+							</displayrule>
+						</tablebody>
+						<tabledetails id="results_Tabledetails" inputmode="">
+							<section id="results_Table_section_1" label="Work Order Details">
+								<sectionrow id="results_Table_section_1_1">
+									<sectioncol id="results_Table_section_1_1_1">
+										<section id="results_Table_section_1_1_1_1">
+											<textbox applink="wotrack" dataattribute="wogroup" id="wm_workorder_table_1_grid4_1" lookup="workorder" menutype="workorder" smartfilloff="true"/>
+											<textbox dataattribute="taskid" id="wm_workorder_table_1_grid4_2" smartfilloff="true"/>
+											<textbox dataattribute="calcpriority" id="wm_workorder_table_1_grid4_4" inputmode="readonly" smartfilloff="true"/>
+											<textbox applink="location,ipc" dataattribute="REPAIRFACILITY" id="wm_workorder_table_1_grid4_6" lookup="repfacility" menutype="repfacility" sigoption="REPFACILITY"/>
+											<textbox dataattribute="REPFACSITEID" id="wm_workorder_table_1_grid4_7" inputmode="readonly" sigoption="REPFACILITY"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="results_Table_section_1_1_2">
+										<section id="results_Table_section_1_1_2_1">
+											<textbox dataattribute="crewworkgroup" id="wm_workorder_table_1_grid4_3a" inputmode="readonly" licensekey="CREW" smartfilloff="true"/>
+											<textbox dataattribute="assetnum" id="wm_workorder_table_1_grid4_3" inputmode="readonly" smartfilloff="true"/>
+											<textbox dataattribute="location" id="wm_workorder_table_1_grid4_5" inputmode="readonly" smartfilloff="true"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+							<section id="assignments_assignments_table_1_grid4" label="Assignment Details">
+								<sectionrow id="assignments_assignments_table_1_grid4_1">
+									<sectioncol id="assignments_assignments_table_1_grid4_1_1">
+										<section id="assignments_assignments_table_1_grid4_1_1_1">
+											<multiparttextbox applink="labor" dataattribute="laborcode" descdataattribute="labor.person.displayname" descinputmode="readonly" desclookup="longdesc" id="wm_assignments_table_1_grid4_2" lookup="laborcraftrate" menutype="normal" smartfilloff="true"/>
+											<textbox applink="craft" dataattribute="craft" defaultfocus="true" id="wm_assignments_table_1_grid4_1" lookup="craftratestatus" menutype="normal" smartfilloff="true"/>
+											<textbox dataattribute="skilllevel" defaultfocus="true" id="wm_assignments_table_1_grid4_9" lookup="craftratestatus" smartfilloff="true"/>
+											<textbox dataattribute="vendor" defaultfocus="true" id="wm_assignments_table_1_grid4_10" lookup="craftratestatus" smartfilloff="true"/>
+											<textbox dataattribute="contractnum" defaultfocus="true" id="wm_assignments_table_1_grid4_11" lookup="craftratestatus" smartfilloff="true"/>
+											<textbox applink="amcrew" dataattribute="amcrew" id="wm_assignments_table_1_grid4_12" licensekey="CREW" lookup="amcrews" menutype="normal" smartfilloff="true"/>
+											<textbox applink="amcrewt" dataattribute="amcrewtype" id="wm_assignments_table_1_grid4_13" licensekey="CREW" lookup="amcrewtype" menutype="normal" smartfilloff="true"/>
+										</section>
+									</sectioncol>
+									<sectioncol id="assignments_assignments_table_1_grid4_1_2">
+										<section id="assignments_assignments_table_1_grid4_1_1_2">
+											<textbox dataattribute="scheduledate" id="wm_assignments_table_1_grid4_6" lookup="datelookup"/>
+											<textbox dataattribute="assignstatus" id="wm_assignments_table_1_grid4_4" inputmode="readonly"/>
+											<textbox dataattribute="laborhrs" id="wm_assignments_table_1_grid4_5"/>
+										</section>
+									</sectioncol>
+								</sectionrow>
+							</section>
+						</tabledetails>
+						<buttongroup id="wmassign_Buttongroup">
+							<pushbutton id="wmassign_button_1" label="Filter Work to Match Labor" mxevent="matwolist"/>
+							<pushbutton id="wmassign_button_2" label="Filter Work to Match Crew" licensekey="CREW" mxevent="crwmatwo"/>
+							<pushbutton id="wmassign_button_3" label="Refresh Work List" mxevent="amworkrefresh"/>
+							<pushbutton default="true" id="wmassign_button_4" label="New Row" mxevent="addrow"/>
+						</buttongroup>
+					</table>
+					<tabgroup id="labor_crew_tab_group">
+						<tab id="select_labor_tab" label="Labor">
+							<table beanclass="psdi.webclient.beans.workman.AMLaborTableBean" id="select_labor_table" inputmode="readonly" label="Labor List" mboname="laborcraftrate" selectmode="multiple">
+								<tablebody customizable="true" displayrowsperpage="8" filterable="true" filterexpanded="false" id="select_labor_tablebody">
+									<tablecol filterable="false" hidden="false" id="select_labor_col_0" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+									<tablecol dataattribute="laborcode" id="select_labor_col_2"/>
+									<tablecol dataattribute="labor.person.displayname" id="select_labor_col_3" sortable="false"/>
+									<tablecol dataattribute="craft" id="select_labor_col_16"/>
+									<tablecol dataattribute="skilllevel" id="select_labor_col_17"/>
+									<tablecol dataattribute="vendor" id="select_labor_col_18"/>
+									<tablecol dataattribute="labor.worklocation" id="select_labor_col_4" label="Work Loc" sortable="false"/>
+									<tablecol dataattribute="labor.personcal.shiftnum" id="select_labor_col_5" sortable="false"/>
+									<tablecol filterable="false" id="select_labor_col_6" mxevent="showassigns" mxevent_desc="Show Assignments" mxevent_icon="btn_showassignments.gif" sortable="false" type="event"/>
+									<tablecol classname="rowbg_gray" dataattribute="labor.day1" filterable="false" id="select_labor_col_7" label="{0}" labelattributes="day1" labelsrcid="AMcalendarview" mxevent="assignlabgrid" sortable="false" targetid="select_labor_col_7" type="event"/>
+									<tablecol classname="rowbg_gray" dataattribute="labor.day2" filterable="false" id="select_labor_col_8" label="{0}" labelattributes="day2" labelsrcid="AMcalendarview" mxevent="assignlabgrid" sortable="false" targetid="select_labor_col_8" type="event"/>
+									<tablecol classname="rowbg_gray" dataattribute="labor.day3" filterable="false" id="select_labor_col_9" label="{0}" labelattributes="day3" labelsrcid="AMcalendarview" mxevent="assignlabgrid" sortable="false" targetid="select_labor_col_9" type="event"/>
+									<tablecol classname="rowbg_gray" dataattribute="labor.day4" filterable="false" id="select_labor_col_10" label="{0}" labelattributes="day4" labelsrcid="AMcalendarview" mxevent="assignlabgrid" sortable="false" targetid="select_labor_col_10" type="event"/>
+									<tablecol classname="rowbg_gray" dataattribute="labor.day5" filterable="false" id="select_labor_col_11" label="{0}" labelattributes="day5" labelsrcid="AMcalendarview" mxevent="assignlabgrid" sortable="false" targetid="select_labor_col_11" type="event"/>
+									<tablecol classname="rowbg_gray" dataattribute="labor.day6" filterable="false" id="select_labor_col_12" label="{0}" labelattributes="day6" labelsrcid="AMcalendarview" mxevent="assignlabgrid" sortable="false" targetid="select_labor_col_12" type="event"/>
+									<tablecol classname="rowbg_gray" dataattribute="labor.day7" filterable="false" id="select_labor_col_13" label="{0}" labelattributes="day7" labelsrcid="AMcalendarview" mxevent="assignlabgrid" sortable="false" targetid="select_labor_col_13" type="event"/>
+									<tablecol dataattribute="labor.percentalloc" filterable="false" id="select_labor_col_14" label="% Alloc" sortable="false"/>
+									<tablecol filterable="false" id="select_labor_col_15" mxevent="modavail" mxevent_desc="Modify Availability" mxevent_icon="btn_modifylaboravail.gif" sortable="false" type="event"/>
+									<displayrule dataattribute="labor.percentalloc" id="select_labor_table_displayrule1">
+										<range classname="rowcolor_percentalloc_0_50" id="select_labor_table_range1" lower="1" upper="50"/>
+										<range classname="rowcolor_percentalloc_51_80" id="select_labor_table_range2" lower="51" upper="80"/>
+										<range classname="rowcolor_percentalloc_81_100" id="select_labor_table_range3" lower="81" upper="100"/>
+									</displayrule>
+								</tablebody>
+								<buttongroup id="select_labor_Buttongroup">
+									<pushbutton id="select_labor_button_1" label="Filter Labor to Match Work" mxevent="matlablist"/>
+									<pushbutton id="select_labor_button_2" label="Refresh Labor List" mxevent="amlaborrefresh"/>
+									<pushbutton id="select_labor_button_3" label="Select Work Date" mxevent="SELWRKDATE"/>
+									<pushbutton id="select_labor_button_4" label="Select Labor Query" mxevent="setquery"/>
+									<pushbutton id="select_labor_button_5" label="Show All Labor" mxevent="SHOWALLLAB" targetid="workman"/>
+								</buttongroup>
+							</table>
+						</tab>
+						<tab id="select_crew_list" label="Crew List" licensekey="CREW">
+							<table beanclass="com.ibm.tivoli.maximo.amcrew.workman.beans.AMCrewTableBean" id="select_crew_table" inputmode="readonly" label="Crew List" mboname="amcrew" selectmode="multiple">
+								<tablebody customizable="true" displayrowsperpage="8" filterable="true" filterexpanded="false" id="select_crew_tablebody">
+									<tablecol filterable="false" hidden="false" id="select_crew_col_1" mxevent="toggleselectrow" mxevent_desc="Select Row {0}" sortable="false" type="event"/>
+									<tablecol dataattribute="amcrew" id="select_crew_col_2"/>
+									<tablecol dataattribute="description" id="select_crew_col_3" sortable="false"/>
+									<tablecol dataattribute="amcrewtype" id="select_crew_col_4"/>
+									<tablecol dataattribute="crewworkgroup" id="select_crew_col_5" label="Work Group" sortable="false"/>
+									<tablecol dataattribute="shiftnum" id="select_crew_col_6" sortable="false"/>
+									<tablecol filterable="false" id="select_crew_col_7" mxevent="showcrewassigns" mxevent_desc="Show Assignments" mxevent_icon="btn_showassignments.gif" sortable="false" type="event"/>
+									<tablecol classname="bg_gray" dataattribute="day1" filterable="false" id="select_crew_col_8" label="{0}" labelattributes="day1" labelsrcid="AMcalendarview" mxevent="assigncrewgrid1" sortable="false" targetid="select_crew_col_21" type="event"/>
+									<tablecol classname="bg_gray" dataattribute="day2" filterable="false" id="select_crew_col_9" label="{0}" labelattributes="day2" labelsrcid="AMcalendarview" mxevent="assigncrewgrid2" sortable="false" targetid="select_crew_col_24" type="event"/>
+									<tablecol classname="bg_gray" dataattribute="day3" filterable="false" id="select_crew_col_10" label="{0}" labelattributes="day3" labelsrcid="AMcalendarview" mxevent="assigncrewgrid3" sortable="false" targetid="select_crew_col_27" type="event"/>
+									<tablecol classname="bg_gray" dataattribute="day4" filterable="false" id="select_crew_col_11" label="{0}" labelattributes="day4" labelsrcid="AMcalendarview" mxevent="assigncrewgrid4" sortable="false" targetid="select_crew_col_30" type="event"/>
+									<tablecol classname="bg_gray" dataattribute="day5" filterable="false" id="select_crew_col_12" label="{0}" labelattributes="day5" labelsrcid="AMcalendarview" mxevent="assigncrewgrid5" sortable="false" targetid="select_crew_col_33" type="event"/>
+									<tablecol classname="bg_gray" dataattribute="day6" filterable="false" id="select_crew_col_13" label="{0}" labelattributes="day6" labelsrcid="AMcalendarview" mxevent="assigncrewgrid6" sortable="false" targetid="select_crew_col_35" type="event"/>
+									<tablecol classname="bg_gray" dataattribute="day7" filterable="false" id="select_crew_col_14" label="{0}" labelattributes="day7" labelsrcid="AMcalendarview" mxevent="assigncrewgrid7" sortable="false" targetid="select_crew_col_38" type="event"/>
+									<tablecol dataattribute="percentalloc" filterable="false" id="select_crew_col_15" label="% Alloc" sortable="false"/>
+									<tablecol filterable="false" id="select_crew_col_16" mxevent="modavailcrew" mxevent_desc="Modify Availability" mxevent_icon="btn_modifylaboravail.gif" sortable="false" type="event"/>
+									<displayrule dataattribute="percentalloc" id="select_crew_table_displayrule1">
+										<range classname="rowcolor_percentalloc_0_50" id="select_crew_table_range1" lower="1" upper="50"/>
+										<range classname="rowcolor_percentalloc_51_80" id="select_crew_table_range2" lower="51" upper="80"/>
+										<range classname="rowcolor_percentalloc_81_100" id="select_crew_table_range3" lower="81" upper="100"/>
+									</displayrule>
+								</tablebody>
+								<buttongroup id="select_crew_Buttongroup">
+									<pushbutton id="select_crew_button_1" label="Filter Crew to Match Work" mxevent="crwmatcrew"/>
+									<pushbutton id="select_crew_button_2" label="Refresh Crew List" mxevent="amCrewRefresh"/>
+									<pushbutton id="select_crew_button_3" label="Select Work Date" mxevent="SELWRKDATE"/>
+									<pushbutton id="select_crew_button_4" label="Select Crew Query" mxevent="crwsetqry"/>
+									<pushbutton id="select_crew_button_5" label="Show All Crews" mxevent="CRWSHOWALL" targetid="workman"/>
+								</buttongroup>
+							</table>
+						</tab>
+					</tabgroup>
+				</tab>
+			</tabgroup>
+		</clientarea>
+		<include id="pageFooter"/>
+	</page>
+
+	<dialog beanclass="psdi.webclient.system.beans.QbeBean" id="searchmore" inputmode="query" label="More Search Fields">
+		<datasrc beanclass="psdi.webclient.beans.common.RepairFacilityConditionalUIBean" id="repfacilitysrc"/>
+		<section id="qbe_grid2">
+			<sectionrow id="qbe_grid2_1">
+				<sectioncol id="qbe_grid2_1_1">
+					<section id="qbe_grid2_1_1_grid3">
+						<textbox applink="wotrack" dataattribute="wonum" id="qbe_grid2_1_1_grid3_1" inputmode="query" lookup="workorder" menutype="workorder"/>
+						<textbox dataattribute="description" id="qbe_grid2_1_1_grid3_1a" inputmode="query"/>
+						<textbox applink="wotrack" dataattribute="wogroup" id="qbe_grid2_1_1_grid3_1b" inputmode="query" lookup="workorder" menutype="workorder"/>
+						<textbox applink="location,ipc" dataattribute="location" id="qbe_grid2_1_1_grid3_5" inputmode="query" lookup="locations" menutype="locations"/>
+						<textbox applink="LOCATION" dataattribute="location" id="copy_qbe_grid2_1_1_grid3_5" inputmode="query" label="Location Description" lookup="locations" menutype="locations"/>
+						<textbox applink="location,ipc" dataattribute="primarysyslocwo.ancestor" id="qbe_grid2_1_1_grid5_15" inputmode="query" lookup="locations" menutype="locations"/>
+						<textbox applink="asset,ipc" dataattribute="assetnum" id="qbe_grid2_1_1_grid3_8" inputmode="query" lookup="asset" menutype="assetmain"/>
+						<textbox applink="ASSET" dataattribute="ASSET.DESCRIPTION" id="copy_copy_qbe_grid2_1_1_grid3_5" inputmode="query" label="Asset Description" lookup="ASSET" menutype="ASSET"/>
+						<textbox applink="pm" dataattribute="pmnum" id="qbe_grid2_1_1_grid4_2" inputmode="query" lookup="pm" menutype="normal"/>
+						<textbox dataattribute="risk" id="qbe_grid2_1_1_grid5_17" inputmode="query"/>
+						<textbox dataattribute="justifypriority" id="qbe_grid2_1_1_grid4_4" inputmode="query"/>
+						<textbox applink="location,ipc" dataattribute="REPAIRFACILITY" id="qbe_grid2_1_1_grid4_15" inputmode="query" lookup="repfacility" menutype="repfacility" sigoption="REPFACILITY" sigoptiondatasrc="repfacilitysrc"/>
+						<textbox dataattribute="REPFACSITEID" id="qbe_grid2_1_1_grid4_16" inputmode="query" lookup="site" sigoption="REPFACILITY" sigoptiondatasrc="repfacilitysrc"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_grid2_1_2">
+					<section id="qbe_grid2_1_2_grid1">
+						<textbox applink="persongr" dataattribute="acrewworkgroup" id="qbe_grid2_1_1_grid4_crew1" inputmode="query" label="Work Group" lookup="persongroup" menutype="normal"/>
+						<textbox applink="amcrewt" dataattribute="amcrewtype" id="qbe_grid2_1_1_grid4_crew2" inputmode="query" lookup="amcrewtype"/>
+						<textbox applink="amcrew" dataattribute="amcrew" id="qbe_grid2_1_1_grid4_crew3" inputmode="query" label="Crew" lookup="amcrews" menutype="normal"/>
+						<textbox dataattribute="problemcode" id="qbe_grid2_1_1_grid4_6" inputmode="query" lookup="failurecode"/>
+						<textbox applink="failure" applinkreturn="failurecode" dataattribute="failurecode" id="qbe_grid2_1_1_grid4_7" inputmode="query" lookup="failurecode" menutype="normal"/>
+						<textbox applink="srvcommod" dataattribute="commoditygroup" id="qbe_grid2_1_1_grid4_10" inputmode="query" lookup="servicegroup" menutype="SRVVIEWRELATEDGRP"/>
+						<textbox dataattribute="commodity" id="qbe_grid2_1_1_grid4_11" inputmode="query" lookup="commodities"/>
+						<textbox applink="company" dataattribute="wovendor" id="qbe_grid2_1_1_grid4_9" inputmode="query" lookup="companies" menutype="normal"/>
+						<textbox dataattribute="origrecordid" id="qbe_grid2_1_1_grid4_3" inputmode="query" menutype="normal"/>
+						<textbox dataattribute="origrecordclass" id="qbe_grid2_1_1_grid4_5" inputmode="query" lookup="valuelist"/>
+						<textbox applink="location,ipc" dataattribute="worklocation" id="qbe_grid2_1_1_grid4_5a" inputmode="query" lookup="locations" menutype="locations"/>
+						<textbox dataattribute="CRAFT" id="new_textbox" label="Craft Required"/>
+						<textbox dataattribute="CREWID" id="copy_new_textbox" label="Crew" lookup="VALUELIST"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_grid2_1_3">
+					<section id="qbe_grid2_1_3_grid1">
+						<textbox dataattribute="worktype" id="qbe_grid2_1_1_grid4_17" inputmode="query" lookup="worktype"/>
+						<textbox dataattribute="ASSIGNSTATUS" id="qbe_grid2_1_1_grid3_17a" inputmode="query" lookup="valuelist"/>
+						<textbox dataattribute="status" id="qbe_grid2_1_1_grid3_11" inputmode="query" lookup="valuelist"/>
+						<textbox dataattribute="woclass" id="qbe_grid2_1_1_grid4_20" inputmode="query" lookup="valuelist"/>
+						<textbox dataattribute="siteid" id="qbe_grid2_1_1_grid3_3" inputmode="query" lookup="site"/>
+						<textbox dataattribute="historyflag" id="qbe_grid2_1_1_grid3_10" inputmode="query"/>
+						<textbox dataattribute="CALCPRIORITY" id="qbe_grid2_1_1_grid4_10a" inputmode="query"/>
+						<textbox dataattribute="wopriority" id="qbe_grid2_1_1_grid4_1" inputmode="query"/>
+						<textbox dataattribute="istask" id="qbe_grid2_1_1_grid5_16" inputmode="query"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<section id="qbe_s2">
+			<sectionrow id="qbe_s2_sr1">
+				<sectioncol id="qbe_s2_sr1_sc1">
+					<section id="qbe_s2_sr1_sc1_s1" label="Plan Details">
+						<sectionrow id="qbe_s2_sr1_sc1_s1_r1">
+							<sectioncol id="qbe_s2_sr1_sc1_s1_r1_c1">
+								<section id="qbe_s2_sr1_sc1_s1_r1_c1_s1">
+									<textbox applink="jobplan" dataattribute="jpnum" id="qbe_grid2_1_1_grid4_18" inputmode="query" lookup="jobplan" menutype="normal"/>
+									<textbox applink="safeplan" dataattribute="wosafetyplan.safetyplanid" id="qbe_grid2_1_1_grid4_19" inputmode="query" lookup="safetyplan" menutype="normal"/>
+									<textbox applink="labor" dataattribute="laborcode" id="qbe_grid2_1_1_grid4_14" inputmode="query" lookup="wmlaboronly" menutype="normal"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_s1_sr1_sc2">
+					<section id="qbe_s1_sr1_sc2_s1" label="User Information">
+						<sectionrow id="qbe_s1_sr1_sc2_s1_r1">
+							<sectioncol id="qbe_s1_sr1_sc2_s1_r1_c1">
+								<section id="qbe_s1_sr1_sc2_s1_r1_c1_s1">
+									<textbox applink="person" dataattribute="reportedby" id="qbe_grid2_1_1_grid3_4" inputmode="query" lookup="person" menutype="normal"/>
+									<textbox applink="person" dataattribute="onbehalfof" id="qbe_grid2_1_1_grid3_7" inputmode="query" lookup="person" menutype="normal"/>
+									<textbox applink="person" dataattribute="supervisor" id="qbe_grid2_1_1_grid4_8" inputmode="query" lookup="person" menutype="normal"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_s1_sr1_sc2_s1_r1_c2">
+								<section id="qbe_s1_sr1_sc2_s1_r1_c2_s1">
+									<textbox applink="person" dataattribute="owner" id="qbe_grid2_1_1_grid4_12" inputmode="query" lookup="person" menutype="normal"/>
+									<textbox applink="persongr" dataattribute="ownergroup" id="qbe_grid2_1_1_grid4_13" inputmode="query" lookup="persongroup" menutype="normal"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<section id="qbe_date_s1" label="Dates">
+			<sectionrow id="qbe_date_r1">
+				<sectioncol id="qbe_date_r1_c1">
+					<section id="qbe_date_r1_c1_s1">
+						<sectionrow id="qbe_date_s1_r1">
+							<sectioncol id="qbe_date_s1_r1_c1">
+								<section id="qbe_date_s1_r1_c1_s1">
+									<statictext align="center" hidelabel="true" id="qbe_date_s1_r1_c1_s1_st1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r1_c2">
+								<section id="qbe_date_s1_r1_c2_s1">
+									<statictext align="center" id="qbe_date_s1_r1_c2_s1_st1" label="From"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r1_c3">
+								<section id="qbe_date_s1_r1_c3_s1">
+									<statictext align="center" id="qbe_date_s1_r1_c3_s1_st1" label="To"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="qbe_date_s1_r2">
+							<sectioncol id="qbe_date_s1_r2_c1">
+								<section id="qbe_date_s1_r2_c1_s1">
+									<statictext align="right" id="qbe_date_s1_r2_c1_s1_t1" label="Reported Date"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r2_c2">
+								<section id="qbe_date_s1_r2_c2_s1">
+									<textbox dataattribute="reportdate" hidelabel="true" id="qbe_grid2_1_1_grid5_3" inputmode="query" lookup="datelookup" prepend="&gt;="/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r2_c3">
+								<section id="qbe_date_s1_r2_c3_s1">
+									<textbox dataattribute="reportdate" hidelabel="true" id="qbe_grid2_1_1_grid5_4" inputmode="query" lookup="datelookup" prepend="&lt;="/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="qbe_date_s1_r3">
+							<sectioncol id="qbe_date_s1_r3_c1">
+								<section id="qbe_date_s1_r3_c1_s1">
+									<statictext align="right" id="qbe_date_s1_r3_c1_s1_t1" label="Target Start"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r3_c2">
+								<section id="qbe_date_s1_r3_c2_s1">
+									<textbox dataattribute="targstartdate" hidelabel="true" id="qbe_grid2_1_1_grid5_7" inputmode="query" lookup="datelookup" prepend="&gt;="/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r3_c3">
+								<section id="qbe_date_s1_r3_c3_s1">
+									<textbox dataattribute="targstartdate" hidelabel="true" id="qbe_grid2_1_1_grid5_8" inputmode="query" lookup="datelookup" prepend="&lt;="/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="qbe_date_s1_r4">
+							<sectioncol id="qbe_date_s1_r4_c1">
+								<section id="qbe_date_s1_r4_c1_s1">
+									<statictext align="right" id="qbe_date_s1_r4_c1_s1_t1" label="Target Finish"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r4_c2">
+								<section id="qbe_date_s1_r4_c2_s1">
+									<textbox dataattribute="targcompdate" hidelabel="true" id="qbe_grid2_1_1_grid5_9" inputmode="query" lookup="datelookup" prepend="&gt;="/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r4_c3">
+								<section id="qbe_date_s1_r4_c3_s1">
+									<textbox dataattribute="targcompdate" hidelabel="true" id="qbe_grid2_1_1_grid5_10" inputmode="query" lookup="datelookup" prepend="&lt;="/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</sectioncol>
+				<sectioncol id="qbe_date_r1_c2">
+					<section id="qbe_date_r1_c2_s1">
+						<sectionrow id="qbe_date_s1_r7">
+							<sectioncol id="qbe_date_s1_r7_c1">
+								<section id="qbe_date_s1_r7_c1_s1">
+									<statictext align="center" hidelabel="true" id="qbe_date_s1_r7_c1_s1_st1"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r7_c2">
+								<section id="qbe_date_s1_r7_c2_s1">
+									<statictext align="center" id="qbe_date_s1_r7_c2_s1_st1" label="From"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r7_c3">
+								<section id="qbe_date_s1_r7_c3_s1">
+									<statictext align="center" id="qbe_date_s1_r7_c3_s1_st1" label="To"/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="qbe_date_s1_r8">
+							<sectioncol id="qbe_date_s1_r8_c1">
+								<blankline id="qbe_blkline"/>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="qbe_date_s1_r5">
+							<sectioncol id="qbe_date_s1_r5_c1">
+								<section id="qbe_date_s1_r5_c1_s1">
+									<statictext align="right" id="qbe_date_s1_r5_c1_s1_t1" label="Scheduled Start"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r5_c2">
+								<section id="qbe_date_s1_r5_c2_s1">
+									<textbox dataattribute="schedstart" hidelabel="true" id="qbe_grid2_1_1_grid5_11" inputmode="query" lookup="datelookup" prepend="&gt;="/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r5_c3">
+								<section id="qbe_date_s1_r5_c3_s1">
+									<textbox dataattribute="schedstart" hidelabel="true" id="qbe_grid2_1_1_grid5_12" inputmode="query" lookup="datelookup" prepend="&lt;="/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+						<sectionrow id="qbe_date_s1_r6">
+							<sectioncol id="qbe_date_s1_r6_c1">
+								<section id="qbe_date_s1_r6_c1_s1">
+									<statictext align="right" id="qbe_date_s1_r6_c1_s1_t1" label="Scheduled Finish"/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r6_c2">
+								<section id="qbe_date_s1_r6_c2_s1">
+									<textbox dataattribute="schedfinish" hidelabel="true" id="qbe_grid2_1_1_grid5_13" inputmode="query" lookup="datelookup" prepend="&gt;="/>
+								</section>
+							</sectioncol>
+							<sectioncol id="qbe_date_s1_r6_c3">
+								<section id="qbe_date_s1_r6_c3_s1">
+									<textbox dataattribute="schedfinish" hidelabel="true" id="qbe_grid2_1_1_grid5_14" inputmode="query" lookup="datelookup" prepend="&lt;="/>
+								</section>
+							</sectioncol>
+						</sectionrow>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="qbe_grid5_1_1_grid6">
+			<pushbutton default="true" id="qbe_grid5_1_1_grid6_1" label="Find" mxevent="dialogok"/>
+			<pushbutton id="qbe_grid5_1_1_grid6_2" label="Clear" mxevent="qbeclear"/>
+			<pushbutton id="qbe_grid5_1_1_grid6_3" label="Cancel" mxevent="qbecancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.WMMatchWOBean" id="matwolist" label="Filter Work to Match Labor" mboname="wmmatch">
+		<table id="matworklist_table">
+			<tablebody displayrowsperpage="15" id="matworklist_table_tablebody">
+				<tablecol dataattribute="craft" id="matworklist_table_tablebody_1" label="Craft">
+					<textbox id="matworklist_table_tablebody_1_1" lookup="craftrate" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="skilllevel" id="matworklist_table_tablebody_2" label="Skill Level">
+					<textbox id="matworklist_table_tablebody_2_1" lookup="craftrate" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="vendor" id="matworklist_table_tablebody_3" label="Vendor">
+					<textbox id="matworklist_table_tablebody_3_1" lookup="craftrate" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="contractnum" id="matworklist_table_tablebody_4" label="Contract">
+					<textbox id="matworklist_table_tablebody_4_1" lookup="craftrate" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="orgid" id="matworklist_table_tablebody_5" label="Organization">
+					<textbox id="matworklist_table_tablebody_5_1" lookup="org" smartfilloff="true"/>
+				</tablecol>
+				<tablecol filterable="false" hidden="false" id="matworklist_table_tablebody_6" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<buttongroup id="matworklist_1">
+				<pushbutton default="true" id="matworklist_1_1" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="matworklist_2">
+			<pushbutton default="true" id="matworklist_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="matworklist_2_2" label="Cancel" mxevent="dialogcancel"/>
+			<pushbutton id="matworklist_2_3" label="Reset" mxevent="resetwhere"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.WMMatchLaborBean" id="matlablist" label="Filter Labor to Match Work" mboname="wmmatch">
+		<table id="matlablist_table">
+			<tablebody displayrowsperpage="15" id="matlablist_table_tablebody">
+				<tablecol dataattribute="craft" id="matlablist_table_tablebody_1" label="Craft">
+					<textbox id="matlablist_table_tablebody_1_1" lookup="craftrate" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="skilllevel" id="matlablist_table_tablebody_2" label="Skill Level">
+					<textbox id="matlablist_table_tablebody_2_1" lookup="craftrate" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="vendor" id="matlablist_table_tablebody_3" label="Vendor">
+					<textbox id="matlablist_table_tablebody_3_1" lookup="craftrate" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="contractnum" id="matlablist_table_tablebody_4" label="Contract">
+					<textbox id="matlablist_table_tablebody_4_1" lookup="craftrate" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="orgid" id="matlablist_table_tablebody_5" label="Organization">
+					<textbox id="matlablist_table_tablebody_5_1" lookup="org" smartfilloff="true"/>
+				</tablecol>
+				<tablecol filterable="false" hidden="false" id="matlablist_table_tablebody_6" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<buttongroup id="matlablist_1">
+				<pushbutton default="true" id="matlablist_1_1" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="matlablist_2">
+			<pushbutton default="true" id="matlablist_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="matlablist_2_2" label="Cancel" mxevent="dialogcancel"/>
+			<pushbutton id="matlablist_2_3" label="Reset" mxevent="resetwhere"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.SelectWorkdateBean" id="SELWRKDATE" label="Select Work Date" mboname="calendarview">
+		<section id="selwrkdate_grid1_row1_col1_1">
+			<textbox dataattribute="day1" id="selwrkdate_grid_1" label="Work Date" lookup="datelookup"/>
+		</section>
+		<buttongroup id="selwrkdate_2">
+			<pushbutton default="true" id="selwrkdate_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="selwrkdate_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.AssignLabBean" id="assignlabdlg" label="Assign Labor" parentdatasrc="select_labor_table" relationship="ASSIGNMENT" width="960">
+		<table id="assign_labor_table">
+			<tablebody displayrowsperpage="20" id="assign_labor_table_tablebody">
+				<tablecol dataattribute="workorder.wogroup" id="assign_labor_table_tablebody_1" inputmode="required">
+					<textbox applink="wotrack" id="assign_labor_table_tablebody_1_1" inputmode="readonly" lookup="workorder" menutype="hyperlink"/>
+				</tablecol>
+				<tablecol dataattribute="workorder.taskid" id="assign_labor_table_tablebody_12" sortable="false"/>
+				<tablecol applink="craft" dataattribute="craft" id="assign_labor_table_tablebody_3" lookup="craftrate" menutype="normal" sortable="false"/>
+				<tablecol applink="labor" dataattribute="laborcode" id="assign_labor_table_tablebody_4" lookup="laborcraftrate" menutype="normal" sortable="false"/>
+				<tablecol dataattribute="skilllevel" id="assign_labor_table_tablebody_6" lookup="craftrate" sortable="false"/>
+				<tablecol dataattribute="vendor" id="assign_labor_table_tablebody_7" lookup="craftrate" sortable="false"/>
+				<tablecol dataattribute="contractnum" id="assign_labor_table_tablebody_8" lookup="craftrate" sortable="false"/>
+				<tablecol dataattribute="scheduledate" id="assign_labor_table_tablebody_9" lookup="datelookup" sortable="false"/>
+				<tablecol dataattribute="laborhrs" id="assign_labor_table_tablebody_10" sortable="false"/>
+				<tablecol filterable="false" hidden="false" id="assign_labor_table_tablebody_11" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="assign_labor_2">
+			<pushbutton default="true" id="assign_labor_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="assign_labor_2_2" label="Cancel" mxevent="cancelAMAssignLabDialog"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.ShowAssignsBean" id="showassigns" label="Show Assignments" orderby="scheduledate" parentdatasrc="select_labor_table" relationship="ASSIGNMENT" width="940">
+		<section border="true" datasrc="select_labor_table" id="showassigns_grid1">
+			<sectionrow id="showassigns_grid_row1">
+				<sectioncol id="showassigns_grid_row1_col1">
+					<section id="showassigns_grid_row1_col1_1">
+						<textbox dataattribute="laborcode" id="showassigns_grid_row1_col1_1_1"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="showassigns_grid_row1_col2">
+					<section id="showassigns_grid_row1_col2_1">
+						<textbox dataattribute="labor.person.displayname" id="showassigns_grid_row1_col2_1_1" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="showassigns_grid_row1_col3">
+					<section id="showassigns_grid_row1_col3_1">
+						<textbox dataattribute="craft" id="showassigns_grid_row1_col3_1_1"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="showassigns_grid_row1_col4">
+					<section id="showassigns_grid_row1_col4_1">
+						<textbox dataattribute="labor.personcal.shiftnum" id="showassigns_grid_row1_col4_1_1" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<table id="showassigns_table">
+			<tablebody displayrowsperpage="15" id="showassigns_table_tablebody">
+				<tablecol dataattribute="workorder.wogroup" id="showassigns_table_tablebody_1" inputmode="required">
+					<textbox applink="wotrack" id="showassigns_table_tablebody_1_1" inputmode="readonly" lookup="workorder" menutype="hyperlink"/>
+				</tablecol>
+				<tablecol dataattribute="workorder.taskid" id="showassigns_table_tablebody_12" inputmode="readonly"/>
+				<tablecol applink="craft" dataattribute="craft" id="showassigns_table_tablebody_3" lookup="craftrate" menutype="normal" smartfilloff="true" sortable="false"/>
+				<tablecol applink="labor" dataattribute="laborcode" id="showassigns_table_tablebody_4" lookup="laborcraftrate" menutype="normal" smartfilloff="true" sortable="false"/>
+				<tablecol dataattribute="skilllevel" id="showassigns_table_tablebody_6" lookup="craftrate" smartfilloff="true" sortable="false"/>
+				<tablecol dataattribute="vendor" id="showassigns_table_tablebody_7" lookup="craftrate" smartfilloff="true" sortable="false"/>
+				<tablecol dataattribute="contractnum" id="showassigns_table_tablebody_8" lookup="craftrate" smartfilloff="true" sortable="false"/>
+				<tablecol dataattribute="scheduledate" id="showassigns_table_tablebody_9" lookup="datelookup" sortable="false"/>
+				<tablecol dataattribute="laborhrs" id="showassigns_table_tablebody_10" sortable="false"/>
+				<tablecol filterable="false" hidden="false" id="showassigns_table_tablebody_11" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="showassigns_2">
+			<pushbutton default="true" id="showassigns_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="showassigns_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.common.ModPersonAvailBean" id="ModifySelectedDays" label="Modify Person Availability" mboname="MODAVAIL">
+		<section id="ModifySelectedDays1">
+			<sectionrow id="ModifySelectedDays_row1">
+				<sectioncol id="ModifySelectedDays_row1_col1">
+					<section id="ModifySelectedDays_col1_1">
+						<textbox dataattribute="starttime" id="ModifySelectedDays_row1_col1_1_2"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="ModifySelectedDays_row1_col2">
+					<section id="ModifySelectedDays_row1_col2_sec1">
+						<textbox dataattribute="endtime" id="ModifySelectedDays_row1_col2_1_2"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="ModifySelectedDays_row1_col3">
+					<section id="ModifySelectedDays_row1_col3_sec1">
+						<textbox dataattribute="workhours" id="ModifySelectedDays_row1_col3_1_2"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="ModifySelectedDays_row1_col4">
+					<section id="ModifySelectedDays_row1_col4_sec1">
+						<textbox dataattribute="reasoncode" id="ModifySelectedDays_row1_col4_1_2" lookup="valuelist"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="ModifySelectedDays_3">
+			<pushbutton default="true" id="ModifySelectedDays_3_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="ModifySelectedDays_3_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.common.ModCrewAvailBean" id="ModifySelectedDaysCrew" label="Modify Crew Availability" mboname="MODAVAIL">
+		<section id="ModifySelectedDaysCrew1">
+			<sectionrow id="ModifySelectedDaysCrew_row1">
+				<sectioncol id="ModifySelectedDaysCrew_row1_col1">
+					<section id="ModifySelectedDaysCrew_col1_1">
+						<textbox dataattribute="starttime" id="ModifySelectedDaysCrew_row1_col1_1_2"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="ModifySelectedDaysCrew_row1_col2">
+					<section id="ModifySelectedDaysCrew_row1_col2_sec1">
+						<textbox dataattribute="endtime" id="ModifySelectedDaysCrew_row1_col2_1_2"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="ModifySelectedDaysCrew_row1_col3">
+					<section id="ModifySelectedDaysCrew_row1_col3_sec1">
+						<textbox dataattribute="workhours" id="ModifySelectedDaysCrew_row1_col3_1_2"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="ModifySelectedDaysCrew_row1_col4">
+					<section id="ModifySelectedDaysCrew_row1_col4_sec1">
+						<textbox dataattribute="reasoncode" id="ModifySelectedDaysCrew_row1_col4_1_2" lookup="valuelist"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<buttongroup id="ModifySelectedDaysCrew_3">
+			<pushbutton default="true" id="ModifySelectedDaysCrew_3_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="ModifySelectedDaysCrew_3_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="modavail" label="Modify Availability" parentdatasrc="select_labor_table" savemode="ONUNLOAD">
+		<section border="true" id="modavail2_grid1">
+			<multiparttextbox dataattribute="laborcode" descdataattribute="labor.person.displayname" descinputmode="readonly" id="modavail2_grid1_1"/>
+			<textbox dataattribute="craft" id="modavail2_grid1_3"/>
+			<multiparttextbox dataattribute="labor.personcal.calnum" descdataattribute="labor.personcal.shiftnum" descinputmode="readonly" id="modavail2_grid1_2" inputmode="readonly"/>
+		</section>
+		<table beanclass="psdi.webclient.beans.common.WorkperiodBean" id="modavail2_workper" inputmode="readonly" label="Work Dates" orderby="workdate asc" relationship="WORKPERIOD" selectmode="multiple">
+			<tablebody displayrowsperpage="10" filterable="false" id="modavail2_workper_tablebody">
+				<tablecol filterable="false" hidden="false" id="modavail2_workper_tablebody_0" mxevent="toggleselectrow" sortable="false" type="event"/>
+				<tablecol dataattribute="workdate" id="modavail2_workper_tablebody_1" inputmode="readonly"/>
+				<tablecol dataattribute="day" id="modavail2_workper_tablebody_2" inputmode="readonly"/>
+				<tablecol dataattribute="starttime" id="modavail2_workper_tablebody_3" inputmode="readonly"/>
+				<tablecol dataattribute="endtime" id="modavail2_workper_tablebody_4" inputmode="readonly"/>
+				<tablecol dataattribute="workhours" id="modavail2_workper_tablebody_5" inputmode="readonly"/>
+				<tablecol dataattribute="notes" id="modavail2_workper_tablebody_6" inputmode="readonly"/>
+			</tablebody>
+			<buttongroup id="modavail2_workper_8">
+				<pushbutton default="true" id="modavail2_workper_9" label="Mass Modify" mxevent="ModifySelectedDays"/>
+				<pushbutton id="modavail2_modify_9" label="Modify" mxevent="DodifyDays"/>
+			</buttongroup>
+		</table>
+		<table beanclass="psdi.webclient.beans.common.ModavialBean" id="modavail2_modify" label="Modify Work Dates" orderby="workdate asc" relationship="MODAVAIL">
+			<tablebody displayrowsperpage="5" filterable="false" id="modavail2_modify_tablebody">
+				<tablecol dataattribute="workdate" id="modavail2_modify_tablebody_1" lookup="datelookup"/>
+				<tablecol dataattribute="day" id="modavail2_modify_tablebody_2" inputmode="readonly"/>
+				<tablecol dataattribute="starttime" id="modavail2_modify_tablebody_3"/>
+				<tablecol dataattribute="endtime" id="modavail2_modify_tablebody_4"/>
+				<tablecol dataattribute="workhours" id="modavail2_modify_tablebody_5"/>
+				<tablecol dataattribute="reasoncode" id="modavail2_modify_tablebody_6" lookup="valuelist"/>
+				<tablecol filterable="false" hidden="false" id="modavail2_modify_tablebody_8" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<buttongroup id="modavail2_modify_10">
+				<pushbutton default="true" id="modavail2_modify_11" label="New Row" mxevent="newrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="modavail2_3">
+			<pushbutton default="true" id="modavail2_3_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="modavail2_3_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.ModAvailBean" id="modavail-old" label="Modify Availability" parentdatasrc="select_labor_table" relationship="PERSONAVAIL" width="900">
+		<section border="true" datasrc="select_labor_table" id="modavail_grid1">
+			<sectionrow id="modavail_grid_row1">
+				<sectioncol id="modavail_grid_row1_col1">
+					<section id="modavail_grid_row1_col1_1">
+						<textbox dataattribute="laborcode" id="modavail_grid_row1_col1_1_1"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="modavail_grid_row1_col2">
+					<section id="modavail_grid_row1_col2_1">
+						<textbox dataattribute="labor.person.displayname" id="modavail_grid_row1_col2_1_1" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="modavail_grid_row1_col3">
+					<section id="modavail_grid_row1_col3_1">
+						<textbox dataattribute="craft" id="modavail_grid_row1_col3_1_1"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="modavail_grid_row1_col4">
+					<section id="modavail_grid_row1_col4_1">
+						<textbox dataattribute="labor.personcal.shiftnum" id="modavail_grid_row1_col4_1_1" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<table id="modavail_table">
+			<tablebody displayrowsperpage="7" id="modavail_table_tablebody">
+				<tablecol dataattribute="workdate" id="modavail_table_tablebody_1" inputmode="readonly" sortable="false"/>
+				<tablecol dataattribute="starttime" id="modavail_table_tablebody_2" sortable="false"/>
+				<tablecol dataattribute="endtime" id="modavail_table_tablebody_3" sortable="false"/>
+				<tablecol dataattribute="workhours" id="modavail_table_tablebody_4" sortable="false"/>
+				<tablecol dataattribute="reasoncode" id="modavail_table_tablebody_5" lookup="valuelist" sortable="false"/>
+			</tablebody>
+		</table>
+		<buttongroup id="modavail_2">
+			<pushbutton default="true" id="modavail_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="modavail_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.AMDispatchBean" id="startassign" label="Start Assignment" relationship="DISPATCHASSIGN">
+		<section id="startassign_grid1">
+			<multiparttextbox dataattribute="ASSIGNDISPATCH.workorder.wogroup" descdataattribute="description" descinputmode="readonly" id="startassign_grid_row1_col1_1_1" inputmode="readonly"/>
+			<textbox dataattribute="ASSIGNDISPATCH.workorder.taskid" id="startassign_grid_row2_col1_1_2" inputmode="readonly"/>
+			<textbox dataattribute="scheduledate" id="startassign_grid_row2_col1_1_1" lookup="datelookup"/>
+			<checkbox dataattribute="printreport" id="startassign_grid_row2_col1_1_3"/>
+		</section>
+		<buttongroup id="startassign_2">
+			<pushbutton default="true" id="startassign_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="startassign_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.AMDispatchBean" id="interruptassign" label="Interrupt Assignment" relationship="DISPATCHASSIGN">
+		<section id="interruptassign_grid1">
+			<sectionrow id="interruptassign_grid_row1">
+				<sectioncol id="interruptassign_grid_row1_col1">
+					<section id="interruptassign_grid_row1_col1_1">
+						<textbox dataattribute="scheduledate" id="interruptassign_grid_row1_col1_1_1" inputmode="readonly"/>
+						<textbox dataattribute="status" id="interruptassign_grid_row1_col1_1_2" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="interruptassign_grid_row1_col2">
+					<section id="interruptassign_grid_row1_col2_1">
+						<textbox dataattribute="finishdate" id="interruptassign_grid_row1_col2_1_1" lookup="datelookup"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<table id="interruptassign_table" inputmode="readonly" label="Started Assignments" relationship="ASSIGNDISPATCH">
+			<tablebody displayrowsperpage="20" id="interruptassign_table_tablebody">
+				<tablecol dataattribute="craft" id="interruptassign_table_tablebody_1" sortable="false"/>
+				<tablecol dataattribute="laborcode" id="interruptassign_table_tablebody_2" sortable="false"/>
+				<tablecol dataattribute="labor.person.displayname" id="interruptassign_table_tablebody_3" sortable="false"/>
+				<tablecol dataattribute="skilllevel" id="interruptassign_table_tablebody_4" sortable="false"/>
+				<tablecol dataattribute="vendor" id="interruptassign_table_tablebody_5" sortable="false"/>
+				<tablecol dataattribute="contractnum" id="interruptassign_table_tablebody_6" sortable="false"/>
+				<tablecol dataattribute="startdate" id="interruptassign_table_tablebody_7" sortable="false"/>
+				<tablecol dataattribute="amcrew" id="interruptassign_table_tablebody_8" sortable="false"/>
+				<tablecol dataattribute="amcrewtype" id="interruptassign_table_tablebody_9" sortable="false"/>
+				<tablecol dataattribute="amcrew.description" id="interruptassign_table_tablebody_10" sortable="false"/>
+			</tablebody>
+		</table>
+		<buttongroup id="interruptassign_2">
+			<pushbutton default="true" id="interruptassign_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="interruptassign_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.AMDispatchBean" id="finishassign" label="Finish Assignment" relationship="DISPATCHASSIGN">
+		<section id="finishassign_grid1">
+			<sectionrow id="finishassign_grid_row1">
+				<sectioncol id="finishassign_grid_row1_col1">
+					<section id="finishassign_grid_row1_col1_1">
+						<textbox dataattribute="scheduledate" id="finishassign_grid_row1_col1_1_1"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="finishassign_grid_row1_col2">
+					<section id="finishassign_grid_row1_col2_1">
+						<textbox dataattribute="finishdate" id="finishassign_grid_row1_col2_1_1" lookup="datelookup"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<table id="finishassign_table" inputmode="readonly" label="Started Assignments" relationship="ASSIGNDISPATCH">
+			<tablebody displayrowsperpage="20" id="finishassign_table_tablebody">
+				<tablecol dataattribute="craft" id="finishassign_table_tablebody_1" sortable="false"/>
+				<tablecol dataattribute="laborcode" id="finishassign_table_tablebody_2" sortable="false"/>
+				<tablecol dataattribute="labor.person.displayname" id="finishassign_table_tablebody_3" sortable="false"/>
+				<tablecol dataattribute="skilllevel" id="finishassign_table_tablebody_4" sortable="false"/>
+				<tablecol dataattribute="vendor" id="finishassign_table_tablebody_5" sortable="false"/>
+				<tablecol dataattribute="contractnum" id="finishassign_table_tablebody_6" sortable="false"/>
+				<tablecol dataattribute="startdate" id="finishassign_table_tablebody_7" sortable="false"/>
+				<tablecol dataattribute="amcrew" id="finishassign_table_tablebody_8" sortable="false"/>
+				<tablecol dataattribute="amcrewtype" id="finishassign_table_tablebody_9" sortable="false"/>
+				<tablecol dataattribute="amcrew.description" id="finishassign_table_tablebody_10" sortable="false"/>
+			</tablebody>
+		</table>
+		<buttongroup id="finishassign_2">
+			<pushbutton default="true" id="finishassign_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="finishassign_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.AMPriPrefsBean" id="ampriprefs" label="Set Priority Preferences">
+		<table id="ampriprefs_pricalc_table" label="Work Priority Calculation" mboname="pricalc" orderby="siteid, findex">
+			<tablebody displayrowsperpage="6" id="ampriprefs_pricalc_table_tablebody">
+				<tablecol dataattribute="formula" id="ampriprefs_pricalc_table_tablebody_1" inputmode="readonly" sortable="false"/>
+				<tablecol dataattribute="selected" id="ampriprefs_pricalc_table_tablebody_2" sortable="false">
+					<checkbox dataattribute="selected" id="ampriprefs_pricalc_table_tablebody_2_box" ondatachange="refreshtable"/>
+				</tablecol>
+				<tablecol dataattribute="siteid" id="ampriprefs_pricalc_table_tablebody_3" inputmode="readonly" sortable="false"/>
+				<tablecol dataattribute="orgid" id="ampriprefs_pricalc_table_tablebody_4" inputmode="readonly" sortable="false"/>
+			</tablebody>
+		</table>
+		<table id="ampriprefs_workpriority_table" label="Work Priority Response Time" mboname="workpriority" orderby="siteid, priority">
+			<tablebody displayrowsperpage="5" id="ampriprefs_workpriority_table_tablebody">
+				<tablecol dataattribute="priority" id="ampriprefs_workpriority_table_tablebody_1" inputmode="readonly" sortable="false"/>
+				<tablecol dataattribute="responsetime" id="ampriprefs_workpriority_table_tablebody_2" sortable="false"/>
+				<tablecol dataattribute="siteid" id="ampriprefs_workpriority_table_tablebody_3" inputmode="readonly" sortable="false"/>
+				<tablecol dataattribute="orgid" id="ampriprefs_workpriority_table_tablebody_4" inputmode="readonly" sortable="false"/>
+			</tablebody>
+		</table>
+		<buttongroup id="ampriprefs_1">
+			<pushbutton default="true" id="ampriprefs_1_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="ampriprefs_1_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.AMVarPrefsBean" id="amvarprefs" label="Set Parameter Preferences">
+		<section id="amvarprefs_grid1">
+			<textbox dataattribute="modavailrows" id="amvarprefs_grid1_section_1_modavailrows"/>
+			<checkbox dataattribute="labtransondispatch" id="amvarprefs_grid1_section_1_labtransondispatch"/>
+		</section>
+		<section id="amvarprefs_grid2">
+			<radiobuttongroup border="false" dataattribute="WOSTATUSONASNTCOMP" id="amvarprefs_grid2_wostatusonasntcomp"/>
+		</section>
+		<buttongroup id="amvarprefs_1">
+			<pushbutton default="true" id="amvarprefs_1_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="amvarprefs_1_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.AMManageQueriesBean" id="setquery" label="View / Manage Queries" mboname="QUERY">
+		<table id="setquery_table" selectmode="single">
+			<tablebody displayrowsperpage="200" filterable="true" id="setquery_table_tablebody">
+				<tablecol filterable="false" hidden="false" id="setquery_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="clausename" id="setquery_tablebody_2" mxevent="selectrecord" type="link"/>
+				<tablecol dataattribute="description" id="setquery_table_tablebody_3"/>
+				<tablecol dataattribute="default" id="setquery_table_tablebody_5" ondatachange="refreshtable">
+					<checkbox id="setquery_table_tablebody_5_1"/>
+				</tablecol>
+				<tablecol dataattribute="ispublic" id="setquery_table_tablebody_6">
+					<checkbox id="setquery_table_tablebody_6_1"/>
+				</tablecol>
+				<tablecol filterable="false" hidden="false" id="setquery_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="setquery_tabledtails">
+				<section id="setquery_tabledtails_1">
+					<multilinetextbox columns="40" dataattribute="clause" id="setquery_tabledtails_1_1" rows="5"/>
+				</section>
+			</tabledetails>
+		</table>
+		<buttongroup id="setquery_2">
+			<pushbutton default="true" id="setquery_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="setquery_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="com.ibm.tivoli.maximo.amcrew.workman.beans.WMMatchWOToCrewBean" id="crwmatwo" label="Filter Work to Match Crew" licensekey="CREW" mboname="WMMATCHCRW">
+		<table id="matwolistcrew_table">
+			<tablebody displayrowsperpage="15" id="matwolistcrew_table_tablebody">
+				<tablecol dataattribute="amcrewtype" id="matwolistcrew_table_tablebody_1" label="Crew Type">
+					<textbox id="matwolistcrew_table_tablebody_1_1" lookup="amcrewtype" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="vendor" id="matwolistcrew_table_tablebody_2" label="Vendor">
+					<textbox id="matwolistcrew_table_tablebody_2_1" lookup="vendors" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="crewworkgroup" id="matwolistcrew_table_tablebody_4" label="Work Group">
+					<textbox id="matwolistcrew_table_tablebody_4_1" lookup="persongroup" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="orgid" id="matwolistcrew_table_tablebody_5" label="Organization">
+					<textbox id="matwolistcrew_table_tablebody_5_1" lookup="org" smartfilloff="true"/>
+				</tablecol>
+				<tablecol filterable="false" hidden="false" id="matwolistcrew_table_tablebody_6" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<buttongroup id="matwolistcrew_1">
+				<pushbutton default="true" id="matwolistcrew_1_1" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="matwolistcrew_2">
+			<pushbutton default="true" id="matwolistcrew_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="matwolistcrew_2_2" label="Cancel" mxevent="dialogcancel"/>
+			<pushbutton id="matwolistcrew_2_3" label="Reset" mxevent="resetwhere"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="com.ibm.tivoli.maximo.amcrew.workman.beans.WMMatchCrewBean" id="crwmatcrew" label="Filter Crew to Match Work" licensekey="CREW" mboname="WMMATCHCRW">
+		<table id="matcrewlist_table">
+			<tablebody displayrowsperpage="15" id="matcrewlist_table_tablebody">
+				<tablecol dataattribute="amcrewtype" id="matcrewlist_table_tablebody_1" label="Crew Type">
+					<textbox id="matcrewlist_table_tablebody_1_1" lookup="amcrewtype" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="vendor" id="matcrewlist_table_tablebody_2" label="Vendor">
+					<textbox id="matcrewlist_table_tablebody_2_1" lookup="vendors" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="crewworkgroup" id="matcrewlist_table_tablebody_3" label="Work Group">
+					<textbox id="matcrewlist_table_tablebody_3_1" lookup="persongroup" smartfilloff="true"/>
+				</tablecol>
+				<tablecol dataattribute="orgid" id="matcrewlist_table_tablebody_5" label="Organization">
+					<textbox id="matcrewlist_table_tablebody_5_1" lookup="org" smartfilloff="true"/>
+				</tablecol>
+				<tablecol filterable="false" hidden="false" id="matcrewlist_table_tablebody_6" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<buttongroup id="matcrewlist_1">
+				<pushbutton default="true" id="matcrewlist_1_1" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="matcrewlist_2">
+			<pushbutton default="true" id="matcrewlist_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="matcrewlist_2_2" label="Cancel" mxevent="dialogcancel"/>
+			<pushbutton id="matcrewlist_2_3" label="Reset" mxevent="resetwhere"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="com.ibm.tivoli.maximo.amcrew.workman.beans.AssignCrewBean" id="assigncrewdlg" label="Assign Crew" licensekey="CREW" width="960">
+		<helpgrid id="assigncrewhelp" innerhtml="Check assignments below"/>
+		<table id="assign_crew_table">
+			<tablebody displayrowsperpage="20" id="assign_crew_table_tablebody">
+				<tablecol dataattribute="workorder.wogroup" id="assign_crew_table_tablebody_1" inputmode="required">
+					<textbox applink="wotrack" id="assign_crew_table_tablebody_1_1" inputmode="readonly" lookup="workorder" menutype="hyperlink"/>
+				</tablecol>
+				<tablecol dataattribute="workorder.taskid" id="assign_crew_table_tablebody_2" inputmode="readonly" sortable="false"/>
+				<tablecol applink="amcrewt" dataattribute="amcrewtype" id="assign_crew_table_tablebody_3" lookup="amcrewtype" menutype="normal" sortable="false"/>
+				<tablecol applink="amcrew" dataattribute="amcrew" id="assign_crew_table_tablebody_4" lookup="amcrews" menutype="normal" sortable="false"/>
+				<tablecol dataattribute="amcrew.description" id="assign_crew_table_tablebody_5" inputmode="readonly" sortable="false"/>
+				<tablecol dataattribute="vendor" id="assign_crew_table_tablebody_6" inputmode="readonly" lookup="vendors" sortable="false"/>
+				<tablecol dataattribute="scheduledate" id="assign_crew_table_tablebody_7" lookup="datelookup" sortable="false"/>
+				<tablecol dataattribute="laborhrs" id="assign_crew_table_tablebody_8" sortable="false"/>
+				<tablecol filterable="false" hidden="false" id="assign_crew_table_tablebody_9" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="assign_crew_0">
+			<pushbutton default="true" id="assign_crew_0_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="assign_crew_0_2" label="Cancel" mxevent="cancelAMAssignCrewDialog"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="psdi.webclient.beans.workman.ShowAssignsBean" id="showcrewassigns" label="Show Assignments" licensekey="CREW" orderby="scheduledate" parentdatasrc="select_crew_table" relationship="ASSIGNMENT" width="940">
+		<section border="true" datasrc="select_crew_table" id="showcrewassigns_grid1">
+			<sectionrow id="showcrewassigns_grid_row1">
+				<sectioncol id="showcrewassigns_grid_row1_col1">
+					<section id="showcrewassigns_grid_row1_col1_1">
+						<textbox dataattribute="amcrew" id="showcrewassigns_grid_row1_col1_1_1" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="showcrewassigns_grid_row1_col2">
+					<section id="showcrewassigns_grid_row1_col2_1">
+						<textbox dataattribute="description" id="showcrewassigns_grid_row1_col2_1_1" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="showcrewassigns_grid_row1_col3">
+					<section id="showcrewassigns_grid_row1_col3_1">
+						<textbox dataattribute="amcrewtype" id="showcrewassigns_grid_row1_col3_1_1" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="showcrewassigns_grid_row1_col4">
+					<section id="showcrewassigns_grid_row1_col4_1">
+						<textbox dataattribute="shiftnum" id="showcrewassigns_grid_row1_col4_1_1" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<table id="showcrewassigns_table">
+			<tablebody displayrowsperpage="15" id="showcrewassigns_table_tablebody">
+				<tablecol dataattribute="workorder.wogroup" id="showcrewassigns_table_tablebody_1" inputmode="required">
+					<textbox applink="wotrack" id="showcrewassigns_table_tablebody_1_1" inputmode="readonly" lookup="workorder" menutype="hyperlink"/>
+				</tablecol>
+				<tablecol dataattribute="workorder.taskid" id="showcrewassigns_table_tablebody_12" inputmode="readonly"/>
+				<tablecol applink="amcrewtype" dataattribute="amcrewtype" id="showcrewassigns_table_tablebody_3" lookup="amcrewtype" menutype="normal" sortable="false"/>
+				<tablecol applink="amcrew" dataattribute="amcrew" id="showcrewassigns_table_tablebody_4" lookup="amcrews" menutype="normal" sortable="false"/>
+				<tablecol dataattribute="scheduledate" id="showcrewassigns_table_tablebody_9" lookup="datelookup" sortable="false"/>
+				<tablecol dataattribute="laborhrs" id="showcrewassigns_table_tablebody_10" sortable="false"/>
+				<tablecol filterable="false" hidden="false" id="showcrewassigns_table_tablebody_11" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+		</table>
+		<buttongroup id="showcrewassigns_2">
+			<pushbutton default="true" id="showcrewassigns_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="showcrewassigns_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog id="modavailcrew" label="Modify Crew Availability" licensekey="CREW" parentdatasrc="select_crew_table" savemode="ONUNLOAD">
+		<section border="true" id="modavailcrew2_grid1">
+			<multiparttextbox dataattribute="amcrew" descdataattribute="description" descinputmode="readonly" id="modavailcrew2_grid1_1"/>
+			<textbox dataattribute="amcrewtype" id="modavailcrew2_grid1_3" inputmode="readonly"/>
+			<multiparttextbox dataattribute="calnum" descdataattribute="shiftnum" descinputmode="readonly" id="modavailcrew2_grid1_2" inputmode="readonly"/>
+		</section>
+		<table beanclass="psdi.webclient.beans.common.WorkperiodBean" id="modavailcrew2_workper" inputmode="readonly" label="Work Dates" orderby="workdate asc" relationship="WORKPERIOD" selectmode="multiple">
+			<tablebody displayrowsperpage="10" filterable="false" id="modavailcrew2_workper_tablebody">
+				<tablecol filterable="false" hidden="false" id="modavailcrew2_workper_tablebody_0" mxevent="toggleselectrow" sortable="false" type="event"/>
+				<tablecol dataattribute="workdate" id="modavailcrew2_workper_tablebody_1" inputmode="readonly"/>
+				<tablecol dataattribute="day" id="modavailcrew2_workper_tablebody_2" inputmode="readonly"/>
+				<tablecol dataattribute="starttime" id="modavailcrew2_workper_tablebody_3" inputmode="readonly"/>
+				<tablecol dataattribute="endtime" id="modavailcrew2_workper_tablebody_4" inputmode="readonly"/>
+				<tablecol dataattribute="workhours" id="modavailcrew2_workper_tablebody_5" inputmode="readonly"/>
+				<tablecol dataattribute="notes" id="modavailcrew2_workper_tablebody_6" inputmode="readonly"/>
+			</tablebody>
+			<buttongroup id="modavailcrew2_workper_8">
+				<pushbutton default="true" id="modavailcrew2_workper_9_1" label="Mass Modify" mxevent="ModifySelectedDaysCrew"/>
+				<pushbutton id="modavailcrew2_workper_modify_9" label="Modify" mxevent="DodifyDays"/>
+			</buttongroup>
+		</table>
+		<table beanclass="psdi.webclient.beans.common.ModavialBean" id="modavailcrew2_modify" label="Modify Work Dates" orderby="workdate asc" relationship="MODAVAIL">
+			<tablebody displayrowsperpage="5" filterable="false" id="modavailcrew2_modify_tablebody">
+				<tablecol dataattribute="workdate" id="modavailcrew2_modify_tablebody_1" lookup="datelookup"/>
+				<tablecol dataattribute="day" id="modavailcrew2_modify_tablebody_2" inputmode="readonly"/>
+				<tablecol dataattribute="starttime" id="modavailcrew2_modify_tablebody_3"/>
+				<tablecol dataattribute="endtime" id="modavailcrew2_modify_tablebody_4"/>
+				<tablecol dataattribute="workhours" id="modavailcrew2_modify_tablebody_5"/>
+				<tablecol dataattribute="reasoncode" id="modavailcrew2_modify_tablebody_6" lookup="valuelist"/>
+				<tablecol filterable="false" hidden="false" id="modavailcrew2_modify_tablebody_8" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<buttongroup id="modavailcrew2_modify_10">
+				<pushbutton default="true" id="modavailcrew2_modify_11" label="New Row" mxevent="addrow"/>
+			</buttongroup>
+		</table>
+		<buttongroup id="modavailcrew2_3">
+			<pushbutton default="true" id="modavailcrew2_3_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="modavailcrew2_3_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="com.ibm.tivoli.maximo.amcrew.workman.beans.ModAvailCrewBean" height="460" id="modavailcrew-old" label="Modify Crew Availability" licensekey="CREW" parentdatasrc="select_crew_table" relationship="AMCREWAVAIL" width="900">
+		<section border="true" datasrc="select_crew_table" id="modavailcrew_grid1">
+			<sectionrow id="modavailcrew_grid_row1">
+				<sectioncol id="modavailcrew_grid_row1_col1">
+					<section id="modavailcrew_grid_row1_col1_1">
+						<textbox dataattribute="amcrew" id="modavailcrew_grid_row1_col1_1_1" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="modavailcrew_grid_row1_col2">
+					<section id="modavailcrew_grid_row1_col2_1">
+						<textbox dataattribute="description" id="modavailcrew_grid_row1_col2_1_1" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="modavailcrew_grid_row1_col3">
+					<section id="modavailcrew_grid_row1_col3_1">
+						<textbox dataattribute="amcrewtype" id="modavailcrew_grid_row1_col3_1_1" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+				<sectioncol id="modavailcrew_grid_row1_col4">
+					<section id="modavailcrew_grid_row1_col4_1">
+						<textbox dataattribute="shiftnum" id="modavailcrew_grid_row1_col4_1_1" inputmode="readonly"/>
+					</section>
+				</sectioncol>
+			</sectionrow>
+		</section>
+		<table id="modavailcrew_table">
+			<tablebody displayrowsperpage="7" id="modavailcrew_table_tablebody">
+				<tablecol dataattribute="workdate" id="modavailcrew_table_tablebody_1" inputmode="readonly" sortable="false"/>
+				<tablecol dataattribute="starttime" id="modavailcrew_table_tablebody_2" sortable="false"/>
+				<tablecol dataattribute="endtime" id="modavailcrew_table_tablebody_3" sortable="false"/>
+				<tablecol dataattribute="workhours" id="modavailcrew_table_tablebody_4" sortable="false"/>
+				<tablecol dataattribute="reasoncode" id="modavailcrew_table_tablebody_5" lookup="valuelist" sortable="false"/>
+			</tablebody>
+		</table>
+		<buttongroup id="modavailcrew_2">
+			<pushbutton default="true" id="modavailcrew_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="modavailcrew_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+
+	<dialog beanclass="com.ibm.tivoli.maximo.amcrew.workman.beans.AMManageCrewQueriesBean" id="crwsetqry" label="View / Manage Queries" licensekey="CREW" mboname="QUERY">
+		<table id="setcrewquery_table" selectmode="single">
+			<tablebody displayrowsperpage="200" filterable="true" id="setcrewquery_table_tablebody">
+				<tablecol filterable="false" hidden="false" id="setcrewquery_tablebody_1" mxevent="toggledetailstate" mxevent_desc="Show Detail" sortable="false" type="event"/>
+				<tablecol dataattribute="clausename" id="setcrewquery_tablebody_2" mxevent="selectrecord" type="link"/>
+				<tablecol dataattribute="description" id="setcrewquery_table_tablebody_3"/>
+				<tablecol dataattribute="default" id="setcrewquery_table_tablebody_5" ondatachange="refreshtable">
+					<checkbox id="setcrewquery_table_tablebody_5_1"/>
+				</tablecol>
+				<tablecol dataattribute="ispublic" id="setcrewquery_table_tablebody_6">
+					<checkbox id="setcrewquery_table_tablebody_6_1"/>
+				</tablecol>
+				<tablecol filterable="false" hidden="false" id="setcrewquery_table_tablebody_7" mxevent="toggledeleterow" mxevent_desc="Mark Row for Delete" mxevent_icon="btn_garbage.gif" sortable="false" type="event"/>
+			</tablebody>
+			<tabledetails id="setcrewquery_tabledtails">
+				<section id="setcrewquery_tabledtails_1">
+					<multilinetextbox columns="40" dataattribute="clause" id="setcrewquery_tabledtails_1_1" rows="5"/>
+				</section>
+			</tabledetails>
+		</table>
+		<buttongroup id="setcrewquery_2">
+			<pushbutton default="true" id="setcrewquery_2_1" label="OK" mxevent="dialogok"/>
+			<pushbutton id="setcrewquery_2_2" label="Cancel" mxevent="dialogcancel"/>
+		</buttongroup>
+	</dialog>
+</presentation>
